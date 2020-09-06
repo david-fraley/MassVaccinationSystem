@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: client-frontend-production
+spec:
+  replicas:
+  selector:
+      matchLabels:
+          app: client
+          role: frontend
+          env: production
+  template:
+    metadata:
+      name: frontend
+      labels:
+        app: client
+        role: frontend
+        env: production
+    spec:
+      containers:
+      - name: frontend
+        image: pethogya/testrepo:client
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "100m"
+        imagePullPolicy: Always
+        #readinessProbe:
+          #httpGet:
+            #path: /healthz
+            #port: 80
+        #command: ["sh", "-c", "app -frontend=true -backend-service=http://gceme-backend:8080 -port=80"]
+        ports:
+        - name: frontend
+          containerPort: 80
