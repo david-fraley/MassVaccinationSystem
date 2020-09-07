@@ -1,9 +1,10 @@
+<!-- Commented out our big front end to specifically show auth demo
 <template>
   <div id="app">
     <div id="davidapp">
       <div class="header">
-        <h1>Front End Skeleton</h1>
-        <p>Currently using a dynamic html/css code.</p>
+        <h1>Firebase Authentication Demo</h1>
+        <p>Integrated a front/back end with firebase to prove authentication works and plot out how to use it</p>
       </div>
 
       <div class="topnav">
@@ -52,21 +53,98 @@
         <h2>Footer</h2>
         <br>
         <div id="vueapp">
-          <HelloWorld msg="API Simulator"/>
+          <HelloWorld msg="Firebase Authentication Demo"/>
+          <button @click="signIn" class="btn btn-outline-primary mx-4">Sign In ></button>
+          <button @click="sendRequest" class="btn btn-outline-success mx-4">Send Request ></button>
+          <button @click="signOut" class="btn btn-outline-danger mx-4">Sign Out ></button>
         </div>
       </div>
     </div>
   </div>
 </template>
+--> 
+
+
+<template>
+  <div class="hello">
+      <h1>{{ msg }}</h1>
+    <p class="lead mt-2">{{ authStatus }}</p>
+    <div class="d-flex my-4 justify-content-center">
+      <button @click="signIn" class="btn btn-outline-primary mx-4">Sign In ></button>
+      <button @click="sendRequest" class="btn btn-outline-success mx-4">Send Request ></button>
+      <button @click="signOut" class="btn btn-outline-danger mx-4">Sign Out ></button>
+    </div>
+    <p class="lead">{{ response }}</p>
+  </div>
+</template>
 
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
+import firebase from 'firebase'
+
+const client = axios.create({
+  baseURL: 'http://localhost:3000',
+  json: true
+})
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: 'HelloWorld',
+  data: function() {
+    return {
+      response: 'No data yet...',
+      authStatus: 'No Auth Status'
+    }
+  },
+  props: {
+    msg: String
+  },
+  methods: {
+    sendRequest() {
+      if (firebase.auth().currentUser) {
+        firebase.auth().currentUser.getIdToken(true)
+        .then((idToken) => {
+          client({
+            method: 'get',
+            url: '/',
+            headers: {
+              'AuthToken': idToken
+            }
+          }).then((res) => {
+            this.response = res.data.message
+          }).catch((error) => {
+            this.response = error
+          })
+        }).catch((error) => {
+          this.response = "Error getting auth token"
+        });
+      } else {
+        client({
+          method: 'get',
+          url: '/'
+        }).then((res) => {
+          this.response = res.data.message
+        }).catch((error) => {
+          this.response = error
+        })
+      }
+    },
+    signIn() {
+      firebase.auth()
+      .signInWithEmailAndPassword("dummy@gmail.com", "pass123!")
+      .then(() => {
+        this.authStatus = 'Authorized'
+      }).catch((err) => {
+        this.authStatus = err
+      })
+    },
+    signOut() {
+      firebase.auth().signOut().then(() => {
+        this.authStatus = 'Unauthorized'
+      }).catch((err) => {
+        this.authStatus = err
+      })
+    }
   }
 }
 </script>

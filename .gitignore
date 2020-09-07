@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Service Account for Client/Server Connection to Firebase Demo Authentication
+client/config/awesome-fbauthdemo-firebase-adminsdk-v56pk-520614fd39.json
+
 # User-specific files
 *.rsuser
 *.suo
