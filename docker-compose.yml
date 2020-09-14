@@ -9,3 +9,18 @@ services:
         build: './server'
         ports:
             - "3000:80"
+    hapi:
+        build: './hapi_fhir'
+        ports:
+            - "8090:8080"
+        volumes:
+            - ./hapi_fhir/data/hapi:/data/hapi
+    db:
+        build: './postgres_db'
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data/
+# named volume for persistent database
+volumes:
+    pgdata:
