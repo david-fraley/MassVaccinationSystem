@@ -4,7 +4,7 @@ services:
     client:
         build: './client'
         ports:
-            - "8080:80"
+            - "8090:80"
     server:
         build: './server'
         ports:
@@ -12,7 +12,7 @@ services:
     hapi:
         build: './hapi_fhir'
         ports:
-            - "8090:8080"
+            - "8080:8080"
         volumes:
             - ./hapi_fhir/data/hapi:/data/hapi
     db:

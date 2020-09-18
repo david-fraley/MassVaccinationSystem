@@ -4,8 +4,8 @@
 1. Install docker compose
 2. Navigate to MassVaccinationSystem directory with the docker-compose.yml file
 3. `docker-compose up`
-4. The backend will run on localhost:3000 and the frontend will run on localhost:8080
-5. The fhir server will run on `http://localhost:8090/hapi-fhir-jpaserver/`;
+4. The backend will run on localhost:3000 and the frontend will run on localhost:8090
+5. The fhir server will run on `http://localhost:8080/hapi-fhir-jpaserver/`;
    Access the database with `docker exec -it docker-container-name bash`;
    Login to database with `psql -U username database-name`;
    `\l` list databases, `\c database` connect to database
