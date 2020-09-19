@@ -24,7 +24,7 @@
   display: table;
 }
 
-/*FIGURE OUT WHAT THIS MEANS*/
+
 [class*="col-"] {
   float: left;
 }
@@ -58,7 +58,7 @@ input[type=text] {
   margin-bottom: 16px;
 }
 
-/* Dropdown field style -- COME BACK TO THIS...there is a larger gap between the label and the dropdown */
+/* Dropdown field style */
 .dropdown-container {
   width: 80%;
   position: relative;
@@ -139,39 +139,10 @@ select:focus {
 		<!-- Row 1:  placeholder for the progress bar -->
 		<div class="row">
 		<div class="col-12 col-s-12">
-		
-	  <div id="progress" class="row flex-center relative">
-      <div id="progress-line"> </div>
-      <div class="col-1">
-        <img src="./completedPageIndicator.png" />
-      </div>
-      <div class="col-1">
-        <img src="./completedPageIndicator.png" />
-      </div>
-      <div class="col-1">
-        <img src="./completedPageIndicator.png" />
-      </div>
-      <div class="col-1">
-        <img src="./completedPageIndicator.png" />
-      </div>
-      <div class="col-1">
-        <img src="./completedPageIndicator.png" />
-      </div>
-      <div class="col-1">
-        <img src="./currentPageIndicator.png" />
-      </div>
-      <div class="col-1">
-        <img src="./futurePageIndicator.png" />
-      </div>
-      <div class="col-1">
-        <img src="./futurePageIndicator.png" />
-      </div>
-      <div class="col-1">
-        <img src="./futurePageIndicator.png" />
-      </div>
+		<p style="text-align:center">Placeholder for the progress bar </p>
 		</div>
-		
-		
+		</div>
+
 		<!-- Row 2:  Page title bar -->
 		<div class="row">
 		<div class="col-12 col-s-12">
@@ -187,42 +158,59 @@ select:focus {
 
 
 	 <!-- Row 3: First row of inputs - Last Name and First Name (row is split into 2 columns, each occupying 41.66% of the horizontal space) -->
- <div class="row">
-  <div class="col-5 col-s-5">
-   <p align="left"> <label for="lastName" style="font-size:14px;color:var(--deep-blue-color)"> Last Name </label>
-   <label style="font-size:14px;color: red">*</label>
-   <br> <input type ="text"
-   id= "Last Name"
-   value = "ex. Jones" />  </label>
-  </div>
+		<div class="row">
+		
+			<div class="col-1 col-s-1">
+			<p> </p>
+			</div>
+		
+			<div class="col-5 col-s-5">
+				<p align="left"> <label for="lastName" style="font-size:14px;color:var(--deep-blue-color)"> Last Name </label>
+				<label style="font-size:14px;color: red">*</label>
+				<br> <input type="text" id="Last Name" value="ex. Jones">   
+			</p></div>
+		
+		
+		<div class="col-5 col-s-5">
+			<p align="left"> <label for="firstName" style="font-size:14px;color:var(--deep-blue-color)"> First Name </label>
+			<label style="font-size:14px;color: red">*</label>
+			<br> <input type="text" id="First Name" value="ex. Mary">  
+		</p></div> 
+		</div>
 
- <div class="col-5 col-s-5">
-  <p align="left"> <label for="firstName" style="font-size:14px;color:var(--deep-blue-color)"> First Name </label>
-  <label style="font-size:14px;color: red">*</label>
-  <br> <input type ="text"
-        id= "First Name"
-            value = "ex. Mary"  />  </label>
- </div>
+		<!-- Second row of inputs -->
+		<div class="row">
+		
+			<div class="col-1 col-s-1">
+			<p> </p>
+			</div>
 
- <!-- Second row of inputs -->
- <div class="row">
-  <div class="col-5 col-s-5">
-   <p align="left"> <label for="phoneNumber" style="font-size:14px;color:var(--deep-blue-color)"> Phone Number </label>
-   <label style="font-size:14px;color: red">*</label>
-   <br> <input type ="text"
-   id= "Phone Number"
-   value = "(414)-227-1111" />  </label>
-  </div>
+		
+			<div class="col-3 col-s-3">
+				<p align="left"> <label for="phoneNumber" style="font-size:14px;color:var(--deep-blue-color)"> Phone Number </label>
+				<label style="font-size:14px;color: red">*</label>
+				<br> <input type="text" id="Phone Number" value="(414)-227-1111">    
+			</p></div>
+			
+			<div class="col-2 col-s-2">
+			<p>  </p>
+			</div>
 
- <div class="col-5 col-s-5">
-   <p align="left">  <label for="phoneType" style="font-size:14px;color:var(--deep-blue-color)"> Phone Number Type </label>
-   <p align="left"> <select name="Phone Number Type" id="Phone Number Type">
-    <option value="" selected="selected">Cell</option>
-    <option value="" selected="selected">Home</option>
-    <option value="" selected="selected"> </option>
-   </select>
- </div>
-</div>
+		<div class="col-2 col-s-2">
+				<p align="left"> <label for="phoneType" style="font-size:14px;color:var(--deep-blue-color)"> Phone Number Type </label>
+				</p><p align="left"> <select name="Phone Number Type" id="Phone Number Type">
+					<option value="" selected="selected">Cell</option>
+					<option value="" selected="selected">Home</option>
+					<option value="" selected="selected"> </option>
+				</select>
+		</p></div> 
+		</div>
+		
+		<div class="row">
+		<div class="col-12 col-s-12">
+		<p> </p>
+		</div>
+		</div>
 
 
 		<!-- Row n:  Page footer -->		
