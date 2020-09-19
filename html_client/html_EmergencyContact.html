@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html>
-<head>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <style>
 
+/* Define style colors */
 :root {
   --deep-blue-color: #52658F;
-  --gold-color: #F7C331;
+  --gold-color: #F7C331;  
   --light-blue-color: #CAEBF2;
   }
 
-/*Allows to include the padding and border in an element's total width and height*/
+/*Allows to include the padding and border in an element's total width and height*/  
 *{
   box-sizing: border-box;
 }
@@ -26,50 +27,22 @@
 /*FIGURE OUT WHAT THIS MEANS*/
 [class*="col-"] {
   float: left;
-  padding-left: 30px;
 }
 
+/* Font style */
 html {
   font-family: "Arial", sans-serif;
 }
 
-/*this is the container that holds everything in the "Specify an emergency contact" box */
+/*this is the container that holds everything */
 .container {
   background-color: white;
   border: 2px solid var(--deep-blue-color);
   display: container;
-  max-width: 1000px;
+  /*What is rem?  --> Equal to the computed value of font-size on the root element. When specified on the font-size property of the root element, the rem units refer to the propertyâ€™s initial value.*/
+  max-width: 70rem;
   margin: auto;
   padding: 0px;
-}
-
-.header {
-  background-color: var(--deep-blue-color);
-  color: white;
-  text-align: center;
-  padding: 5px;
-}
-
-.footer {
-  background-color: var(--gold-color);
-  color: var(--deep-blue-color);
-/*  text-align: center; */
-  font-size: 12px;
-  padding: 15px;
-}
-
-/* Previous button position*/
-.bottomleft {
-	position: absolute;
-    bottom: 197px;
-    left: 12px;
-}
-
-/* Next button position*/
-.bottomright {
-	position: absolute;
-    bottom: 197px;
-    right: 12px;
 }
 
 /* Text field style */
@@ -116,7 +89,7 @@ select:focus {
   border-bottom-color: var(--deep-blue-color);
 }
 
-/*RESPONSIVE WEB DESIGN*/
+/*RESPONSIVE WEB DESIGN...need to learn more*/
 /* For mobile phones: */
 [class*="col-"] {
   width: 100%;
@@ -156,19 +129,64 @@ select:focus {
 </head>
 
 <body>
-<!-- Page heading -->
-<h3 style="text-align:center">COVID-19 Vaccination Registration</h3>
-<p style="text-align:center"><label style="font-size:14px;color:var(--deep-blue-color)">The following questions are required prior to receiving vaccination.</p>
+	<!-- Page heading -->
+	<h3 style="text-align:center">COVID-19 Vaccination Registration</h3>
+	<p style="text-align:center">The following questions are required prior to receiving vaccination.</p>
 
-<!-- Start of the container box -->
-<div class="container">
+	<!-- Start of the container box -->
+	<div class="container">
+	
+		<!-- Row 1:  placeholder for the progress bar -->
+		<div class="row">
+		<div class="col-12 col-s-12">
+		
+	  <div id="progress" class="row flex-center relative">
+      <div id="progress-line"> </div>
+      <div class="col-1">
+        <img src="./completedPageIndicator.png" />
+      </div>
+      <div class="col-1">
+        <img src="./completedPageIndicator.png" />
+      </div>
+      <div class="col-1">
+        <img src="./completedPageIndicator.png" />
+      </div>
+      <div class="col-1">
+        <img src="./completedPageIndicator.png" />
+      </div>
+      <div class="col-1">
+        <img src="./completedPageIndicator.png" />
+      </div>
+      <div class="col-1">
+        <img src="./currentPageIndicator.png" />
+      </div>
+      <div class="col-1">
+        <img src="./futurePageIndicator.png" />
+      </div>
+      <div class="col-1">
+        <img src="./futurePageIndicator.png" />
+      </div>
+      <div class="col-1">
+        <img src="./futurePageIndicator.png" />
+      </div>
+		</div>
+		
+		
+		<!-- Row 2:  Page title bar -->
+		<div class="row">
+		<div class="col-12 col-s-12">
+		<h1 style="
+		background-color: var(--deep-blue-color);
+		color: white;
+		text-align: center;
+		font-size: 24px;
+		padding: 10px;
+		">Specify an emergency contact</h1>
+		</div>
+		</div>
 
- <!--  Title bar -->
- <div class="header">
- <h1>Specify an emergency contact</h1>
- </div>
 
- <!--  First row of inputs - the row is split into 2 columns, each occupying 41.66% of the horizontal space (see above definition for col-5 and col-s-5) -->
+	 <!-- Row 3: First row of inputs - Last Name and First Name (row is split into 2 columns, each occupying 41.66% of the horizontal space) -->
  <div class="row">
   <div class="col-5 col-s-5">
    <p align="left"> <label for="lastName" style="font-size:14px;color:var(--deep-blue-color)"> Last Name </label>
@@ -206,14 +224,18 @@ select:focus {
  </div>
 </div>
 
-<!-- Next & Previous buttons -->
-<div class="footer">
-<div class="bottomleft"> <button type="button" style="font-size:24px;color:var(--deep-blue-color);background-color:var(--gold-color);border:none" ><i class= 'fas fa-angle-left' style='font-size:24px;color:var(--deep-blue-color)'></i> Previous  </button> </div>
 
-
-<div class="bottomright"> <button type="button" style="font-size:24px;color:var(--deep-blue-color);background-color:var(--gold-color);border:none" >Next  <i class='fas fa-angle-right' style='font-size:24px;color:var(--deep-blue-color)'></i></button>
-</div>
-</div>
-
-</body>
-</html>
+		<!-- Row n:  Page footer -->		
+		<div class="row">
+		<!-- Previous button:  left aligned -->
+		<div class="col-6 col-s-6" style="background-color: var(--gold-color);text-align:left">
+			<button type="button" style="font-size:18px;color:var(--deep-blue-color);background-color:var(--gold-color);border:none"><i class="fas fa-angle-left" style="font-size:18px;color:var(--deep-blue-color)" aria-hidden="true"></i> Previous  </button>
+		</div>
+		
+		<!-- Next button:  right aligned -->
+		<div class="col-6 col-s-6" style="background-color: var(--gold-color);text-align:right">
+			<button type="button" style="font-size:18px;color:var(--deep-blue-color);background-color:var(--gold-color);border:none;">Next  <i class="fas fa-angle-right" style="font-size:18px;color:var(--deep-blue-color)" aria-hidden="true"></i></button>
+		</div>
+		</div>
+	</div>
+</body></html>
