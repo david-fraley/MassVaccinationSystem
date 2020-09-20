@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+		<link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media"all">
+		
+		<style>
+		
+			/* Define style colors */
+			:root {
+			--deep-blue-color: #52658F;
+			--gold-color: #F7C331;  
+			--light-blue-color: #CAEBF2;
+			}
+
+			/*FIGURE OUT WHAT THIS MEANS*/  
+			*{
+			  box-sizing: border-box;
+			}
+
+			/*FIGURE OUT WHAT THIS MEANS*/
+			.row::after {
+				content: "";
+				clear: both;
+				display: table;
+			  }
+
+			/*FIGURE OUT WHAT THIS MEANS*/
+			[class*="col-"] {
+			  float: left;
+			}
+
+			/* Font style */
+			html {
+				font-family: "Arial", sans-serif;
+			}
+
+		/*this is the container that holds everything */
+		.container {
+			background-color: white;
+			border: 2px solid var(--deep-blue-color);
+			display: container;
+			/*What is rem?  --> Equal to the computed value of font-size on the root element. When specified on the font-size property of the root element, the rem units refer to the property’s initial value.*/
+			max-width: 70rem;
+			margin: auto;
+			padding: 0px;
+		}
+
+		/*RESPONSIVE WEB DESIGN...need to learn more*/
+		/* For mobile phones: */
+		[class*="col-"] {
+			width: 100%;
+		}
+
+		@media only screen and (min-width: 600px) {
+		/* For tablets: */
+		  .col-s-1 {width: 8.33%;}
+		  .col-s-2 {width: 16.66%;}
+		  .col-s-3 {width: 25%;}
+		  .col-s-4 {width: 33.33%;}
+		  .col-s-5 {width: 41.66%;}
+		  .col-s-6 {width: 50%;}
+		  .col-s-7 {width: 58.33%;}
+		  .col-s-8 {width: 66.66%;}
+		  .col-s-9 {width: 75%;}
+		  .col-s-10 {width: 83.33%;}
+		  .col-s-11 {width: 91.66%;}
+		  .col-s-12 {width: 100%;}
+		}
+		@media only screen and (min-width: 768px) {
+		  /* For desktop: */
+		  .col-1 {width: 8.33%;}
+		  .col-2 {width: 16.66%;}
+		  .col-3 {width: 25%;}
+		  .col-4 {width: 33.33%;}
+		  .col-5 {width: 41.66%;}
+		  .col-6 {width: 50%;}
+		  .col-7 {width: 58.33%;}
+		  .col-8 {width: 66.66%;}
+		  .col-9 {width: 75%;}
+		  .col-10 {width: 83.33%;}
+		  .col-11 {width: 91.66%;}
+		  .col-12 {width: 100%;}
+		}
+
+    </style>
+  </head>
+  <body>
+  <!-- Page Heading -->
+  <h3 style="text-align:center">COVID-19 Vaccination Registration</h3>
+  <p style="text-align:center">The following questions are required prior to receiving vaccination.</p>
+  <!-- Start of the container box -->
+  <div class="container">
+	<!-- Progress Bar -->
+	<div id="progress" class="row flex-center relative">
+		<div id="progress-line"> </div>
+
+	 </div>
+	 <div class="row">
+		<div class="col-12 col-s-12">
+			<h1 style="
+					background-color: var(--deep-blue-color);
+					color: white;
+					text-align: center;
+					font-size: 24px;
+				margin: 0px;
+					padding: 10px;
+					">Enter your contact information</h1>
+		</div>
+	  </div>
+	  
+	  <!-- Row 3: This is where the content of the page owuld bein to be populated -->
+	  <div class="row"
+		<p style="text-align:center">Contact Info Content Here</p>
+	  </div>
+	  <!-- Row n: Page footer -->
+	  <div class="row">
+		<!-- Previous button:  left aligned -->
+		<div class="col-6 col-s-6" style="background-color: var(--gold-color);text-align:left">
+			<button type="button" style="font-size:18px;color:var(--deep-blue-color);background-color:var(--gold-color);border:none"><i class="fas fa-angle-left" style="font-size:18px;color:var(--deep-blue-color)" aria-hidden="true"></i> Previous  </button>
+		</div>
+		
+		<!-- Next button:  right aligned -->
+		<div class="col-6 col-s-6" style="background-color: var(--gold-color);text-align:right">
+			<button type="button" style="font-size:18px;color:var(--deep-blue-color);background-color:var(--gold-color);border:none;">Next  <i class="fas fa-angle-right" style="font-size:18px;color:var(--deep-blue-color)" aria-hidden="true"></i></button>
+		</div>
+	  </div>
+	 </body>
+   </html>
+		
+				
+					
