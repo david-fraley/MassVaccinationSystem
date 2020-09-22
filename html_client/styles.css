@@ -54,11 +54,26 @@ html {
   color: var(--deep-blue-color);
   text-align: center;
 }
+#info {
+  margin: 10px;
+}
 #info > div > h2 {
   color: var(--deep-blue-color);
 }
+#info > div > p {
+  margin: 5px;
+}
+#info > div > div > p {
+  margin: 8px;
+}
 #info > div > div > h2 {
   color: var(--deep-blue-color);
+}
+#info-personal {
+  padding: 10px;
+}
+#personal > div > img {
+  padding-right: 10px;
 }
 /* -- CSS for the Progress Bar -*/
 img {
