@@ -22,6 +22,10 @@
   float: left;
 }
 
+.floatL {
+  float: left;
+}
+
 /* Font style */
 html {
   font-family: "Arial", sans-serif;
@@ -51,6 +55,9 @@ html {
   text-align: center;
 }
 #info > div > h2 {
+  color: var(--deep-blue-color);
+}
+#info > div > div > h2 {
   color: var(--deep-blue-color);
 }
 /* -- CSS for the Progress Bar -*/
