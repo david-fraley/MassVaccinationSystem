@@ -37,6 +37,22 @@ html {
   margin: auto;
   padding: 0px;
 }
+
+.prompt-title {
+  background-color: var(--deep-blue-color);
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  margin: 0px;
+  padding: 10px;
+}
+.prompt-info {
+  color: var(--deep-blue-color);
+  text-align: center;
+}
+#info > div > h2 {
+  color: var(--deep-blue-color);
+}
 /* -- CSS for the Progress Bar -*/
 img {
   height: auto;
@@ -58,7 +74,7 @@ img {
   height: 3px;
   background-color: grey;
 }
-#progress > .col-1 {
+#progress > .col-2 {
   justify-content: center;
   display: flex;
   z-index: 1;
