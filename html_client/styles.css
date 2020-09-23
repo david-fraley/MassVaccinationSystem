@@ -75,6 +75,10 @@ html {
 #personal > div > img {
   padding-right: 10px;
 }
+
+.footer-arrow {
+  height: 20px;
+}
 /* -- CSS for the Progress Bar -*/
 img {
   height: auto;
