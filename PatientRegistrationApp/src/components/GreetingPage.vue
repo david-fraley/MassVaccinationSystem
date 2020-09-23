@@ -7,7 +7,10 @@
 			justify="center"
 		>
 		
-			<v-col class="d-flex" cols="10" sm="10">
+			<v-col 
+				class="d-flex" 
+				cols="9" 
+				sm="9">
 				<v-select
 					:items="items"
 					label="Please select your preferred language"
@@ -22,9 +25,9 @@
 		>
 		
 			<v-col 
-				class="d-flex" 
-				cols="12" 
-				sm="6"
+				class="d-flex flex-wrap" 
+				cols="9" 
+				sm="9"
 			>
 				
 				<v-tooltip top>
@@ -45,13 +48,8 @@
 					<span>Register yourself!</span>
 				</v-tooltip>
 				
-			</v-col>
-
-			<v-col 
-				class="d-flex" 
-				cols="12" 
-				sm="6"
-			>
+				<v-spacer></v-spacer>
+				
 				<v-tooltip top>
 					<template v-slot:activator="{on, attrs}">
 						<v-btn 
