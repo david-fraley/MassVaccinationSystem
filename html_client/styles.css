@@ -26,6 +26,14 @@
   float: left;
 }
 
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 /* Font style */
 html {
   font-family: "Arial", sans-serif;
@@ -76,8 +84,21 @@ html {
   padding-right: 10px;
 }
 
+footer {
+  padding: 10px;
+  position: relative;
+}
+
 .footer-arrow {
   height: 20px;
+}
+
+#footer-arrow-l {
+  left: 1px;
+}
+
+#footer-arrow-r {
+  right: 1px;
 }
 /* -- CSS for the Progress Bar -*/
 img {
