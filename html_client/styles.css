@@ -1,0 +1,167 @@
+/* Define style colors */
+:root {
+  --deep-blue-color: #52658F;
+  --gold-color: #F7C331;  
+  --light-blue-color: #CAEBF2;
+  }
+
+/*FIGURE OUT WHAT THIS MEANS*/  
+*{
+  box-sizing: border-box;
+}
+
+/*FIGURE OUT WHAT THIS MEANS*/
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/*FIGURE OUT WHAT THIS MEANS*/
+[class*="col-"] {
+  float: left;
+}
+
+.floatL {
+  float: left;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+/* Font style */
+html {
+  font-family: "Arial", sans-serif;
+}
+
+/*this is the container that holds everything */
+.container {
+  background-color: white;
+  border: 2px solid var(--deep-blue-color);
+  display: container;
+  /*What is rem?  --> Equal to the computed value of font-size on the root element. When specified on the font-size property of the root element, the rem units refer to the property’s initial value.*/
+  max-width: 70rem;
+  margin: auto;
+  padding: 0px;
+}
+
+.prompt-title {
+  background-color: var(--deep-blue-color);
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  margin: 0px;
+  padding: 10px;
+}
+.prompt-info {
+  color: var(--deep-blue-color);
+  text-align: center;
+}
+#info {
+  margin: 10px;
+}
+#info > div > h2 {
+  color: var(--deep-blue-color);
+}
+#info > div > p {
+  margin: 5px;
+}
+#info > div > div > p {
+  margin: 8px;
+}
+#info > div > div > h2 {
+  color: var(--deep-blue-color);
+}
+#info-personal {
+  padding: 10px;
+}
+#personal > div > img {
+  padding-right: 10px;
+}
+
+footer {
+  padding: 10px;
+  position: relative;
+}
+
+.footer-arrow {
+  height: 20px;
+}
+
+#footer-arrow-l {
+  left: 1px;
+}
+
+#footer-arrow-r {
+  right: 1px;
+}
+/* -- CSS for the Progress Bar -*/
+img {
+  height: auto;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+.relative {
+  position: relative;  
+}
+#progress {
+  margin: 10px;
+}
+#progress-line {
+  position: absolute;
+  top: 30px;
+  width: 67%;
+  height: 3px;
+  background-color: grey;
+}
+#progress > .col-2 {
+  justify-content: center;
+  display: flex;
+  z-index: 1;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+/* --          ------------------- - */
+/*RESPONSIVE WEB DESIGN...need to learn more*/
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+  /* For tablets: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%; margin-top: auto;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
