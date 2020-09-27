@@ -1,12 +1,9 @@
 <template>
 
   <v-app id="Patient-registration">
-  
+ 
     <v-main>
-		<v-container
-			class="fill-height"
-			fluid
-		>
+		<v-container bg fill-height grid-list-md text-xs-center>
 			<v-row
 				align="center"
 				justify="center"
@@ -18,23 +15,21 @@
 						class="elevation-12" 
 						min-width="400"
 						max-width="1000"
-					>
+					> 
 						<v-toolbar
-							color="primary"
-							dark
-							flat
+							color="blue darken-4"
+							
 						>
-							<v-toolbar-title>COVID-19 Vaccination Registration</v-toolbar-title>
-						</v-toolbar>
-						
+						<v-toolbar-title primary-title class="grey--text text--lighten-5">COVID-19 Vaccination Registration</v-toolbar-title>
+						</v-toolbar>						
 						<v-form class ="grey lighten-5">
 							<GreetingPage/>
 						</v-form>
 						
-						<v-card-actions>
+						<v-card-actions> 
 							<v-icon
 								large
-								color="secondary"
+								color="#FDD835"
 								@click="previous"
 							>
 								mdi-chevron-left
@@ -44,7 +39,7 @@
 							
 							<v-icon
 								large
-								color="secondary"
+								color="#FDD835"
 								@click="next"
 							>
 								mdi-chevron-right
