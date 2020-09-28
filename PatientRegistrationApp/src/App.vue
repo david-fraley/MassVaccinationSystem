@@ -10,17 +10,16 @@
 				min-width="400"
 				max-width="1000"
 			>
-				
+				<!--the v-stepper is the progress bar along the top of the container-->
 				<v-stepper 
 					v-model="page"
-				>
-				
+				>	
 					<v-stepper-header>
-					
 						<!-- Greeting Page -->
 						<v-stepper-step
 							:complete="page > 1"
 							step="1"
+							color="accent"
 						></v-stepper-step>
 						
 						<v-divider></v-divider>
@@ -29,6 +28,7 @@
 						<v-stepper-step
 							:complete="page > 2"
 							step="2"
+							color="accent"
 						></v-stepper-step>
 
 						<v-divider></v-divider>
@@ -37,6 +37,7 @@
 						<v-stepper-step
 							:complete="page > 3"
 							step="3"
+							color="accent"
 						></v-stepper-step>
 
 						<v-divider></v-divider>
@@ -45,6 +46,7 @@
 						<v-stepper-step
 							:complete="page > 4"
 							step="4"
+							color="accent"
 						></v-stepper-step>
 
 						<v-divider></v-divider>
@@ -53,23 +55,27 @@
 						<v-stepper-step
 							:complete="page > 5"
 							step="5"
+							color="accent"
 						></v-stepper-step>
 
 						<v-divider></v-divider>
 
 						<!-- Review and Submit -->
-						<v-stepper-step step="6">
-						</v-stepper-step>
+						<v-stepper-step 
+							step="6"
+							color="accent"
+						></v-stepper-step>
 					</v-stepper-header>
 					
 					<v-toolbar
 						color="primary"
 						dark
-						flat
 					>
-					<v-toolbar-title>COVID-19 Vaccination Registration</v-toolbar-title>
+						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
+						<v-toolbar-title>{{title}}</v-toolbar-title>
 					</v-toolbar>			
 					
+					<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
 					<v-stepper-items>
 						
 						<!-- Greeting Page -->
@@ -79,11 +85,8 @@
 							>							
 								<GreetingPage/>
 							</v-card>
-				
-							<v-card-actions>
-																
+							<v-card-actions>								
 								<v-spacer></v-spacer>
-								
 								<v-icon
 									large
 									color="secondary"
@@ -96,12 +99,16 @@
 						
 						<!-- Home Address -->
 						<v-stepper-content step="2">
+							<v-toolbar
+								flat
+							>
+								<v-toolbar-title>Enter your home address</v-toolbar-title>
+							</v-toolbar>
 							<v-card
 								flat
 							>
-								<!-- placeholder -->
-							</v-card>
-							
+								<SinglePatientHomeAddress/>
+							</v-card>				
 							<v-card-actions>
 								<v-icon
 									large
@@ -110,9 +117,7 @@
 								>
 									mdi-chevron-left
 								</v-icon>
-								
 								<v-spacer></v-spacer>
-								
 								<v-icon
 									large
 									color="secondary"
@@ -125,12 +130,16 @@
 						
 						<!-- Contact Info -->
 						<v-stepper-content step="3">
+							<v-toolbar
+								flat
+							>
+								<v-toolbar-title>Enter your contact information</v-toolbar-title>
+							</v-toolbar>
 							<v-card
 								flat
 							>
-								<!-- placeholder -->
+								<SinglePatientContactInfo/>
 							</v-card>
-							
 							<v-card-actions>
 								<v-icon
 									large
@@ -139,9 +148,7 @@
 								>
 									mdi-chevron-left
 								</v-icon>
-								
 								<v-spacer></v-spacer>
-								
 								<v-icon
 									large
 									color="secondary"
@@ -154,12 +161,16 @@
 						
 						<!-- Personal Info -->
 						<v-stepper-content step="4">
+							<v-toolbar
+								flat
+							>
+								<v-toolbar-title>Enter your personal information</v-toolbar-title>
+							</v-toolbar>
 							<v-card
 								flat
 							>
-								<!--placeholder-->
-							</v-card>
-							
+								<SinglePatientPersonalInfo/>
+							</v-card>							
 							<v-card-actions>
 								<v-icon
 									large
@@ -168,9 +179,7 @@
 								>
 									mdi-chevron-left
 								</v-icon>
-								
 								<v-spacer></v-spacer>
-								
 								<v-icon
 									large
 									color="secondary"
@@ -183,12 +192,16 @@
 						
 						<!-- Emergency Contact -->
 						<v-stepper-content step="5">
+							<v-toolbar
+								flat
+							>
+								<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
+							</v-toolbar>
 							<v-card
 								flat
 							>
-								<!-- placeholder -->
+								<SinglePatientEmergencyContact/>
 							</v-card>
-							
 							<v-card-actions>
 								<v-icon
 									large
@@ -197,9 +210,7 @@
 								>
 									mdi-chevron-left
 								</v-icon>
-								
 								<v-spacer></v-spacer>
-								
 								<v-icon
 									large
 									color="secondary"
@@ -212,12 +223,16 @@
 						
 						<!-- Review and Submit -->
 						<v-stepper-content step="6">
+							<v-toolbar
+								flat
+							>
+								<v-toolbar-title>Review and submit registration</v-toolbar-title>
+							</v-toolbar>
 							<v-card
 								flat
 							>
-								<!-- placeholder -->
+								<SinglePatientReviewSubmit/>
 							</v-card>
-							
 							<v-card-actions>
 								<v-icon
 									large
@@ -226,9 +241,7 @@
 								>
 									mdi-chevron-left
 								</v-icon>
-								
 								<v-spacer></v-spacer>
-								
 								<v-btn
 									large
 									color="secondary"
@@ -238,7 +251,7 @@
 								</v-btn>
 							</v-card-actions>
 						</v-stepper-content>
-						
+
 					</v-stepper-items>
 				</v-stepper>
 			</v-card>
@@ -250,20 +263,17 @@
 
 <script>
 import GreetingPage from './components/GreetingPage';
+import SinglePatientHomeAddress  from './components/SinglePatientHomeAddress';
+import SinglePatientContactInfo from './components/SinglePatientContactInfo';
+import SinglePatientPersonalInfo from './components/SinglePatientPersonalInfo';
+import SinglePatientEmergencyContact from './components/SinglePatientEmergencyContact';
+import SinglePatientReviewSubmit from './components/SinglePatientReviewSubmit';
 
 
 export default {
 	name: 'App',
 	methods: 
 	{
-		next() 
-		{
-			alert('You clicked next!')
-		},
-		previous() 
-		{
-			alert('You clicked previous!')
-		},
 		submit()
 		{
 			alert('You clicked submit!')
@@ -272,11 +282,17 @@ export default {
   components: 
   {
 	GreetingPage,
+	SinglePatientPersonalInfo,
+	SinglePatientHomeAddress,
+	SinglePatientContactInfo,
+	SinglePatientEmergencyContact,
+	SinglePatientReviewSubmit,
   },
 
   data () {
 	return {
 		page: 1,
+		title: 'COVID-19 Vaccination Registration',
 		}
 	},
   }
