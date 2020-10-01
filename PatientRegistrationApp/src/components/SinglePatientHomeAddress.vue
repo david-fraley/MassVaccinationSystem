@@ -1,11 +1,6 @@
 
 <template>
 	<v-container fluid>
-	
-		<v-row
-			align="center"
-			justify="center"
-		>
 		<v-row>
 		<v-col
         cols="12"
