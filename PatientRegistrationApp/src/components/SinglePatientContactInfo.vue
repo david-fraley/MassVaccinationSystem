@@ -67,9 +67,8 @@ export default {
       phonetype: ["Cell", "Landline", "Other"],
       radios: "May we contact you for a follow up vaccination?",
       emailRules: [
-        (v) => !!v || "E-mail is required",
         (v) =>
-          /.+@.+\..+/.test(v) ||
+          /^[\s]*$|.+@.+\..+/.test(v) ||
           "E-mail must be in the format example@example.com",
       ],
     };
