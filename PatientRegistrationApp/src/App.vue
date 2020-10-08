@@ -121,13 +121,12 @@
 								<v-icon
 									large
 									color="secondary"
-									@click="page=3"
+									@click="y = confirmForm(); if (y == 1) page=3;"
 								>
 									mdi-chevron-right
 								</v-icon>
 							</v-card-actions>
 						</v-stepper-content>
-						
 						<!-- Contact Info -->
 						<v-stepper-content step="3">
 							<v-toolbar
@@ -272,8 +271,60 @@ import SinglePatientReviewSubmit from './components/SinglePatientReviewSubmit';
 
 export default {
 	name: 'App',
-	methods: 
-	{
+	methods: {
+	
+		confirmForm() {
+			var valid = true
+			var message = "Woops! You need to enter the following fields:"
+			
+			var a = document.getElementById("addr")
+			a.required = true
+			if (a.value == "") {
+				message += " *address"
+				valid = false
+			}
+			
+		var b = document.getElementById("city")
+			b.required = true
+			if (b.value == "") {
+				message += " *city"
+				valid = false
+			}
+			
+		var c = document.getElementById("state")
+			c.required = true
+			if (c.value == "") {
+				message += " *state"
+				valid = false
+			}
+			
+		var d = document.getElementById("county")
+			d.required = true
+			if (d.value == "") {
+				message += " *county"
+				valid = false
+			}
+			
+		var e = document.getElementById("country")
+			e.required = true
+			if (e.value == "") {
+				message += " *country"
+				valid = false
+			}
+			
+		var f = document.getElementById("zipcode")
+			f.required = true
+			if (f.value == "") {
+				message += " *zipcode"
+				valid = false
+			}
+
+		if (valid == false) {
+			alert(message)
+			return -1
+		}
+		return 1
+},
 		submit()
 		{
 			alert('You clicked submit!')
@@ -295,6 +346,6 @@ export default {
 		title: 'COVID-19 Vaccination Registration',
 		}
 	},
-  }
-
+  
+}
 </script>

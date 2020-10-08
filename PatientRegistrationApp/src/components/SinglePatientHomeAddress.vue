@@ -7,6 +7,7 @@
         sm="6"
         md="3">
 			<v-text-field
+			id = "addr"
 			:rules="['Required']"
             label="Home Address"
 			placeholder="1234 Right Lane"
@@ -18,6 +19,7 @@
           sm="4"
           md="3">
 			<v-text-field
+			id = "city"
 			:rules="['Required']"
             label="City"
             placeholder="Hilltop"
@@ -33,6 +35,7 @@
 				md="3">
 							
 				<v-select
+				id = "state"
 					:rules="['Required']"
 					v-model="e6"
                     :items="state"
@@ -46,6 +49,7 @@
 				sm="4">
 							
 				<v-text-field
+				id = "county"
 					:rules="['Required']"
                     label="County"
 					placeholder="Racine County"
@@ -58,6 +62,7 @@
 				sm="2">
 							
 				<v-select
+				id = "country"
 					:rules="['Required']"
 					v-model="e7"
                     :items="country"
@@ -71,6 +76,7 @@
           md="3"
         >
 			<v-text-field
+			id = "zipcode"
 			:rules="['Required']"
             label="Zipcode"
 			placeholder="534444"
