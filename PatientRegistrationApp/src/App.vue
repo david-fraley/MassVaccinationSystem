@@ -293,7 +293,7 @@ export default {
 			
 		var c = document.getElementById("state")
 			c.required = true
-			if (c.value == "") {
+			if (c.value == "state") {
 				message += " *state"
 				valid = false
 			}
@@ -307,7 +307,7 @@ export default {
 			
 		var e = document.getElementById("country")
 			e.required = true
-			if (e.value == "") {
+			if (e.value == "country") {
 				message += " *country"
 				valid = false
 			}
