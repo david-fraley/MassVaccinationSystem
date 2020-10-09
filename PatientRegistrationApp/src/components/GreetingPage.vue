@@ -29,44 +29,48 @@
 				sm="9"
 			>
 				
-				<v-tooltip top>
-					<template v-slot:activator="{on, attrs}">
-						<v-btn 
-							class="ma-2"
-							outlined 
-							rounded 
-							x-large 
-							color="blue"
-							v-bind="attrs"
-							v-on="on"
-						>
-							<v-icon left style="color:#FDD835;">mdi-account</v-icon>
-							Register myself
-						</v-btn>
-					</template>
-					<span>Register yourself!</span>
-				</v-tooltip>
-				
-				<v-spacer></v-spacer>
-				
-				<v-tooltip top>
-					<template v-slot:activator="{on, attrs}">
-						<v-btn 
-							class="ma-2"
-							outlined 
-							rounded 
-							x-large 
-							color="blue"
-							v-bind="attrs"
-							v-on="on"
-						>
-							<v-icon left style="color:#FDD835;">mdi-account-group</v-icon>
-							Register my household
-						</v-btn>
-					</template>
-					<span>A household is composed of any people who occupy the same given housing unit. If you are planning to register your household, all members must currently be residing in the same address. If members of a household are residing in other housing units, it is necessary to register any given members individually. Max household registration of 20 registrants.</span>
-				</v-tooltip>
-				
+				<v-btn-toggle
+					v-model="text"
+					tile
+					x-large
+					color="primary"
+					group
+				>
+					<v-tooltip top>
+						<template v-slot:activator="{on, attrs}">
+							<v-btn 
+									class="ma-2"
+									outlined 
+									x-large 
+									color="primary"
+									v-bind="attrs"
+									v-on="on"
+									@click="singleRegistration"
+							>
+									<v-icon left color="secondary">mdi-account</v-icon>
+									Register myself
+							</v-btn>
+						</template>
+						<span>Register yourself!</span>
+					</v-tooltip>
+					<v-tooltip top>
+						<template v-slot:activator="{on, attrs}">
+							<v-btn 
+									class="ma-2"
+									outlined 
+									x-large 
+									color="primary"
+									v-bind="attrs"
+									v-on="on"
+									@click="householdRegistration"
+								>
+									<v-icon left color="secondary">mdi-account-group</v-icon>
+									Register my household
+							</v-btn>
+						</template>
+						<span>A household is composed of any people who occupy the same given housing unit. If you are planning to register your household, all members must currently be residing in the same address. If members of a household are residing in other housing units, it is necessary to register any given members individually. Max household registration of 20 registrants.</span>
+					</v-tooltip>
+				</v-btn-toggle>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -79,5 +83,15 @@
 	data: () => ({
 	items: ['English','Spanish'],
 	}),
+	methods: {
+		singleRegistration()
+		{
+			this.$emit("singleRegistration");
+		},
+		householdRegistration()
+		{
+			this.$emit("householdRegistration");
+		}
+	}
   }
 </script>
