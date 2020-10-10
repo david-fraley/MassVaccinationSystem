@@ -1,23 +1,21 @@
-
 <template>
   <v-container fluid>
     <v-row align="center" justify="center">
       <!-- Last name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field
-          label="Last Name"
+        <v-text-field label="Last Name" id="lastName" v-model="lName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
 
       <!-- First name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field label="First Name"></v-text-field>
+        <v-text-field label="First Name" id="firstName" v-model="fName"></v-text-field>
       </v-col>
 
       <!-- Suffix -->
       <v-col class="d-flex" cols="2" sm="2">
-        <v-text-field label="Suffix"></v-text-field>
+        <v-text-field label="Suffix" id="suffix" v-model="suffix"></v-text-field>
       </v-col>
     </v-row>
 
@@ -62,6 +60,7 @@
         <v-select
           :items="gender"
           label="Gender identity"
+          v-model="genderID"
           prepend-icon="mdi-menu-right"
         ></v-select>
       </v-col>
@@ -86,7 +85,7 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Race -->
         <v-select
-          v-model="e6"
+          v-model="raceSelections"
           :items="race"
           label="Race (select all that apply)"
           prepend-icon="mdi-menu-right"
@@ -100,7 +99,7 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Ethnicity -->
         <v-select
-          v-model="e7"
+          v-model="ethnicitySelection"
           :items="ethnicity"
           label="Ethnicity"
           prepend-icon="mdi-menu-right"
@@ -108,10 +107,23 @@
       </v-col>
       <v-spacer></v-spacer>
     </v-row>
+    <v-row>
+      <v-col cols="12" >
+        <v-btn
+            large
+            color="secondary"
+            @click="sendPersonalInfoDataToReviewPage"
+          >
+            Send data
+          </v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
+import EventBus from '../eventBus'
+
 export default {
   data() {
     return {
@@ -131,5 +143,20 @@ export default {
       ],
     };
   },
+  methods: {
+    sendPersonalInfoDataToReviewPage()
+    {
+      const personalInfoPayload = {
+        lName: this.lName,
+        fName: this.fName,
+        suffix: this.suffix,
+        dateOfBirth: this.date,
+        genderID: this.genderID,
+        raceSelections: this.raceSelections,
+        ethnicitySelection: this.ethnicitySelection
+      }
+      EventBus.$emit('DATA_PERSONAL_INFO_PUBLISHED', personalInfoPayload)
+    }
+  }
 };
 </script>
