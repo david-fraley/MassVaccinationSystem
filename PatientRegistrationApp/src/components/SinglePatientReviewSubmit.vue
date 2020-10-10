@@ -60,9 +60,8 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<p>Jones, Mary</p>
-				<p>Phone:</p>
-				<p>Email:</p>
+				<p>{{dataEContact.eContactLastName}}, {{dataEContact.eContactFirstName}}</p>
+				<p>Phone:  {{dataEContact.eContactPhoneNumber}} ({{dataEContact.eContactPhoneNumberType}})</p>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -76,13 +75,20 @@ import EventBus from '../eventBus'
 		return {
 			data:
 			{
-				lName: 'Smith',
-				fName: 'Mary',
+				lName: '',
+				fName: '',
 				suffix: '',
-				dateOfBirth: '1900-01-01',
-				genderID: 'Female',
+				dateOfBirth: '',
+				genderID: '',
 				raceSelections: 'N/A',
 				ethnicitySelection: 'N/A'
+			},
+			dataEContact:
+			{
+				eContactLastName: '',
+				eContactFirstName: '',
+				eContactPhoneNumber: '',
+				eContactPhoneNumberType: ''
 			}	
 		}
 	},
@@ -92,7 +98,7 @@ import EventBus from '../eventBus'
 			this.data = personalInfoPayload
 		},
 		updateEmergencyContactData(emergencyContactPayload) {
-			this.data = emergencyContactPayload
+			this.dataEContact = emergencyContactPayload
 		}
 	},
 	mounted() {
