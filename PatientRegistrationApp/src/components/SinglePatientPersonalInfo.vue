@@ -75,6 +75,7 @@
           :rules="rules"
           accept="image/png, image/jpeg, image/bmp"
           placeholder="Upload a recent photo"
+          v-model="recentPhoto"
           label="Photo"
           prepend-icon="mdi-camera"
         ></v-file-input>
@@ -152,6 +153,7 @@ export default {
         suffix: this.suffix,
         dateOfBirth: this.date,
         genderID: this.genderID,
+        recentPhoto: this.recentPhoto,
         raceSelections: this.raceSelections,
         ethnicitySelection: this.ethnicitySelection
       }

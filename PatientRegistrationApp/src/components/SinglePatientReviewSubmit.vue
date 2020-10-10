@@ -18,11 +18,11 @@
 				</v-img>
 			</v-col>  
 			<v-col cols="8" sm="6">
-				<p>{{data.lName}}, {{data.fName}} {{data.suffix}}</p>
-				<p>DOB:  {{data.dateOfBirth}}</p>
-				<p>Gender ID:  {{data.genderID}}</p>
-				<p>Race:  {{data.raceSelections}}</p>
-				<p>Ethnicity:  {{data.ethnicitySelection}}</p>
+				<p>{{dataPersonalInfo.lName}}, {{dataPersonalInfo.fName}} {{dataPersonalInfo.suffix}}</p>
+				<p>DOB:  {{dataPersonalInfo.dateOfBirth}}</p>
+				<p>Gender ID:  {{dataPersonalInfo.genderID}}</p>
+				<p>Race(s):  {{dataPersonalInfo.raceSelections}}</p>
+				<p>Ethnicity:  {{dataPersonalInfo.ethnicitySelection}}</p>
 			</v-col>
 		</v-row>
 		<v-row>
@@ -33,8 +33,8 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<p>1234 Right Lane</p>
-				<p>Hilltop, Waukesha County, WI, USA, 53444</p>
+				<p>{{dataHomeAddress.streetAddr}}</p>
+				<p>{{dataHomeAddress.cityAddr}}, {{dataHomeAddress.countyAddr}}, {{dataHomeAddress.stateAddr}}, {{dataHomeAddress.countryAddr}}, {{dataHomeAddress.zipAddr}}</p>
 			</v-col>
 		</v-row>
 
@@ -46,9 +46,9 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<p>Phone: </p>
-				<p>E-mail: </p>
-				<p>Follow-up approval: </p>
+				<p>Phone: {{dataContactInfo.contactPhoneNumber}} ({{dataContactInfo.contactPhoneNumberType}})</p>
+				<p>E-mail: {{dataContactInfo.contactEMail}}</p>
+				<p>Follow-up approval: {{dataContactInfo.contactApproval}}</p>
 			</v-col>
 		</v-row>
 
@@ -73,13 +73,14 @@ import EventBus from '../eventBus'
 	export default {
 	data () {
 		return {
-			data:
+			dataPersonalInfo:
 			{
 				lName: '',
 				fName: '',
 				suffix: '',
 				dateOfBirth: '',
 				genderID: '',
+				recentPhoto: '../assets/blankPicture.png',
 				raceSelections: 'N/A',
 				ethnicitySelection: 'N/A'
 			},
@@ -89,16 +90,38 @@ import EventBus from '../eventBus'
 				eContactFirstName: '',
 				eContactPhoneNumber: '',
 				eContactPhoneNumberType: ''
-			}	
+			},
+			dataHomeAddress:
+			{
+				streetAddr: '',
+				cityAddr: '',
+				countyAddr: '',
+				stateAddr: '',
+				countryAddr: '',
+				zipAddr: ''
+			},	
+			dataContactInfo:
+			{
+				contactPhoneNumber: '',
+				contactPhoneNumberType: '',
+				contactEMail: '',
+				contactApproval: ''
+			}
 		}
 	},
 	methods:
 	{
 		updatePersonalInfoData(personalInfoPayload) {
-			this.data = personalInfoPayload
+			this.dataPersonalInfo = personalInfoPayload
 		},
 		updateEmergencyContactData(emergencyContactPayload) {
 			this.dataEContact = emergencyContactPayload
+		},
+		updateHomeAddressData(homeAddressPayload) {
+			this.dataHomeAddress = homeAddressPayload
+		},
+		updateContactInfoData(contactInfoPayload) {
+			this.dataContactInfo = contactInfoPayload
 		}
 	},
 	mounted() {
@@ -107,6 +130,12 @@ import EventBus from '../eventBus'
 		}),
 		EventBus.$on('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', (emergencyContactPayload) => {
 			this.updateEmergencyContactData(emergencyContactPayload)
+		}),
+		EventBus.$on('DATA_ADDRESS_INFO_PUBLISHED', (homeAddressPayload) => {
+			this.updateHomeAddressData(homeAddressPayload)
+		}),
+		EventBus.$on('DATA_CONTACT_INFO_PUBLISHED', (contactInfoPayload) => {
+			this.updateContactInfoData(contactInfoPayload)
 		})
 	}
 }

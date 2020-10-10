@@ -1,4 +1,3 @@
-
 <template>
   <v-container fluid>
     <v-row align="center" justify="center">
@@ -10,6 +9,7 @@
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
+
       <!-- First name -->
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
@@ -28,6 +28,7 @@
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
+
       <!-- Phone Number Type -->
       <v-col class="d-flex" cols="5" sm="3">
         <v-select
@@ -38,6 +39,7 @@
       </v-col>
       <v-col class="d-flex" cols="5" sm="2"> </v-col>
     </v-row>
+
     <v-row>
       <v-col cols="12" >
         <v-btn
@@ -74,6 +76,5 @@ export default {
       EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
     }
   }
-
 };
 </script>
