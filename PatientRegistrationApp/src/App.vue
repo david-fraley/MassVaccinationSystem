@@ -1,126 +1,116 @@
 <template>
 
-  <v-app id="Patient-registration">
-  
+  <v-app id="Patient-registration"> 
     <v-main>
+		
 		<v-container>
-			
-			<v-card 
-				class="elevation-12"
-				min-width="400"
-				max-width="1000"
-			>
-				<!--the v-stepper is the progress bar along the top of the container-->
-				<v-stepper 
-					v-model="page"
-				>	
-					<v-stepper-header>
-						<!-- Greeting Page -->
-						<v-stepper-step
-							:complete="page > 1"
-							step="1"
-							color="accent"
-						></v-stepper-step>
-						
-						<v-divider></v-divider>
-						
-						<!-- Home Address -->
-						<v-stepper-step
-							:complete="page > 2"
-							step="2"
-							color="accent"
-						></v-stepper-step>
+			<v-card class="elevation-12" min-width="400" max-width="1000"> 
+				<v-stepper v-model="page">	
+					<!-- Logic to check if the page is the greeting page; if so, don't show the stepper-header because we don't know how many steps are involved until a registration path is chosen-->
+					<template v-if="page != '1'">
+						<!--Logic to check for the "single patient" registration path-->
+						<template v-if="registrationPath == '1'"> <!--TO DO:  can we set a #DEFINE or equivalent?? -->
+							<!--the v-stepper-header is the progress bar along the top of the container-->
+							<v-stepper-header>
+								<!-- Greeting Page -->
+								<v-stepper-step color="accent"
+									:complete="page > 1"
+									step="1"
+								></v-stepper-step>
+								
+								<v-divider></v-divider>
+								
+								<!-- Home Address -->
+								<v-stepper-step color="accent"
+									:complete="page > 2"
+									step="2"
+								></v-stepper-step>
 
-						<v-divider></v-divider>
-						
-						<!-- Contact Info -->
-						<v-stepper-step
-							:complete="page > 3"
-							step="3"
-							color="accent"
-						></v-stepper-step>
+								<v-divider></v-divider>
+								
+								<!-- Contact Info -->
+								<v-stepper-step color="accent"
+									:complete="page > 3"
+									step="3"
+								></v-stepper-step>
 
-						<v-divider></v-divider>
-						
-						<!-- Personal Info -->
-						<v-stepper-step
-							:complete="page > 4"
-							step="4"
-							color="accent"
-						></v-stepper-step>
+								<v-divider></v-divider>
+								
+								<!-- Personal Info -->
+								<v-stepper-step color="accent"
+									:complete="page > 4"
+									step="4"
+								></v-stepper-step>
 
-						<v-divider></v-divider>
-						
-						<!-- Emergency Contact -->
-						<v-stepper-step
-							:complete="page > 5"
-							step="5"
-							color="accent"
-						></v-stepper-step>
+								<v-divider></v-divider>
+								
+								<!-- Emergency Contact -->
+								<v-stepper-step color="accent"
+									:complete="page > 5"
+									step="5"
+								></v-stepper-step>
 
-						<v-divider></v-divider>
+								<v-divider></v-divider>
 
-						<!-- Review and Submit -->
-						<v-stepper-step 
-							step="6"
-							color="accent"
-						></v-stepper-step>
-					</v-stepper-header>
+								<!-- Review and Submit -->
+								<v-stepper-step color="accent"
+									step="6"
+								></v-stepper-step>
+							</v-stepper-header>
+						</template>
+					</template>
 					
-					<v-toolbar
-						color="primary"
-						dark
-					>
+					<v-toolbar color="primary" dark>
 						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
 						<v-toolbar-title>{{title}}</v-toolbar-title>
 					</v-toolbar>			
 					
 					<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
 					<v-stepper-items>
-						
 						<!-- Greeting Page -->
 						<v-stepper-content step="1">
-							<v-card
-								flat
-							>							
-								<GreetingPage/>
+							<v-card flat>			
+								<!--listen for changes in the button selections-->				
+								<GreetingPage @singleRegistration="setSinglePatientRegistration" @householdRegistration="setHouseholdRegistration"/>
 							</v-card>
 							<v-card-actions>								
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=2"
-								>
-									mdi-chevron-right
-								</v-icon>
+								<!--Logic to check for single patient registration path -->
+								<template v-if="registrationPath == '1'">
+									<v-icon large color="secondary"
+										@click="page=2"
+									>
+										mdi-chevron-right
+									</v-icon>
+								</template>
+								<!--Logic to check for household registration path -->
+								<!-- Just stay on this page for now - until we build the household registration pages -->
+								<template v-if="registrationPath == '2'">
+									<v-icon large color="secondary"
+										@click="page=1" 
+									>
+										mdi-chevron-right
+									</v-icon>
+								</template>
 							</v-card-actions>
 						</v-stepper-content>
 						
 						<!-- Home Address -->
 						<v-stepper-content step="2">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Enter your home address</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
+							<v-card flat>
 								<SinglePatientHomeAddress/>
 							</v-card>				
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=1"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=3"
 								>
 									mdi-chevron-right
@@ -130,28 +120,20 @@
 						
 						<!-- Contact Info -->
 						<v-stepper-content step="3">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Enter your contact information</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
+							<v-card flat>
 								<SinglePatientContactInfo/>
 							</v-card>
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=2"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=4"
 								>
 									mdi-chevron-right
@@ -161,28 +143,20 @@
 						
 						<!-- Personal Info -->
 						<v-stepper-content step="4">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Enter your personal information</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
+							<v-card flat>
 								<SinglePatientPersonalInfo/>
 							</v-card>							
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=3"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=5"
 								>
 									mdi-chevron-right
@@ -192,28 +166,20 @@
 						
 						<!-- Emergency Contact -->
 						<v-stepper-content step="5">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
+							<v-card flat>
 								<SinglePatientEmergencyContact/>
 							</v-card>
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=4"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=6"
 								>
 									mdi-chevron-right
@@ -223,42 +189,32 @@
 						
 						<!-- Review and Submit -->
 						<v-stepper-content step="6">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Review and submit registration</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
+							<v-card flat>
 								<SinglePatientReviewSubmit/>
 							</v-card>
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=5"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-btn
-									large
-									color="secondary"
+								<v-btn large color="secondary"
 									@click="submit"
 								>
 									Submit
 								</v-btn>
 							</v-card-actions>
 						</v-stepper-content>
-
 					</v-stepper-items>
 				</v-stepper>
 			</v-card>
 		</v-container>
 	</v-main>
   </v-app>
-  
 </template>
 
 <script>
@@ -277,7 +233,15 @@ export default {
 		submit()
 		{
 			alert('You clicked submit!')
-		}	
+		},
+		setSinglePatientRegistration()
+		{
+			this.registrationPath = 1;
+		},
+		setHouseholdRegistration()
+		{
+			this.registrationPath = 2;
+		},	
 	},
   components: 
   {
@@ -293,6 +257,7 @@ export default {
 	return {
 		page: 1,
 		title: 'COVID-19 Vaccination Registration',
+		registrationPath: 0
 		}
 	},
   }
