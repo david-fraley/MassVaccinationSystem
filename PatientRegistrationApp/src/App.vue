@@ -4,16 +4,9 @@
   
     <v-main>
 		<v-container>
-			
-			<v-card 
-				class="elevation-12"
-				min-width="400"
-				max-width="1000"
-			>
+			<v-card class="elevation-12" min-width="400" max-width="1000">
 				<!--the v-stepper is the progress bar along the top of the container-->
-				<v-stepper 
-					v-model="page"
-				>	
+				<v-stepper v-model="page">	
 					<v-stepper-header>
 						<!-- Greeting Page -->
 						<v-stepper-step
@@ -67,10 +60,7 @@
 						></v-stepper-step>
 					</v-stepper-header>
 					
-					<v-toolbar
-						color="primary"
-						dark
-					>
+					<v-toolbar color="primary" dark>
 						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
 						<v-toolbar-title>{{title}}</v-toolbar-title>
 					</v-toolbar>			
@@ -80,16 +70,12 @@
 						
 						<!-- Greeting Page -->
 						<v-stepper-content step="1">
-							<v-card
-								flat
-							>							
+							<v-card flat >							
 								<GreetingPage/>
 							</v-card>
 							<v-card-actions>								
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
+								<v-icon large color="secondary"
 									@click="page=2"
 								>
 									mdi-chevron-right
@@ -99,29 +85,21 @@
 						
 						<!-- Home Address -->
 						<v-stepper-content step="2">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat >
 								<v-toolbar-title>Enter your home address</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
-								<SinglePatientHomeAddress/>
+							<v-card flat>
+								<SinglePatientHomeAddress ref="singlepatienthomeaddress"/>
 							</v-card>				
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=1"
+								<v-icon large color="secondary"
+									@click="goToPage(1)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=3"
+								<v-icon large color="secondary"
+									@click="verifySinglePatientHomeAddress"
 								>
 									mdi-chevron-right
 								</v-icon>
@@ -130,29 +108,21 @@
 						
 						<!-- Contact Info -->
 						<v-stepper-content step="3">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Enter your contact information</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
-								<SinglePatientContactInfo/>
+							<v-card flat>
+								<SinglePatientContactInfo ref="singlepatientcontactinfo"/>
 							</v-card>
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=2"
+								<v-icon large color="secondary"
+									@click="goToPage(2)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=4"
+								<v-icon large color="secondary"
+									@click="verifySinglePatientContactInfo"
 								>
 									mdi-chevron-right
 								</v-icon>
@@ -161,29 +131,21 @@
 						
 						<!-- Personal Info -->
 						<v-stepper-content step="4">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Enter your personal information</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
-								<SinglePatientPersonalInfo/>
+							<v-card flat>
+								<SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/>
 							</v-card>							
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=3"
+								<v-icon large color="secondary"
+									@click="goToPage(3)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=5"
+								<v-icon large color="secondary"
+									@click="verifySinglePatientPersonalInfo"
 								>
 									mdi-chevron-right
 								</v-icon>
@@ -192,29 +154,21 @@
 						
 						<!-- Emergency Contact -->
 						<v-stepper-content step="5">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
-								<SinglePatientEmergencyContact/>
+							<v-card flat>
+								<SinglePatientEmergencyContact ref="singlepatientemergencycontact"/>
 							</v-card>
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=4"
+								<v-icon large color="secondary"
+									@click="goToPage(4)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=6"
+								<v-icon large color="secondary"
+									@click="verifySinglePatientEmergencyContact"
 								>
 									mdi-chevron-right
 								</v-icon>
@@ -223,42 +177,32 @@
 						
 						<!-- Review and Submit -->
 						<v-stepper-content step="6">
-							<v-toolbar
-								flat
-							>
+							<v-toolbar flat>
 								<v-toolbar-title>Review and submit registration</v-toolbar-title>
 							</v-toolbar>
-							<v-card
-								flat
-							>
+							<v-card flat>
 								<SinglePatientReviewSubmit/>
 							</v-card>
 							<v-card-actions>
-								<v-icon
-									large
-									color="secondary"
-									@click="page=5"
+								<v-icon large color="secondary"
+									@click="goToPage(5)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
-								<v-btn
-									large
-									color="secondary"
+								<v-btn large color="secondary"
 									@click="submit"
 								>
 									Submit
 								</v-btn>
 							</v-card-actions>
 						</v-stepper-content>
-
 					</v-stepper-items>
 				</v-stepper>
 			</v-card>
 		</v-container>
 	</v-main>
   </v-app>
-  
 </template>
 
 <script>
@@ -272,27 +216,52 @@ import SinglePatientReviewSubmit from './components/SinglePatientReviewSubmit';
 
 export default {
 	name: 'App',
+	components: 
+	{
+		GreetingPage,
+		SinglePatientHomeAddress,
+		SinglePatientContactInfo,
+		SinglePatientPersonalInfo,
+		SinglePatientEmergencyContact,
+		SinglePatientReviewSubmit,
+	},
 	methods: 
 	{
 		submit()
 		{
 			alert('You clicked submit!')
-		}	
+		},
+		goToPage(pageNum)
+		{
+			this.page=pageNum
+		},
+		verifySinglePatientHomeAddress()
+		{
+			this.$refs.singlepatienthomeaddress.sendHomeAddressInfoToReviewPage();
+			this.goToPage(3);
+			//this.$refs.singlepatienthomeaddress.verifyFormContents() ? this.goToPage(3) : this.goToPage(2);
+		},
+		verifySinglePatientContactInfo()
+		{
+			this.$refs.singlepatientcontactinfo.sendContactInfoInfoToReviewPage();
+			this.goToPage(4);
+			//this.$refs.singlepatientcontactinfo.verifyFormContents() ? this.goToPage(4) : this.goToPage(3);
+		},
+		verifySinglePatientPersonalInfo()
+		{
+			this.$refs.singlepatientpersonalinfo.verifyFormContents() ? this.goToPage(5) : this.goToPage(4);
+		},
+		verifySinglePatientEmergencyContact()
+		{
+			this.$refs.singlepatientemergencycontact.sendEmergencyContactInfoToReviewPage();
+			this.goToPage(6);
+			//this.$refs.singlepatientemergencycontact.verifyFormContents() ? this.goToPage(6) : this.goToPage(5);
+		},	
 	},
-  components: 
-  {
-	GreetingPage,
-	SinglePatientPersonalInfo,
-	SinglePatientHomeAddress,
-	SinglePatientContactInfo,
-	SinglePatientEmergencyContact,
-	SinglePatientReviewSubmit,
-  },
-
-  data () {
-	return {
-		page: 1,
-		title: 'COVID-19 Vaccination Registration',
+	data () {
+		return {
+			page: 1,
+			title: 'COVID-19 Vaccination Registration',
 		}
 	},
   }

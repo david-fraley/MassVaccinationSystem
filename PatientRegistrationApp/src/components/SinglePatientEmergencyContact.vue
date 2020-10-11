@@ -39,18 +39,6 @@
       </v-col>
       <v-col class="d-flex" cols="5" sm="2"> </v-col>
     </v-row>
-
-    <v-row>
-      <v-col cols="12" >
-        <v-btn
-            large
-            color="secondary"
-            @click="sendEmergencyContactInfoToReviewPage"
-          >
-            Send data
-          </v-btn>
-      </v-col>
-    </v-row>
   </v-container>
 </template>
 
@@ -75,6 +63,12 @@ export default {
       }
       EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
     }
-  }
+  },
+  verifyFormContents()
+    {
+      //add logic to check form contents
+      this.sendEmergencyContactInfoToReviewPage();
+      return true;
+    }
 };
 </script>

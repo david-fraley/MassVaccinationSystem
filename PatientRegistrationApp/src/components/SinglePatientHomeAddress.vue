@@ -57,17 +57,6 @@
 				></v-checkbox>
 			</v-col>	  		
 		</v-row>
-		<v-row>
-			<v-col cols="12" >
-				<v-btn
-					large
-					color="secondary"
-					@click="sendHomeAddressInfoToReviewPage"
-				>
-					Send data
-				</v-btn>
-			</v-col>
-		</v-row>
 	</v-container>
 </template>
 
@@ -75,7 +64,6 @@
 import EventBus from '../eventBus'
 
   export default {
-    name: 'SinglePatientHomeAddress',
 	data () {
 		return {
 			state:[
@@ -110,6 +98,12 @@ import EventBus from '../eventBus'
 		}
 		EventBus.$emit('DATA_ADDRESS_INFO_PUBLISHED', homeAddressPayload)
 		}
-	}
+	},
+	verifyFormContents()
+    {
+      //add logic to check form contents
+      this.sendHomeAddressInfoToReviewPage();
+      return true;
+    }
   }
 </script>

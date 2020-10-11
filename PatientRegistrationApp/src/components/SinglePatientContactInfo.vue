@@ -1,4 +1,3 @@
-
 <template>
   <v-container fluid>
     <v-row>
@@ -56,17 +55,6 @@
         </v-col>
       </v-radio-group>
     </v-row>
-    <v-row>
-    <v-col cols="12" >
-        <v-btn
-            large
-            color="secondary"
-            @click="sendContactInfoInfoToReviewPage"
-          >
-            Send data
-          </v-btn>
-      </v-col>
-    </v-row>
   </v-container>
 </template>
 
@@ -97,6 +85,12 @@ export default {
       }
       EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)
     }
-  }
+  },
+  verifyFormContents()
+    {
+      //add logic to check form contents
+      this.sendContactInfoInfoToReviewPage();
+      return true;
+    }
 };
 </script>

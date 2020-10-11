@@ -108,17 +108,6 @@
       </v-col>
       <v-spacer></v-spacer>
     </v-row>
-    <v-row>
-      <v-col cols="12" >
-        <v-btn
-            large
-            color="secondary"
-            @click="sendPersonalInfoDataToReviewPage"
-          >
-            Send data
-          </v-btn>
-      </v-col>
-    </v-row>
   </v-container>
 </template>
 
@@ -158,7 +147,13 @@ export default {
         ethnicitySelection: this.ethnicitySelection
       }
       EventBus.$emit('DATA_PERSONAL_INFO_PUBLISHED', personalInfoPayload)
+    },
+    verifyFormContents()
+    {
+      //add logic to check form contents
+      this.sendPersonalInfoDataToReviewPage();
+      return true;
     }
-  }
+  },
 };
 </script>
