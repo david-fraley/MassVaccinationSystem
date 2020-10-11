@@ -83,7 +83,14 @@ import EventBus from '../eventBus'
 		'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
 		],
 			country: ['United States'],
+			streetAddr: '',
+			cityAddr: '',
+			countyAddr: '',
+			stateAddr: '',
+			countryAddr: '',
+			zipAddr: ''
 		}
+		
 	},
 	methods: {
 		sendHomeAddressInfoToReviewPage()
@@ -100,9 +107,9 @@ import EventBus from '../eventBus'
 		},
 		verifyFormContents()
 		{
-		//add logic to check form contents
-		this.sendHomeAddressInfoToReviewPage();
-		return true;
+			//add logic to check form contents
+			this.sendHomeAddressInfoToReviewPage();
+			return true;
 		}
 	},
   }

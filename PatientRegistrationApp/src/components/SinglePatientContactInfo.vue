@@ -72,6 +72,10 @@ export default {
           /^[\s]*$|.+@.+\..+/.test(v) ||
           "E-mail must be in the format example@example.com",
       ],
+      contactPhoneNumber: '',
+      contactPhoneNumberType: '',
+      contactEmail: '',
+      contactApproval: ''
     };
   },
   methods: {

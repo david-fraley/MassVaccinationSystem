@@ -131,6 +131,14 @@ export default {
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
       ],
+      lName: '',
+      fName: '',
+      suffix: '',
+      dateOfBirth: '',
+      genderID: '',
+      recentPhoto: '',
+      raceSelections: '',
+      ethnicitySelection: ''
     };
   },
   methods: {

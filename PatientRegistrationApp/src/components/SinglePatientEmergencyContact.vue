@@ -50,6 +50,10 @@ export default {
   data() {
     return {
       phoneType: ["Cell", "Home"],
+      eContactLastName: '',
+      eContactFirstName: '',
+      eContactPhoneNumber: '',
+      eContactPhoneNumberType: ''
     };
   },
   methods: {
