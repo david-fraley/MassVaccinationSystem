@@ -97,13 +97,13 @@ import EventBus from '../eventBus'
 			zipAddr: this.zipAddr
 		}
 		EventBus.$emit('DATA_ADDRESS_INFO_PUBLISHED', homeAddressPayload)
+		},
+		verifyFormContents()
+		{
+		//add logic to check form contents
+		this.sendHomeAddressInfoToReviewPage();
+		return true;
 		}
 	},
-	verifyFormContents()
-    {
-      //add logic to check form contents
-      this.sendHomeAddressInfoToReviewPage();
-      return true;
-    }
   }
 </script>

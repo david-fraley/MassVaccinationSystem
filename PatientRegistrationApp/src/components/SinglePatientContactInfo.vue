@@ -84,13 +84,13 @@ export default {
         contactApproval: this.contactApproval
       }
       EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)
-    }
-  },
-  verifyFormContents()
+    },
+    verifyFormContents()
     {
       //add logic to check form contents
       this.sendContactInfoInfoToReviewPage();
       return true;
     }
+  },
 };
 </script>

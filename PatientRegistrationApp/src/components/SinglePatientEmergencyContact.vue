@@ -62,13 +62,13 @@ export default {
         eContactPhoneNumberType: this.eContactPhoneNumberType
       }
       EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
-    }
-  },
-  verifyFormContents()
+    },
+    verifyFormContents()
     {
       //add logic to check form contents
       this.sendEmergencyContactInfoToReviewPage();
       return true;
     }
+  },
 };
 </script>

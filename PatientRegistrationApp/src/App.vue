@@ -237,15 +237,11 @@ export default {
 		},
 		verifySinglePatientHomeAddress()
 		{
-			this.$refs.singlepatienthomeaddress.sendHomeAddressInfoToReviewPage();
-			this.goToPage(3);
-			//this.$refs.singlepatienthomeaddress.verifyFormContents() ? this.goToPage(3) : this.goToPage(2);
+			this.$refs.singlepatienthomeaddress.verifyFormContents() ? this.goToPage(3) : this.goToPage(2);
 		},
 		verifySinglePatientContactInfo()
 		{
-			this.$refs.singlepatientcontactinfo.sendContactInfoInfoToReviewPage();
-			this.goToPage(4);
-			//this.$refs.singlepatientcontactinfo.verifyFormContents() ? this.goToPage(4) : this.goToPage(3);
+			this.$refs.singlepatientcontactinfo.verifyFormContents() ? this.goToPage(4) : this.goToPage(3);
 		},
 		verifySinglePatientPersonalInfo()
 		{
@@ -253,9 +249,7 @@ export default {
 		},
 		verifySinglePatientEmergencyContact()
 		{
-			this.$refs.singlepatientemergencycontact.sendEmergencyContactInfoToReviewPage();
-			this.goToPage(6);
-			//this.$refs.singlepatientemergencycontact.verifyFormContents() ? this.goToPage(6) : this.goToPage(5);
+			this.$refs.singlepatientemergencycontact.verifyFormContents() ? this.goToPage(6) : this.goToPage(5);
 		},	
 	},
 	data () {
