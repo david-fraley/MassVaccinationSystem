@@ -1,8 +1,6 @@
 <template>
-
   <v-app id="Patient-registration"> 
     <v-main>
-		
 		<v-container>
 			<v-card class="elevation-12" min-width="400" max-width="1000"> 
 				<v-stepper v-model="page">	
@@ -87,7 +85,7 @@
 								<!-- Just stay on this page for now - until we build the household registration pages -->
 								<template v-if="registrationPath == '2'">
 									<v-icon large color="secondary"
-										@click="page=1" 
+										@click="page=12" 
 									>
 										mdi-chevron-right
 									</v-icon>
@@ -95,7 +93,7 @@
 							</v-card-actions>
 						</v-stepper-content>
 						
-						<!-- Home Address -->
+						<!-- Single Patient: Home Address -->
 						<v-stepper-content step="2">
 							<v-toolbar flat>
 								<v-toolbar-title>Enter your home address</v-toolbar-title>
@@ -118,7 +116,7 @@
 							</v-card-actions>
 						</v-stepper-content>
 						
-						<!-- Contact Info -->
+						<!-- Single Patient: Contact Info -->
 						<v-stepper-content step="3">
 							<v-toolbar flat>
 								<v-toolbar-title>Enter your contact information</v-toolbar-title>
@@ -141,7 +139,7 @@
 							</v-card-actions>
 						</v-stepper-content>
 						
-						<!-- Personal Info -->
+						<!-- Single Patient: Personal Info -->
 						<v-stepper-content step="4">
 							<v-toolbar flat>
 								<v-toolbar-title>Enter your personal information</v-toolbar-title>
@@ -164,7 +162,7 @@
 							</v-card-actions>
 						</v-stepper-content>
 						
-						<!-- Emergency Contact -->
+						<!-- Single Patient: Emergency Contact -->
 						<v-stepper-content step="5">
 							<v-toolbar flat>
 								<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
@@ -187,7 +185,7 @@
 							</v-card-actions>
 						</v-stepper-content>
 						
-						<!-- Review and Submit -->
+						<!-- Single Patient: Review and Submit -->
 						<v-stepper-content step="6">
 							<v-toolbar flat>
 								<v-toolbar-title>Review and submit registration</v-toolbar-title>
@@ -198,6 +196,144 @@
 							<v-card-actions>
 								<v-icon large color="secondary"
 									@click="page=5"
+								>
+									mdi-chevron-left
+								</v-icon>
+								<v-spacer></v-spacer>
+								<v-btn large color="secondary"
+									@click="submit"
+								>
+									Submit
+								</v-btn>
+							</v-card-actions>
+						</v-stepper-content>
+
+						<!-- Household: Register Number of People -->
+						<v-stepper-content step="12">
+							<v-toolbar flat>
+								<v-toolbar-title>Register your household</v-toolbar-title>
+							</v-toolbar>
+							<v-card flat>
+								<HouseholdRegisterNumber/>
+							</v-card>				
+							<v-card-actions>
+								<v-icon large color="secondary"
+									@click="page=1"
+								>
+									mdi-chevron-left
+								</v-icon>
+								<v-spacer></v-spacer>
+								<v-icon large color="secondary"
+									@click="page=13"
+								>
+									mdi-chevron-right
+								</v-icon>
+							</v-card-actions>
+						</v-stepper-content>
+
+						<!-- Household: Address -->
+						<v-stepper-content step="13">
+							<v-toolbar flat>
+								<v-toolbar-title>Enter your household address</v-toolbar-title>
+							</v-toolbar>
+							<v-card flat>
+								<HouseholdHomeAddress/>
+							</v-card>				
+							<v-card-actions>
+								<v-icon large color="secondary"
+									@click="page=12"
+								>
+									mdi-chevron-left
+								</v-icon>
+								<v-spacer></v-spacer>
+								<v-icon large color="secondary"
+									@click="page=14"
+								>
+									mdi-chevron-right
+								</v-icon>
+							</v-card-actions>
+						</v-stepper-content>
+
+						<!-- Household: Contact Info -->
+						<v-stepper-content step="14">
+							<v-toolbar flat>
+								<v-toolbar-title>Enter your household contact information</v-toolbar-title>
+							</v-toolbar>
+							<v-card flat>
+								<HouseholdContactInfo/>
+							</v-card>				
+							<v-card-actions>
+								<v-icon large color="secondary"
+									@click="page=13"
+								>
+									mdi-chevron-left
+								</v-icon>
+								<v-spacer></v-spacer>
+								<v-icon large color="secondary"
+									@click="page=15"
+								>
+									mdi-chevron-right
+								</v-icon>
+							</v-card-actions>
+						</v-stepper-content>
+
+						<!-- Household: Personal Info -->
+						<v-stepper-content step="15">
+							<v-toolbar flat>
+								<v-toolbar-title>Enter your personal information</v-toolbar-title>
+							</v-toolbar>
+							<v-card flat>
+								<HouseholdPersonalInfo_1/>
+							</v-card>				
+							<v-card-actions>
+								<v-icon large color="secondary"
+									@click="page=14"
+								>
+									mdi-chevron-left
+								</v-icon>
+								<v-spacer></v-spacer>
+								<v-icon large color="secondary"
+									@click="page=16"
+								>
+									mdi-chevron-right
+								</v-icon>
+							</v-card-actions>
+						</v-stepper-content>
+
+						<!-- Household: Emergency Contact -->
+						<v-stepper-content step="16">
+							<v-toolbar flat>
+								<v-toolbar-title>Specify your emergency contact</v-toolbar-title>
+							</v-toolbar>
+							<v-card flat>
+								<HouseholdEmergencyContact/>
+							</v-card>				
+							<v-card-actions>
+								<v-icon large color="secondary"
+									@click="page=15"
+								>
+									mdi-chevron-left
+								</v-icon>
+								<v-spacer></v-spacer>
+								<v-icon large color="secondary"
+									@click="page=17"
+								>
+									mdi-chevron-right
+								</v-icon>
+							</v-card-actions>
+						</v-stepper-content>
+
+						<!-- Household: Review and submit -->
+						<v-stepper-content step="17">
+							<v-toolbar flat>
+								<v-toolbar-title>Review and submit registration</v-toolbar-title>
+							</v-toolbar>
+							<v-card flat>
+								<HouseholdReviewSubmit/>
+							</v-card>				
+							<v-card-actions>
+								<v-icon large color="secondary"
+									@click="page=16"
 								>
 									mdi-chevron-left
 								</v-icon>
@@ -224,7 +360,12 @@ import SinglePatientContactInfo from './components/SinglePatientContactInfo';
 import SinglePatientPersonalInfo from './components/SinglePatientPersonalInfo';
 import SinglePatientEmergencyContact from './components/SinglePatientEmergencyContact';
 import SinglePatientReviewSubmit from './components/SinglePatientReviewSubmit';
-
+import HouseholdRegisterNumber from './components/HouseholdRegisterNumber';
+import HouseholdHomeAddress from './components/HouseholdHomeAddress';
+import HouseholdContactInfo from './components/HouseholdContactInfo';
+import HouseholdPersonalInfo_1 from './components/HouseholdPersonalInfo_1';
+import HouseholdEmergencyContact from './components/HouseholdEmergencyContact';
+import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 
 export default {
 	name: 'App',
@@ -251,6 +392,12 @@ export default {
 	SinglePatientContactInfo,
 	SinglePatientEmergencyContact,
 	SinglePatientReviewSubmit,
+	HouseholdRegisterNumber,
+	HouseholdHomeAddress,
+	HouseholdContactInfo,
+	HouseholdPersonalInfo_1,
+	HouseholdEmergencyContact,
+	HouseholdReviewSubmit
   },
 
   data () {
