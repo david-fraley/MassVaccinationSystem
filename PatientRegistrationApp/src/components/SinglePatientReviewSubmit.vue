@@ -5,7 +5,7 @@
 		</v-row>
 		<v-row>
 			<v-col cols="12" sm="6"	md="3">
-				<p class="font-weight-medium primary--text"> Personal information</p>
+				<div class="font-weight-medium primary--text"> Personal information</div>
 			</v-col>
 		</v-row>
 		<v-row>
@@ -18,50 +18,50 @@
 				</v-img>
 			</v-col>  
 			<v-col cols="8" sm="6">
-				<p>{{dataPersonalInfo.lName}}, {{dataPersonalInfo.fName}} {{dataPersonalInfo.suffix}}</p>
-				<p>DOB:  {{dataPersonalInfo.dateOfBirth}}</p>
-				<p>Gender ID:  {{dataPersonalInfo.genderID}}</p>
-				<p>Race(s):  {{dataPersonalInfo.raceSelections}}</p>
-				<p>Ethnicity:  {{dataPersonalInfo.ethnicitySelection}}</p>
+				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.lName}}, {{dataPersonalInfo.fName}} {{dataPersonalInfo.suffix}}</span></div>
+				<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataPersonalInfo.dateOfBirth}}</span></div>
+				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.genderID}}</span></div>
+				<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
+				<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataPersonalInfo.ethnicitySelection}}</span></div>
 			</v-col>
 		</v-row>
 		<v-row>
 			<v-col cols="12" sm="6" md="3">
-				<p class="font-weight-medium primary--text">Home Address </p>
+				<div class="font-weight-medium primary--text">Home Address </div>
 			</v-col>
 		</v-row>
 
 		<v-row>	
 			<v-col cols="12">
-				<p>{{dataHomeAddress.streetAddr}}</p>
-				<p>{{dataHomeAddress.cityAddr}}, {{dataHomeAddress.countyAddr}}, {{dataHomeAddress.stateAddr}}, {{dataHomeAddress.countryAddr}}, {{dataHomeAddress.zipAddr}}</p>
+				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">{{dataHomeAddress.streetAddr}}</span></div>
+				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHomeAddress.cityAddr}}, {{dataHomeAddress.countyAddr}}, {{dataHomeAddress.stateAddr}}, {{dataHomeAddress.countryAddr}}, {{dataHomeAddress.zipAddr}}</span></div>
 			</v-col>
 		</v-row>
 
 		<v-row>
 			<v-col cols="12" sm="6" md="3">
-				<p class="font-weight-medium primary--text"> Contact Information</p>
+				<div class="font-weight-medium primary--text"> Contact Information</div>
 			</v-col>
 		</v-row>
 
 		<v-row>	
 			<v-col cols="12">
-				<p>Phone: {{dataContactInfo.contactPhoneNumber}} ({{dataContactInfo.contactPhoneNumberType}})</p>
-				<p>E-mail: {{dataContactInfo.contactEMail}}</p>
-				<p>Follow-up approval: {{dataContactInfo.contactApproval}}</p>
+				<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.contactPhoneNumber}} ({{dataContactInfo.contactPhoneNumberType}})</span></div>
+				<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.contactEMail}}</span></div>
+				<div class="font-weight-medium">Follow-up approval: <span class="font-weight-regular">{{dataContactInfo.contactApproval}}</span></div>
 			</v-col>
 		</v-row>
 
 		<v-row>	
 			<v-col cols="12" sm="6" md="3">
-				<p class="font-weight-medium primary--text"> Emergency Contact </p>
+				<div class="font-weight-medium primary--text"> Emergency Contact </div>
 			</v-col>
 		</v-row>
 
 		<v-row>	
 			<v-col cols="12">
-				<p>{{dataEContact.eContactLastName}}, {{dataEContact.eContactFirstName}}</p>
-				<p>Phone:  {{dataEContact.eContactPhoneNumber}} ({{dataEContact.eContactPhoneNumberType}})</p>
+				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEContact.eContactLastName}}, {{dataEContact.eContactFirstName}}</span></div>
+				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEContact.eContactPhoneNumber}} ({{dataEContact.eContactPhoneNumberType}})</span></div>
 			</v-col>
 		</v-row>
 	</v-container>
