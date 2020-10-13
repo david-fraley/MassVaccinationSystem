@@ -3,14 +3,14 @@
     <v-row align="center" justify="center">
       <!-- Last name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field label="Last Name" id="lastName" v-model="lName"
+        <v-text-field label="Last Name" id="lastName" v-model="familyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
 
       <!-- First name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field label="First Name" id="firstName" v-model="fName"></v-text-field>
+        <v-text-field label="First Name" id="firstName" v-model="givenName"></v-text-field>
       </v-col>
 
       <!-- Suffix -->
@@ -58,9 +58,9 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Gender identity -->
         <v-select
-          :items="gender"
+          :items="genderID"
           label="Gender identity"
-          v-model="genderID"
+          v-model="gender"
           prepend-icon="mdi-menu-right"
         ></v-select>
       </v-col>
@@ -117,7 +117,7 @@ import EventBus from '../eventBus'
 export default {
   data() {
     return {
-      gender: ["Male", "Female", "Other", "Decline to answer"],
+      genderID: ["Male", "Female", "Other", "Decline to answer"],
       race: [
         "Black or African American",
         "White",
@@ -131,11 +131,11 @@ export default {
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
       ],
-      lName: '',
-      fName: '',
+      familyName: '',
+      givenName: '',
       suffix: '',
-      dateOfBirth: '',
-      genderID: '',
+      birthDate: '',
+      gender: '',
       recentPhoto: '',
       raceSelections: '',
       ethnicitySelection: ''
@@ -145,11 +145,11 @@ export default {
     sendPersonalInfoDataToReviewPage()
     {
       const personalInfoPayload = {
-        lName: this.lName,
-        fName: this.fName,
+        familyName: this.familyName,
+        givenName: this.givenName,
         suffix: this.suffix,
-        dateOfBirth: this.date,
-        genderID: this.genderID,
+        birthDate: this.date,
+        gender: this.gender,
         recentPhoto: this.recentPhoto,
         raceSelections: this.raceSelections,
         ethnicitySelection: this.ethnicitySelection

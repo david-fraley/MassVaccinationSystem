@@ -5,14 +5,14 @@
         <v-text-field
           :rules="['Required']"
           label="Primary Phone Number"
-          v-model="contactPhoneNumber"
+          v-model="phoneNumber"
         ></v-text-field>
       </v-col>
 
       <v-col class="d-flex" cols="6" sm="2">
         <v-select
           :rules="['Required']"
-          v-model="contactPhoneNumberType"
+          v-model="phoneNumberType"
           :items="phonetype"
           label="Phone Type"
         ></v-select>
@@ -33,7 +33,7 @@
         <v-text-field
           :rules="emailRules"
           label="Primary Email Address"
-          v-model="contactEMail"
+          v-model="email"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -46,7 +46,7 @@
 
     <v-row>
       <v-radio-group
-        v-model="contactApproval"
+        v-model="approval"
         label="May we contact you regarding follow up vaccination information?"
       >
         <v-col align="right" cols="3" sm="3" md="3">
@@ -72,20 +72,20 @@ export default {
           /^[\s]*$|.+@.+\..+/.test(v) ||
           "E-mail must be in the format example@example.com",
       ],
-      contactPhoneNumber: '',
-      contactPhoneNumberType: '',
-      contactEmail: '',
-      contactApproval: ''
+      phoneNumber: '',
+      phoneNumberType: '',
+      email: '',
+      approval: ''
     };
   },
   methods: {
     sendContactInfoInfoToReviewPage()
     {
       const contactInfoPayload = {
-        contactPhoneNumber: this.contactPhoneNumber,
-        contactPhoneNumberType: this.contactPhoneNumberType,
-        contactEMail: this.contactEMail,
-        contactApproval: this.contactApproval
+        phoneNumber: this.phoneNumber,
+        phoneNumberType: this.phoneNumberType,
+        email: this.email,
+        approval: this.approval
       }
       EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)
     },

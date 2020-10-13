@@ -18,9 +18,9 @@
 				</v-img>
 			</v-col>  
 			<v-col cols="8" sm="6">
-				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.lName}}, {{dataPersonalInfo.fName}} {{dataPersonalInfo.suffix}}</span></div>
-				<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataPersonalInfo.dateOfBirth}}</span></div>
-				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.genderID}}</span></div>
+				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, {{dataPersonalInfo.givenName}} {{dataPersonalInfo.suffix}}</span></div>
+				<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataPersonalInfo.birthDate}}</span></div>
+				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.gender}}</span></div>
 				<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
 				<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataPersonalInfo.ethnicitySelection}}</span></div>
 			</v-col>
@@ -33,8 +33,8 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">{{dataHomeAddress.streetAddr}}</span></div>
-				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHomeAddress.cityAddr}}, {{dataHomeAddress.countyAddr}}, {{dataHomeAddress.stateAddr}}, {{dataHomeAddress.countryAddr}}, {{dataHomeAddress.zipAddr}}</span></div>
+				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">{{dataHomeAddress.lineAddress}}</span></div>
+				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHomeAddress.cityAddress}}, {{dataHomeAddress.districtAddress}}, {{dataHomeAddress.stateAddress}}, {{dataHomeAddress.countryAddress}}, {{dataHomeAddress.postalCode}}</span></div>
 			</v-col>
 		</v-row>
 
@@ -46,9 +46,9 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.contactPhoneNumber}} ({{dataContactInfo.contactPhoneNumberType}})</span></div>
-				<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.contactEMail}}</span></div>
-				<div class="font-weight-medium">Follow-up approval: <span class="font-weight-regular">{{dataContactInfo.contactApproval}}</span></div>
+				<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.phoneNumber}} ({{dataContactInfo.phoneNumberType}})</span></div>
+				<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.email}}</span></div>
+				<div class="font-weight-medium">Follow-up approval: <span class="font-weight-regular">{{dataContactInfo.approval}}</span></div>
 			</v-col>
 		</v-row>
 
@@ -60,8 +60,8 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEContact.eContactLastName}}, {{dataEContact.eContactFirstName}}</span></div>
-				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEContact.eContactPhoneNumber}} ({{dataEContact.eContactPhoneNumberType}})</span></div>
+				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEmergencyContact.contactFamilyName}}, {{dataEmergencyContact.contactGivenName}}</span></div>
+				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEmergencyContact.contactPhoneNumber}} ({{dataEmergencyContact.contactPhoneNumberType}})</span></div>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -75,37 +75,37 @@ import EventBus from '../eventBus'
 		return {
 			dataPersonalInfo:
 			{
-				lName: '',
-				fName: '',
+				familyName: '',
+				givenName: '',
 				suffix: '',
-				dateOfBirth: '',
-				genderID: '',
+				birthDate: '',
+				gender: '',
 				recentPhoto: '../assets/blankPicture.png',
 				raceSelections: 'N/A',
 				ethnicitySelection: 'N/A'
 			},
-			dataEContact:
+			dataEmergencyContact:
 			{
-				eContactLastName: '',
-				eContactFirstName: '',
-				eContactPhoneNumber: '',
-				eContactPhoneNumberType: ''
+				contactFamilyName: '',
+				contactGivenName: '',
+				contactPhoneNumber: '',
+				contactPhoneNumberType: ''
 			},
 			dataHomeAddress:
 			{
-				streetAddr: '',
-				cityAddr: '',
-				countyAddr: '',
-				stateAddr: '',
-				countryAddr: '',
-				zipAddr: ''
+				lineAddress: '',
+				cityAddress: '',
+				districtAddress: '',
+				stateAddress: '',
+				countryAddress: '',
+				postalCode: ''
 			},	
 			dataContactInfo:
 			{
-				contactPhoneNumber: '',
-				contactPhoneNumberType: '',
-				contactEMail: '',
-				contactApproval: ''
+				phoneNumber: '',
+				phoneNumberType: '',
+				email: '',
+				approval: ''
 			}
 		}
 	},
@@ -115,7 +115,7 @@ import EventBus from '../eventBus'
 			this.dataPersonalInfo = personalInfoPayload
 		},
 		updateEmergencyContactData(emergencyContactPayload) {
-			this.dataEContact = emergencyContactPayload
+			this.dataEmergencyContact = emergencyContactPayload
 		},
 		updateHomeAddressData(homeAddressPayload) {
 			this.dataHomeAddress = homeAddressPayload

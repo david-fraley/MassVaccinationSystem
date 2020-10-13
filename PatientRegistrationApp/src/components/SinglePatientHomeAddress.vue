@@ -5,7 +5,7 @@
 				<v-text-field
 					:rules="['Required']"
 					label="Home Address"
-					v-model="streetAddr"
+					v-model="lineAddress"
 				></v-text-field>
 			</v-col>
 
@@ -13,7 +13,7 @@
 				<v-text-field
 					:rules="['Required']"
 					label="City"
-					v-model="cityAddr"
+					v-model="cityAddress"
 				></v-text-field>
 			</v-col>
 		</v-row>
@@ -21,7 +21,7 @@
 			<v-col class="d-flex" cols="4" sm="2" md="3">
 				<v-select
 					:rules="['Required']"
-					v-model="stateAddr"
+					v-model="stateAddress"
                     :items="state"
                     label="State"
 				></v-select>
@@ -30,13 +30,13 @@
 				<v-text-field
 					:rules="['Required']"
                     label="County"
-					v-model="countyAddr"
+					v-model="districtAddress"
 				></v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="4" sm="2">
 				<v-select
 					:rules="['Required']"
-					v-model="countryAddr"
+					v-model="countryAddress"
                     :items="country"
                     label="Country"
 				></v-select>
@@ -45,7 +45,7 @@
 				<v-text-field
 					:rules="['Required']"
 					label="Zipcode"
-					v-model="zipAddr"
+					v-model="postalCode"
 				></v-text-field>
 			</v-col>
 		</v-row>	
@@ -83,12 +83,12 @@ import EventBus from '../eventBus'
 		'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
 		],
 			country: ['United States'],
-			streetAddr: '',
-			cityAddr: '',
-			countyAddr: '',
-			stateAddr: '',
-			countryAddr: '',
-			zipAddr: ''
+			lineAddress: '',
+			cityAddress: '',
+			districtAddress: '',
+			stateAddress: '',
+			countryAddress: '',
+			postalCode: ''
 		}
 		
 	},
@@ -96,12 +96,12 @@ import EventBus from '../eventBus'
 		sendHomeAddressInfoToReviewPage()
 		{
 		const homeAddressPayload = {
-			streetAddr: this.streetAddr,
-			cityAddr: this.cityAddr,
-			countyAddr: this.countyAddr,
-			stateAddr: this.stateAddr,
-			countryAddr: this.countryAddr,
-			zipAddr: this.zipAddr
+			lineAddress: this.lineAddress,
+			cityAddress: this.cityAddress,
+			districtAddress: this.districtAddress,
+			stateAddress: this.stateAddress,
+			countryAddress: this.countryAddress,
+			postalCode: this.postalCode
 		}
 		EventBus.$emit('DATA_ADDRESS_INFO_PUBLISHED', homeAddressPayload)
 		},
