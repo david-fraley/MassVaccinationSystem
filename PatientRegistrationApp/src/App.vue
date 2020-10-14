@@ -95,21 +95,21 @@
 						
 						<!-- Single Patient: Home Address -->
 						<v-stepper-content step="2">
-							<v-toolbar flat>
+							<v-toolbar flat >
 								<v-toolbar-title>Enter your home address</v-toolbar-title>
 							</v-toolbar>
 							<v-card flat>
-								<SinglePatientHomeAddress/>
+								<SinglePatientHomeAddress ref="singlepatienthomeaddress"/>
 							</v-card>				
 							<v-card-actions>
 								<v-icon large color="secondary"
-									@click="page=1"
+									@click="goToPage(1)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
 								<v-icon large color="secondary"
-									@click="page=3"
+									@click="verifySinglePatientHomeAddress"
 								>
 									mdi-chevron-right
 								</v-icon>
@@ -122,17 +122,17 @@
 								<v-toolbar-title>Enter your contact information</v-toolbar-title>
 							</v-toolbar>
 							<v-card flat>
-								<SinglePatientContactInfo/>
+								<SinglePatientContactInfo ref="singlepatientcontactinfo"/>
 							</v-card>
 							<v-card-actions>
 								<v-icon large color="secondary"
-									@click="page=2"
+									@click="goToPage(2)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
 								<v-icon large color="secondary"
-									@click="page=4"
+									@click="verifySinglePatientContactInfo"
 								>
 									mdi-chevron-right
 								</v-icon>
@@ -145,17 +145,17 @@
 								<v-toolbar-title>Enter your personal information</v-toolbar-title>
 							</v-toolbar>
 							<v-card flat>
-								<SinglePatientPersonalInfo/>
+								<SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/>
 							</v-card>							
 							<v-card-actions>
 								<v-icon large color="secondary"
-									@click="page=3"
+									@click="goToPage(3)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
 								<v-icon large color="secondary"
-									@click="page=5"
+									@click="verifySinglePatientPersonalInfo"
 								>
 									mdi-chevron-right
 								</v-icon>
@@ -168,17 +168,17 @@
 								<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
 							</v-toolbar>
 							<v-card flat>
-								<SinglePatientEmergencyContact/>
+								<SinglePatientEmergencyContact ref="singlepatientemergencycontact"/>
 							</v-card>
 							<v-card-actions>
 								<v-icon large color="secondary"
-									@click="page=4"
+									@click="goToPage(4)"
 								>
 									mdi-chevron-left
 								</v-icon>
 								<v-spacer></v-spacer>
 								<v-icon large color="secondary"
-									@click="page=6"
+									@click="verifySinglePatientEmergencyContact"
 								>
 									mdi-chevron-right
 								</v-icon>
@@ -195,7 +195,7 @@
 							</v-card>
 							<v-card-actions>
 								<v-icon large color="secondary"
-									@click="page=5"
+									@click="goToPage(5)"
 								>
 									mdi-chevron-left
 								</v-icon>
@@ -375,6 +375,26 @@ export default {
 		{
 			alert('You clicked submit!')
 		},
+		goToPage(pageNum)
+		{
+			this.page=pageNum
+		},
+		verifySinglePatientHomeAddress()
+		{
+			this.$refs.singlepatienthomeaddress.verifyFormContents() ? this.goToPage(3) : this.goToPage(2);
+		},
+		verifySinglePatientContactInfo()
+		{
+			this.$refs.singlepatientcontactinfo.verifyFormContents() ? this.goToPage(4) : this.goToPage(3);
+		},
+		verifySinglePatientPersonalInfo()
+		{
+			this.$refs.singlepatientpersonalinfo.verifyFormContents() ? this.goToPage(5) : this.goToPage(4);
+		},
+		verifySinglePatientEmergencyContact()
+		{
+			this.$refs.singlepatientemergencycontact.verifyFormContents() ? this.goToPage(6) : this.goToPage(5);
+		},	
 		setSinglePatientRegistration()
 		{
 			this.registrationPath = 1;
@@ -382,31 +402,30 @@ export default {
 		setHouseholdRegistration()
 		{
 			this.registrationPath = 2;
-		},	
+		},
 	},
-  components: 
-  {
-	GreetingPage,
-	SinglePatientPersonalInfo,
-	SinglePatientHomeAddress,
-	SinglePatientContactInfo,
-	SinglePatientEmergencyContact,
-	SinglePatientReviewSubmit,
-	HouseholdRegisterNumber,
-	HouseholdHomeAddress,
-	HouseholdContactInfo,
-	HouseholdPersonalInfo_1,
-	HouseholdEmergencyContact,
-	HouseholdReviewSubmit
-  },
-
-  data () {
-	return {
-		page: 1,
-		title: 'COVID-19 Vaccination Registration',
-		registrationPath: 0
-		}
+	components: 
+	{
+		GreetingPage,
+		SinglePatientPersonalInfo,
+		SinglePatientHomeAddress,
+		SinglePatientContactInfo,
+		SinglePatientEmergencyContact,
+		SinglePatientReviewSubmit,
+		HouseholdRegisterNumber,
+		HouseholdHomeAddress,
+		HouseholdContactInfo,
+		HouseholdPersonalInfo_1,
+		HouseholdEmergencyContact,
+		HouseholdReviewSubmit
 	},
+	data () {
+		return {
+			page: 1,
+			title: 'COVID-19 Vaccination Registration',
+			registrationPath: 0
+			}
+		},
   }
 
 </script>

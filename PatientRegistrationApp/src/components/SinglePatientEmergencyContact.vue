@@ -1,4 +1,3 @@
-
 <template>
   <v-container fluid>
     <v-row align="center" justify="center">
@@ -6,12 +5,17 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field
           label="Last Name"
+          v-model="emergencyContactFamilyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
+
       <!-- First name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field label="First Name"></v-text-field>
+        <v-text-field 
+          label="First Name"
+          v-model="emergencyContactGivenName">
+        </v-text-field>
       </v-col>
     </v-row>
 
@@ -20,13 +24,15 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field
           label="Phone Number"
+          v-model="emergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
+
       <!-- Phone Number Type -->
       <v-col class="d-flex" cols="5" sm="3">
         <v-select
-          v-model="e7"
+          v-model="emergencyContactPhoneNumberType"
           :items="phoneType"
           label="Phone Number Type"
         ></v-select>
@@ -37,12 +43,36 @@
 </template>
 
 <script>
+import EventBus from '../eventBus'
+
 export default {
   name: "SinglePatientEmergencyContact",
   data() {
     return {
       phoneType: ["Cell", "Home"],
+      emergencyContactFamilyName: '',
+      emergencyContactGivenName: '',
+      emergencyContactPhoneNumber: '',
+      emergencyContactPhoneNumberType: ''
     };
+  },
+  methods: {
+    sendEmergencyContactInfoToReviewPage()
+    {
+      const emergencyContactPayload = {
+        emergencyContactFamilyName: this.emergencyContactFamilyName,
+        emergencyContactGivenName: this.emergencyContactGivenName,
+        emergencyContactPhoneNumber: this.emergencyContactPhoneNumber,
+        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType
+      }
+      EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
+    },
+    verifyFormContents()
+    {
+      //add logic to check form contents
+      this.sendEmergencyContactInfoToReviewPage();
+      return true;
+    }
   },
 };
 </script>
