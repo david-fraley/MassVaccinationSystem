@@ -5,7 +5,7 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field
           label="Last Name"
-          v-model="contactFamilyName"
+          v-model="emergencyContactFamilyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
@@ -14,7 +14,7 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
           label="First Name"
-          v-model="contactGivenName">
+          v-model="emergencyContactGivenName">
         </v-text-field>
       </v-col>
     </v-row>
@@ -24,7 +24,7 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field
           label="Phone Number"
-          v-model="contactPhoneNumber"
+          v-model="emergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
@@ -32,7 +32,7 @@
       <!-- Phone Number Type -->
       <v-col class="d-flex" cols="5" sm="3">
         <v-select
-          v-model="contactPhoneNumberType"
+          v-model="emergencyContactPhoneNumberType"
           :items="phoneType"
           label="Phone Number Type"
         ></v-select>
@@ -50,20 +50,20 @@ export default {
   data() {
     return {
       phoneType: ["Cell", "Home"],
-      contactFamilyName: '',
-      contactGivenName: '',
-      contactPhoneNumber: '',
-      contactPhoneNumberType: ''
+      emergencyContactFamilyName: '',
+      emergencyContactGivenName: '',
+      emergencyContactPhoneNumber: '',
+      emergencyContactPhoneNumberType: ''
     };
   },
   methods: {
     sendEmergencyContactInfoToReviewPage()
     {
       const emergencyContactPayload = {
-        contactFamilyName: this.contactFamilyName,
-        contactGivenName: this.contactGivenName,
-        contactPhoneNumber: this.contactPhoneNumber,
-        contactPhoneNumberType: this.contactPhoneNumberType
+        emergencyContactFamilyName: this.emergencyContactFamilyName,
+        emergencyContactGivenName: this.emergencyContactGivenName,
+        emergencyContactPhoneNumber: this.emergencyContactPhoneNumber,
+        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType
       }
       EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
     },

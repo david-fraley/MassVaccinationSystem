@@ -5,14 +5,14 @@
         <v-text-field
           :rules="['Required']"
           label="Primary Phone Number"
-          v-model="phoneNumber"
+          v-model="patientPhoneNumber"
         ></v-text-field>
       </v-col>
 
       <v-col class="d-flex" cols="6" sm="2">
         <v-select
           :rules="['Required']"
-          v-model="phoneNumberType"
+          v-model="patientPhoneNumberType"
           :items="phonetype"
           label="Phone Type"
         ></v-select>
@@ -31,16 +31,16 @@
     <v-row>
       <v-col cols="12" sm="6" md="6">
         <v-text-field
-          :rules="emailRules"
-          label="Primary Email Address"
-          v-model="email"
+          :rules="patientEmailRules"
+          label="Primary patientEmail Address"
+          v-model="patientEmail"
         ></v-text-field>
       </v-col>
     </v-row>
     <v-col cols="12" sm="6" md="3">
       <v-checkbox
         v-model="checkbox"
-        label="I have no email address"
+        label="I have no patientEmail address"
       ></v-checkbox>
     </v-col>
 
@@ -67,14 +67,14 @@ export default {
     return {
       phonetype: ["Cell", "Landline", "Other"],
       radios: "May we contact you for a follow up vaccination?",
-      emailRules: [
+      patientEmailRules: [
         (v) =>
           /^[\s]*$|.+@.+\..+/.test(v) ||
           "E-mail must be in the format example@example.com",
       ],
-      phoneNumber: '',
-      phoneNumberType: '',
-      email: '',
+      patientPhoneNumber: '',
+      patientPhoneNumberType: '',
+      patientEmail: '',
       approval: ''
     };
   },
@@ -82,9 +82,9 @@ export default {
     sendContactInfoInfoToReviewPage()
     {
       const contactInfoPayload = {
-        phoneNumber: this.phoneNumber,
-        phoneNumberType: this.phoneNumberType,
-        email: this.email,
+        patientPhoneNumber: this.patientPhoneNumber,
+        patientPhoneNumberType: this.patientPhoneNumberType,
+        patientEmail: this.patientEmail,
         approval: this.approval
       }
       EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)

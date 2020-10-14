@@ -18,7 +18,8 @@
 				</v-img>
 			</v-col>  
 			<v-col cols="8" sm="6">
-				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, {{dataPersonalInfo.givenName}} {{dataPersonalInfo.suffix}}</span></div>
+				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
+					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.suffix}}</span></div>
 				<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataPersonalInfo.birthDate}}</span></div>
 				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.gender}}</span></div>
 				<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
@@ -34,7 +35,8 @@
 		<v-row>	
 			<v-col cols="12">
 				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">{{dataHomeAddress.lineAddress}}</span></div>
-				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHomeAddress.cityAddress}}, {{dataHomeAddress.districtAddress}}, {{dataHomeAddress.stateAddress}}, {{dataHomeAddress.countryAddress}}, {{dataHomeAddress.postalCode}}</span></div>
+				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHomeAddress.cityAddress}}, 
+					{{dataHomeAddress.districtAddress}}, {{dataHomeAddress.stateAddress}}, {{dataHomeAddress.countryAddress}}, {{dataHomeAddress.postalCode}}</span></div>
 			</v-col>
 		</v-row>
 
@@ -46,8 +48,9 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.phoneNumber}} ({{dataContactInfo.phoneNumberType}})</span></div>
-				<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.email}}</span></div>
+				<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.patientPhoneNumber}} 
+					({{dataContactInfo.patientPhoneNumberType}})</span></div>
+				<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.patientEmail}}</span></div>
 				<div class="font-weight-medium">Follow-up approval: <span class="font-weight-regular">{{dataContactInfo.approval}}</span></div>
 			</v-col>
 		</v-row>
@@ -60,8 +63,10 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEmergencyContact.contactFamilyName}}, {{dataEmergencyContact.contactGivenName}}</span></div>
-				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEmergencyContact.contactPhoneNumber}} ({{dataEmergencyContact.contactPhoneNumberType}})</span></div>
+				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactFamilyName}}, 
+					{{dataEmergencyContact.emergencyContactFivenName}}</span></div>
+				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactPhoneNumber}} 
+					({{dataEmergencyContact.emergencyContactPhoneNumberType}})</span></div>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -80,16 +85,16 @@ import EventBus from '../eventBus'
 				suffix: '',
 				birthDate: '',
 				gender: '',
-				recentPhoto: '../assets/blankPicture.png',
+				patientPhoto: '../assets/blankPicture.png',
 				raceSelections: 'N/A',
 				ethnicitySelection: 'N/A'
 			},
 			dataEmergencyContact:
 			{
-				contactFamilyName: '',
-				contactGivenName: '',
-				contactPhoneNumber: '',
-				contactPhoneNumberType: ''
+				emergencyContactFamilyName: '',
+				emergencyContactFivenName: '',
+				emergencyContactPhoneNumber: '',
+				emergencyContactPhoneNumberType: ''
 			},
 			dataHomeAddress:
 			{
@@ -102,9 +107,9 @@ import EventBus from '../eventBus'
 			},	
 			dataContactInfo:
 			{
-				phoneNumber: '',
-				phoneNumberType: '',
-				email: '',
+				patientPhoneNumber: '',
+				patientPhoneNumberType: '',
+				patientEmail: '',
 				approval: ''
 			}
 		}
