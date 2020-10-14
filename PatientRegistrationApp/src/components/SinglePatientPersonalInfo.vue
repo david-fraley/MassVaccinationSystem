@@ -1,23 +1,21 @@
-
 <template>
   <v-container fluid>
     <v-row align="center" justify="center">
       <!-- Last name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field
-          label="Last Name"
+        <v-text-field label="Last Name" id="lastName" v-model="familyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
 
       <!-- First name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field label="First Name"></v-text-field>
+        <v-text-field label="First Name" id="firstName" v-model="givenName"></v-text-field>
       </v-col>
 
       <!-- Suffix -->
       <v-col class="d-flex" cols="2" sm="2">
-        <v-text-field label="Suffix"></v-text-field>
+        <v-text-field label="Suffix" id="suffix" v-model="suffix"></v-text-field>
       </v-col>
     </v-row>
 
@@ -60,8 +58,9 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Gender identity -->
         <v-select
-          :items="gender"
+          :items="genderID"
           label="Gender identity"
+          v-model="gender"
           prepend-icon="mdi-menu-right"
         ></v-select>
       </v-col>
@@ -76,6 +75,7 @@
           :rules="rules"
           accept="image/png, image/jpeg, image/bmp"
           placeholder="Upload a recent photo"
+          v-model="patientPhoto"
           label="Photo"
           prepend-icon="mdi-camera"
         ></v-file-input>
@@ -86,7 +86,7 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Race -->
         <v-select
-          v-model="e6"
+          v-model="raceSelections"
           :items="race"
           label="Race (select all that apply)"
           prepend-icon="mdi-menu-right"
@@ -100,7 +100,7 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Ethnicity -->
         <v-select
-          v-model="e7"
+          v-model="ethnicitySelection"
           :items="ethnicity"
           label="Ethnicity"
           prepend-icon="mdi-menu-right"
@@ -112,10 +112,12 @@
 </template>
 
 <script>
+import EventBus from '../eventBus'
+
 export default {
   data() {
     return {
-      gender: ["Male", "Female", "Other", "Decline to answer"],
+      genderID: ["Male", "Female", "Other", "Decline to answer"],
       race: [
         "Black or African American",
         "White",
@@ -129,7 +131,37 @@ export default {
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
       ],
+      familyName: '',
+      givenName: '',
+      suffix: '',
+      birthDate: '',
+      gender: '',
+      patientPhoto: '',
+      raceSelections: '',
+      ethnicitySelection: ''
     };
+  },
+  methods: {
+    sendPersonalInfoDataToReviewPage()
+    {
+      const personalInfoPayload = {
+        familyName: this.familyName,
+        givenName: this.givenName,
+        suffix: this.suffix,
+        birthDate: this.date,
+        gender: this.gender,
+        patientPhoto: this.patientPhoto,
+        raceSelections: this.raceSelections,
+        ethnicitySelection: this.ethnicitySelection
+      }
+      EventBus.$emit('DATA_PERSONAL_INFO_PUBLISHED', personalInfoPayload)
+    },
+    verifyFormContents()
+    {
+      //add logic to check form contents
+      this.sendPersonalInfoDataToReviewPage();
+      return true;
+    }
   },
 };
 </script>
