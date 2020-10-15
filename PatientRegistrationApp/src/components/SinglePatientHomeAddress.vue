@@ -4,7 +4,8 @@
 			<v-col cols="12" sm="6" md="3">
 				<v-text-field
 					id = "addr"
-					:rules="['Required']"
+					required
+					:rules="[v => !!v || 'Address field is required']"
 					label="Home Address"
 					v-model="lineAddress"
 				></v-text-field>
@@ -13,7 +14,8 @@
 			<v-col cols="6" sm="4" md="3">
 				<v-text-field
 					id = "city"
-					:rules="['Required']"
+					required
+					:rules="[v => !!v || 'City field is required']"
 					label="City"
 					v-model="cityAddress"
 				></v-text-field>
@@ -23,7 +25,8 @@
 			<v-col class="d-flex" cols="4" sm="2" md="3">
 				<v-select
 				id = "state"
-					:rules="['Required']"
+					required
+					:rules="[v => !!v || 'State field is required']"
 					v-model="stateAddress"
                     :items="state"
                     label="State"
@@ -32,7 +35,8 @@
 			<v-col class="d-flex" cols="6" sm="4">
 				<v-text-field
 				id = "county"
-					:rules="['Required']"
+					required
+					:rules="[v => !!v || 'County field is required']"
                     label="County"
 					v-model="districtAddress"
 				></v-text-field>
@@ -40,7 +44,8 @@
 			<v-col class="d-flex" cols="4" sm="2">
 				<v-select
 				id = "country"
-					:rules="['Required']"
+					required
+					:rules="[v => !!v || 'Country field is required']"
 					v-model="countryAddress"
                     :items="country"
                     label="Country"
@@ -49,7 +54,8 @@
 			<v-col cols="6" sm="4" md="3">
 				<v-text-field
 					id = "zipcode"
-					:rules="['Required']"
+					required
+					:rules="[v => !!v || 'Zipcode field is required']"
 					label="Zipcode"
 					v-model="postalCode"
 				></v-text-field>
@@ -113,60 +119,41 @@ import EventBus from '../eventBus'
 		},
 		verifyFormContents()
 		{
-			alert('verifyformcontents')
 			//add logic to check form contents
 			var valid = true
 			var message = "Woops! You need to enter the following fields:"
 			
-			//var a = document.getElementById("addr")
-			//a.required = true
-			//this.lineAddress.required = true  <-- keeping this line doesn't work for some reason
-			//if (a.value == "") {
+			
 			if(this.lineAddress == "") {
 				message += " *address"
 				valid = false
 			}
 			
-			//var b = document.getElementById("city")
-			//b.required = true
-			//this.cityAddress.required = true
-			//if (b.value == "") {
+			
 			if(this.cityAddress == "") {
 				message += " *city"
 				valid = false
 			}
 				
-			//var c = document.getElementById("state")
-			//c.required = true
-			//this.stateAddress.required = true
-			//if (c.value == "state") {
+			
 			if(this.stateAddress == "") {
 				message += " *state"
 				valid = false
 			}
 				
-			//var d = document.getElementById("county")
-			//d.required = true
-			//this.districtAddress.required = true
-			//if (d.value == "") {
+			
 			if(this.districtAddress == "") {
 				message += " *county"
 				valid = false
 			}
 				
-			//var e = document.getElementById("country")
-			//e.required = true
-			//this.countryAddress.required = true
-			//if (e.value == "country") {
+			
 			if(this.countryAddress == "") {
 				message += " *country"
 				valid = false
 			}
 				
-			//var f = document.getElementById("zipcode")
-			//f.required = true
-			//this.postalCode.required = true
-			//if (f.value == "") {
+			
 			if(this.postalCode == "") {
 				message += " *zipcode"
 				valid = false
