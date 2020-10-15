@@ -105,10 +105,6 @@ export default {
 			valid = false
 			}
 			
-			if(this.patientPhoneNumberType == "") {
-			message += "*Phone Number Type"
-			valid = false
-			}
 			
 			if(this.patientEmail == "") {
 			message += "*E-mail"
