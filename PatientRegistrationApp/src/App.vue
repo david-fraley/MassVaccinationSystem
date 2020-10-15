@@ -117,7 +117,6 @@
 								</v-icon>
 							</v-card-actions>
 						</v-stepper-content>
-						
 						<!-- Contact Info -->
 						<v-stepper-content step="3">
 							<v-toolbar flat>
@@ -228,17 +227,7 @@ import SinglePatientReviewSubmit from './components/SinglePatientReviewSubmit';
 
 export default {
 	name: 'App',
-	components: 
-	{
-		GreetingPage,
-		SinglePatientHomeAddress,
-		SinglePatientContactInfo,
-		SinglePatientPersonalInfo,
-		SinglePatientEmergencyContact,
-		SinglePatientReviewSubmit,
-	},
-	methods: 
-	{
+	methods: {
 		submit()
 		{
 			alert('You clicked submit!')
@@ -270,7 +259,16 @@ export default {
 		setHouseholdRegistration()
 		{
 			this.registrationPath = 2;
-		},
+		}, 
+	},
+	components: 
+	{
+		GreetingPage,
+		SinglePatientHomeAddress,
+		SinglePatientContactInfo,
+		SinglePatientPersonalInfo,
+		SinglePatientEmergencyContact,
+		SinglePatientReviewSubmit,
 	},
 	data () {
 		return {
@@ -278,7 +276,6 @@ export default {
 			title: 'COVID-19 Vaccination Registration',
 			registrationPath: 0
 		}
-	},
-  }
-
+	}
+}
 </script>
