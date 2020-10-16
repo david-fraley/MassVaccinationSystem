@@ -12,11 +12,8 @@
 
       <v-col class="d-flex" cols="6" sm="2">
         <v-select
-<<<<<<< Updated upstream
-        required
-		:rules="[v => !!v || 'Phone type is required']"
-=======
->>>>>>> Stashed changes
+          required
+          :rules="[v => !!v || 'Phone type is required']"
           v-model="patientPhoneNumberType"
           :items="phonetype"
           label="Phone Type"
@@ -108,13 +105,6 @@ export default {
 			valid = false
 			}
 			
-<<<<<<< Updated upstream
-=======
-			if(this.patientPhoneNumberType == "") {
-			message += "*Phone Number Type"
-			valid = false
-			}
->>>>>>> Stashed changes
 			
 			if(this.patientEmail == "") {
 			message += "*E-mail"
@@ -122,11 +112,7 @@ export default {
 			}
 			
 			if(this.approval == "") {
-<<<<<<< Updated upstream
-			message += "*Follow up concent"
-=======
 			message += "*Follow up consent"
->>>>>>> Stashed changes
 			valid = false
 			}
 			

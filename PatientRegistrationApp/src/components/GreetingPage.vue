@@ -1,4 +1,3 @@
-
 <template>
 	<v-container bg fill-height grid-list-md text-xs-center>
 		<v-row
