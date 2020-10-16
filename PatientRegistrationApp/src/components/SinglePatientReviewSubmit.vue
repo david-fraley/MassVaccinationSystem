@@ -64,7 +64,7 @@
 		<v-row>	
 			<v-col cols="12">
 				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactFamilyName}}, 
-					{{dataEmergencyContact.emergencyContactFivenName}}</span></div>
+					{{dataEmergencyContact.emergencyContactGivenName}}</span></div>
 				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactPhoneNumber}} 
 					({{dataEmergencyContact.emergencyContactPhoneNumberType}})</span></div>
 			</v-col>
