@@ -3,7 +3,8 @@
     <v-row>
       <v-col cols="12" sm="6" md="3">
         <v-text-field
-          :rules="['Required']"
+        required
+		:rules="[v => !!v || 'Phone number is required']"
           label="Primary Phone Number"
           v-model="patientPhoneNumber"
         ></v-text-field>
@@ -11,7 +12,8 @@
 
       <v-col class="d-flex" cols="6" sm="2">
         <v-select
-          :rules="['Required']"
+          required
+          :rules="[v => !!v || 'Phone type is required']"
           v-model="patientPhoneNumberType"
           :items="phonetype"
           label="Phone Type"
@@ -31,8 +33,9 @@
     <v-row>
       <v-col cols="12" sm="6" md="6">
         <v-text-field
-          :rules="patientEmailRules"
-          label="Primary patientEmail Address"
+		required
+		:rules="[v => !!v || 'Email address is required']"
+          label="Primary patient Email Address"
           v-model="patientEmail"
         ></v-text-field>
       </v-col>
@@ -46,6 +49,8 @@
 
     <v-row>
       <v-radio-group
+		required
+		:rules="[v => !!v || 'This field is required']"
         v-model="approval"
         label="May we contact you regarding follow up vaccination information?"
       >
@@ -91,10 +96,35 @@ export default {
     },
     verifyFormContents()
     {
-      //add logic to check form contents
+		//add logic to check form contents
+		var valid = true
+		var message = "Woops! You need to enter the following fields:"
+	
+			if(this.patientPhoneNumber == "") {
+			message += "*Phone Number"
+			valid = false
+			}
+			
+			
+			if(this.patientEmail == "") {
+			message += "*E-mail"
+			valid = false
+			}
+			
+			if(this.approval == "") {
+			message += "*Follow up consent"
+			valid = false
+			}
+			
+			if (valid == false) {
+				alert (message)
+				return false
+			}
+	
+	
       this.sendContactInfoInfoToReviewPage();
       return true;
     }
   },
-};
+}
 </script>

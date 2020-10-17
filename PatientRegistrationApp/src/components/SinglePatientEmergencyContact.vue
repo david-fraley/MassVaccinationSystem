@@ -5,6 +5,8 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field
           label="Last Name"
+			required
+			:rules="[v => !!v || 'Last name field is required']"
           v-model="emergencyContactFamilyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
@@ -14,6 +16,8 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
           label="First Name"
+			required
+			:rules="[v => !!v || 'First name field is required']"
           v-model="emergencyContactGivenName">
         </v-text-field>
       </v-col>
@@ -24,6 +28,8 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field
           label="Phone Number"
+			required
+			:rules="[v => !!v || 'Phone number field is required']"
           v-model="emergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
@@ -69,7 +75,30 @@ export default {
     },
     verifyFormContents()
     {
-      //add logic to check form contents
+		//add logic to check form contents
+		var valid = true
+		var message = "Woops! You need to enter the following fields:"
+		
+		if(this.emergencyContactFamilyName == "")  {
+			message += " *Last Name"
+			valid = false
+		}
+		
+		if(this.emergencyContactGivenName == "") {
+			message += " *First Name"
+			valid = false
+		}
+		
+		
+		if (this.emergencyContactPhoneNumber == "") {
+			message += " *Phone Number"
+			valid = false
+		}
+		
+		if (valid == false) {
+				alert(message)
+				return false
+			}
       this.sendEmergencyContactInfoToReviewPage();
       return true;
     }

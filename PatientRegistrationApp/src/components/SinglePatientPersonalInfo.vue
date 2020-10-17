@@ -3,19 +3,34 @@
     <v-row align="center" justify="center">
       <!-- Last name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field label="Last Name" id="lastName" v-model="familyName"
+        <v-text-field 
+			label="Last Name" 
+			id="lastName" 
+			required
+			:rules="[v => !!v || 'Last name field is required']"
+			v-model="familyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
 
       <!-- First name -->
       <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field label="First Name" id="firstName" v-model="givenName"></v-text-field>
+        <v-text-field 
+		label="First Name" 
+		id="firstName" 
+		required
+		:rules="[v => !!v || 'First name field is required']"
+		v-model="givenName">
+		</v-text-field>
       </v-col>
 
       <!-- Suffix -->
       <v-col class="d-flex" cols="2" sm="2">
-        <v-text-field label="Suffix" id="suffix" v-model="suffix"></v-text-field>
+        <v-text-field 
+		label="Suffix" 
+		id="suffix" 
+		v-model="suffix">
+		</v-text-field>
       </v-col>
     </v-row>
 
@@ -23,11 +38,11 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Date of Birth -->
         <v-menu
-          ref="menu"
-          v-model="menu"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
+			ref="menu"
+			v-model="menu"
+				:close-on-content-click="false"
+				transition="scale-transition"
+				offset-y
           min-width="290px"
         >
           <template v-slot:activator="{ on, attrs }">
@@ -60,6 +75,8 @@
         <v-select
           :items="genderID"
           label="Gender identity"
+			required
+			:rules="[v => !!v || 'Gender identity field is required']"
           v-model="gender"
           prepend-icon="mdi-menu-right"
         ></v-select>
@@ -158,7 +175,36 @@ export default {
     },
     verifyFormContents()
     {
-      //add logic to check form contents
+		//add logic to check form contents
+		var valid = true
+		var message = "Woops! You need to enter the following fields:"
+		
+		if(this.familyName == "")  {
+			message += " *Last Name"
+			valid = false
+		}
+		
+		if(this.givenName == "") {
+			message += " *First Name"
+			valid = false
+		}
+		
+		
+		if (this.date == null) {
+			message += " *Date of birth"
+			valid = false
+		}
+		
+		if(this.gender == "") {
+			message += " *Gender Identity" 
+			valid = false
+		}
+		
+		if (valid == false) {
+				alert(message)
+				return false
+			}
+		
       this.sendPersonalInfoDataToReviewPage();
       return true;
     }
