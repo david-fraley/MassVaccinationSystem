@@ -3,7 +3,9 @@
 		<v-row>
 			<v-col cols="12" sm="6" md="3">
 				<v-text-field
-					:rules="['Required']"
+					id = "addr"
+					required
+					:rules="[v => !!v || 'Address field is required']"
 					label="Home Address"
 					v-model="lineAddress"
 				></v-text-field>
@@ -11,7 +13,9 @@
 
 			<v-col cols="6" sm="4" md="3">
 				<v-text-field
-					:rules="['Required']"
+					id = "city"
+					required
+					:rules="[v => !!v || 'City field is required']"
 					label="City"
 					v-model="cityAddress"
 				></v-text-field>
@@ -20,7 +24,9 @@
 		<v-row>
 			<v-col class="d-flex" cols="4" sm="2" md="3">
 				<v-select
-					:rules="['Required']"
+				id = "state"
+					required
+					:rules="[v => !!v || 'State field is required']"
 					v-model="stateAddress"
                     :items="state"
                     label="State"
@@ -28,14 +34,18 @@
 			</v-col>
 			<v-col class="d-flex" cols="6" sm="4">
 				<v-text-field
-					:rules="['Required']"
+				id = "county"
+					required
+					:rules="[v => !!v || 'County field is required']"
                     label="County"
 					v-model="districtAddress"
 				></v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="4" sm="2">
 				<v-select
-					:rules="['Required']"
+				id = "country"
+					required
+					:rules="[v => !!v || 'Country field is required']"
 					v-model="countryAddress"
                     :items="country"
                     label="Country"
@@ -43,7 +53,9 @@
 			</v-col>
 			<v-col cols="6" sm="4" md="3">
 				<v-text-field
-					:rules="['Required']"
+					id = "zipcode"
+					required
+					:rules="[v => !!v || 'Zipcode field is required']"
 					label="Zipcode"
 					v-model="postalCode"
 				></v-text-field>
@@ -108,6 +120,50 @@ import EventBus from '../eventBus'
 		verifyFormContents()
 		{
 			//add logic to check form contents
+			var valid = true
+			var message = "Woops! You need to enter the following fields:"
+			
+			
+			if(this.lineAddress == "") {
+				message += " *address"
+				valid = false
+			}
+			
+			
+			if(this.cityAddress == "") {
+				message += " *city"
+				valid = false
+			}
+				
+			
+			if(this.stateAddress == "") {
+				message += " *state"
+				valid = false
+			}
+				
+			
+			if(this.districtAddress == "") {
+				message += " *county"
+				valid = false
+			}
+				
+			
+			if(this.countryAddress == "") {
+				message += " *country"
+				valid = false
+			}
+				
+			
+			if(this.postalCode == "") {
+				message += " *zipcode"
+				valid = false
+			}
+
+			if (valid == false) {
+				alert(message)
+				return false
+			}
+			
 			this.sendHomeAddressInfoToReviewPage();
 			return true;
 		}
