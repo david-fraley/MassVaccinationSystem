@@ -274,7 +274,7 @@ export default {
 	methods: 
 	{
 		submit() {
-			alert('You clicked submit!')
+			alert('You clicked submit!');
 		},
 		goToPage(pageNum) {
 			this.page=pageNum
