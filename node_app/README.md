@@ -1,6 +1,8 @@
-Have npm installed
-Have nodemon installed
-Run the FHIR server
+### Requirements
+Have npm installed <br>
+Have nodemon installed <br>
+Run the FHIR server <br>
 
-npm install
-nodemon index.js
+### Instructions
+npm install <br>
+nodemon index.js <br>
