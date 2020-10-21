@@ -1,7 +1,6 @@
 const Joi = require('joi');
 const express = require('express');
 const app = express();
-const request = require('request');
 const axios = require('axios').default;
 
 
@@ -11,16 +10,15 @@ const courses = [
     { id: 1, name: 'course1'},
     { id: 2, name: 'course2'},
     { id: 3, name: 'course3'},
-]
+];
 
 // Get all patients
 app.get('/Patients', (req, res) => {
     
     axios.get('http://localhost:8080/hapi-fhir-jpaserver/fhir/Patient')
-        .then(function (response) {
+        .then((response) => {
             // handle success
-            console.log(JSON.stringify(response['data']));
-            res.send(JSON.stringify(response['data']));
+            res.send(JSON.stringify(response.data));
         })
         .catch(function (error) {
             // handle error
@@ -36,10 +34,9 @@ app.get('/Patients', (req, res) => {
 app.get('/Organizations', (req, res) => {
     
     axios.get('http://localhost:8080/hapi-fhir-jpaserver/fhir/Organization')
-        .then(function (response) {
+        .then((response) => {
             // handle success
-            console.log(JSON.stringify(response['data']));
-            res.send(JSON.stringify(response['data']));
+            res.send(JSON.stringify(response.data));
         })
         .catch(function (error) {
             // handle error
@@ -55,10 +52,9 @@ app.get('/Organizations', (req, res) => {
 app.get('/Patients2', (req, res) => {
     
     axios.get('http://localhost:8080/hapi-fhir-jpaserver/fhir/Patient?gender=male')
-        .then(function (response) {
+        .then((response) => {
             // handle success
-            console.log(JSON.stringify(response['data']));
-            res.send(JSON.stringify(response['data']));
+            res.send(JSON.stringify(response.data));
         })
         .catch(function (error) {
             // handle error
@@ -71,18 +67,18 @@ app.get('/Patients2', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    res.send('Hello World');
 });
 
 app.get('/api/courses', (req, res) => {
-    res.send(courses)
+    res.send(courses);
 });
 
 app.get('/api/courses/:id', (req, res) => {
-    const course = courses.find(c => c.id === parseInt(req.params.id))
+    const course = courses.find(c => c.id === parseInt(req.params.id));
 
-    if (!course) return res.status(404).send('The course with the given id was not found')
-    res.send(course)
+    if (!course) return res.status(404).send('The course with the given id was not found');
+    res.send(course);
 });
 
 app.get('/api/courses/:year/:month', (req,res) => {
@@ -90,27 +86,30 @@ app.get('/api/courses/:year/:month', (req,res) => {
 });
 
 app.post('/api/courses', (req, res) => {
+    // Validate for errors
+    const { error } = validateCourse(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
 
+    // Format course to create
     const course = {
         id: courses.length + 1,
         name: req.body.name
     };
     
-    courses.push(course)
-    res.send(course)
+    // Add course to backend
+    courses.push(course);
+    res.send(course);
 });
 
 app.put('/api/courses/:id', (req, res) => {
 
     // Check if course exists
-    const course = courses.find(c => c.id === parseInt(req.params.id))
-    if (!course) return res.status(404).send('The course with the given id was not found')
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+    if (!course) return res.status(404).send('The course with the given id was not found');
 
-    // Validate for erroes
-    const result = validateCourse(req.body);
-    if (result.error) {
-        return res.status(400).send(result.error.details[0].message)
-    }
+    // Validate for errors
+    const { error } = validateCourse(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
 
     // Update Course
     course.name = req.body.name;
@@ -122,12 +121,11 @@ function validateCourse(course) {
         name: Joi.string()
             .min(3)
             .required()
-    })
+    });
 
-    const result = schema.validate(course);
-    return result
+    return schema.validate(course);
 }
 
 
 const port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Listening on port ${port}`))
+app.listen(port, () => console.log(`Listening on port ${port}`));
