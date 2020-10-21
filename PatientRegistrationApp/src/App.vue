@@ -2,7 +2,7 @@
   <v-app id="Patient-registration"> 
     <v-main>
 		<v-container>
-			<v-card class="elevation-12" min-width="400" max-width="1000"> 
+			<v-card class="elevation-12"> 
 				<v-stepper v-model="page">	
 					<!-- v-stepper-header is the progress bar along the top of the page -->
 					<v-stepper-header>
