@@ -166,7 +166,7 @@
 								<v-toolbar flat>
 									<v-toolbar-title>Enter your household address</v-toolbar-title>
 								</v-toolbar>
-								<v-card flat><HouseholdHomeAddress/></v-card>				
+								<v-card flat><HouseholdHomeAddress ref="householdhomeaddress"/></v-card>				
 								<v-card-actions>
 									<v-icon large color="secondary" @click="goToPreviousPage()">
 										mdi-chevron-left
@@ -303,7 +303,9 @@ export default {
 			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdHomeAddress() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
+			this.$refs.householdhomeaddress.verifyFormContents() ?
+			this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE) :
+			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdContactInfo() {
 			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PAGE);
