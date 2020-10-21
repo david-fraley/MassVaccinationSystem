@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import EventBus from '../eventBus'
+//import EventBus from '../eventBus'
 
   export default {
 	data () {
@@ -106,7 +106,7 @@ import EventBus from '../eventBus'
 		
 	},
 	methods: {
-		sendHouseholdHomeAddressInfoToHouseholdReviewPage()
+		/*sendHouseholdHomeAddressInfoToHouseholdReviewPage()
 		{
 		const householdHomeAddressPayload = {
 			householdLineAddress: this.householdLineAddress,
@@ -117,7 +117,7 @@ import EventBus from '../eventBus'
 			householdPostalCode: this.householdPostalCode
 		}
 		EventBus.$emit('DATA_ADDRESS_INFO_PUBLISHED', householdHomeAddressPayload)
-		},
+		},*/
 		verifyFormContents()
 		{
 			//add logic to check form contents
@@ -165,7 +165,7 @@ import EventBus from '../eventBus'
 				return false
 			}
 			
-			this.sendHouseholdHomeAddressInfoToReviewPage();
+			//this.sendHouseholdHomeAddressInfoToReviewPage();
 			return true;
 		}
 	},
