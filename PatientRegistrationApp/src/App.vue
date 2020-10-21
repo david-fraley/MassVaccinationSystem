@@ -1,11 +1,11 @@
 <template>
-  <v-app id="Patient-registration"> 
+  <v-app id="Patient-registration" style="background: #757575"> 
     <v-main>
 		<v-container>
-			<v-card class="elevation-12" min-width="400" max-width="1000"> 
+			<v-card flat> 
 				<v-stepper v-model="page">	
 					<!-- v-stepper-header is the progress bar along the top of the page -->
-					<v-stepper-header>
+					<v-stepper-header flat>
 						<template v-for="n in getNumberOfSteps()">
 							<v-stepper-step
 								:key="`${n}-step`"
@@ -22,7 +22,7 @@
 						</template>
 					</v-stepper-header>
 					
-					<v-toolbar color="primary" dark>
+					<v-toolbar flat color="primary" dark>
 						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
 						<v-toolbar-title>{{title}}</v-toolbar-title>
 					</v-toolbar>			
