@@ -4,8 +4,13 @@
 		<v-container>
 			<v-card flat> 
 				<v-stepper v-model="page" class="elevation-0">	
+					<v-toolbar flat color="primary" dark>
+						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
+						<v-toolbar-title>{{title}}</v-toolbar-title>
+					</v-toolbar>
+
 					<!-- v-stepper-header is the progress bar along the top of the page -->
-					<v-stepper-header flat>
+					<v-stepper-header class="elevation-0">
 						<template v-for="n in getNumberOfSteps()">
 							<v-stepper-step
 								:key="`${n}-step`"
@@ -21,11 +26,6 @@
 							></v-divider>
 						</template>
 					</v-stepper-header>
-					
-					<v-toolbar flat color="primary" dark>
-						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
-						<v-toolbar-title>{{title}}</v-toolbar-title>
-					</v-toolbar>			
 					
 					<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
 					<v-stepper-items>
