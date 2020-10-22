@@ -1,9 +1,9 @@
 <template>
-  <v-app id="Patient-registration" style="background: #757575"> 
+  <v-app id="Patient-registration"> <!--style="background: #F5F5F5"--> 
     <v-main>
 		<v-container>
 			<v-card flat> 
-				<v-stepper v-model="page">	
+				<v-stepper v-model="page" class="elevation-0">	
 					<!-- v-stepper-header is the progress bar along the top of the page -->
 					<v-stepper-header flat>
 						<template v-for="n in getNumberOfSteps()">
