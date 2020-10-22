@@ -8,7 +8,7 @@
           label="Last Name"
 			required
 			:rules="[v => !!v || 'Last name field is required']"
-          v-model="emergencyContactFamilyName"
+          v-model="householdEmergencyContactFamilyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
@@ -19,7 +19,7 @@
           label="First Name"
 			required
 			:rules="[v => !!v || 'First name field is required']"
-          v-model="emergencyContactGivenName">
+          v-model="householdEmergencyContactGivenName">
         </v-text-field>
       </v-col>
     </v-row>
@@ -31,7 +31,7 @@
           label="Phone Number"
 			required
 			:rules="[v => !!v || 'Phone number field is required']"
-          v-model="emergencyContactPhoneNumber"
+          v-model="householdEmergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
@@ -39,7 +39,7 @@
       <!-- Phone Number Type -->
       <v-col class="d-flex" cols="5" sm="3">
         <v-select
-          v-model="emergencyContactPhoneNumberType"
+          v-model="householdEmergencyContactPhoneNumberType"
           :items="phoneType"
           label="Phone Number Type"
         ></v-select>

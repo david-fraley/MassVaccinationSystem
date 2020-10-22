@@ -215,8 +215,9 @@
 							<!-- Household: Emergency Contact -->
 							<v-stepper-content step="6">
 								<v-toolbar flat>
-									<v-row><v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-row>
-									<v-row><v-toolbar-sub-title>Note: You will be specified as the emergency contact for the rest of your household.</v-toolbar-sub-title></v-row>
+									<v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-toolbar>
+								<v-toolbar flat>
+									<v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader>
 								</v-toolbar>
 								<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
 								<v-card-actions>
