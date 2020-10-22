@@ -1,9 +1,6 @@
 <template>
 	<v-container fluid>
 	
-		<template>
-	<v-container fluid>
-	
 		<v-row align="center" justify="center">
       <!-- Last name -->
       <v-col class="d-flex" cols="5" sm="5">
@@ -38,6 +35,15 @@
       </v-col>
     </v-row>
 
+    <v-row>
+      <v-col cols="12" sm="12" md="12">
+        <v-checkbox
+          v-model="checkbox"
+          label="All household members have the same last name"
+        ></v-checkbox>
+      </v-col>
+    </v-row>
+	
     <v-row align="center" justify="center">
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Date of Birth -->
