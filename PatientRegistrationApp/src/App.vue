@@ -149,7 +149,7 @@
 								<v-toolbar flat>
 									<v-toolbar-title>Register your household</v-toolbar-title>
 								</v-toolbar>
-								<v-card flat><HouseholdRegisterNumber/></v-card>				
+								<v-card flat><HouseholdRegisterNumber ref="householdregisternumber"/></v-card>				
 								<v-card-actions>
 									<v-icon large color="secondary" @click="goToPreviousPage()">
 										mdi-chevron-left
@@ -268,6 +268,7 @@ import HouseholdPersonalInfo_1 from './components/HouseholdPersonalInfo_1';
 import HouseholdEmergencyContact from './components/HouseholdEmergencyContact';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import config from './config.js';
+import EventBus from './eventBus'
 
 export default {
 	name: 'App',
@@ -300,7 +301,9 @@ export default {
 			this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE);
 		},	
 		verifyHouseholdRegisterNumber() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
+			this.$refs.householdregisternumber.verifyFormContents() ?
+			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE) :
+			this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE);
 		},
 		verifyHouseholdHomeAddress() {
 			this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
@@ -319,6 +322,10 @@ export default {
 		},
 		setHouseholdRegistration() {
 			this.registrationPath = config.selectedRegistrationPath.HOUSEHOLD_REGISTRATION_PATH;
+		},
+		setNumberOfHouseholdMembers(householdCountPayload)
+		{
+			this.numberOfHouseholdMembers = householdCountPayload.householdCount
 		},
 		isSinglePatientRegistration() {
 			let returnValue = true;
@@ -349,9 +356,23 @@ export default {
 		},
 		getNumberOfSteps() {
 			let numberOfSteps = 0;
-			this.isSinglePatientRegistration() ? numberOfSteps = config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE : numberOfSteps = config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE;
+			if(this.isSinglePatientRegistration())
+			{
+				numberOfSteps = config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE;
+			}
+			else if(this.isHouseholdRegistration())
+			{
+				numberOfSteps = this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE;
+			}
+				
 			return numberOfSteps;
 		}
+	},
+	mounted() 
+	{
+		EventBus.$on('DATA_HOUSHOLD_COUNT_UPDATED', (householdCountPayload) => {
+			this.setNumberOfHouseholdMembers(householdCountPayload)
+		})
 	},
 	components: 
 	{
@@ -373,6 +394,7 @@ export default {
 			page: config.registrationPages.GREETING_PAGE,
 			title: 'COVID-19 Vaccination Registration',
 			registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
+			numberOfHouseholdMembers: 2
 			}
 		},
   }
