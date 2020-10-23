@@ -1,5 +1,5 @@
 <template>
-  <v-app id="Patient-registration"> 
+  <v-app id="Patient-registration"> <!--style="background: #F5F5F5"--> 
     <v-main>
 		<v-container>
 			<v-card class="elevation-12"> 
