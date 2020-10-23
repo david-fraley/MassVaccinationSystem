@@ -1,256 +1,270 @@
 <template>
-  <v-app id="Patient-registration"> 
+  <v-app id="Patient-registration" style="background: #F5F5F5"> 
     <v-main>
-		<v-container>
-			<v-card class="elevation-12" min-width="400" max-width="1000"> 
-				<v-stepper v-model="page" class="elevation-0">
-					<v-toolbar flat color="primary" dark>
-						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
-						<v-toolbar-title>{{title}}</v-toolbar-title>
-					</v-toolbar>
-					<!-- v-stepper-header is the progress bar along the top of the page -->
-					<v-stepper-header class="elevation-0">
-						<template v-for="n in getNumberOfSteps()">
-							<v-stepper-step
-								:key="`${n}-step`"
-								:complete="page > n"
-								color="accent"
-								:step="n" 
-							>
-							</v-stepper-step>
+		<v-container fill-height>
+			<v-layout justify-center align-center>
+				<v-card flat height="100%" width="100%" class="d-flex flex-column" color="pink"> 
+					<v-stepper v-model="page" class="elevation-0">
+						<v-toolbar flat color="primary" dark>
+							<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
+							<v-toolbar-title>{{title}}</v-toolbar-title>
+						</v-toolbar>
+						<!-- v-stepper-header is the progress bar along the top of the page -->
+						<v-stepper-header class="elevation-0">
+							<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">
+								<template v-for="n in getNumberOfSteps()">
+									<v-stepper-step
+										:key="`${n}-step`"
+										:complete="page > n"
+										color="accent"
+										:step="n" 
+									>
+									</v-stepper-step>
 
-							<v-divider
-								v-if="n !== getNumberOfSteps()"
-								:key="n"
-							></v-divider>
-						</template>
-					</v-stepper-header>
-		
-					
-					<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
-					<v-stepper-items>
-						<!-- Greeting Page -->
-						<v-stepper-content step="1">
-							<v-card flat>			
-								<!--listen for changes in the button selections-->				
-								<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"/>
-							</v-card>
-							<v-card-actions>								
+									<v-divider
+										v-if="n !== getNumberOfSteps()"
+										:key="n"
+									></v-divider>
+								</template>
+							</template>
+						</v-stepper-header>
+			
+						<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
+						<v-stepper-items>
+							<!-- Greeting Page -->
+							<v-stepper-content step="1">
+								<v-card flat color="yellow">			
+									<!--listen for changes in the button selections-->				
+									<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"/>
+								</v-card>
 								<v-spacer></v-spacer>
-								<!--Logic to check for single patient registration path -->
-								<template v-if="isSinglePatientRegistration()">
-									<v-icon large color="secondary"	@click="advanceToSinglePatientRegistration()">
-										mdi-chevron-right
-									</v-icon>
-								</template>
-								<!--Logic to check for household registration path -->
-								<!-- Just stay on this page for now - until we build the household registration pages -->
-								<template v-if="isHouseholdRegistration()">
-									<v-icon large color="secondary" @click="advanceToHouseholdRegistration()">
-										mdi-chevron-right
-									</v-icon>
-								</template>
-							</v-card-actions>
-						</v-stepper-content>
-
-						<!--Logic to check for the "single patient" registration path-->
-						<template v-if="isSinglePatientRegistration()">
-							<!-- Single Patient: Home Address -->
-							<v-stepper-content step="2">
-								<v-toolbar flat >
-									<v-toolbar-title>Enter your home address</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><SinglePatientHomeAddress ref="singlepatienthomeaddress"/></v-card>				
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
+								<v-divider></v-divider>
+								<v-card-actions>								
 									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifySinglePatientHomeAddress()">
-										mdi-chevron-right
-									</v-icon>
-								</v-card-actions>
-							</v-stepper-content>
-							
-							<!-- Single Patient: Contact Info -->
-							<v-stepper-content step="3">
-								<v-toolbar flat>
-									<v-toolbar-title>Enter your contact information</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><SinglePatientContactInfo ref="singlepatientcontactinfo"/></v-card>
-								<v-card-actions>
-									<v-icon large color="secondary"	@click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifySinglePatientContactInfo()">
-										mdi-chevron-right
-									</v-icon>
-								</v-card-actions>
-							</v-stepper-content>
-							
-							<!-- Single Patient: Personal Info -->
-							<v-stepper-content step="4">
-								<v-toolbar flat>
-									<v-toolbar-title>Enter your personal information</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/></v-card>							
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifySinglePatientPersonalInfo()">
-										mdi-chevron-right
-									</v-icon>
-								</v-card-actions>
-							</v-stepper-content>
-							
-							<!-- Single Patient: Emergency Contact -->
-							<v-stepper-content step="5">
-								<v-toolbar flat>
-									<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><SinglePatientEmergencyContact ref="singlepatientemergencycontact"/></v-card>
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifySinglePatientEmergencyContact()">
-										mdi-chevron-right
-									</v-icon>
-								</v-card-actions>
-							</v-stepper-content>
-							
-							<!-- Single Patient: Review and Submit -->
-							<v-stepper-content step="6">
-								<v-toolbar flat>
-									<v-toolbar-title>Review and submit registration</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><SinglePatientReviewSubmit/></v-card>
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-btn large color="secondary" @click="submit()">
-										Submit
-									</v-btn>
-								</v-card-actions>
-							</v-stepper-content>
-						</template>
-
-						<!--Logic to check for the "household" registration path-->
-						<template v-if="isHouseholdRegistration()">
-
-							<!-- Household: Register Number of People -->
-							<v-stepper-content step="2">
-								<v-toolbar flat>
-									<v-toolbar-title>Register your household</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><HouseholdRegisterNumber/></v-card>				
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifyHouseholdRegisterNumber()">
-										mdi-chevron-right
-									</v-icon>
+									<!--Logic to check for single patient registration path -->
+									<template v-if="isSinglePatientRegistration()">
+										<v-icon large color="secondary"	@click="advanceToSinglePatientRegistration()">
+											mdi-chevron-right
+										</v-icon>
+									</template>
+									<!--Logic to check for household registration path -->
+									<!-- Just stay on this page for now - until we build the household registration pages -->
+									<template v-if="isHouseholdRegistration()">
+										<v-icon large color="secondary" @click="advanceToHouseholdRegistration()">
+											mdi-chevron-right
+										</v-icon>
+									</template>
 								</v-card-actions>
 							</v-stepper-content>
 
-							<!-- Household: Address -->
-							<v-stepper-content step="3">
-								<v-toolbar flat>
-									<v-toolbar-title>Enter your household address</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><HouseholdHomeAddress ref="householdhomeaddress"/></v-card>				
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifyHouseholdHomeAddress()">
-										mdi-chevron-right
-									</v-icon>
-								</v-card-actions>
-							</v-stepper-content>
+							<!--Logic to check for the "single patient" registration path-->
+							<template v-if="isSinglePatientRegistration()">
+								<!-- Single Patient: Home Address -->
+								<v-stepper-content step="2">
+									<v-toolbar flat >
+										<v-toolbar-title>Enter your home address</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><SinglePatientHomeAddress ref="singlepatienthomeaddress"/></v-card>				
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifySinglePatientHomeAddress()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
+								
+								<!-- Single Patient: Contact Info -->
+								<v-stepper-content step="3">
+									<v-toolbar flat>
+										<v-toolbar-title>Enter your contact information</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><SinglePatientContactInfo ref="singlepatientcontactinfo"/></v-card>
+									<v-card-actions>
+										<v-icon large color="secondary"	@click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifySinglePatientContactInfo()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
+								
+								<!-- Single Patient: Personal Info -->
+								<v-stepper-content step="4">
+									<v-toolbar flat>
+										<v-toolbar-title>Enter your personal information</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/></v-card>							
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifySinglePatientPersonalInfo()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
+								
+								<!-- Single Patient: Emergency Contact -->
+								<v-stepper-content step="5">
+									<v-toolbar flat>
+										<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><SinglePatientEmergencyContact ref="singlepatientemergencycontact"/></v-card>
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifySinglePatientEmergencyContact()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
+								
+								<!-- Single Patient: Review and Submit -->
+								<v-stepper-content step="6">
+									<v-toolbar flat>
+										<v-toolbar-title>Review and submit registration</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><SinglePatientReviewSubmit/></v-card>
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-btn large color="secondary" @click="submit()">
+											Submit
+										</v-btn>
+									</v-card-actions>
+								</v-stepper-content>
+							</template>
 
-							<!-- Household: Contact Info -->
-							<v-stepper-content step="4">
-								<v-toolbar flat>
-									<v-toolbar-title>Enter your household contact information</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><HouseholdContactInfo/></v-card>				
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifyHouseholdContactInfo()">
-										mdi-chevron-right
-									</v-icon>
-								</v-card-actions>
-							</v-stepper-content>
+							<!--Logic to check for the "household" registration path-->
+							<template v-if="isHouseholdRegistration()">
 
-							<!-- Household: Personal Info -->
-							<v-stepper-content step="5">
-								<v-toolbar flat>
-									<v-toolbar-title>Enter your personal information</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"/></v-card>				
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifyHouseholdPersonalInfo()">
-										mdi-chevron-right
-									</v-icon>
-								</v-card-actions>
-							</v-stepper-content>
+								<!-- Household: Register Number of People -->
+								<v-stepper-content step="2">
+									<v-toolbar flat>
+										<v-toolbar-title>Register your household</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><HouseholdRegisterNumber/></v-card>				
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifyHouseholdRegisterNumber()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
 
-							<!-- Household: Emergency Contact -->
-							<v-stepper-content step="6">
-								<v-toolbar flat>
-									<v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-toolbar>
-								<v-toolbar flat>
-									<v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader>
-								</v-toolbar>
-								<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-icon large color="secondary" @click="verifyHouseholdEmergencyContact()">
-										mdi-chevron-right
-									</v-icon>
-								</v-card-actions>
-							</v-stepper-content>
+								<!-- Household: Address -->
+								<v-stepper-content step="3">
+									<v-toolbar flat>
+										<v-toolbar-title>Enter your household address</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><HouseholdHomeAddress ref="householdhomeaddress"/></v-card>				
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifyHouseholdHomeAddress()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
 
-							<!-- Household: Review and submit -->
-							<v-stepper-content step="7">
-								<v-toolbar flat>
-									<v-toolbar-title>Review and submit registration</v-toolbar-title>
-								</v-toolbar>
-								<v-card flat><HouseholdReviewSubmit/></v-card>				
-								<v-card-actions>
-									<v-icon large color="secondary" @click="goToPreviousPage()">
-										mdi-chevron-left
-									</v-icon>
-									<v-spacer></v-spacer>
-									<v-btn large color="secondary" @click="submit()">
-										Submit
-									</v-btn>
-								</v-card-actions>
-							</v-stepper-content>
-						</template>
-					</v-stepper-items>
-				</v-stepper>
-			</v-card>
+								<!-- Household: Contact Info -->
+								<v-stepper-content step="4">
+									<v-toolbar flat>
+										<v-toolbar-title>Enter your household contact information</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><HouseholdContactInfo/></v-card>				
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifyHouseholdContactInfo()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
+
+								<!-- Household: Personal Info -->
+								<v-stepper-content step="5">
+									<v-toolbar flat>
+										<v-toolbar-title>Enter your personal information</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"/></v-card>				
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifyHouseholdPersonalInfo()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
+
+								<!-- Household: Emergency Contact -->
+								<v-stepper-content step="6">
+									<v-toolbar flat>
+										<v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-toolbar>
+									<v-toolbar flat>
+										<v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader>
+									</v-toolbar>
+									<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="verifyHouseholdEmergencyContact()">
+											mdi-chevron-right
+										</v-icon>
+									</v-card-actions>
+								</v-stepper-content>
+
+								<!-- Household: Review and submit -->
+								<v-stepper-content step="7">
+									<v-toolbar flat>
+										<v-toolbar-title>Review and submit registration</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><HouseholdReviewSubmit/></v-card>				
+									<v-card-actions>
+										<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-btn large color="secondary" @click="submit()">
+											Submit
+										</v-btn>
+									</v-card-actions>
+								</v-stepper-content>
+							</template>
+						</v-stepper-items>
+					</v-stepper>
+					<v-footer absolute color="green">
+						<v-icon large color="secondary" @click="goToPreviousPage()">
+											mdi-chevron-left
+										</v-icon>
+										<v-spacer></v-spacer>
+										<v-icon large color="secondary" @click="submit()">
+											mdi-chevron-right
+										</v-icon>
+						</v-footer>
+				</v-card>
+			</v-layout>
 		</v-container>
 	</v-main>
   </v-app>
