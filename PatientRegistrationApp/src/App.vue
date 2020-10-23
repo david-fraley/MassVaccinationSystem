@@ -3,29 +3,31 @@
     <v-main>
 		<v-container>
 			<v-card flat> 
-				<v-stepper v-model="page" class="elevation-0">	
+				<v-stepper v-model="page" class="elevation-0">
 					<v-toolbar flat color="primary" dark>
 						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
 						<v-toolbar-title>{{title}}</v-toolbar-title>
 					</v-toolbar>
-
 					<!-- v-stepper-header is the progress bar along the top of the page -->
 					<v-stepper-header class="elevation-0">
-						<template v-for="n in getNumberOfSteps()">
-							<v-stepper-step
-								:key="`${n}-step`"
-								:complete="page > n"
-								color="accent"
-								:step="n" 
-							>
-							</v-stepper-step>
+						<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">
+							<template v-for="n in getNumberOfSteps()">
+								<v-stepper-step
+									:key="`${n}-step`"
+									:complete="page > n"
+									color="accent"
+									:step="n" 
+								>
+								</v-stepper-step>
 
-							<v-divider
-								v-if="n !== getNumberOfSteps()"
-								:key="n"
-							></v-divider>
+								<v-divider
+									v-if="n !== getNumberOfSteps()"
+									:key="n"
+								></v-divider>
+							</template>
 						</template>
 					</v-stepper-header>
+		
 					
 					<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
 					<v-stepper-items>
@@ -166,7 +168,7 @@
 								<v-toolbar flat>
 									<v-toolbar-title>Enter your household address</v-toolbar-title>
 								</v-toolbar>
-								<v-card flat><HouseholdHomeAddress/></v-card>				
+								<v-card flat><HouseholdHomeAddress ref="householdhomeaddress"/></v-card>				
 								<v-card-actions>
 									<v-icon large color="secondary" @click="goToPreviousPage()">
 										mdi-chevron-left
@@ -200,7 +202,7 @@
 								<v-toolbar flat>
 									<v-toolbar-title>Enter your personal information</v-toolbar-title>
 								</v-toolbar>
-								<v-card flat><HouseholdPersonalInfo_1/></v-card>				
+								<v-card flat><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"/></v-card>				
 								<v-card-actions>
 									<v-icon large color="secondary" @click="goToPreviousPage()">
 										mdi-chevron-left
@@ -215,9 +217,11 @@
 							<!-- Household: Emergency Contact -->
 							<v-stepper-content step="6">
 								<v-toolbar flat>
-									<v-toolbar-title>Specify your emergency contact</v-toolbar-title>
+									<v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-toolbar>
+								<v-toolbar flat>
+									<v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader>
 								</v-toolbar>
-								<v-card flat><HouseholdEmergencyContact/></v-card>				
+								<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
 								<v-card-actions>
 									<v-icon large color="secondary" @click="goToPreviousPage()">
 										mdi-chevron-left
@@ -303,16 +307,22 @@ export default {
 			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdHomeAddress() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
+			this.$refs.householdhomeaddress.verifyFormContents() ?
+			this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE) :
+			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdContactInfo() {
 			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PAGE);
 		},
 		verifyHouseholdPersonalInfo() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
+			this.$refs.householdPersonalInfo_1.verifyFormContents() ?
+			this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
 		},
 		verifyHouseholdEmergencyContact() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE);
+			this.$refs.householdemergencycontact.verifyFormContents() ?
+			this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
+			this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 		},
 		setSinglePatientRegistration() {
 			this.registrationPath = config.selectedRegistrationPath.SINGLE_PATIENT_REGISTRATION_PATH;
