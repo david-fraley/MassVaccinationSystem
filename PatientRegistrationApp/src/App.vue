@@ -2,7 +2,7 @@
   <v-app id="Patient-registration"> <!--style="background: #F5F5F5"--> 
     <v-main>
 		<v-container>
-			<v-card class="elevation-12"> 
+			<v-card flat> 
 				<v-stepper v-model="page" class="elevation-0">
 					<v-toolbar flat color="primary" dark>
 						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
@@ -27,8 +27,6 @@
 							</template>
 						</template>
 					</v-stepper-header>
-					
-		
 					
 					<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
 					<v-stepper-items>
