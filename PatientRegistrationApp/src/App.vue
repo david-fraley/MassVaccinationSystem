@@ -215,9 +215,11 @@
 							<!-- Household: Emergency Contact -->
 							<v-stepper-content step="6">
 								<v-toolbar flat>
-									<v-toolbar-title>Specify your emergency contact</v-toolbar-title>
+									<v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-toolbar>
+								<v-toolbar flat>
+									<v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader>
 								</v-toolbar>
-								<v-card flat><HouseholdEmergencyContact/></v-card>				
+								<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
 								<v-card-actions>
 									<v-icon large color="secondary" @click="goToPreviousPage()">
 										mdi-chevron-left
@@ -314,7 +316,9 @@ export default {
 			this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 		},
 		verifyHouseholdEmergencyContact() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE);
+			this.$refs.householdemergencycontact.verifyFormContents() ?
+			this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
+			this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 		},
 		setSinglePatientRegistration() {
 			this.registrationPath = config.selectedRegistrationPath.SINGLE_PATIENT_REGISTRATION_PATH;
