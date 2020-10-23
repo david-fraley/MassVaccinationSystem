@@ -10,21 +10,24 @@
 					</v-toolbar>
 					<!-- v-stepper-header is the progress bar along the top of the page -->
 					<v-stepper-header class="elevation-0">
-						<template v-for="n in getNumberOfSteps()">
-							<v-stepper-step
-								:key="`${n}-step`"
-								:complete="page > n"
-								color="accent"
-								:step="n" 
-							>
-							</v-stepper-step>
+						<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">
+							<template v-for="n in getNumberOfSteps()">
+								<v-stepper-step
+									:key="`${n}-step`"
+									:complete="page > n"
+									color="accent"
+									:step="n" 
+								>
+								</v-stepper-step>
 
-							<v-divider
-								v-if="n !== getNumberOfSteps()"
-								:key="n"
-							></v-divider>
+								<v-divider
+									v-if="n !== getNumberOfSteps()"
+									:key="n"
+								></v-divider>
+							</template>
 						</template>
 					</v-stepper-header>
+					
 		
 					
 					<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
