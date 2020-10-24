@@ -1,15 +1,14 @@
 <template>
 	<v-container fluid>
-	
 		<v-row align="center" justify="center">
       <!-- Last name -->
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
-			label="Last Name" 
-			id="lastName" 
-			required
-			:rules="[v => !!v || 'Last name field is required']"
-			v-model="householdFamilyName"
+          label="Last Name" 
+          id="lastName" 
+          required
+          :rules="[v => !!v || 'Last name field is required']"
+          v-model="householdFamilyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
@@ -17,21 +16,21 @@
       <!-- First name -->
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
-		label="First Name" 
-		id="firstName" 
-		required
-		:rules="[v => !!v || 'First name field is required']"
-		v-model="householdGivenName">
-		</v-text-field>
+          label="First Name" 
+          id="firstName" 
+          required
+          :rules="[v => !!v || 'First name field is required']"
+          v-model="householdGivenName">
+        </v-text-field>
       </v-col>
 
       <!-- Suffix -->
       <v-col class="d-flex" cols="2" sm="2">
         <v-text-field 
-		label="Suffix" 
-		id="suffix" 
-		v-model="householdSuffix">
-		</v-text-field>
+          label="Suffix" 
+          id="suffix" 
+          v-model="householdSuffix">
+        </v-text-field>
       </v-col>
     </v-row>
 
@@ -48,11 +47,11 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Date of Birth -->
         <v-menu
-			ref="householdMenu"
-			v-model="householdMenu"
-				:close-on-content-click="false"
-				transition="scale-transition"
-				offset-y
+          ref="householdMenu"
+          v-model="householdMenu"
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
           min-width="290px"
         >
           <template v-slot:activator="{ on, attrs }">
@@ -85,8 +84,8 @@
         <v-select
           :items="genderID"
           label="Gender identity"
-			required
-			:rules="[v => !!v || 'Gender identity field is required']"
+          required
+          :rules="[v => !!v || 'Gender identity field is required']"
           v-model="householdGender"
           prepend-icon="mdi-menu-right"
         ></v-select>
@@ -139,7 +138,7 @@
 </template>
 
 <script>
-//import EventBus from '../eventBus'
+import EventBus from '../eventBus'
 
 export default {
   data() {
@@ -165,58 +164,59 @@ export default {
       householdGender: '',
       householdPatientPhoto: '',
       householdRaceSelections: '',
-      householdEthnicitySelection: ''
+      householdEthnicitySelection: '',
     };
   },
   methods: {
-    /*sendPersonalInfoDataToReviewPage()
+    sendHouseholdPersonalInfoDataToReviewPage()
     {
-      const personalInfoPayload = {
-        familyName: this.familyName,
-        givenName: this.givenName,
-        suffix: this.suffix,
-        birthDate: this.date,
-        gender: this.gender,
-        patientPhoto: this.patientPhoto,
-        raceSelections: this.raceSelections,
-        ethnicitySelection: this.ethnicitySelection
+      const householdPersonalInfoPayload = {
+        householdFamilyName: this.householdFamilyName,
+        householdGivenName: this.householdGivenName,
+        householdSuffix: this.householdSuffix,
+        householdBirthDate: this.householdDate,
+        householdGender: this.householdGender,
+        householdPatientPhoto: this.householdPatientPhoto,
+        householdRaceSelections: this.householdRaceSelections,
+        householdEthnicitySelection: this.householdEthnicitySelection
       }
-      EventBus.$emit('DATA_PERSONAL_INFO_PUBLISHED', personalInfoPayload)
-    },*/
+      const householdMemberNumber = 1
+      EventBus.$emit('DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED', householdPersonalInfoPayload, householdMemberNumber)
+    },
     verifyFormContents()
     {
-		//add logic to check form contents
-		var valid = true
-		var message = "Woops! You need to enter the following fields:"
-		
-		if(this.householdFamilyName == "")  {
-			message += " *Last Name"
-			valid = false
-		}
-		
-		if(this.householdGivenName == "") {
-			message += " *First Name"
-			valid = false
-		}
-		
-		
-		if (this.householdDate == null) {
-			message += " *Date of birth"
-			valid = false
-		}
-		
-		if(this.householdGender == "") {
-			message += " *Gender Identity" 
-			valid = false
-		}
-		
-		if (valid == false) {
-				alert(message)
-				return false
-			}
-		
-      //this.sendPersonalInfoDataToReviewPage();
-      return true;
+      //add logic to check form contents
+      var valid = true
+      var message = "Woops! You need to enter the following fields:"
+      
+      if(this.householdFamilyName == "")  {
+        message += " *Last Name"
+        valid = false
+      }
+      
+      if(this.householdGivenName == "") {
+        message += " *First Name"
+        valid = false
+      }
+      
+      
+      if (this.householdDate == null) {
+        message += " *Date of birth"
+        valid = false
+      }
+      
+      if(this.householdGender == "") {
+        message += " *Gender Identity" 
+        valid = false
+      }
+      
+      if (valid == false) {
+          alert(message)
+          return false
+        }
+      
+        this.sendHouseholdPersonalInfoDataToReviewPage();
+        return true;
     }
   },
 };

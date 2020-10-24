@@ -184,7 +184,7 @@
 								<v-toolbar flat>
 									<v-toolbar-title>Enter your household contact information</v-toolbar-title>
 								</v-toolbar>
-								<v-card flat><HouseholdContactInfo/></v-card>				
+								<v-card flat><HouseholdContactInfo ref="householdcontactinfo"/></v-card>				
 								<v-card-actions>
 									<v-icon large color="secondary" @click="goToPreviousPage()">
 										mdi-chevron-left
@@ -314,7 +314,9 @@ export default {
 			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdContactInfo() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PAGE);
+			this.$refs.householdcontactinfo.verifyFormContents() ?
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PAGE) :
+			this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
 		},
 		verifyHouseholdPersonalInfo() {
 			this.$refs.householdPersonalInfo_1.verifyFormContents() ?
@@ -379,7 +381,7 @@ export default {
 	},
 	mounted() 
 	{
-		EventBus.$on('DATA_HOUSHOLD_COUNT_UPDATED', (householdCountPayload) => {
+		EventBus.$on('DATA_HOUSEHOLD_COUNT_UPDATED', (householdCountPayload) => {
 			this.setNumberOfHouseholdMembers(householdCountPayload)
 		})
 	},
