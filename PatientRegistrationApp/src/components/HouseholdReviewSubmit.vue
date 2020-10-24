@@ -12,9 +12,9 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">Line Address</span></div>
-				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">City Address, 
-					District, State, Country, Postal Code</span></div>
+				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress}}</span></div>
+				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, 
+					{{dataHouseholdHomeAddress.householdDistrictAddress}}, {{dataHouseholdHomeAddress.householdStateAddress}}, {{dataHouseholdHomeAddress.householdCountryAddress}}, {{dataHouseholdHomeAddress.householdPostalCode}}</span></div>
 			</v-col>
 		</v-row>
 
@@ -405,7 +405,7 @@ import EventBus from '../eventBus'
 	export default {
 	data () {
 		return {
-			numberOfHouseholdMembers: 2
+			numberOfHouseholdMembers: 2,
 			/*dataPersonalInfo:
 			{
 				familyName: '',
@@ -416,24 +416,24 @@ import EventBus from '../eventBus'
 				patientPhoto: '../assets/blankPicture.png',
 				raceSelections: 'N/A',
 				ethnicitySelection: 'N/A'
-			},
-			dataEmergencyContact:
+			},*/
+			/*dataEmergencyContact:
 			{
 				emergencyContactFamilyName: '',
 				emergencyContactFivenName: '',
 				emergencyContactPhoneNumber: '',
 				emergencyContactPhoneNumberType: ''
-			},
-			dataHomeAddress:
+			},*/
+			dataHouseholdHomeAddress:
 			{
-				lineAddress: '',
-				cityAddress: '',
-				districtAddress: '',
-				stateAddress: '',
-				countryAddress: '',
-				postalCode: ''
+				householdLineAddress: '',
+				householdCityAddress: '',
+				householdDistrictAddress: '',
+				householdStateAddress: '',
+				householdCountryAddress: '',
+				householdPostalCode: ''
 			},	
-			dataContactInfo:
+			/*dataContactInfo:
 			{
 				patientPhoneNumber: '',
 				patientPhoneNumberType: '',
@@ -448,9 +448,15 @@ import EventBus from '../eventBus'
 		{
 			this.numberOfHouseholdMembers = householdCountPayload.householdCount
 		},
+		updateHomeAddressData(householdHomeAddressPayload) {
+			this.dataHouseholdHomeAddress = householdHomeAddressPayload
+		},
 	},
 	mounted() 
 	{
+		EventBus.$on('DATA_HOUSEHOLD_ADDRESS_INFO_PUBLISHED', (householdHomeAddressPayload) => {
+			this.updateHomeAddressData(householdHomeAddressPayload)
+		}),
 		EventBus.$on('DATA_HOUSHOLD_COUNT_UPDATED', (householdCountPayload) => {
 			this.setNumberOfHouseholdMembers(householdCountPayload)
 		})

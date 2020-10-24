@@ -1,6 +1,5 @@
 <template>
 	<v-container fluid>
-	
 		<v-row>
 			<v-col cols="12" sm="6" md="3">
 				<v-text-field
@@ -74,7 +73,7 @@
 </template>
 
 <script>
-//import EventBus from '../eventBus'
+import EventBus from '../eventBus'
 
   export default {
 	data () {
@@ -106,18 +105,18 @@
 		
 	},
 	methods: {
-		/*sendHouseholdHomeAddressInfoToHouseholdReviewPage()
+		sendHouseholdHomeAddressInfoToReviewPage()
 		{
-		const householdHomeAddressPayload = {
-			householdLineAddress: this.householdLineAddress,
-			householdCityAddress: this.householdCityAddress,
-			householdDistrictAddress: this.householdDistrictAddress,
-			householdStateAddress: this.householdStateAddress,
-			householdCountryAddress: this.householdCountryAddress,
-			householdPostalCode: this.householdPostalCode
-		}
-		EventBus.$emit('DATA_ADDRESS_INFO_PUBLISHED', householdHomeAddressPayload)
-		},*/
+			const householdHomeAddressPayload = {
+				householdLineAddress: this.householdLineAddress,
+				householdCityAddress: this.householdCityAddress,
+				householdDistrictAddress: this.householdDistrictAddress,
+				householdStateAddress: this.householdStateAddress,
+				householdCountryAddress: this.householdCountryAddress,
+				householdPostalCode: this.householdPostalCode
+			}
+			EventBus.$emit('DATA_HOUSEHOLD_ADDRESS_INFO_PUBLISHED', householdHomeAddressPayload)
+		},
 		verifyFormContents()
 		{
 			//add logic to check form contents
@@ -165,7 +164,7 @@
 				return false
 			}
 			
-			//this.sendHouseholdHomeAddressInfoToReviewPage();
+			this.sendHouseholdHomeAddressInfoToReviewPage();
 			return true;
 		}
 	},
