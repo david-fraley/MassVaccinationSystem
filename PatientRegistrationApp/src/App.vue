@@ -1,32 +1,31 @@
 <template>
-  <v-app id="Patient-registration"> <!--style="background: #F5F5F5"--> 
+  <v-app id="Patient-registration"> 
     <v-main>
 		<v-container>
-			<v-card flat> 
-				<v-stepper v-model="page" class="elevation-0">	
+			<v-card class="elevation-12" min-width="400" max-width="1000"> 
+				<v-stepper v-model="page" class="elevation-0">
 					<v-toolbar flat color="primary" dark>
 						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
-						<v-toolbar-title>{{title}}</v-toolbar-title>
+						<v-spacer /><v-toolbar-title style="font-size:2em" class="font-weight-bold">{{title}}</v-toolbar-title> <v-spacer />
 					</v-toolbar>
 					<!-- v-stepper-header is the progress bar along the top of the page -->
 					<v-stepper-header class="elevation-0">
-						<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">
-							<template v-for="n in getNumberOfSteps()">
-								<v-stepper-step
-									:key="`${n}-step`"
-									:complete="page > n"
-									color="accent"
-									:step="n" 
-								>
-								</v-stepper-step>
+						<template v-for="n in getNumberOfSteps()">
+							<v-stepper-step
+								:key="`${n}-step`"
+								:complete="page > n"
+								color="accent"
+								:step="n" 
+							>
+							</v-stepper-step>
 
-								<v-divider
-									v-if="n !== getNumberOfSteps()"
-									:key="n"
-								></v-divider>
-							</template>
+							<v-divider
+								v-if="n !== getNumberOfSteps()"
+								:key="n"
+							></v-divider>
 						</template>
 					</v-stepper-header>
+		
 					
 					<!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
 					<v-stepper-items>
@@ -59,7 +58,7 @@
 							<!-- Single Patient: Home Address -->
 							<v-stepper-content step="2">
 								<v-toolbar flat >
-									<v-toolbar-title>Enter your home address</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Enter your home address</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientHomeAddress ref="singlepatienthomeaddress"/></v-card>				
 								<v-card-actions>
@@ -76,7 +75,7 @@
 							<!-- Single Patient: Contact Info -->
 							<v-stepper-content step="3">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter your contact information</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Enter your contact information</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientContactInfo ref="singlepatientcontactinfo"/></v-card>
 								<v-card-actions>
@@ -93,7 +92,7 @@
 							<!-- Single Patient: Personal Info -->
 							<v-stepper-content step="4">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter your personal information</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Enter your personal information</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/></v-card>							
 								<v-card-actions>
@@ -110,7 +109,7 @@
 							<!-- Single Patient: Emergency Contact -->
 							<v-stepper-content step="5">
 								<v-toolbar flat>
-									<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Specify an emergency contact</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientEmergencyContact ref="singlepatientemergencycontact"/></v-card>
 								<v-card-actions>
@@ -127,7 +126,7 @@
 							<!-- Single Patient: Review and Submit -->
 							<v-stepper-content step="6">
 								<v-toolbar flat>
-									<v-toolbar-title>Review and submit registration</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Review and submit registration</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientReviewSubmit/></v-card>
 								<v-card-actions>
@@ -148,9 +147,9 @@
 							<!-- Household: Register Number of People -->
 							<v-stepper-content step="2">
 								<v-toolbar flat>
-									<v-toolbar-title>Register your household</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Register your household</v-toolbar-title>
 								</v-toolbar>
-								<v-card flat><HouseholdRegisterNumber ref="householdregisternumber"/></v-card>				
+								<v-card flat><HouseholdRegisterNumber/></v-card>				
 								<v-card-actions>
 									<v-icon large color="secondary" @click="goToPreviousPage()">
 										mdi-chevron-left
@@ -165,7 +164,7 @@
 							<!-- Household: Address -->
 							<v-stepper-content step="3">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter your household address</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Enter your household address</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdHomeAddress ref="householdhomeaddress"/></v-card>				
 								<v-card-actions>
@@ -182,7 +181,7 @@
 							<!-- Household: Contact Info -->
 							<v-stepper-content step="4">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter your household contact information</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Enter your household contact information</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdContactInfo/></v-card>				
 								<v-card-actions>
@@ -199,7 +198,7 @@
 							<!-- Household: Personal Info -->
 							<v-stepper-content step="5">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter your personal information</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Enter your personal information</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"/></v-card>				
 								<v-card-actions>
@@ -216,9 +215,9 @@
 							<!-- Household: Emergency Contact -->
 							<v-stepper-content step="6">
 								<v-toolbar flat>
-									<v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-toolbar>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Specify your emergency contact</v-toolbar-title></v-toolbar>
 								<v-toolbar flat>
-									<v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader>
+									<v-spacer /><v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader><v-spacer />
 								</v-toolbar>
 								<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
 								<v-card-actions>
@@ -235,7 +234,7 @@
 							<!-- Household: Review and submit -->
 							<v-stepper-content step="7">
 								<v-toolbar flat>
-									<v-toolbar-title>Review and submit registration</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-bold">Review and submit registration</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdReviewSubmit/></v-card>				
 								<v-card-actions>
@@ -271,7 +270,6 @@ import HouseholdPersonalInfo_1 from './components/HouseholdPersonalInfo_1';
 import HouseholdEmergencyContact from './components/HouseholdEmergencyContact';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import config from './config.js';
-import EventBus from './eventBus'
 
 export default {
 	name: 'App',
@@ -304,9 +302,7 @@ export default {
 			this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE);
 		},	
 		verifyHouseholdRegisterNumber() {
-			this.$refs.householdregisternumber.verifyFormContents() ?
-			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE) :
-			this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE);
+			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdHomeAddress() {
 			this.$refs.householdhomeaddress.verifyFormContents() ?
@@ -331,10 +327,6 @@ export default {
 		},
 		setHouseholdRegistration() {
 			this.registrationPath = config.selectedRegistrationPath.HOUSEHOLD_REGISTRATION_PATH;
-		},
-		setNumberOfHouseholdMembers(householdCountPayload)
-		{
-			this.numberOfHouseholdMembers = householdCountPayload.householdCount
 		},
 		isSinglePatientRegistration() {
 			let returnValue = true;
@@ -365,23 +357,9 @@ export default {
 		},
 		getNumberOfSteps() {
 			let numberOfSteps = 0;
-			if(this.isSinglePatientRegistration())
-			{
-				numberOfSteps = config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE;
-			}
-			else if(this.isHouseholdRegistration())
-			{
-				numberOfSteps = this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE;
-			}
-				
+			this.isSinglePatientRegistration() ? numberOfSteps = config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE : numberOfSteps = config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE;
 			return numberOfSteps;
 		}
-	},
-	mounted() 
-	{
-		EventBus.$on('DATA_HOUSHOLD_COUNT_UPDATED', (householdCountPayload) => {
-			this.setNumberOfHouseholdMembers(householdCountPayload)
-		})
 	},
 	components: 
 	{
@@ -403,7 +381,6 @@ export default {
 			page: config.registrationPages.GREETING_PAGE,
 			title: 'COVID-19 Vaccination Registration',
 			registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
-			numberOfHouseholdMembers: 2
 			}
 		},
   }
