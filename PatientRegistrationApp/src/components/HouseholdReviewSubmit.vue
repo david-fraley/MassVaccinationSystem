@@ -37,365 +37,43 @@
 		</v-row>
 
 		<v-row>	
-			<v-col cols="6">
-				<v-card class="pa-2" outlined tile>
-					<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
-					<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-					{{dataHouseholdPersonalInfo.householdGivenName}} {{dataHouseholdPersonalInfo.householdSuffix}}</span></div>
-					<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdBirthDate}}</span></div>
-					<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdGender}}</span></div>
-					<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdRaceSelections}}</span></div>
-					<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdEthnicitySelection}}</span></div>
-					<div class="font-weight-light primary--text">Emergency Contact</div>
-					<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactFamilyName}}, 
-					{{dataHouseholdEmergencyContact.householdEmergencyContactGivenName}}</span></div>
-					<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumber}} 
-					({{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumberType}})</span></div>
+			<v-col cols="12">
+				<v-card class="d-flex flex-wrap" flat>
+					<v-card class="pa-2" flat min-width=33%>
+						<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
+						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
+						{{dataHouseholdPersonalInfo[0].householdGivenName}} {{dataHouseholdPersonalInfo[0].householdSuffix}}</span></div>
+						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdBirthDate}}</span></div>
+						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdGender}}</span></div>
+						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdRaceSelections}}</span></div>
+						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdEthnicitySelection}}</span></div>
+						<div class="font-weight-light primary--text">Emergency Contact</div>
+						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactFamilyName}}, 
+						{{dataHouseholdEmergencyContact.householdEmergencyContactGivenName}}</span></div>
+						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumber}} 
+						({{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumberType}})</span></div>
+					</v-card>
+			
+					<v-card 
+						v-for="n in numberOfHouseholdMembers-1"
+						:key="n"
+						class="pa-2" flat min-width=33%>
+						<div class="font-weight-medium primary--text">Personal Info: Household Member #{{n+1}}</div>
+						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdFamilyName}}, 
+						{{dataHouseholdPersonalInfo[1].householdGivenName}} {{dataHouseholdPersonalInfo[1].householdSuffix}}</span></div>
+						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdBirthDate}}</span></div>
+						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdGender}}</span></div>
+						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdRaceSelections}}</span></div>
+						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdEthnicitySelection}}</span></div>
+						<div class="font-weight-light primary--text">Emergency Contact</div>
+						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
+						{{dataHouseholdPersonalInfo[0].householdGivenName}}</span></div>
+						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
+						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
+					</v-card>
 				</v-card>
 			</v-col>
-			<v-col cols="6">
-				<v-card class="pa-2" outlined tile>
-					<div class="font-weight-medium primary--text">Personal Info: Household Member #2</div>
-					<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-					Given name Suffix</span></div>
-					<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-					<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-					<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-					<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-					<div class="font-weight-light primary--text">Emergency Contact</div>
-					<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-					{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-					<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-					({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-				</v-card>
-			</v-col>
-			<template v-if="numberOfHouseholdMembers >=3">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #3</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=4">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #4</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>	
-			</template>
-			<template v-if="numberOfHouseholdMembers >=5">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #5</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=6">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #6</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>	
-			</template>
-			<template v-if="numberOfHouseholdMembers >=7">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #7</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=8">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #8</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>	
-			</template>
-			<template v-if="numberOfHouseholdMembers >=9">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #9</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=10">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #10</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=11">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #11</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=12">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #12</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=13">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #13</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=14">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #14</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>	
-			</template>
-			<template v-if="numberOfHouseholdMembers >=15">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #15</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=16">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #16</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=17">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #17</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=18">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #18</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>	
-			</template>
-			<template v-if="numberOfHouseholdMembers >=19">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #19</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
-			<template v-if="numberOfHouseholdMembers >=20">
-				<v-col cols="6">
-					<v-card class="pa-2" outlined tile>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #20</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">Family name, 
-						Given name Suffix</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">Birth date</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">Gender ID</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">Race(s)</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">Ethnicity</span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo.householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo.householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
-				</v-col>
-			</template>
 		</v-row>
-
-
 	</v-container>
 </template>
 
@@ -406,17 +84,16 @@ import EventBus from '../eventBus'
 	data () {
 		return {
 			numberOfHouseholdMembers: 2,
-			dataHouseholdPersonalInfo:
-			{
-				householdFamilyName: '',
-				householdGivenName: '',
-				householdSuffix: '',
-				householdBirthDate: '',
-				householdGender: '',
-				householdPatientPhoto: '',
-				householdRaceSelections: 'N/A',
-				householdEthnicitySelection: 'N/A',
-			},
+			dataHouseholdPersonalInfo: [
+				{householdFamilyName: ''},
+				{householdGivenName: ''},
+				{householdSuffix: ''},
+				{householdBirthDate: ''},
+				{householdGender: ''},
+				{householdPatientPhoto: ''},
+				{householdRaceSelections: 'N/A'},
+				{householdEthnicitySelection: 'N/A'},
+			],
 			dataHouseholdEmergencyContact:
 			{
 				householdEmergencyContactFamilyName: '',
@@ -449,6 +126,7 @@ import EventBus from '../eventBus'
 	{
 		setNumberOfHouseholdMembers(householdCountPayload)
 		{
+			alert(householdCountPayload.householdCount)
 			this.numberOfHouseholdMembers = householdCountPayload.householdCount
 		},
 		updateHomeAddressData(householdHomeAddressPayload) {
@@ -458,8 +136,7 @@ import EventBus from '../eventBus'
 			this.dataHouseholdContactInfo = householdContactInfoPayload
 		},
 		updateHouseholdPersonalInfoData(householdPersonalInfoPayload, householdMemberNumber) {
-			this.dataHouseholdPersonalInfo = householdPersonalInfoPayload
-			alert(householdMemberNumber)
+			this.dataHouseholdPersonalInfo[householdMemberNumber-1] = householdPersonalInfoPayload
 		},
 		updateHouseholdEmergencyContactData(householdEmergencyContactPayload) {
 			this.dataHouseholdEmergencyContact = householdEmergencyContactPayload
