@@ -40,7 +40,7 @@ Best Ratio for large text (18pt or 14pt bolded) is **4.5:1**, normal text is **7
 Logos do not matter.
 
 Buttons need a **3:1** contrast ratio, except for when inactive.
-![Contrast Img](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7ecbe037-4e5b-4a64-ab9f-23f9756ac7d0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201018%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201018T210251Z&X-Amz-Expires=86400&X-Amz-Signature=c2da81a83e8b76ae18f3ee32023c22006806cafc705489b75a99018a5e027c6c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![media/contrastFormula.png](media/contrastFormula.png)
 
 [Decoration, Formatting, Invisible](https://www.w3.org/TR/WCAG21/#non-text-content)
 If non-text content is [pure decoration](https://www.w3.org/TR/WCAG21/#dfn-pure-decoration), is used only for visual formatting, or is not presented to users, then it is implemented in a way that it can be ignored by [assistive technology](https://www.w3.org/TR/WCAG21/#dfn-assistive-technologies). 
