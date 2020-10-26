@@ -33,6 +33,8 @@ Make the programmatic label (name="Submit") of text or button the same as the te
 ##
 **Contrast** between elements and background needs to be of a certain ratio, determined by this formula. [https://www.w3.org/TR/WCAG21/#contrast-minimum](https://www.w3.org/TR/WCAG21/#contrast-minimum) 
 
+![media/contrastFormula.png](media/contrastFormula.png)
+
 Minimum Ratio for large text (18pt or 14pt bolded) is **3:1**, normal text is **4.5:1** 
 
 Best Ratio for large text (18pt or 14pt bolded) is **4.5:1**, normal text is **7:1** 
@@ -40,7 +42,7 @@ Best Ratio for large text (18pt or 14pt bolded) is **4.5:1**, normal text is **7
 Logos do not matter.
 
 Buttons need a **3:1** contrast ratio, except for when inactive.
-![media/contrastFormula.png](media/contrastFormula.png)
+
 
 [Decoration, Formatting, Invisible](https://www.w3.org/TR/WCAG21/#non-text-content)
 If non-text content is [pure decoration](https://www.w3.org/TR/WCAG21/#dfn-pure-decoration), is used only for visual formatting, or is not presented to users, then it is implemented in a way that it can be ignored by [assistive technology](https://www.w3.org/TR/WCAG21/#dfn-assistive-technologies). 
