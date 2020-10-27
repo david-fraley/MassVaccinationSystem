@@ -15,7 +15,7 @@ const courses = [
 // Get all patients
 app.get('/Patients', (req, res) => {
     
-    axios.get('http://localhost:8080/hapi-fhir-jpaserver/fhir/Patient')
+    axios.get('http://hapi:8080/hapi-fhir-jpaserver/fhir/Patient')
         .then((response) => {
             // handle success
             res.send(JSON.stringify(response.data));
@@ -33,7 +33,7 @@ app.get('/Patients', (req, res) => {
 // Get all organizations
 app.get('/Organizations', (req, res) => {
     
-    axios.get('http://localhost:8080/hapi-fhir-jpaserver/fhir/Organization')
+    axios.get('http://hapi:8080/hapi-fhir-jpaserver/fhir/Organization')
         .then((response) => {
             // handle success
             res.send(JSON.stringify(response.data));
@@ -51,7 +51,7 @@ app.get('/Organizations', (req, res) => {
 // Search patients
 app.get('/Patients2', (req, res) => {
     
-    axios.get('http://localhost:8080/hapi-fhir-jpaserver/fhir/Patient?gender=male')
+    axios.get('http://hapi:8080/hapi-fhir-jpaserver/fhir/Patient?gender=male')
         .then((response) => {
             // handle success
             res.send(JSON.stringify(response.data));
@@ -140,5 +140,5 @@ function validateCourse(course) {
 }
 
 
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}`));
