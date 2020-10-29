@@ -10,9 +10,12 @@
 				cols="9" 
 				sm="9">
 				<v-select
-					:items="items"
+					:items="preferredLanguage"
 					label="Please select your preferred language"
+					required
+					:rules="[v => !!v || 'Gender identity field is required']"
 					dense
+					v-model="preferredLanguage"
 				></v-select>
 			</v-col>
 		</v-row>
@@ -75,15 +78,24 @@
 	</v-container>
 </template>
 
-<script>
 
-  export default {
-    name: 'GreetingPage',
-	data: () => ({
-	items: ['English','Spanish'],
+
+<script>
+import EventBus from '../eventBus'
+
+export default {
+  name: "GreetingPage",
+  data: () => ({
+	preferredLanguage: ['English','Spanish'],
+	
+	 preferredLanguage: '',
 	}),
+      
+     
+ 
 	methods: {
-		singleRegistration()
+  
+	singleRegistration()
 		{
 			this.$emit("singleRegistration");
 		},
@@ -91,6 +103,32 @@
 		{
 			this.$emit("householdRegistration");
 		}
-	}
-  }
+	sendGreetingPageInfoToReviewPage()
+	{
+		const greetingPagePayload = {
+		preferredLanguage: this.preferredLanguage,
+		}
+		EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)
+	}, 
+	verifyFormContents()
+    {
+		//add logic to check form contents
+		var valid = true
+		var message = "Woops! You need to enter the following fields:"
+	
+			if (this.preferredLanguage == "") {
+			message += "*Preferred Language"
+			valid = false
+			}
+			if (valid == false) {
+				alert(message)
+				return false
+			}
+	
+      this.sendGreetingPageInfoToReviewPage();
+      return true;
+    }
+  },
+} 
 </script>
+
