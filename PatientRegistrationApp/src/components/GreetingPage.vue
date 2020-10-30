@@ -13,7 +13,7 @@
 					:items="preferredLanguage"
 					label="Please select your preferred language"
 					required
-					:rules="[v => !!v || 'Gender identity field is required']"
+					:rules="[v => !!v || 'Preferred language field is required']"
 					dense
 					v-model="preferredLanguage"
 				></v-select>
@@ -84,11 +84,10 @@
 import EventBus from '../eventBus'
 
 export default {
-  name: "GreetingPage",
-  data: () => ({
-	preferredLanguage: ['English','Spanish'],
+	name: "GreetingPage",
+	data: () => ({
+		preferredLanguage: ['English','Spanish'],
 	
-	 preferredLanguage: '',
 	}),
       
      
@@ -102,7 +101,7 @@ export default {
 		householdRegistration()
 		{
 			this.$emit("householdRegistration");
-		}
+		},
 	sendGreetingPageInfoToReviewPage()
 	{
 		const greetingPagePayload = {
