@@ -1,6 +1,5 @@
 <template>
 	<v-container fluid>
-	
 		<v-row align="center" justify="center">
 			<v-heading> Please review all entries before submitting the registration! </v-heading>
 		</v-row>
@@ -59,12 +58,12 @@
 						:key="n"
 						class="pa-2" flat min-width=33%>
 						<div class="font-weight-medium primary--text">Personal Info: Household Member #{{n+1}}</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo[1].householdGivenName}} {{dataHouseholdPersonalInfo[1].householdSuffix}}</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdBirthDate}}</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdGender}}</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdRaceSelections}}</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[1].householdEthnicitySelection}}</span></div>
+						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[n].householdFamilyName}}, 
+						{{dataHouseholdPersonalInfo[n].householdGivenName}} {{dataHouseholdPersonalInfo[n].householdSuffix}}</span></div>
+						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[n].householdBirthDate}}</span></div>
+						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[n].householdGender}}</span></div>
+						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[n].householdRaceSelections}}</span></div>
+						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[n].householdEthnicitySelection}}</span></div>
 						<div class="font-weight-light primary--text">Emergency Contact</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
 						{{dataHouseholdPersonalInfo[0].householdGivenName}}</span></div>
@@ -126,7 +125,6 @@ import EventBus from '../eventBus'
 	{
 		setNumberOfHouseholdMembers(householdCountPayload)
 		{
-			alert(householdCountPayload.householdCount)
 			this.numberOfHouseholdMembers = householdCountPayload.householdCount
 		},
 		updateHomeAddressData(householdHomeAddressPayload) {
