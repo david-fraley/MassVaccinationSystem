@@ -10,7 +10,7 @@
 				cols="9" 
 				sm="9">
 				<v-select
-					:items="preferredLanguage"
+					:items="preferredLanguageOptions"
 					label="Please select your preferred language"
 					required
 					:rules="[v => !!v || 'Preferred language field is required']"
@@ -86,7 +86,8 @@ import EventBus from '../eventBus'
 export default {
 	name: "GreetingPage",
 	data: () => ({
-		preferredLanguage: ['English','Spanish'],
+		preferredLanguageOptions: ['English','Spanish'],
+		preferredLanguage: ''
 	
 	}),
       

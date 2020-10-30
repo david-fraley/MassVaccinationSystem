@@ -33,7 +33,8 @@
 						<v-stepper-content step="1">
 							<v-card flat>			
 								<!--listen for changes in the button selections-->				
-								<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"/>
+								<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"
+								ref="greetingpage"/>
 							</v-card>
 							<v-card-actions>								
 								<v-spacer></v-spacer>
@@ -355,10 +356,16 @@ export default {
 			this.goToPage(currentPage)
 		},
 		advanceToSinglePatientRegistration() {
-			this.goToPage(config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE)
+			if(this.$refs.greetingpage.verifyFormContents())
+			{
+				this.goToPage(config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE)
+			}
 		},
 		advanceToHouseholdRegistration() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE)
+			if(this.$refs.greetingpage.verifyFormContents())
+			{
+				this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE)
+			}
 		},
 		getNumberOfSteps() {
 			let numberOfSteps = 0;
