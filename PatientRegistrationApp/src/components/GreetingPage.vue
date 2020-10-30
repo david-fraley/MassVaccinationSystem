@@ -108,7 +108,7 @@ export default {
 		const greetingPagePayload = {
 		preferredLanguage: this.preferredLanguage,
 		}
-		EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)
+		EventBus.$emit('DATA_LANGUAGE_INFO_PUBLISHED', greetingPagePayload)
 	}, 
 	verifyFormContents()
     {
