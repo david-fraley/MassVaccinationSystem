@@ -232,10 +232,26 @@
 								</v-card-actions>
 							</v-stepper-content>
 
-							<!-- Household: Review and submit -->
 							<v-stepper-content step="7">
 								<v-toolbar flat>
-									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and Submit Registration</v-toolbar-title>
+									<v-toolbar-title>Enter personal information for household member #2</v-toolbar-title>
+								</v-toolbar>
+								<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_n"/></v-card>				
+								<v-card-actions>
+									<v-icon large color="secondary" @click="goToPreviousPage()">
+										mdi-chevron-left
+									</v-icon>
+									<v-spacer></v-spacer>
+									<v-icon large color="secondary" @click="verifyHouseholdPersonalInfo_n()">
+										mdi-chevron-right
+									</v-icon>
+								</v-card-actions>
+							</v-stepper-content>
+
+							<!-- Household: Review and submit -->
+							<v-stepper-content step="8">
+								<v-toolbar flat>
+									<v-toolbar-title>Review and submit registration</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdReviewSubmit/></v-card>				
 								<v-card-actions>
@@ -269,6 +285,7 @@ import HouseholdHomeAddress from './components/HouseholdHomeAddress';
 import HouseholdContactInfo from './components/HouseholdContactInfo';
 import HouseholdPersonalInfo_1 from './components/HouseholdPersonalInfo_1';
 import HouseholdEmergencyContact from './components/HouseholdEmergencyContact';
+import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import config from './config.js';
 
@@ -316,7 +333,7 @@ export default {
 			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdContactInfo() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PAGE);
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
 		},
 		verifyHouseholdPersonalInfo() {
 			this.$refs.householdPersonalInfo_1.verifyFormContents() ?
@@ -325,8 +342,13 @@ export default {
 		},
 		verifyHouseholdEmergencyContact() {
 			this.$refs.householdemergencycontact.verifyFormContents() ?
-			this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE):
 			this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
+		},
+		verifyHouseholdPersonalInfo_n() {
+			this.$refs.householdPersonalInfo_n.verifyFormContents() ?
+			this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE);
 		},
 		setSinglePatientRegistration() {
 			this.registrationPath = config.selectedRegistrationPath.SINGLE_PATIENT_REGISTRATION_PATH;
@@ -386,6 +408,7 @@ export default {
 		HouseholdContactInfo,
 		HouseholdPersonalInfo_1,
 		HouseholdEmergencyContact,
+		HouseholdPersonalInfo_n,
 		HouseholdReviewSubmit
 	},
 	data () {
