@@ -259,7 +259,7 @@
 											mdi-chevron-left
 										</v-icon>
 										<v-spacer></v-spacer>
-										<v-icon large color="secondary" @click="submit()">
+										<v-icon large color="secondary" @click="goToNextPage()">
 											mdi-chevron-right
 										</v-icon>
 						</v-footer>
@@ -316,6 +316,7 @@ export default {
 			this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE);
 		},	
 		verifyHouseholdRegisterNumber() {
+			alert('verifyhouseholdregisternumber')
 			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdHomeAddress() {
@@ -324,7 +325,7 @@ export default {
 			this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 		},
 		verifyHouseholdContactInfo() {
-			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PAGE);
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
 		},
 		verifyHouseholdPersonalInfo() {
 			this.$refs.householdPersonalInfo_1.verifyFormContents() ?
@@ -362,6 +363,74 @@ export default {
 			(currentPage > config.registrationPages.GREETING_PAGE) ? currentPage-- : currentPage;
 			
 			this.goToPage(currentPage)
+		},
+		goToNextPage()
+		{
+			if(this.isSinglePatientRegistration())
+			{
+				switch(this.page)
+				{
+					case config.registrationPages.GREETING_PAGE:
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE)
+						break;
+					case config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE:
+						this.$refs.singlepatienthomeaddress.verifyFormContents() ? 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_CONTACT_INFO_PAGE) : 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE);
+						break;
+					case config.registrationPages.SINGLE_PATIENT_CONTACT_INFO_PAGE:
+						this.$refs.singlepatientcontactinfo.verifyFormContents() ? 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_PERSONAL_INFO_PAGE) : 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_CONTACT_INFO_PAGE);
+						break;
+					case config.registrationPages.SINGLE_PATIENT_PERSONAL_INFO_PAGE:
+						this.$refs.singlepatientpersonalinfo.verifyFormContents() ? 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE) : 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_PERSONAL_INFO_PAGE);
+						break;
+					case config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE:
+						this.$refs.singlepatientemergencycontact.verifyFormContents() ? 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE) : 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE);
+						break;
+					default:
+						alert(this.page)
+						break;
+				}									
+			}
+			else if(this.isHouseholdRegistration())
+			{
+				switch(this.page)
+				{
+					case config.registrationPages.GREETING_PAGE:
+						this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE)
+						break;
+					case config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE:
+						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
+						break;
+					case config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE:
+						this.$refs.householdhomeaddress.verifyFormContents() ?
+						this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE) :
+						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
+						break;
+					case config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE:
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
+						break;
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE:
+						this.$refs.householdPersonalInfo_1.verifyFormContents() ?
+						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
+						break;
+					case config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE:
+						this.$refs.householdemergencycontact.verifyFormContents() ?
+						this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
+						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
+						break;
+					default:
+						alert(this.page)
+						break;
+				}
+			}
 		},
 		advanceToSinglePatientRegistration() {
 			this.goToPage(config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE)
