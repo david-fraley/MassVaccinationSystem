@@ -14,7 +14,8 @@ export default {
         HOUSEHOLD_CONTACT_INFO_PAGE: 4,
         HOUSEHOLD_PERSONAL_INFO_1_PAGE: 5,
         HOUSEHOLD_EMERGENCY_CONTACT_PAGE: 6,
-        HOUSEHOLD_REVIEW_SUBMIT_PAGE: 7   
+        HOUSEHOLD_PERSONAL_INFO_N_PAGE: 7,
+        HOUSEHOLD_REVIEW_SUBMIT_PAGE: 8   
     },
 
     selectedRegistrationPath:
