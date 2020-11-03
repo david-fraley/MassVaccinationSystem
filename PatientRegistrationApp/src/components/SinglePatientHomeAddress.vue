@@ -78,6 +78,13 @@ import EventBus from '../eventBus'
   export default {
 	data () {
 		return {
+			postalCodeRules: [
+        (v) => !!v || "Zip code is required",
+			(v) =>
+			/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+          "Zip code must be in format of ##### or #####-####",
+      ],
+			
 			state:[
 		'Alabama', 'Alaska', 'American Samoa', 'Arizona',
 		'Arkansas', 'California', 'Colorado', 'Connecticut',
