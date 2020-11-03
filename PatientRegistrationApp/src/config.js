@@ -25,3 +25,8 @@ export default {
         HOUSEHOLD_REGISTRATION_PATH: 2
     }
 }
+export const FontSizes = Object.freeze({
+    FONTLARGE: '3em', 
+    FONTSMALL: '1em', 
+    FONTMEDIUM: '1.5em'
+    });
