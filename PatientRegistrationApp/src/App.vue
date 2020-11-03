@@ -6,7 +6,7 @@
 				<v-stepper v-model="page" class="elevation-0">
 					<v-toolbar flat color="primary" dark>
 						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
-						<v-spacer /><v-toolbar-title>{{title}}</v-toolbar-title> <v-spacer />
+						<v-spacer /><v-toolbar-title style: FontSizes.FONTLARGE>{{title}}</v-toolbar-title> <v-spacer />
 					</v-toolbar>
 					<!-- v-stepper-header is the progress bar along the top of the page -->
 					<v-stepper-header class="elevation-0">
@@ -288,6 +288,7 @@ import HouseholdEmergencyContact from './components/HouseholdEmergencyContact';
 import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import config from './config.js';
+import FontSizes from './config.js';
 
 export default {
 	name: 'App',
@@ -409,7 +410,9 @@ export default {
 		HouseholdPersonalInfo_1,
 		HouseholdEmergencyContact,
 		HouseholdPersonalInfo_n,
-		HouseholdReviewSubmit
+		HouseholdReviewSubmit,
+		FONTLARGE,
+		FONTMEDIUM,
 	},
 	data () {
 		return {
