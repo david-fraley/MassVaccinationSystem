@@ -117,7 +117,7 @@ export default {
 		var message = "Woops! You need to enter the following field:"
 	
 			if (this.preferredLanguage == "") {
-			message += "Preferred Language"
+			message += " Preferred Language"
 			valid = false
 			}
 			if (valid == false) {
