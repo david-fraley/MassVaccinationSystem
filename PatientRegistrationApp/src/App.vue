@@ -332,23 +332,23 @@ export default {
 		},
 		verifyHouseholdContactInfo() {
 			this.$refs.householdcontactinfo.verifyFormContents() ?
-			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE) :
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE) :
 			this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
 		},
 		verifyHouseholdPersonalInfo() {
 			this.$refs.householdPersonalInfo_1.verifyFormContents() ?
 			this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
-			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE);
 		},
 		verifyHouseholdEmergencyContact() {
 			this.$refs.householdemergencycontact.verifyFormContents() ?
-			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE):
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE):
 			this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 		},
 		verifyHouseholdPersonalInfo_n() {
 			this.$refs.householdPersonalInfo_n.verifyFormContents() ?
 			this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
-			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE);
+			this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE);
 		},
 		setSinglePatientRegistration() {
 			this.registrationPath = config.selectedRegistrationPath.SINGLE_PATIENT_REGISTRATION_PATH;
