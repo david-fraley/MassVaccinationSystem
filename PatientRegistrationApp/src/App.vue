@@ -9,7 +9,6 @@
 							<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
 							<v-toolbar-title>{{title}}</v-toolbar-title>
 						</v-toolbar>
-						<!-- v-stepper-header is the progress bar along the top of the page -->
 						<v-stepper-header class="elevation-0">
 							<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">
 								<template v-for="n in getNumberOfSteps()">
@@ -33,8 +32,7 @@
 						<v-stepper-items>
 							<!-- Greeting Page -->
 							<v-stepper-content step="1">
-								<v-card flat>			
-									<!--listen for changes in the button selections-->				
+								<v-card flat>							
 									<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"/>
 								</v-card>
 							</v-stepper-content>
