@@ -55,7 +55,7 @@
 				<v-text-field
 					id = "zipcode"
 					required
-					:rules="[v => !!v || 'Zipcode field is required']"
+					:rules="postalCodeRules"
 					label="Zipcode"
 					v-model="postalCode"					
 				></v-text-field>
