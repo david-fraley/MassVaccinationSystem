@@ -193,6 +193,10 @@ export default {
       relationship:''
     };
   },
+  props:
+  {
+    householdMemberNumber: Number
+  },
   methods: {
     sendHouseholdPersonalInfoDataToReviewPage()
     {
@@ -206,8 +210,7 @@ export default {
         householdRaceSelections: this.householdRaceSelections,
         householdEthnicitySelection: this.householdEthnicitySelection
       }
-      const householdMemberNumber = 2
-      EventBus.$emit('DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED', householdPersonalInfoPayload, householdMemberNumber)
+      EventBus.$emit('DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED', householdPersonalInfoPayload, this.householdMemberNumber)
     },
     verifyFormContents()
     {

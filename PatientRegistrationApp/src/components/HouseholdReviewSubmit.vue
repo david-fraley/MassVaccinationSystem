@@ -52,25 +52,30 @@
 						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumber}} 
 						({{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumberType}})</span></div>
 					</v-card>
-			
-					<v-card 
-						v-for="n in numberOfHouseholdMembers-1"
-						:key="n"
-						class="pa-2" flat min-width=33%>
-						<div class="font-weight-medium primary--text">Personal Info: Household Member #{{n+1}}</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular"><!--{{dataHouseholdPersonalInfo[n].householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo[n].householdGivenName}} {{dataHouseholdPersonalInfo[n].householdSuffix}}--></span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular"><!--{{dataHouseholdPersonalInfo[n].householdBirthDate}}--></span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular"><!--{{dataHouseholdPersonalInfo[n].householdGender}}--></span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular"><!--{{dataHouseholdPersonalInfo[n].householdRaceSelections}}--></span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular"><!--{{dataHouseholdPersonalInfo[n].householdEthnicitySelection}}--></span></div>
-						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo[0].householdGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-					</v-card>
+
+					<template v-for="index in getNumberOfHouseholdMembers()-1">
+						<v-card class="pa-2" flat min-width=33%
+						:key="index">
+							<div class="font-weight-medium primary--text">Personal Info: Household Member #{{index+1}}</div>
+							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdFamilyName}}, 
+							{{dataHouseholdPersonalInfo[index].householdGivenName}} {{dataHouseholdPersonalInfo[index].householdSuffix}}</span></div>
+							<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdBirthDate}}</span></div>
+							<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdGender}}</span></div>
+							<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdRaceSelections}}</span></div>
+							<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdEthnicitySelection}}</span></div>
+							<div class="font-weight-light primary--text">Emergency Contact</div>
+							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
+							{{dataHouseholdPersonalInfo[0].householdGivenName}}</span></div>
+							<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
+							({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
+						</v-card>
+					</template>
 				</v-card>
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-col cols="12">
+			<p> </p>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -82,16 +87,47 @@ import EventBus from '../eventBus'
 	export default {
 	data () {
 		return {
-			numberOfHouseholdMembers: 2,
-			dataHouseholdPersonalInfo: [
-				{householdFamilyName: ''},
-				{householdGivenName: ''},
-				{householdSuffix: ''},
-				{householdBirthDate: ''},
-				{householdGender: ''},
-				{householdPatientPhoto: ''},
-				{householdRaceSelections: 'N/A'},
-				{householdEthnicitySelection: 'N/A'},
+			dataHouseholdPersonalInfo: [ //array for 20 patients
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
+				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
+					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
 			],
 			dataHouseholdEmergencyContact:
 			{
@@ -121,12 +157,12 @@ import EventBus from '../eventBus'
 			}
 		}
 	},
+	props:
+	{
+		numberOfHouseholdMembers: Number
+	},
 	methods:
 	{
-		setNumberOfHouseholdMembers(householdCountPayload)
-		{
-			this.numberOfHouseholdMembers = householdCountPayload.householdCount
-		},
 		updateHomeAddressData(householdHomeAddressPayload) {
 			this.dataHouseholdHomeAddress = householdHomeAddressPayload
 		},
@@ -134,17 +170,18 @@ import EventBus from '../eventBus'
 			this.dataHouseholdContactInfo = householdContactInfoPayload
 		},
 		updateHouseholdPersonalInfoData(householdPersonalInfoPayload, householdMemberNumber) {
-			this.dataHouseholdPersonalInfo[householdMemberNumber-1] = householdPersonalInfoPayload
+			this.$set(this.dataHouseholdPersonalInfo, householdMemberNumber-1, householdPersonalInfoPayload)
 		},
 		updateHouseholdEmergencyContactData(householdEmergencyContactPayload) {
 			this.dataHouseholdEmergencyContact = householdEmergencyContactPayload
 		},
+		getNumberOfHouseholdMembers()
+		{
+			return this.numberOfHouseholdMembers;
+		}
 	},
 	mounted() 
 	{
-		EventBus.$on('DATA_HOUSEHOLD_COUNT_UPDATED', (householdCountPayload) => {
-			this.setNumberOfHouseholdMembers(householdCountPayload)
-		}),
 		EventBus.$on('DATA_HOUSEHOLD_ADDRESS_INFO_PUBLISHED', (householdHomeAddressPayload) => {
 			this.updateHomeAddressData(householdHomeAddressPayload)
 		}),
