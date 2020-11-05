@@ -1,5 +1,5 @@
 <template>
-  <v-app id="Patient-registration"> <!--style="background: #F5F5F5"--> 
+  <v-app id="Patient-registration">  
     <v-main>
 		<v-container fill-height>
 			<v-layout justify-center align-center>
@@ -33,7 +33,8 @@
 							<!-- Greeting Page -->
 							<v-stepper-content step="1">
 								<v-card flat>							
-									<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"/>
+									<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"
+									ref="greetingpage"/>
 								</v-card>
 							</v-stepper-content>
 
@@ -104,7 +105,7 @@
 									<v-toolbar flat>
 										<v-toolbar-title>Enter your household contact information</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><HouseholdContactInfo/></v-card>				
+									<v-card flat><HouseholdContactInfo ref="householdcontactinfo"/></v-card>				
 								</v-stepper-content>
 
 								<!-- Household: Personal Info -->
@@ -201,7 +202,6 @@ import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import config from './config.js';
 import EventBus from './eventBus'
-
 export default {
 	name: 'App',
 	methods: 
@@ -305,22 +305,24 @@ export default {
 						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 						break;
 					case config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE:
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
+						this.$refs.householdcontactinfo.verifyFormContents()?
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE):
+						this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE:
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE:
 						this.$refs.householdPersonalInfo_1.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE);
 						break;
 					case config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE:
 						this.$refs.householdemergencycontact.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE:
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE:
 						this.$refs.householdPersonalInfo_n.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE);
 						break;
 					default:
 						alert(this.page)
@@ -344,7 +346,7 @@ export default {
 	},
 	mounted() 
 	{
-		EventBus.$on('DATA_HOUSHOLD_COUNT_UPDATED', (householdCountPayload) => {
+		EventBus.$on('DATA_HOUSEHOLD_COUNT_UPDATED', (householdCountPayload) => {
 			this.setNumberOfHouseholdMembers(householdCountPayload)
 		})
 	},
@@ -373,5 +375,4 @@ export default {
 			}
 		},
   }
-
 </script>

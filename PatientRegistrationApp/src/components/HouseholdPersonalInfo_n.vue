@@ -160,7 +160,7 @@
 </template>
 
 <script>
-//import EventBus from '../eventBus'
+import EventBus from '../eventBus'
 
 export default {
   data() {
@@ -194,20 +194,21 @@ export default {
     };
   },
   methods: {
-    /*sendPersonalInfoDataToReviewPage()
+    sendHouseholdPersonalInfoDataToReviewPage()
     {
-      const personalInfoPayload = {
-        familyName: this.familyName,
-        givenName: this.givenName,
-        suffix: this.suffix,
-        birthDate: this.date,
-        gender: this.gender,
-        patientPhoto: this.patientPhoto,
-        raceSelections: this.raceSelections,
-        ethnicitySelection: this.ethnicitySelection
+      const householdPersonalInfoPayload = {
+        householdFamilyName: this.householdFamilyName,
+        householdGivenName: this.householdGivenName,
+        householdSuffix: this.householdSuffix,
+        householdBirthDate: this.householdDate,
+        householdGender: this.householdGender,
+        householdPatientPhoto: this.householdPatientPhoto,
+        householdRaceSelections: this.householdRaceSelections,
+        householdEthnicitySelection: this.householdEthnicitySelection
       }
-      EventBus.$emit('DATA_PERSONAL_INFO_PUBLISHED', personalInfoPayload)
-    },*/
+      const householdMemberNumber = 2
+      EventBus.$emit('DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED', householdPersonalInfoPayload, householdMemberNumber)
+    },
     verifyFormContents()
     {
       var valid = true
@@ -248,7 +249,7 @@ export default {
           return false
         }
       
-        //this.sendPersonalInfoDataToReviewPage();
+        this.sendHouseholdPersonalInfoDataToReviewPage();
         return true;
     }
   },

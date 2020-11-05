@@ -34,7 +34,7 @@ watch: {
 			const householdCountPayload = {
 				householdCount: this.e1
 			}
-			EventBus.$emit('DATA_HOUSHOLD_COUNT_UPDATED', householdCountPayload)
+			EventBus.$emit('DATA_HOUSEHOLD_COUNT_UPDATED', householdCountPayload)
 		}
 	},
 },
