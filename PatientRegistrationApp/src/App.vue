@@ -260,7 +260,10 @@ export default {
 				switch(this.page)
 				{
 					case config.registrationPages.GREETING_PAGE:
-						this.goToPage(config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE)
+						if(this.$refs.greetingpage.verifyFormContents())
+						{
+							this.goToPage(config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE)
+						}
 						break;
 					case config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE:
 						this.$refs.singlepatienthomeaddress.verifyFormContents() ? 
@@ -292,7 +295,10 @@ export default {
 				switch(this.page)
 				{
 					case config.registrationPages.GREETING_PAGE:
-						this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE)
+						if(this.$refs.greetingpage.verifyFormContents())
+						{
+							this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE)
+						}
 						break;
 					case config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE:
 						this.$refs.householdregisternumber.verifyFormContents() ?
