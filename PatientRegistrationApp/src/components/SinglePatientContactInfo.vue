@@ -75,7 +75,7 @@ export default {
       emailRules: [
         (v) =>
           /^[\s]*$|.+@.+\..+/.test(v) ||
-          "E-mail must be in the format example@example.com",
+          "Please provide a valid e-mail address",
       ],
       patientPhoneNumber: '',
       patientPhoneNumberType: '',
