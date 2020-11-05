@@ -55,9 +55,9 @@
 				<v-text-field
 					id = "zipcode"
 					required
-					:rules="[v => !!v || 'Zipcode field is required']"
+					:rules="postalCodeRules"
 					label="Zipcode"
-					v-model="postalCode"
+					v-model="postalCode"					
 				></v-text-field>
 			</v-col>
 		</v-row>	
@@ -78,6 +78,13 @@ import EventBus from '../eventBus'
   export default {
 	data () {
 		return {
+			postalCodeRules: [
+        (v) => !!v || "Zip code is required",
+			(v) =>
+			/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+          "Zip code must be in format of ##### or #####-####",
+      ],
+			
 			state:[
 		'Alabama', 'Alaska', 'American Samoa', 'Arizona',
 		'Arkansas', 'California', 'Colorado', 'Connecticut',
@@ -101,9 +108,30 @@ import EventBus from '../eventBus'
 			stateAddress: '',
 			countryAddress: '',
 			postalCode: ''
-		}
-		
+		}				
 	},
+	
+	rules1: {
+        postalCode: [{
+          required: true,
+          message: 'Please enter Mobile Number',
+          trigger: 'blur'
+        }, {
+          min: 10,
+          max: 10,
+          message: 'Length must be 10',
+          trigger: 'blur'
+        }, {
+          pattern: /^\d*$/,
+          message: 'Must be all numbers',
+          trigger: 'blur'
+        }, {
+          pattern: /^[789]/,
+          message: 'Must start 7, 8 or 9',
+          trigger: 'blur'
+        }]
+      },
+	
 	methods: {
 		sendHomeAddressInfoToReviewPage()
 		{
@@ -158,6 +186,8 @@ import EventBus from '../eventBus'
 				message += " *zipcode"
 				valid = false
 			}
+			
+	
 
 			if (valid == false) {
 				alert(message)
