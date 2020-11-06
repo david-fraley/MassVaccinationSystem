@@ -55,7 +55,7 @@
 						</template>
 						<span>Register yourself!</span>
 					</v-tooltip>
-					<v-tooltip top>
+					<v-tooltip right :nudge-bottom='130' max-width="20%">
 						<template v-slot:activator="{on, attrs}">
 							<v-btn 
 									class="ma-2"
