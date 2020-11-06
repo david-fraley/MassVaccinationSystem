@@ -1,22 +1,16 @@
 <template>
   <v-app>
     
-     <v-app-bar
-      app
-      clipped-right
-      flat
-      height="69"
-      color="primary"
-    >
-    Page title
+    <v-app-bar app clipped-right flat height="69" color="primary">
+      <h2 class="font-weight-medium white--text">Page Title</h2>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app width="20em">
       <v-sheet color="white" class="pa-4">
-        <v-btn icon color="primary">
-              <v-icon>mdi-account-circle</v-icon>
+        <v-btn icon color="accent">
+              <v-icon large>mdi-account-circle</v-icon>
         </v-btn>
-        Welcome, _____
+        Welcome, 
       </v-sheet>
 
       <v-divider></v-divider>
@@ -28,11 +22,11 @@
           link
         >
           <v-list-item-icon>
-            <v-icon large>{{ icon }}</v-icon>
+            <v-icon large color="secondary">{{ icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ text }}</v-list-item-title>
+            <v-list-item-title class="font-weight-medium secondary--text">{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
