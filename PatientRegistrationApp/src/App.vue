@@ -1,5 +1,5 @@
 <template>
-  <v-app id="Patient-registration"> <!--style="background: #F5F5F5"--> 
+  <v-app id="Patient-registration">  
     <v-main>
 		<v-container fill-height>
 			<v-layout justify-center align-center>
@@ -9,7 +9,6 @@
 							<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
 							<v-toolbar-title>{{title}}</v-toolbar-title>
 						</v-toolbar>
-						<!-- v-stepper-header is the progress bar along the top of the page -->
 						<v-stepper-header class="elevation-0">
 							<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">
 								<template v-for="n in getNumberOfSteps()">
@@ -33,9 +32,9 @@
 						<v-stepper-items>
 							<!-- Greeting Page -->
 							<v-stepper-content step="1">
-								<v-card flat>			
-									<!--listen for changes in the button selections-->				
-									<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"/>
+								<v-card flat>							
+									<GreetingPage @singleRegistration="setSinglePatientRegistration()" @householdRegistration="setHouseholdRegistration()"
+									ref="greetingpage"/>
 								</v-card>
 							</v-stepper-content>
 
@@ -547,7 +546,6 @@ import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import config from './config.js';
 import EventBus from './eventBus'
-
 export default {
 	name: 'App',
 	methods: 
@@ -613,10 +611,10 @@ export default {
 				switch(this.page)
 				{
 					case config.registrationPages.GREETING_PAGE:
-						//if(this.$refs.greetingpage.verifyFormContents())
-						//{
+						if(this.$refs.greetingpage.verifyFormContents())
+						{
 							this.goToPage(config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE)
-						//}
+						}
 						break;
 					case config.registrationPages.SINGLE_PATIENT_HOME_ADDRESS_PAGE:
 						this.$refs.singlepatienthomeaddress.verifyFormContents() ? 
@@ -648,14 +646,14 @@ export default {
 				switch(this.page)
 				{
 					case config.registrationPages.GREETING_PAGE:
-						//if(this.$refs.greetingpage.verifyFormContents())
-						//{
+						if(this.$refs.greetingpage.verifyFormContents())
+						{
 							this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE)
-						//}
+						}
 						break;
 					case config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE:
 						this.$refs.householdregisternumber.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE):
+						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE) :
 						this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE);
 						break;
 					case config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE:
@@ -665,113 +663,113 @@ export default {
 						break;
 					case config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE:
 						this.$refs.householdcontactinfo.verifyFormContents()?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE:
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE:
 						this.$refs.householdPersonalInfo_1.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_1_PAGE);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE);
 						break;
 					case config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE:
 						this.$refs.householdemergencycontact.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE: //patient #2
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE: //patient #2
 						this.$refs.householdPersonalInfo_2.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+1: //patient #3
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+1: //patient #3
 						this.$refs.householdPersonalInfo_3.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+2):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+1);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+2):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+1);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+2: //patient #4
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+2: //patient #4
 						this.$refs.householdPersonalInfo_4.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+3):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+2);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+3):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+2);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+3: //patient #5
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+3: //patient #5
 						this.$refs.householdPersonalInfo_5.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+4):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+3);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+4):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+3);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+4: //patient #6
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+4: //patient #6
 						this.$refs.householdPersonalInfo_6.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+5):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+4);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+5):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+4);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+5: //patient #7
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+5: //patient #7
 						this.$refs.householdPersonalInfo_7.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+6):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+5);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+6):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+5);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+6: //patient #8
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+6: //patient #8
 						this.$refs.householdPersonalInfo_8.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+7):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+6);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+7):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+6);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+7: //patient #9
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+7: //patient #9
 						this.$refs.householdPersonalInfo_9.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+8):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+7);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+8):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+7);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+8: //patient #10
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+8: //patient #10
 						this.$refs.householdPersonalInfo_10.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+9):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+8);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+9):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+8);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+9: //patient #11
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+9: //patient #11
 						this.$refs.householdPersonalInfo_11.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+10):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+9);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+10):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+9);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+10: //patient #12
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+10: //patient #12
 						this.$refs.householdPersonalInfo_12.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+11):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+10);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+11):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+10);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+11: //patient #13
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+11: //patient #13
 						this.$refs.householdPersonalInfo_13.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+12):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+11);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+12):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+11);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+12: //patient #14
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+12: //patient #14
 						this.$refs.householdPersonalInfo_14.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+13):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+12);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+13):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+12);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+13: //patient #15
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+13: //patient #15
 						this.$refs.householdPersonalInfo_15.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+14):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+13);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+14):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+13);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+14: //patient #16
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+14: //patient #16
 						this.$refs.householdPersonalInfo_16.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+15):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+14);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+15):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+14);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+15: //patient #17
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+15: //patient #17
 						this.$refs.householdPersonalInfo_17.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+16):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+15);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+16):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+15);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+16: //patient #18
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+16: //patient #18
 						this.$refs.householdPersonalInfo_18.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+17):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+16);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+17):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+16);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+17: //patient #19
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+17: //patient #19
 						this.$refs.householdPersonalInfo_19.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+18):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+17);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+18):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+17);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+18: //patient #20
+					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+18: //patient #20
 						this.$refs.householdPersonalInfo_20.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+19):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_N_PAGE+18);
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+19):
+						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+18);
 						break;
 					default:
 						alert(this.page)
@@ -824,5 +822,4 @@ export default {
 			}
 		},
   }
-
 </script>
