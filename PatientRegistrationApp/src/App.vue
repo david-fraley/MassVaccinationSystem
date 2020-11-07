@@ -6,7 +6,7 @@
 				<v-stepper v-model="page" class="elevation-0">
 					<v-toolbar flat color="primary" dark>
 						<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
-						<v-spacer /><v-toolbar-title style: FontSizes.FONTLARGE>{{title}}</v-toolbar-title> <v-spacer />
+						<v-spacer /><v-toolbar-title style="font-size:2em" class="font-weight-bold">{{title}}</v-toolbar-title> <v-spacer />
 					</v-toolbar>
 					<!-- v-stepper-header is the progress bar along the top of the page -->
 					<v-stepper-header class="elevation-0">
@@ -59,7 +59,7 @@
 							<!-- Single Patient: Home Address -->
 							<v-stepper-content step="2">
 								<v-toolbar flat >
-									<v-toolbar-title>Enter Your Home Address</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter Your Home Address</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientHomeAddress ref="singlepatienthomeaddress"/></v-card>				
 								<v-card-actions>
@@ -76,7 +76,7 @@
 							<!-- Single Patient: Contact Info -->
 							<v-stepper-content step="3">
 								<v-toolbar flat>
-									<v-toolbar-title> Enter Your Contact Information</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular"> Enter Your Contact Information</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientContactInfo ref="singlepatientcontactinfo"/></v-card>
 								<v-card-actions>
@@ -93,7 +93,7 @@
 							<!-- Single Patient: Personal Info -->
 							<v-stepper-content step="4">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter Your Personal Information</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter Your Personal Information</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/></v-card>							
 								<v-card-actions>
@@ -110,7 +110,7 @@
 							<!-- Single Patient: Emergency Contact -->
 							<v-stepper-content step="5">
 								<v-toolbar flat>
-									<v-toolbar-title>Specify an Emergency Contact</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Specify an Emergency Contact</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientEmergencyContact ref="singlepatientemergencycontact"/></v-card>
 								<v-card-actions>
@@ -127,7 +127,7 @@
 							<!-- Single Patient: Review and Submit -->
 							<v-stepper-content step="6">
 								<v-toolbar flat>
-									<v-toolbar-title>Review and Submit Registration</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and Submit Registration</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><SinglePatientReviewSubmit/></v-card>
 								<v-card-actions>
@@ -165,7 +165,7 @@
 							<!-- Household: Address -->
 							<v-stepper-content step="3">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter Your Household Address</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter Your Household Address</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdHomeAddress ref="householdhomeaddress"/></v-card>				
 								<v-card-actions>
@@ -182,7 +182,7 @@
 							<!-- Household: Contact Info -->
 							<v-stepper-content step="4">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter Your Household Contact Information</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter Your Household Contact Information</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdContactInfo/></v-card>				
 								<v-card-actions>
@@ -199,7 +199,7 @@
 							<!-- Household: Personal Info -->
 							<v-stepper-content step="5">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter Your Personal Information</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter Your Personal Information</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"/></v-card>				
 								<v-card-actions>
@@ -216,7 +216,7 @@
 							<!-- Household: Emergency Contact -->
 							<v-stepper-content step="6">
 								<v-toolbar flat>
-									<v-toolbar-title>Specify Your Emergency Contact</v-toolbar-title></v-toolbar>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Specify Your Emergency Contact</v-toolbar-title></v-toolbar>
 								<v-toolbar flat>
 									<v-spacer /><v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader><v-spacer />
 								</v-toolbar>
@@ -234,7 +234,7 @@
 
 							<v-stepper-content step="7">
 								<v-toolbar flat>
-									<v-toolbar-title>Enter personal information for household member #2</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #2</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_n"/></v-card>				
 								<v-card-actions>
@@ -251,7 +251,7 @@
 							<!-- Household: Review and submit -->
 							<v-stepper-content step="8">
 								<v-toolbar flat>
-									<v-toolbar-title>Review and submit registration</v-toolbar-title>
+									<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 								</v-toolbar>
 								<v-card flat><HouseholdReviewSubmit/></v-card>				
 								<v-card-actions>
