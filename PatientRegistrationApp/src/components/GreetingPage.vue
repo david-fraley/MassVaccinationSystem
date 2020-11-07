@@ -38,8 +38,6 @@
 					color="primary"
 					group
 				>
-					<v-tooltip top>
-						<template v-slot:activator="{on, attrs}">
 							<v-btn 
 									class="ma-2"
 									outlined 
@@ -52,9 +50,7 @@
 									<v-icon left color="secondary">mdi-account</v-icon>
 									Register myself
 							</v-btn>
-						</template>
-						<span>Register yourself!</span>
-					</v-tooltip>
+
 					<v-tooltip right :nudge-bottom='130' max-width="20%">
 						<template v-slot:activator="{on, attrs}">
 							<v-btn 
