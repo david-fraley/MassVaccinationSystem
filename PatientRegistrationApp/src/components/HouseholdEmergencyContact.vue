@@ -1,13 +1,12 @@
 <template>
 	<v-container fluid>
-	
 		<v-row align="center" justify="center">
       <!-- Last name -->
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field
           label="Last Name"
-			required
-			:rules="[v => !!v || 'Last name field is required']"
+          required
+          :rules="[v => !!v || 'Last name field is required']"
           v-model="householdEmergencyContactFamilyName"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
@@ -17,8 +16,8 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
           label="First Name"
-			required
-			:rules="[v => !!v || 'First name field is required']"
+          required
+          :rules="[v => !!v || 'First name field is required']"
           v-model="householdEmergencyContactGivenName">
         </v-text-field>
       </v-col>
@@ -29,8 +28,8 @@
       <v-col class="d-flex" cols="5" sm="5">
         <v-text-field
           label="Phone Number"
-			required
-			:rules="[v => !!v || 'Phone number field is required']"
+          required
+          :rules="[v => !!v || 'Phone number field is required']"
           v-model="householdEmergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
@@ -50,7 +49,7 @@
 </template>
 
 <script>
-//import EventBus from '../eventBus'
+import EventBus from '../eventBus'
 
 export default {
   data() {
@@ -63,43 +62,42 @@ export default {
     };
   },
   methods: {
-    /*sendHouseholdEmergencyContactInfoToHouseholdReviewPage()
+    sendHouseholdEmergencyContactInfoToReviewPage()
     {
-      const emergencyContactPayload = {
-        emergencyContactFamilyName: this.householdEmergencyContactFamilyName,
-        emergencyContactGivenName: this.householdEmergencyContactGivenName,
-        emergencyContactPhoneNumber: this.householdEmergencyContactPhoneNumber,
-        emergencyContactPhoneNumberType: this.householdEmergencyContactPhoneNumberType
+      const householdEmergencyContactPayload = {
+        householdEmergencyContactFamilyName: this.householdEmergencyContactFamilyName,
+        householdEmergencyContactGivenName: this.householdEmergencyContactGivenName,
+        householdEmergencyContactPhoneNumber: this.householdEmergencyContactPhoneNumber,
+        householdEmergencyContactPhoneNumberType: this.householdEmergencyContactPhoneNumberType
       }
-      EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
-    },*/
+      EventBus.$emit('DATA_HOUSEHOLD_EMERGENCY_CONTACT_INFO_PUBLISHED', householdEmergencyContactPayload)
+    },
     verifyFormContents()
     {
-		//add logic to check form contents
-		var valid = true
-		var message = "Woops! You need to enter the following fields:"
-		
-		if(this.householdEmergencyContactFamilyName == "")  {
-			message += " *Last Name"
-			valid = false
-		}
-		
-		if(this.householdEmergencyContactGivenName == "") {
-			message += " *First Name"
-			valid = false
-		}
-		
-		
-		if (this.householdEmergencyContactPhoneNumber == "") {
-			message += " *Phone Number"
-			valid = false
-		}
-		
-		if (valid == false) {
-				alert(message)
-				return false
-			}
-      //this.sendHouseholdEmergencyContactInfoToReviewPage();
+      //add logic to check form contents
+      var valid = true
+      var message = "Woops! You need to enter the following fields:"
+      
+      if(this.householdEmergencyContactFamilyName == "")  {
+        message += " *Last Name"
+        valid = false
+      }
+      
+      if(this.householdEmergencyContactGivenName == "") {
+        message += " *First Name"
+        valid = false
+      }
+      
+      if (this.householdEmergencyContactPhoneNumber == "") {
+        message += " *Phone Number"
+        valid = false
+      }
+      
+      if (valid == false) {
+          alert(message)
+          return false
+        }
+      this.sendHouseholdEmergencyContactInfoToReviewPage();
       return true;
     }
   },

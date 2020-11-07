@@ -1,6 +1,5 @@
 <template>
 	<v-container fluid>
-	
 		<v-row>
 			<v-col cols="12" sm="6" md="3">
 				<v-text-field
@@ -74,26 +73,26 @@
 </template>
 
 <script>
-//import EventBus from '../eventBus'
+import EventBus from '../eventBus'
 
   export default {
 	data () {
 		return {
 			state:[
-		'Alabama', 'Alaska', 'American Samoa', 'Arizona',
-		'Arkansas', 'California', 'Colorado', 'Connecticut',
-		'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-		'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-		'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-		'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-		'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-		'Missouri', 'Montana', 'Nebraska', 'Nevada',
-		'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-		'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-		'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-		'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-		'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-		'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
+		'AL', 'AK', 'AS', 'AZ',
+		'AR', 'CA', 'CO', 'CT',
+		'DE', 'DC', 'FM',
+		'FL', 'GA', 'GU', 'HI', 'ID',
+		'IL', 'IN', 'IA', 'KS', 'KY',
+		'LA', 'ME', 'MH', 'MD',
+		'MA', 'MI', 'MN', 'MS',
+		'MO', 'MT', 'NE', 'NV',
+		'NH', 'NJ', 'NM', 'NY',
+		'NC', 'ND', 'MP', 'OH',
+		'OK', 'OR', 'PW', 'PA', 'PR',
+		'RI', 'SC', 'SD', 'TN',
+		'TX', 'UT', 'VT', 'VI', 'VA',
+		'WA', 'WV', 'WI', 'WY',
 		],
 			country: ['United States'],
 			householdLineAddress: '',
@@ -106,18 +105,18 @@
 		
 	},
 	methods: {
-		/*sendHouseholdHomeAddressInfoToHouseholdReviewPage()
+		sendHouseholdHomeAddressInfoToReviewPage()
 		{
-		const householdHomeAddressPayload = {
-			householdLineAddress: this.householdLineAddress,
-			householdCityAddress: this.householdCityAddress,
-			householdDistrictAddress: this.householdDistrictAddress,
-			householdStateAddress: this.householdStateAddress,
-			householdCountryAddress: this.householdCountryAddress,
-			householdPostalCode: this.householdPostalCode
-		}
-		EventBus.$emit('DATA_ADDRESS_INFO_PUBLISHED', householdHomeAddressPayload)
-		},*/
+			const householdHomeAddressPayload = {
+				householdLineAddress: this.householdLineAddress,
+				householdCityAddress: this.householdCityAddress,
+				householdDistrictAddress: this.householdDistrictAddress,
+				householdStateAddress: this.householdStateAddress,
+				householdCountryAddress: this.householdCountryAddress,
+				householdPostalCode: this.householdPostalCode
+			}
+			EventBus.$emit('DATA_HOUSEHOLD_ADDRESS_INFO_PUBLISHED', householdHomeAddressPayload)
+		},
 		verifyFormContents()
 		{
 			//add logic to check form contents
@@ -165,7 +164,7 @@
 				return false
 			}
 			
-			//this.sendHouseholdHomeAddressInfoToReviewPage();
+			this.sendHouseholdHomeAddressInfoToReviewPage();
 			return true;
 		}
 	},

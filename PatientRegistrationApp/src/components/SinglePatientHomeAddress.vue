@@ -55,9 +55,9 @@
 				<v-text-field
 					id = "zipcode"
 					required
-					:rules="[v => !!v || 'Zipcode field is required']"
+					:rules="postalCodeRules"
 					label="Zipcode"
-					v-model="postalCode"
+					v-model="postalCode"					
 				></v-text-field>
 			</v-col>
 		</v-row>	
@@ -78,21 +78,28 @@ import EventBus from '../eventBus'
   export default {
 	data () {
 		return {
+			postalCodeRules: [
+        (v) => !!v || "Zip code is required",
+			(v) =>
+			/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+          "Zip code must be in format of ##### or #####-####",
+      ],
+			
 			state:[
-		'Alabama', 'Alaska', 'American Samoa', 'Arizona',
-		'Arkansas', 'California', 'Colorado', 'Connecticut',
-		'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-		'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-		'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-		'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-		'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-		'Missouri', 'Montana', 'Nebraska', 'Nevada',
-		'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-		'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-		'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-		'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-		'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-		'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
+		'AL', 'AK', 'AS', 'AZ',
+		'AR', 'CA', 'CO', 'CT',
+		'DE', 'DC', 'FM',
+		'FL', 'GA', 'GU', 'HI', 'ID',
+		'IL', 'IN', 'IA', 'KS', 'KY',
+		'LA', 'ME', 'MH', 'MD',
+		'MA', 'MI', 'MN', 'MS',
+		'MO', 'MT', 'NE', 'NV',
+		'NH', 'NJ', 'NM', 'NY',
+		'NC', 'ND', 'MP', 'OH',
+		'OK', 'OR', 'PW', 'PA', 'PR',
+		'RI', 'SC', 'SD', 'TN',
+		'TX', 'UT', 'VT', 'VI', 'VA',
+		'WA', 'WV', 'WI', 'WY',
 		],
 			country: ['United States'],
 			lineAddress: '',
@@ -101,9 +108,30 @@ import EventBus from '../eventBus'
 			stateAddress: '',
 			countryAddress: '',
 			postalCode: ''
-		}
-		
+		}				
 	},
+	
+	rules1: {
+        postalCode: [{
+          required: true,
+          message: 'Please enter Mobile Number',
+          trigger: 'blur'
+        }, {
+          min: 10,
+          max: 10,
+          message: 'Length must be 10',
+          trigger: 'blur'
+        }, {
+          pattern: /^\d*$/,
+          message: 'Must be all numbers',
+          trigger: 'blur'
+        }, {
+          pattern: /^[789]/,
+          message: 'Must start 7, 8 or 9',
+          trigger: 'blur'
+        }]
+      },
+	
 	methods: {
 		sendHomeAddressInfoToReviewPage()
 		{
@@ -158,6 +186,8 @@ import EventBus from '../eventBus'
 				message += " *zipcode"
 				valid = false
 			}
+			
+	
 
 			if (valid == false) {
 				alert(message)
