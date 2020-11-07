@@ -23,10 +23,11 @@ export default {
         NO_PATH_SELECTED: 0,
         SINGLE_PATIENT_REGISTRATION_PATH: 1,
         HOUSEHOLD_REGISTRATION_PATH: 2
-    }
+    },
+FontSizes:
+	{
+		FONT_SMALL: '1em',
+		FONT_MEDIUM: '1.5em',
+		FONT_LARGE: '3em'
+	},	
 }
-export const FontSizes = Object.freeze({
-    FONTLARGE: '3em', 
-    FONTSMALL: '1em', 
-    FONTMEDIUM: '1.5em'
-    });
