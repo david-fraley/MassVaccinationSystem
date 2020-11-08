@@ -6,7 +6,7 @@
 				<v-card flat height="100%" width="100%" class="d-flex flex-column"> 
 					<v-stepper v-model="page" class="elevation-0">	
 						<v-toolbar flat color="primary" dark>
-							<v-spacer /><v-toolbar-title style="font-size:2em" class="font-weight-bold">{{title}}</v-toolbar-title><v-spacer />
+							<v-toolbar-title style="font-size:2em" class="font-weight-bold">{{title}}</v-toolbar-title>
 						</v-toolbar>
 						<v-stepper-header class="elevation-0">
 							<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">
