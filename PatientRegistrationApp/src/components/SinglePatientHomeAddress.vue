@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-row>
-			<v-col cols="12" sm="6" md="3">
+			<v-col cols="12" sm="12" md="12">
 				<v-text-field
 					id = "addr"
 					required
@@ -10,7 +10,8 @@
 					v-model="lineAddress"
 				></v-text-field>
 			</v-col>
-
+		</v-row>
+		<v-row>
 			<v-col cols="6" sm="4" md="3">
 				<v-text-field
 					id = "city"
@@ -20,9 +21,7 @@
 					v-model="cityAddress"
 				></v-text-field>
 			</v-col>
-		</v-row>
-		<v-row>
-			<v-col class="d-flex" cols="4" sm="2" md="3">
+				<v-col class="d-flex" cols="1" sm="1" md="1">
 				<v-select
 				id = "state"
 					required
@@ -32,7 +31,7 @@
                     label="State"
 				></v-select>
 			</v-col>
-			<v-col class="d-flex" cols="6" sm="4">
+			<v-col class="d-flex" cols="3" sm="3">
 				<v-text-field
 				id = "county"
 					required
@@ -41,7 +40,7 @@
 					v-model="districtAddress"
 				></v-text-field>
 			</v-col>
-			<v-col class="d-flex" cols="4" sm="2">
+			<v-col class="d-flex" cols="2" sm="2">
 				<v-select
 				id = "country"
 					required
@@ -51,7 +50,7 @@
                     label="Country"
 				></v-select>
 			</v-col>
-			<v-col cols="6" sm="4" md="3">
+			<v-col cols="3" sm="3" md="3">
 				<v-text-field
 					id = "zipcode"
 					required
@@ -86,20 +85,20 @@ import EventBus from '../eventBus'
       ],
 			
 			state:[
-		'Alabama', 'Alaska', 'American Samoa', 'Arizona',
-		'Arkansas', 'California', 'Colorado', 'Connecticut',
-		'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-		'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-		'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-		'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-		'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-		'Missouri', 'Montana', 'Nebraska', 'Nevada',
-		'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-		'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-		'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-		'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-		'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-		'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
+		'AL', 'AK', 'AS', 'AZ',
+		'AR', 'CA', 'CO', 'CT',
+		'DE', 'DC', 'FM',
+		'FL', 'GA', 'GU', 'HI', 'ID',
+		'IL', 'IN', 'IA', 'KS', 'KY',
+		'LA', 'ME', 'MH', 'MD',
+		'MA', 'MI', 'MN', 'MS',
+		'MO', 'MT', 'NE', 'NV',
+		'NH', 'NJ', 'NM', 'NY',
+		'NC', 'ND', 'MP', 'OH',
+		'OK', 'OR', 'PW', 'PA', 'PR',
+		'RI', 'SC', 'SD', 'TN',
+		'TX', 'UT', 'VT', 'VI', 'VA',
+		'WA', 'WV', 'WI', 'WY',
 		],
 			country: ['United States'],
 			lineAddress: '',
