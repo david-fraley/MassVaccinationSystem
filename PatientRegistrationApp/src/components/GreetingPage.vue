@@ -35,8 +35,6 @@
 					v-model="text"
 					group
 				>
-					<v-tooltip top>
-						<template v-slot:activator="{on, attrs}">
 							<v-btn 
 									class="ma-2"
 									outlined 
@@ -53,11 +51,8 @@
 									<span><br /><p style="font-size:1.5em" class="font-weight-regular"><br />Register myself</p></span>
 								</div>
 							</v-btn>
-						</template>
-						<span>Register yourself!</span>
-					</v-tooltip>
-					
-					<v-tooltip top>
+
+					<v-tooltip bottom max-width="20%">
 						<template v-slot:activator="{on, attrs}">
 							<v-btn 
 									class="ma-2"
