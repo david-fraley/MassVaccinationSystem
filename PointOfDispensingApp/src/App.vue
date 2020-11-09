@@ -42,10 +42,10 @@
             <template v-if="false">
             <PatientLookup />
             </template>
-            <template v-if="true">
+            <template v-if="false">
             <PatientInfo />
             </template>
-            <template v-if="false">
+            <template v-if="true">
             <PatientCheckIn/>
             </template>
             <template v-if="false">
