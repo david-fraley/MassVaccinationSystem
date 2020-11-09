@@ -36,15 +36,33 @@
       <v-container class="py-8 px-6" fluid>
         <v-row>
           <v-col cols="12">
+            <template v-if="false">
             <UserLogin />
+            </template>
+            <template v-if="true">
             <PatientLookup />
+            </template>
+            <template v-if="false">
             <PatientCheckIn/>
+            </template>
+            <template v-if="false">
             <PatientHistory/>
+            </template>
+            <template v-if="false">
             <VaccinationScreening/>
+            </template>
+            <template v-if="false">
             <VaccinationProceed/>
+            </template>
+            <template v-if="false">
             <VaccinationCanceled/>
+            </template>
+            <template v-if="false">
             <AdverseEvents/>
+            </template>
+            <template v-if="false">
             <PatientDischarge/>
+            </template>
           </v-col>
         </v-row>
       </v-container>
