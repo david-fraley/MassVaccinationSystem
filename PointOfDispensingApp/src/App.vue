@@ -36,7 +36,15 @@
       <v-container class="py-8 px-6" fluid>
         <v-row>
           <v-col cols="12">
-            Guts
+            <UserLogin />
+            <PatientLookup />
+            <PatientCheckIn/>
+            <PatientHistory/>
+            <VaccinationScreening/>
+            <VaccinationProceed/>
+            <VaccinationCanceled/>
+            <AdverseEvents/>
+            <PatientDischarge/>
           </v-col>
         </v-row>
       </v-container>
@@ -45,17 +53,45 @@
 </template>
 
 <script>
+import UserLogin from './components/UserLogin';
+import PatientLookup from './components/PatientLookup';
+import PatientCheckIn from './components/PatientCheckIn';
+import PatientHistory from './components/PatientHistory';
+import VaccinationScreening from './components/VaccinationScreening';
+import VaccinationProceed from './components/VaccinationProceed';
+import VaccinationCanceled from './components/VaccinationCanceled';
+import AdverseEvents from './components/AdverseEvents';
+import PatientDischarge from './components/PatientDischarge';
+
   export default {
-    data: () => ({
-      drawer: null,
-      links: [
-        ['mdi-binoculars', 'Retrieve Patient Record'],
-        ['mdi-card-account-details-outline', 'Check-In'],
-        ['mdi-history', 'Patient History'],
-        ['mdi-medical-bag', 'Vaccination Event'],
-        ['mdi-alert', 'Adverse Reaction'],
-        ['mdi-checkbox-marked-outline', 'Discharge'],
-      ],
-    }),
+    name: 'App',
+    methods: 
+    {
+    },
+    components: 
+    {
+      UserLogin,
+      PatientLookup,
+      PatientCheckIn,
+      PatientHistory,
+      VaccinationScreening,
+      VaccinationProceed,
+      VaccinationCanceled,
+      AdverseEvents,
+      PatientDischarge
+    },
+    data () {
+      return {
+        drawer: null,
+        links: [
+          ['mdi-binoculars', 'Retrieve Patient Record'],
+          ['mdi-card-account-details-outline', 'Check-In'],
+          ['mdi-history', 'Patient History'],
+          ['mdi-medical-bag', 'Vaccination Event'],
+          ['mdi-alert', 'Adverse Reaction'],
+          ['mdi-checkbox-marked-outline', 'Discharge'],
+        ],
+      }
+    }
   }
 </script>
