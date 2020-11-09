@@ -93,7 +93,7 @@ import EventBus from '../eventBus'
 		'TX', 'UT', 'VT', 'VI', 'VA',
 		'WA', 'WV', 'WI', 'WY',
 		],
-			country: ['United States'],
+			country: ['USA'],
 			householdLineAddress: '',
 			householdCityAddress: '',
 			householdDistrictAddress: '',
