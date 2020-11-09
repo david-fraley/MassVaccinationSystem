@@ -48,10 +48,10 @@
             <template v-if="false">
             <PatientCheckIn/>
             </template>
-            <template v-if="true">
+            <template v-if="false">
             <PatientHistory/>
             </template>
-            <template v-if="false">
+            <template v-if="true">
             <VaccinationScreening/>
             </template>
             <template v-if="false">
