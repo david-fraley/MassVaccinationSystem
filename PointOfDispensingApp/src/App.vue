@@ -43,6 +43,9 @@
             <PatientLookup />
             </template>
             <template v-if="true">
+            <PatientInfo />
+            </template>
+            <template v-if="false">
             <PatientCheckIn/>
             </template>
             <template v-if="false">
@@ -73,6 +76,7 @@
 <script>
 import UserLogin from './components/UserLogin';
 import PatientLookup from './components/PatientLookup';
+import PatientInfo from './components/PatientInfo';
 import PatientCheckIn from './components/PatientCheckIn';
 import PatientHistory from './components/PatientHistory';
 import VaccinationScreening from './components/VaccinationScreening';
@@ -90,6 +94,7 @@ import PatientDischarge from './components/PatientDischarge';
     {
       UserLogin,
       PatientLookup,
+      PatientInfo,
       PatientCheckIn,
       PatientHistory,
       VaccinationScreening,
