@@ -28,16 +28,16 @@
       </v-col>
       <v-col cols="10">
         <v-row>
-          <v-col cols="4">
+          <v-col cols="3">
             Encounter status (e.g. "arrived") goes here
           </v-col>
-          <v-col cols="4">
+          <v-col cols="3">
             Encounter time stamp goes here
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12">
-            <v-btn color="accent">
+          <v-col cols="6">
+            <v-btn block color="accent">
               Patient information verified
             </v-btn>
           </v-col>

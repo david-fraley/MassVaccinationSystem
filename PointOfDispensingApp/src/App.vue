@@ -51,7 +51,7 @@
             <template v-if="false">
             <PatientHistory/>
             </template>
-            <template v-if="true">
+            <template v-if="false">
             <VaccinationScreening/>
             </template>
             <template v-if="false">
@@ -60,7 +60,7 @@
             <template v-if="false">
             <VaccinationCanceled/>
             </template>
-            <template v-if="false">
+            <template v-if="true">
             <AdverseEvents/>
             </template>
             <template v-if="false">
