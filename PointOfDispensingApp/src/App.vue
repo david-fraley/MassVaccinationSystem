@@ -45,10 +45,10 @@
             <template v-if="false">
             <PatientInfo />
             </template>
-            <template v-if="true">
+            <template v-if="false">
             <PatientCheckIn/>
             </template>
-            <template v-if="false">
+            <template v-if="true">
             <PatientHistory/>
             </template>
             <template v-if="false">
