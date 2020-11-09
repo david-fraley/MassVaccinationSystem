@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-row>
-			<v-col cols="12" sm="6" md="3">
+			<v-col cols="12" sm="12" md="12">
 				<v-text-field
 					id = "addr"
 					required
@@ -10,7 +10,8 @@
 					v-model="householdLineAddress"
 				></v-text-field>
 			</v-col>
-
+		</v-row>
+		<v-row>
 			<v-col cols="6" sm="4" md="3">
 				<v-text-field
 					id = "city"
@@ -20,9 +21,7 @@
 					v-model="householdCityAddress"
 				></v-text-field>
 			</v-col>
-		</v-row>
-		<v-row>
-			<v-col class="d-flex" cols="4" sm="2" md="3">
+			<v-col class="d-flex" cols="1" sm="1" md="1">
 				<v-select
 				id = "state"
 					required
@@ -32,7 +31,7 @@
                     label="State"
 				></v-select>
 			</v-col>
-			<v-col class="d-flex" cols="6" sm="4">
+			<v-col class="d-flex" cols="3" sm="3">
 				<v-text-field
 				id = "county"
 					required
@@ -41,7 +40,7 @@
 					v-model="householdDistrictAddress"
 				></v-text-field>
 			</v-col>
-			<v-col class="d-flex" cols="4" sm="2">
+			<v-col class="d-flex" cols="2" sm="2">
 				<v-select
 				id = "country"
 					required
@@ -51,7 +50,7 @@
                     label="Country"
 				></v-select>
 			</v-col>
-			<v-col cols="6" sm="4" md="3">
+			<v-col cols="3" sm="3" md="3">
 				<v-text-field
 					id = "zipcode"
 					required
