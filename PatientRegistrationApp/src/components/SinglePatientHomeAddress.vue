@@ -8,6 +8,7 @@
 					:rules="[v => !!v || 'Address field is required']"
 					label="Home Address"
 					v-model="lineAddress"
+					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
 		</v-row>
@@ -19,6 +20,7 @@
 					:rules="[v => !!v || 'City field is required']"
 					label="City"
 					v-model="cityAddress"
+					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
 				<v-col class="d-flex" cols="1" sm="1" md="1">
