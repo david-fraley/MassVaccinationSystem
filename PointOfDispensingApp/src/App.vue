@@ -60,10 +60,10 @@
             <template v-if="false">
             <VaccinationCanceled/>
             </template>
-            <template v-if="true">
+            <template v-if="false">
             <AdverseEvents/>
             </template>
-            <template v-if="false">
+            <template v-if="true">
             <PatientDischarge/>
             </template>
           </v-col>
