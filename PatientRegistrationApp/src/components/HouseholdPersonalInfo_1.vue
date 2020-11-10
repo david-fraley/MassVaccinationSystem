@@ -187,26 +187,38 @@ export default {
     {
       //add logic to check form contents
       var valid = true
-      var message = "Woops! You need to enter the following fields:"
+      var message = "Woops! You need to enter the following field(s):"
       
       if(this.householdFamilyName == "")  {
-        message += " *Last Name"
+        message += " Last Name"
         valid = false
       }
       
       if(this.householdGivenName == "") {
-        message += " *First Name"
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " First Name"
         valid = false
       }
       
       
       if (this.householdDate == null) {
-        message += " *Date of birth"
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " Date of birth"
         valid = false
       }
       
       if(this.householdGender == "") {
-        message += " *Gender Identity" 
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " Gender Identity" 
         valid = false
       }
       

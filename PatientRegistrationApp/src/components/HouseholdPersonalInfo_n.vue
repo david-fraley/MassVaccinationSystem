@@ -212,35 +212,55 @@ export default {
     verifyFormContents()
     {
       var valid = true
-      var message = "Woops! You need to enter the following fields:"
+      var message = "Woops! You need to enter the following field(s):"
       
       if(this.preferredLanguage == "")  {
-        message += " *Preferred Language"
+        message += " Preferred Language"
         valid = false
       }
 
       if(this.householdFamilyName == "")  {
-        message += " *Last Name"
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " Last Name"
         valid = false
       }
       
       if(this.householdGivenName == "") {
-        message += " *First Name"
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " First Name"
         valid = false
       }
       
       if (this.householdDate == null) {
-        message += " *Date of birth"
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " Date of birth"
         valid = false
       }
       
       if(this.householdGender == "") {
-        message += " *Gender Identity" 
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " Gender Identity" 
         valid = false
       }
 
       if(this.relationship == "") {
-        message += " *Relationship" 
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " Relationship" 
         valid = false
       }
       

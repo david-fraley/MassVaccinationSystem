@@ -120,41 +120,61 @@ import EventBus from '../eventBus'
 		{
 			//add logic to check form contents
 			var valid = true
-			var message = "Woops! You need to enter the following fields:"
+			var message = "Woops! You need to enter the following field(s):"
 			
 			
 			if(this.householdLineAddress == "") {
-				message += " *address"
+				message += " Address"
 				valid = false
 			}
 			
 			
 			if(this.householdCityAddress == "") {
-				message += " *city"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " City"
 				valid = false
 			}
 				
 			
 			if(this.householdStateAddress == "") {
-				message += " *state"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " State"
 				valid = false
 			}
 				
 			
 			if(this.householdDistrictAddress == "") {
-				message += " *county"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " County"
 				valid = false
 			}
 				
 			
 			if(this.householdCountryAddress == "") {
-				message += " *country"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Country"
 				valid = false
 			}
 				
 			
 			if(this.householdPostalCode == "") {
-				message += " *zipcode"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Zipcode"
 				valid = false
 			}
 

@@ -148,7 +148,7 @@ import EventBus from '../eventBus'
 		{
 			//add logic to check form contents
 			var valid = true
-			var message = "Woops! You need to enter the following fields:"
+			var message = "Woops! You need to enter the following field(s):"
 			
 			
 			if(this.lineAddress == "") {

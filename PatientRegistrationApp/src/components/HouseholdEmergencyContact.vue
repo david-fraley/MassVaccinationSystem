@@ -76,20 +76,28 @@ export default {
     {
       //add logic to check form contents
       var valid = true
-      var message = "Woops! You need to enter the following fields:"
+      var message = "Woops! You need to enter the following field(s):"
       
       if(this.householdEmergencyContactFamilyName == "")  {
-        message += " *Last Name"
+        message += " Last Name"
         valid = false
       }
       
       if(this.householdEmergencyContactGivenName == "") {
-        message += " *First Name"
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " First Name"
         valid = false
       }
       
       if (this.householdEmergencyContactPhoneNumber == "") {
-        message += " *Phone Number"
+	  if(!valid)
+				{
+				message +=","
+				}
+        message += " Phone Number"
         valid = false
       }
       
