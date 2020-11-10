@@ -49,7 +49,7 @@
 
 <script>
   export default {
-    name: 'PatientCheckIn',
+    name: 'PatientCheckInComponent',
     methods: 
     {
     },

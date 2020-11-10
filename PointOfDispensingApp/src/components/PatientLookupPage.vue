@@ -59,7 +59,7 @@
 
 <script>
   export default {
-    name: 'PatientLookup',
+    name: 'PatientLookupPage',
     methods: 
     {
     },

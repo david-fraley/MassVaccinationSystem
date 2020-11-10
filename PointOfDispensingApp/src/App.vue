@@ -37,34 +37,22 @@
         <v-row>
           <v-col cols="12">
             <template v-if="false">
-            <UserLogin />
+            <UserLoginPage />
             </template>
             <template v-if="false">
-            <PatientLookup />
+            <PatientCheckInPage />
             </template>
             <template v-if="false">
-            <PatientInfo />
+            <PatientHistoryPage/>
             </template>
             <template v-if="false">
-            <PatientCheckIn/>
+            <VaccinationEventPage/>
             </template>
             <template v-if="false">
-            <PatientHistory/>
-            </template>
-            <template v-if="false">
-            <VaccinationScreening/>
-            </template>
-            <template v-if="false">
-            <VaccinationProceed/>
-            </template>
-            <template v-if="false">
-            <VaccinationCanceled/>
-            </template>
-            <template v-if="false">
-            <AdverseEvents/>
+            <AdverseEventsPage/>
             </template>
             <template v-if="true">
-            <PatientDischarge/>
+            <DischargePage/>
             </template>
           </v-col>
         </v-row>
@@ -74,16 +62,12 @@
 </template>
 
 <script>
-import UserLogin from './components/UserLogin';
-import PatientLookup from './components/PatientLookup';
-import PatientInfo from './components/PatientInfo';
-import PatientCheckIn from './components/PatientCheckIn';
-import PatientHistory from './components/PatientHistory';
-import VaccinationScreening from './components/VaccinationScreening';
-import VaccinationProceed from './components/VaccinationProceed';
-import VaccinationCanceled from './components/VaccinationCanceled';
-import AdverseEvents from './components/AdverseEvents';
-import PatientDischarge from './components/PatientDischarge';
+import UserLoginPage from './components/UserLoginPage';
+import PatientCheckInPage from './components/PatientCheckInPage';
+import PatientHistoryPage from './components/PatientHistoryPage';
+import VaccinationEventPage from './components/VaccinationEventPage';
+import AdverseEventsPage from './components/AdverseEventsPage';
+import DischargePage from './components/DischargePage';
 
   export default {
     name: 'App',
@@ -92,16 +76,12 @@ import PatientDischarge from './components/PatientDischarge';
     },
     components: 
     {
-      UserLogin,
-      PatientLookup,
-      PatientInfo,
-      PatientCheckIn,
-      PatientHistory,
-      VaccinationScreening,
-      VaccinationProceed,
-      VaccinationCanceled,
-      AdverseEvents,
-      PatientDischarge
+      UserLoginPage,
+      PatientCheckInPage,
+      PatientHistoryPage,
+      VaccinationEventPage,
+      AdverseEventsPage,
+      DischargePage
     },
     data () {
       return {

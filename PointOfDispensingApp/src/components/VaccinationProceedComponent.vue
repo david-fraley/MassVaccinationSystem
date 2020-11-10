@@ -78,7 +78,7 @@
 
 <script>
   export default {
-    name: 'VaccinationProceed',
+    name: 'VaccinationProceedComponent',
     methods: 
     {
     },

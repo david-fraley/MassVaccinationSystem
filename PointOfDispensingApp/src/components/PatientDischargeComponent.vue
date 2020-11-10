@@ -66,7 +66,7 @@
 
 <script>
   export default {
-    name: 'PatientDischarge',
+    name: 'PatientDischargeComponent',
     methods: 
     {
     },
