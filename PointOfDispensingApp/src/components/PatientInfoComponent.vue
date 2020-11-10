@@ -42,7 +42,7 @@
 
 <script>
   export default {
-    name: 'PatientInfo',
+    name: 'PatientInfoComponent',
     methods: 
     {
     },

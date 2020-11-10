@@ -85,12 +85,17 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-divider></v-divider>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
   export default {
-    name: 'VaccinationScreening',
+    name: 'VaccinationScreeningComponent',
     methods: 
     {
     },

@@ -1,6 +1,11 @@
 <template>
   <v-container>
     <v-row>
+      <v-col cols="12">
+        Reason vaccine was not administered goes here
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col cols="4">
         Vaccination status (e.g. not done) goes here
       </v-col>
@@ -10,18 +15,18 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-divider></v-divider>
+        Healthcare practitioner goes here
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-        Adverse reactions inputs go here
+        Notes box goes here
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="6">
         <v-btn block color="accent">
-          Submit observation record
+          Submit vaccination record
         </v-btn>
       </v-col>
     </v-row>
@@ -30,7 +35,7 @@
 
 <script>
   export default {
-    name: 'AdverseEvents',
+    name: 'VaccinationCanceledComponent',
     methods: 
     {
     },
