@@ -180,23 +180,35 @@ export default {
 		var message = "Woops! You need to enter the following fields:"
 		
 		if(this.familyName == "")  {
-			message += " *Last Name"
+			message += " Last Name"
 			valid = false
 		}
 		
 		if(this.givenName == "") {
-			message += " *First Name"
+		if(!valid)
+				{
+				message +=","
+				}
+			message += " First Name"
 			valid = false
 		}
 		
 		
 		if (this.date == null) {
-			message += " *Date of birth"
+		if(!valid)
+				{
+				message +=","
+				}
+			message += " Date of birth"
 			valid = false
 		}
 		
 		if(this.gender == "") {
-			message += " *Gender Identity" 
+		if(!valid)
+				{
+				message +=","
+				}
+			message += " Gender Identity" 
 			valid = false
 		}
 		

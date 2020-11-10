@@ -80,18 +80,26 @@ export default {
 		var message = "Woops! You need to enter the following fields:"
 		
 		if(this.emergencyContactFamilyName == "")  {
-			message += " *Last Name"
+			message += " Last Name"
 			valid = false
 		}
 		
 		if(this.emergencyContactGivenName == "") {
-			message += " *First Name"
+		if(!valid)
+				{
+				message +=","
+				}
+			message += " First Name"
 			valid = false
 		}
 		
 		
 		if (this.emergencyContactPhoneNumber == "") {
-			message += " *Phone Number"
+		if(!valid)
+				{
+				message +=","
+				}
+			message += " Phone Number"
 			valid = false
 		}
 		

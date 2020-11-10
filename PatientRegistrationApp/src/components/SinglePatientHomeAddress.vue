@@ -152,37 +152,57 @@ import EventBus from '../eventBus'
 			
 			
 			if(this.lineAddress == "") {
-				message += " *address"
+				message += " Address"
 				valid = false
 			}
 			
 			
 			if(this.cityAddress == "") {
-				message += " *city"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " City"
 				valid = false
 			}
 				
 			
 			if(this.stateAddress == "") {
-				message += " *state"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " State"
 				valid = false
 			}
 				
 			
 			if(this.districtAddress == "") {
-				message += " *county"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " County"
 				valid = false
 			}
 				
 			
 			if(this.countryAddress == "") {
-				message += " *country"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Country"
 				valid = false
 			}
 				
 			
 			if(this.postalCode == "") {
-				message += " *zipcode"
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Zipcode"
 				valid = false
 			}
 			

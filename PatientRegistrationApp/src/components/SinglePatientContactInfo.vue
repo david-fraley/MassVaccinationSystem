@@ -101,15 +101,23 @@ export default {
       var message = "Woops! You need to enter the following fields:"
 	
 			if(this.patientPhoneNumber == "") {
-        message += "*Phone Number"
+        message += " Phone Number"
         valid = false
 			}
 			if(this.patientEmail == "") {
-        message += "*E-mail"
+			if(!valid)
+				{
+				message +=","
+				}
+        message += " E-mail"
         valid = false
 			}
 			if(this.approval == "") {
-        message += "*Follow up consent"
+			if(!valid)
+				{
+				message +=","
+				}
+        message += " Follow up consent"
         valid = false
 			}
 			if (valid == false) {
