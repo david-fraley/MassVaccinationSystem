@@ -1,80 +1,67 @@
 <template>
 	<v-container bg fill-height grid-list-md text-xs-center>
-		<v-row>
-			
-			<v-divider></v-divider>
-			
-		</v-row>
 		<v-row align="left" justify="left">
-			<span><p style="font-size:1.5em" class="font-weight-regular"><br />Select your preferred language</p></span>
-		</v-row>
-		<v-row align="center" justify="center">
-			<v-col class="d-flex" cols="4">
-				
-				<v-select
+			<v-col cols="4">
+				<span><p style="font-size:1.5em" class="font-weight-regular">Select your preferred language</p></span>
+			</v-col>
+			<v-col cols="3">
+				<v-select required dense
 					:items="preferredLanguageOptions"
-					label=" "
-					required
 					:rules="[v => !!v || 'Preferred language field is required']"
 					v-model="preferredLanguage"
 				></v-select>
 			</v-col>
 		</v-row>
 		<v-row>
-			
-			<v-divider></v-divider>
-			
+			<v-col cols="12">
+				<v-divider></v-divider>
+			</v-col>
 		</v-row>
 		<v-row align="left" justify="left">
-			<span><p style="font-size:1.5em" class="font-weight-regular"><br />Select your registration type</p></span>
+			<v-col cols="4">
+				<span><p style="font-size:1.5em" class="font-weight-regular"><br />Select your registration type</p></span>
+			</v-col>
 		</v-row>
-		
 		<v-row align="center" justify="center">
-			
-				<v-btn-toggle
-					v-model="text"
-					group
+			<v-btn-toggle v-model="text" group>
+				<v-btn 
+					class="ma-2"
+					outlined 
+					x-large 
+					color="primary"
+					v-bind="attrs"
+					v-on="on"
+					height="18em"
+					width="22em"
+					@click="singleRegistration"
 				>
-							<v-btn 
-									class="ma-2"
-									outlined 
-									x-large 
-									color="primary"
-									v-bind="attrs"
-									v-on="on"
-									height="18em"
-									width="22em"
-									@click="singleRegistration"
+				<div>
+					<v-icon size="9em">mdi-account</v-icon>
+					<span><br /><p style="font-size:1.5em" class="font-weight-regular"><br />Register myself</p></span>
+				</div>
+				</v-btn>
+				<v-tooltip bottom max-width="20%">
+					<template v-slot:activator="{on, attrs}">
+						<v-btn 
+							class="ma-2"
+							outlined 
+							x-large 
+							color="primary"
+							v-bind="attrs"
+							v-on="on"
+							height="18em"
+							width="22em"
+							@click="householdRegistration"
 							>
-								<div>
-									<v-icon size="9em">mdi-account</v-icon>
-									<span><br /><p style="font-size:1.5em" class="font-weight-regular"><br />Register myself</p></span>
-								</div>
-							</v-btn>
-
-					<v-tooltip bottom max-width="20%">
-						<template v-slot:activator="{on, attrs}">
-							<v-btn 
-									class="ma-2"
-									outlined 
-									x-large 
-									color="primary"
-									v-bind="attrs"
-									v-on="on"
-									height="18em"
-									width="22em"
-									@click="householdRegistration"
-								>
-									<div>
-									<v-icon size="9em">mdi-account-group</v-icon>
-									<span><br /><p style="font-size:1.5em" class="font-weight-regular"><br />Register my household</p></span>
-								</div>
-							</v-btn>
-						</template>
-						<span>A household is composed of any people who occupy the same given housing unit. If you are planning to register your household, all members must currently be residing in the same address. If members of a household are residing in other housing units, it is necessary to register any given members individually. Max household registration of 20 registrants.</span>
-					</v-tooltip>
-				</v-btn-toggle>
-			
+							<div>
+							<v-icon size="9em">mdi-account-group</v-icon>
+							<span><br /><p style="font-size:1.5em" class="font-weight-regular"><br />Register my household</p></span>
+							</div>
+						</v-btn>
+					</template>
+					<span>A household is composed of any people who occupy the same given housing unit. If you are planning to register your household, all members must currently be residing in the same address. If members of a household are residing in other housing units, it is necessary to register any given members individually. Max household registration of 20 registrants.</span>
+				</v-tooltip>
+			</v-btn-toggle>
 		</v-row>
 	</v-container>
 </template>
