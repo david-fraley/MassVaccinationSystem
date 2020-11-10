@@ -2,7 +2,7 @@
   <v-app>
     
     <v-app-bar app clipped-right flat height="69" color="primary">
-      <h2 class="font-weight-medium white--text">Page Title</h2>
+      <h1 class="font-weight-medium white--text">Point of Dispensing Application</h1>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app width="20em">

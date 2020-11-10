@@ -1,12 +1,16 @@
 <template>
   <v-container>
     <v-row>
+      <h2 class="font-weight-medium primary--text">Vaccination Event</h2>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-divider></v-divider>
+      </v-col>
+    </v-row>
+    <v-row>
       <PatientInfoComponent />
-    </v-row>
-    <v-row>
       <VaccinationScreeningComponent />
-    </v-row>
-    <v-row>
       <template v-if="true">
       <VaccinationProceedComponent />
       </template>
