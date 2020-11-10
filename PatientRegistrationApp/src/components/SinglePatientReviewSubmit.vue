@@ -1,7 +1,6 @@
 <template>
 	<v-container fluid>
 		<v-row align="center" justify="center">
-			<v-heading> Ensure information is correct before submission. </v-heading>
 		</v-row>
 		<v-row>
 			<v-col cols="12" sm="6"	md="3">
