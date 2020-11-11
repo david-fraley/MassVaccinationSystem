@@ -6,7 +6,7 @@
 				<v-card flat height="100%" width="100%" class="d-flex flex-column"> 
 					<v-stepper v-model="page" class="elevation-0">	
 						<v-toolbar flat height="100" color="primary" dark>
-							<v-toolbar-title style="font-size:2em" class="font-weight-bold">{{title}}</v-toolbar-title>
+							<v-toolbar-title style="font-size:3em" class="font-weight-bold">{{title}}</v-toolbar-title>
 							<v-spacer></v-spacer>
 							<v-img
 								max-height="100"
