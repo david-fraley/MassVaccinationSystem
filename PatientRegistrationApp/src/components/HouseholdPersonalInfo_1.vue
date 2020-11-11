@@ -9,7 +9,7 @@
           required
           :rules="[v => !!v || 'Last name field is required']"
           v-model="householdFamilyName"
-          prepend-icon="mdi-menu-right"
+			prepend-icon="mdi-menu-right"
         ></v-text-field>
       </v-col>
 
@@ -87,7 +87,7 @@
           required
           :rules="[v => !!v || 'Gender identity field is required']"
           v-model="householdGender"
-          prepend-icon="mdi-menu-right"
+			prepend-icon="mdi-menu-right"
         ></v-select>
       </v-col>
 
@@ -115,7 +115,7 @@
           v-model="householdRaceSelections"
           :items="race"
           label="Race (select all that apply)"
-          prepend-icon="mdi-menu-right"
+			prepend-icon="mdi-menu-right"
           multiple
         ></v-select>
       </v-col>
@@ -129,7 +129,7 @@
           v-model="householdEthnicitySelection"
           :items="ethnicity"
           label="Ethnicity"
-          prepend-icon="mdi-menu-right"
+			prepend-icon="mdi-menu-right"
         ></v-select>
       </v-col>
       <v-spacer></v-spacer>
