@@ -81,8 +81,8 @@ import EventBus from '../eventBus'
         (v) => !!v || "Zip code is required",
 			(v) =>
 			/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
-          "Zip code must be in format of ##### or #####-####",
-      ],
+			"Zip code must be in format of ##### or #####-####",
+		],
 			
 			state:[
 		'AL', 'AK', 'AS', 'AZ',
@@ -112,9 +112,9 @@ import EventBus from '../eventBus'
 	
 	rules1: {
         postalCode: [{
-          required: true,
-          message: 'Please enter Mobile Number',
-          trigger: 'blur'
+			required: true,
+			message: 'Please enter Mobile Number',
+			trigger: 'blur'
         }, {
           min: 10,
           max: 10,
@@ -148,47 +148,74 @@ import EventBus from '../eventBus'
 		{
 			//add logic to check form contents
 			var valid = true
-			var message = "Woops! You need to enter the following fields:"
+			var message = "Woops! You need to enter the following field(s):"
 			
 			
-			if(this.lineAddress == "") {
-				message += " *address"
+			if(this.lineAddress == "") 
+			{
+				message += " Address"
 				valid = false
 			}
 			
 			
-			if(this.cityAddress == "") {
-				message += " *city"
-				valid = false
-			}
-				
-			
-			if(this.stateAddress == "") {
-				message += " *state"
-				valid = false
-			}
-				
-			
-			if(this.districtAddress == "") {
-				message += " *county"
+			if(this.cityAddress == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " City"
 				valid = false
 			}
 				
 			
-			if(this.countryAddress == "") {
-				message += " *country"
+			if(this.stateAddress == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " State"
 				valid = false
 			}
 				
 			
-			if(this.postalCode == "") {
-				message += " *zipcode"
+			if(this.districtAddress == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " County"
+				valid = false
+			}
+				
+			
+			if(this.countryAddress == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Country"
+				valid = false
+			}
+				
+			
+			if(this.postalCode == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Zipcode"
 				valid = false
 			}
 			
 	
 
-			if (valid == false) {
+			if (valid == false) 
+			{
 				alert(message)
 				return false
 			}
@@ -197,5 +224,5 @@ import EventBus from '../eventBus'
 			return true;
 		}
 	},
-  }
+}
 </script>

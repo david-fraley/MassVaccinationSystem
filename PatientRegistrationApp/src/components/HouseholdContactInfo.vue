@@ -119,21 +119,33 @@ import EventBus from '../eventBus'
 		verifyFormContents()
 		{
 			var valid = true
-			var message = "Woops! You need to enter the following fields:"
+			var message = "Woops! You need to enter the following field(s):"
 		
-			if(this.primaryPhoneNumber == "") {
-				message += "*Primary Phone Number"
+			if(this.primaryPhoneNumber == "") 
+			{
+				message += " Primary Phone Number"
 				valid = false
 			}
-			if(this.primaryEmail == "") {
-				message += "*Primary E-mail"
+			if(this.primaryEmail == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Primary E-mail"
 				valid = false
 			}
-			if(this.approval == "") {
-				message += "*Follow up consent"
+			if(this.approval == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Follow up consent"
 				valid = false
 			}
-			if (valid == false) {
+			if (valid == false) 
+			{
 				alert (message)
 				return false
 			}
