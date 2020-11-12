@@ -81,8 +81,8 @@ import EventBus from '../eventBus'
         (v) => !!v || "Zip code is required",
 			(v) =>
 			/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
-          "Zip code must be in format of ##### or #####-####",
-      ],
+			"Zip code must be in format of ##### or #####-####",
+		],
 			
 			state:[
 		'AL', 'AK', 'AS', 'AZ',
@@ -112,9 +112,9 @@ import EventBus from '../eventBus'
 	
 	rules1: {
         postalCode: [{
-          required: true,
-          message: 'Please enter Mobile Number',
-          trigger: 'blur'
+			required: true,
+			message: 'Please enter Mobile Number',
+			trigger: 'blur'
         }, {
           min: 10,
           max: 10,
@@ -151,13 +151,15 @@ import EventBus from '../eventBus'
 			var message = "Woops! You need to enter the following field(s):"
 			
 			
-			if(this.lineAddress == "") {
+			if(this.lineAddress == "") 
+			{
 				message += " Address"
 				valid = false
 			}
 			
 			
-			if(this.cityAddress == "") {
+			if(this.cityAddress == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -167,7 +169,8 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.stateAddress == "") {
+			if(this.stateAddress == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -177,7 +180,8 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.districtAddress == "") {
+			if(this.districtAddress == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -187,7 +191,8 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.countryAddress == "") {
+			if(this.countryAddress == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -197,7 +202,8 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.postalCode == "") {
+			if(this.postalCode == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -208,7 +214,8 @@ import EventBus from '../eventBus'
 			
 	
 
-			if (valid == false) {
+			if (valid == false) 
+			{
 				alert(message)
 				return false
 			}
@@ -217,5 +224,5 @@ import EventBus from '../eventBus'
 			return true;
 		}
 	},
-  }
+}
 </script>

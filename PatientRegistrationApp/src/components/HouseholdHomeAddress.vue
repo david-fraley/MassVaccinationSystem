@@ -123,13 +123,15 @@ import EventBus from '../eventBus'
 			var message = "Woops! You need to enter the following field(s):"
 			
 			
-			if(this.householdLineAddress == "") {
+			if(this.householdLineAddress == "") 
+			{
 				message += " Address"
 				valid = false
 			}
 			
 			
-			if(this.householdCityAddress == "") {
+			if(this.householdCityAddress == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -139,7 +141,8 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.householdStateAddress == "") {
+			if(this.householdStateAddress == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -149,7 +152,8 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.householdDistrictAddress == "") {
+			if(this.householdDistrictAddress == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -159,7 +163,8 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.householdCountryAddress == "") {
+			if(this.householdCountryAddress == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -169,7 +174,8 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.householdPostalCode == "") {
+			if(this.householdPostalCode == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -178,7 +184,8 @@ import EventBus from '../eventBus'
 				valid = false
 			}
 
-			if (valid == false) {
+			if (valid == false) 
+			{
 				alert(message)
 				return false
 			}

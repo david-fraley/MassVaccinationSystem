@@ -121,11 +121,13 @@ import EventBus from '../eventBus'
 			var valid = true
 			var message = "Woops! You need to enter the following field(s):"
 		
-			if(this.primaryPhoneNumber == "") {
+			if(this.primaryPhoneNumber == "") 
+			{
 				message += " Primary Phone Number"
 				valid = false
 			}
-			if(this.primaryEmail == "") {
+			if(this.primaryEmail == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -133,7 +135,8 @@ import EventBus from '../eventBus'
 				message += " Primary E-mail"
 				valid = false
 			}
-			if(this.approval == "") {
+			if(this.approval == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -141,7 +144,8 @@ import EventBus from '../eventBus'
 				message += " Follow up consent"
 				valid = false
 			}
-			if (valid == false) {
+			if (valid == false) 
+			{
 				alert (message)
 				return false
 			}

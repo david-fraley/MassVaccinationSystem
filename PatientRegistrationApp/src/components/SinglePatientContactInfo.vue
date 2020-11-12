@@ -1,66 +1,66 @@
 <template>
-  <v-container fluid>
+	<v-container fluid>
     <v-row>
-      <v-col cols="12" sm="6" md="3">
+		<v-col cols="12" sm="6" md="3">
         <v-text-field
-          required
-          :rules="[v => !!v || 'Phone number is required']"
-          label="Phone Number"
-          v-model="patientPhoneNumber"
+			required
+			:rules="[v => !!v || 'Phone number is required']"
+			label="Phone Number"
+			v-model="patientPhoneNumber"
         ></v-text-field>
-      </v-col>
+	</v-col>
 
-      <v-col class="d-flex" cols="6" sm="2">
+	<v-col class="d-flex" cols="6" sm="2">
         <v-select
-          required
-          :rules="[v => !!v || 'Phone type is required']"
-          v-model="patientPhoneNumberType"
-          :items="phonetype"
-          label="Phone Type"
+			required
+			:rules="[v => !!v || 'Phone type is required']"
+			v-model="patientPhoneNumberType"
+			:items="phonetype"
+			label="Phone Type"
         ></v-select>
-      </v-col>
+	</v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="6" sm="6" md="3">
+	<v-col cols="6" sm="6" md="3">
         <v-checkbox
-          v-model="checkbox"
-          label="I have no phone number"
+			v-model="checkbox"
+			label="I have no phone number"
         ></v-checkbox>
-      </v-col>
+	</v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="12" sm="6" md="6">
+	<v-col cols="12" sm="6" md="6">
         <v-text-field
-          required
-          :rules="emailRules"
-          label="E-mail Address"
-          v-model="patientEmail"
+			required
+			:rules="emailRules"
+			label="E-mail Address"
+			v-model="patientEmail"
         ></v-text-field>
-      </v-col>
+	</v-col>
     </v-row>
     <v-col cols="12" sm="6" md="3">
-      <v-checkbox
-        v-model="checkbox"
-        label="I have no e-mail address"
-      ></v-checkbox>
+		<v-checkbox
+			v-model="checkbox"
+			label="I have no e-mail address"
+	></v-checkbox>
     </v-col>
 
     <v-row>
-      <v-radio-group
+	<v-radio-group
         required
         :rules="[v => !!v || 'This field is required']"
         v-model="approval"
         label="May we contact you regarding follow up vaccination information?"
-      >
+	>
         <v-col align="right" cols="3" sm="3" md="3">
-          <v-radio label="Yes" value="yes"></v-radio>
-          <v-radio label="No" value="no"></v-radio>
+			<v-radio label="Yes" value="yes"></v-radio>
+			<v-radio label="No" value="no"></v-radio>
         </v-col>
-      </v-radio-group>
+	</v-radio-group>
     </v-row>
-  </v-container>
+	</v-container>
 </template>
 
 <script>
@@ -100,11 +100,13 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
 	
-			if(this.patientPhoneNumber == "") {
+			if(this.patientPhoneNumber == "") 
+			{
         message += " Phone Number"
         valid = false
 			}
-			if(this.patientEmail == "") {
+			if(this.patientEmail == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -112,7 +114,8 @@ export default {
         message += " E-mail"
         valid = false
 			}
-			if(this.approval == "") {
+			if(this.approval == "") 
+			{
 			if(!valid)
 				{
 				message +=","
@@ -120,14 +123,15 @@ export default {
         message += " Follow up consent"
         valid = false
 			}
-			if (valid == false) {
+			if (valid == false) 
+			{
 				alert (message)
 				return false
 			}
 	
-      this.sendContactInfoInfoToReviewPage();
-      return true;
-    }
-  },
+		this.sendContactInfoInfoToReviewPage();
+		return true;
+		}
+	},
 }
 </script>

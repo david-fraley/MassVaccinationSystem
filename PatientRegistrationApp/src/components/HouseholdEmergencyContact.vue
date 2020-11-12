@@ -1,51 +1,51 @@
 <template>
 	<v-container fluid>
-		<v-row align="center" justify="center">
-      <!-- Last name -->
-      <v-col class="d-flex" cols="5" sm="5">
+	<v-row align="center" justify="center">
+		<!-- Last name -->
+		<v-col class="d-flex" cols="5" sm="5">
         <v-text-field
-          label="Last Name"
-          required
-          :rules="[v => !!v || 'Last name field is required']"
-          v-model="householdEmergencyContactFamilyName"
-          prepend-icon="mdi-menu-right"
+			label="Last Name"
+			required
+			:rules="[v => !!v || 'Last name field is required']"
+			v-model="householdEmergencyContactFamilyName"
+			prepend-icon="mdi-menu-right"
         ></v-text-field>
-      </v-col>
+		</v-col>
 
-      <!-- First name -->
-      <v-col class="d-flex" cols="5" sm="5">
+		<!-- First name -->
+		<v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
-          label="First Name"
-          required
-          :rules="[v => !!v || 'First name field is required']"
-          v-model="householdEmergencyContactGivenName">
+			label="First Name"
+			required
+			:rules="[v => !!v || 'First name field is required']"
+			v-model="householdEmergencyContactGivenName">
         </v-text-field>
-      </v-col>
+		</v-col>
     </v-row>
 
     <v-row align="center" justify="center">
-      <!-- Phone Number -->
-      <v-col class="d-flex" cols="5" sm="5">
+		<!-- Phone Number -->
+		<v-col class="d-flex" cols="5" sm="5">
         <v-text-field
-          label="Phone Number"
-          required
-          :rules="[v => !!v || 'Phone number field is required']"
-          v-model="householdEmergencyContactPhoneNumber"
-          prepend-icon="mdi-menu-right"
+			label="Phone Number"
+			required
+			:rules="[v => !!v || 'Phone number field is required']"
+			v-model="householdEmergencyContactPhoneNumber"
+			prepend-icon="mdi-menu-right"
         ></v-text-field>
-      </v-col>
+		</v-col>
 
-      <!-- Phone Number Type -->
-      <v-col class="d-flex" cols="5" sm="3">
+		<!-- Phone Number Type -->
+		<v-col class="d-flex" cols="5" sm="3">
         <v-select
-          v-model="householdEmergencyContactPhoneNumberType"
-          :items="phoneType"
-          label="Phone Number Type"
+			v-model="householdEmergencyContactPhoneNumberType"
+			:items="phoneType"
+			label="Phone Number Type"
         ></v-select>
-      </v-col>
-      <v-col class="d-flex" cols="5" sm="2"> </v-col>
+		</v-col>
+		<v-col class="d-flex" cols="5" sm="2"> </v-col>
     </v-row>
-  </v-container>
+	</v-container>
 </template>
 
 <script>
@@ -78,12 +78,14 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
       
-      if(this.householdEmergencyContactFamilyName == "")  {
+      if(this.householdEmergencyContactFamilyName == "")  
+	  {
         message += " Last Name"
         valid = false
       }
       
-      if(this.householdEmergencyContactGivenName == "") {
+      if(this.householdEmergencyContactGivenName == "") 
+	  {
 	  if(!valid)
 				{
 				message +=","
@@ -92,7 +94,8 @@ export default {
         valid = false
       }
       
-      if (this.householdEmergencyContactPhoneNumber == "") {
+      if (this.householdEmergencyContactPhoneNumber == "") 
+	  {
 	  if(!valid)
 				{
 				message +=","
@@ -101,7 +104,8 @@ export default {
         valid = false
       }
       
-      if (valid == false) {
+      if (valid == false) 
+		{
           alert(message)
           return false
         }
