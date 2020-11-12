@@ -190,43 +190,43 @@ export default {
       var message = "Woops! You need to enter the following field(s):"
       
       if(this.householdFamilyName == "")  
-	  {
+	{
         message += " Last Name"
         valid = false
-      }
+	}
       
       if(this.householdGivenName == "") 
-	  {
-	  if(!valid)
+	{
+	if(!valid)
 				{
 				message +=","
 				}
         message += " First Name"
         valid = false
-      }
+	}
       
       
       if (this.householdDate == null) 
-	  {
-	  if(!valid)
+	{
+	if(!valid)
 				{
 				message +=","
 				}
         message += " Date of birth"
         valid = false
-      }
+	}
       
       if(this.householdGender == "") 
-	  {
-	  if(!valid)
+	{
+	if(!valid)
 				{
 				message +=","
 				}
         message += " Gender Identity" 
         valid = false
-      }
+	}
       
-      if (valid == false) 
+	if (valid == false) 
 		{
           alert(message)
           return false
@@ -235,6 +235,6 @@ export default {
         this.sendHouseholdPersonalInfoDataToReviewPage();
         return true;
     }
-  },
+},
 };
 </script>

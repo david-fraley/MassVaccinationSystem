@@ -215,60 +215,60 @@ export default {
       var message = "Woops! You need to enter the following field(s):"
       
 		if(this.preferredLanguage == "")  
-	  {
+	{
         message += " Preferred Language"
         valid = false
-      }
+	}
 
 		if(this.householdFamilyName == "")  
-	  {
+	{
 		if(!valid)
 				{
 				message +=","
 				}
         message += " Last Name"
         valid = false
-      }
+	}
       
 		if(this.householdGivenName == "") 
-	  {
+	{
 		if(!valid)
 				{
 				message +=","
 				}
         message += " First Name"
         valid = false
-      }
+	}
       
 		if (this.householdDate == null) 
-	  {
+	{
 		if(!valid)
 				{
 				message +=","
 				}
         message += " Date of birth"
         valid = false
-      }
+	}
       
 		if(this.householdGender == "") 
-	  {
+	{
 		if(!valid)
 				{
 				message +=","
 				}
         message += " Gender Identity" 
         valid = false
-      }
+	}
 
 		if(this.relationship == "") 
-	  {
+	{
 		if(!valid)
 				{
 				message +=","
 				}
         message += " Relationship" 
         valid = false
-      }
+	}
       
 		if (valid == false) 
 		{
@@ -279,6 +279,6 @@ export default {
         this.sendHouseholdPersonalInfoDataToReviewPage();
         return true;
     }
-  },
+},
 };
 </script>

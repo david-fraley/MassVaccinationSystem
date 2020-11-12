@@ -78,40 +78,40 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
       
-      if(this.householdEmergencyContactFamilyName == "")  
-	  {
-        message += " Last Name"
-        valid = false
-      }
+	if(this.householdEmergencyContactFamilyName == "")  
+	{
+		message += " Last Name"
+		valid = false
+	}
       
-      if(this.householdEmergencyContactGivenName == "") 
-	  {
-	  if(!valid)
+	if(this.householdEmergencyContactGivenName == "") 
+	{
+	if(!valid)
 				{
 				message +=","
 				}
         message += " First Name"
         valid = false
-      }
+	}
       
-      if (this.householdEmergencyContactPhoneNumber == "") 
-	  {
-	  if(!valid)
+	if (this.householdEmergencyContactPhoneNumber == "") 
+	{
+	if(!valid)
 				{
 				message +=","
 				}
         message += " Phone Number"
         valid = false
-      }
+	}
       
-      if (valid == false) 
+	if (valid == false) 
 		{
-          alert(message)
-          return false
+		alert(message)
+		return false
         }
-      this.sendHouseholdEmergencyContactInfoToReviewPage();
-      return true;
+	this.sendHouseholdEmergencyContactInfoToReviewPage();
+	return true;
     }
-  },
+},
 };
 </script>
