@@ -1,5 +1,14 @@
 <template>
 	<v-container fluid>
+	<v-row align="left" justify="left">
+			<v-col cols="6" sm="6" md="3">
+				<v-checkbox
+					v-model="checkbox"
+					label="I have no home address"
+				></v-checkbox>
+			</v-col>	  		
+		</v-row>
+	
 		<v-row>
 			<v-col cols="12" sm="12" md="12">
 				<v-text-field
@@ -60,14 +69,7 @@
 				></v-text-field>
 			</v-col>
 		</v-row>	
-		<v-row align="center" justify="center">
-			<v-col cols="12" sm="6" md="3">
-				<v-checkbox
-					v-model="checkbox"
-					label="I have no home address"
-				></v-checkbox>
-			</v-col>	  		
-		</v-row>
+		
 	</v-container>
 </template>
 
