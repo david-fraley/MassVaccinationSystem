@@ -4,8 +4,10 @@
       <v-col cols="12" sm="6" md="3">
         <v-text-field
           required
-          :rules="[v => !!v || 'Phone number is required']"
           label="Phone Number"
+          :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+          placeholder="(###)###-####"
+          v-mask="'(###)###-####'"
           v-model="patientPhoneNumber"
         ></v-text-field>
       </v-col>
