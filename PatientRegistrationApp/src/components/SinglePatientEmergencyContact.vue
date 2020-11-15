@@ -27,11 +27,13 @@
 		<!-- Phone Number -->
 		<v-col class="d-flex" cols="5" sm="5">
         <v-text-field
-			label="Phone Number"
-			required
-			:rules="[v => !!v || 'Phone number field is required']"
-			v-model="emergencyContactPhoneNumber"
-			prepend-icon="mdi-menu-right"
+          label="Phone Number"
+          required
+          :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+          placeholder="(###)###-####"
+          v-mask="'(###)###-####'"
+          v-model="emergencyContactPhoneNumber"
+          prepend-icon="mdi-menu-right"
         ></v-text-field>
 		</v-col>
 
