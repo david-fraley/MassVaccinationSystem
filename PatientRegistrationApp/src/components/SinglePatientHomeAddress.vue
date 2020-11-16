@@ -105,7 +105,7 @@ import EventBus from '../eventBus'
 			cityAddress: '',
 			districtAddress: '',
 			stateAddress: '',
-			countryAddress: '',
+			countryAddress: 'USA',
 			postalCode: ''
 		}				
 	},

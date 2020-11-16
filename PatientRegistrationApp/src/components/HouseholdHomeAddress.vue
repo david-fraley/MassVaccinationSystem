@@ -98,7 +98,7 @@ import EventBus from '../eventBus'
 			householdCityAddress: '',
 			householdDistrictAddress: '',
 			householdStateAddress: '',
-			householdCountryAddress: '',
+			householdCountryAddress: 'USA',
 			householdPostalCode: ''
 		}
 		
