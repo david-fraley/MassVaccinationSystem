@@ -4,23 +4,23 @@
       <!-- Last name -->
       <v-col class="d-flex" cols="6" sm="6">
         <v-text-field
-          label="Last Name"
+			label="Last Name"
 			required
 			:rules="[v => !!v || 'Last name field is required']"
-          v-model="emergencyContactFamilyName"
-          prepend-icon="mdi-menu-right"
+			v-model="emergencyContactFamilyName"
+			prepend-icon="mdi-menu-right"
         ></v-text-field>
-      </v-col>
+		</v-col>
 
       <!-- First name -->
       <v-col class="d-flex" cols="6" sm="6">
         <v-text-field 
-          label="First Name"
+			label="First Name"
 			required
 			:rules="[v => !!v || 'First name field is required']"
-          v-model="emergencyContactGivenName">
+			v-model="emergencyContactGivenName">
         </v-text-field>
-      </v-col>
+		</v-col>
     </v-row>
 
     <v-row>
@@ -28,24 +28,26 @@
       <v-col class="d-flex" cols="12" sm="6">
         <v-text-field
           label="Phone Number"
-			required
-			:rules="[v => !!v || 'Phone number field is required']"
+          required
+          :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+          placeholder="(###)###-####"
+          v-mask="'(###)###-####'"
           v-model="emergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
-      </v-col>
+		</v-col>
 
       <!-- Phone Number Type -->
       <v-col class="d-flex" cols="6" sm="3">
         <v-select
-          v-model="emergencyContactPhoneNumberType"
-          :items="phoneType"
-          label="Phone Number Type"
+			v-model="emergencyContactPhoneNumberType"
+			:items="phoneType"
+			label="Phone Number Type"
         ></v-select>
-      </v-col>
-      <v-col class="d-flex" cols="5" sm="2"> </v-col>
+		</v-col>
+		<v-col class="d-flex" cols="5" sm="2"> </v-col>
     </v-row>
-  </v-container>
+	</v-container>
 </template>
 
 <script>
@@ -77,31 +79,43 @@ export default {
     {
 		//add logic to check form contents
 		var valid = true
-		var message = "Woops! You need to enter the following fields:"
+		var message = "Woops! You need to enter the following field(s):"
 		
-		if(this.emergencyContactFamilyName == "")  {
-			message += " *Last Name"
+		if(this.emergencyContactFamilyName == "")  
+		{
+			message += " Last Name"
 			valid = false
 		}
 		
-		if(this.emergencyContactGivenName == "") {
-			message += " *First Name"
+		if(this.emergencyContactGivenName == "") 
+		{
+		if(!valid)
+				{
+				message +=","
+				}
+			message += " First Name"
 			valid = false
 		}
 		
 		
-		if (this.emergencyContactPhoneNumber == "") {
-			message += " *Phone Number"
+		if (this.emergencyContactPhoneNumber == "") 
+		{
+		if(!valid)
+				{
+				message +=","
+				}
+			message += " Phone Number"
 			valid = false
 		}
 		
-		if (valid == false) {
+		if (valid == false) 
+		{
 				alert(message)
 				return false
-			}
-      this.sendEmergencyContactInfoToReviewPage();
-      return true;
+		}
+	this.sendEmergencyContactInfoToReviewPage();
+	return true;
     }
-  },
+},
 };
 </script>
