@@ -16,22 +16,18 @@
 </template>
 
 <script>
-import PatientInfoComponent from './PatientInfoComponent';
-import PatientDischargeComponent from './PatientDischargeComponent';
+import PatientInfoComponent from "./PatientInfoComponent";
+import PatientDischargeComponent from "./PatientDischargeComponent";
 
-  export default {
-    name: 'DischargePage',
-    methods: 
-    {
-    },
-    components: 
-    {
-      PatientInfoComponent,
-      PatientDischargeComponent
-    },
-    data () {
-      return {
-      }
-    }
-  }
+export default {
+  name: "DischargePage",
+  methods: {},
+  components: {
+    PatientInfoComponent,
+    PatientDischargeComponent,
+  },
+  data() {
+    return {};
+  },
+};
 </script>

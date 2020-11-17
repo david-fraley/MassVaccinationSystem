@@ -12,36 +12,32 @@
       <PatientInfoComponent />
       <VaccinationScreeningComponent />
       <template v-if="true">
-      <VaccinationProceedComponent />
+        <VaccinationProceedComponent />
       </template>
       <template v-if="false">
-      <VaccinationCanceledComponent />
+        <VaccinationCanceledComponent />
       </template>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import PatientInfoComponent from './PatientInfoComponent';
-import VaccinationScreeningComponent from './VaccinationScreeningComponent';
-import VaccinationProceedComponent from './VaccinationProceedComponent';
-import VaccinationCanceledComponent from './VaccinationCanceledComponent';
+import PatientInfoComponent from "./PatientInfoComponent";
+import VaccinationScreeningComponent from "./VaccinationScreeningComponent";
+import VaccinationProceedComponent from "./VaccinationProceedComponent";
+import VaccinationCanceledComponent from "./VaccinationCanceledComponent";
 
-  export default {
-    name: 'VaccinationEventPage',
-    methods: 
-    {
-    },
-    components: 
-    {
-      PatientInfoComponent,
-      VaccinationScreeningComponent,
-      VaccinationProceedComponent,
-      VaccinationCanceledComponent
-    },
-    data () {
-      return {
-      }
-    }
-  }
+export default {
+  name: "VaccinationEventPage",
+  methods: {},
+  components: {
+    PatientInfoComponent,
+    VaccinationScreeningComponent,
+    VaccinationProceedComponent,
+    VaccinationCanceledComponent,
+  },
+  data() {
+    return {};
+  },
+};
 </script>

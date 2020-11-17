@@ -16,22 +16,18 @@
 </template>
 
 <script>
-import PatientInfoComponent from './PatientInfoComponent';
-import AdverseEventsComponent from './AdverseEventsComponent';
+import PatientInfoComponent from "./PatientInfoComponent";
+import AdverseEventsComponent from "./AdverseEventsComponent";
 
-  export default {
-    name: 'AdverseEventsPage',
-    methods: 
-    {
-    },
-    components: 
-    {
-      PatientInfoComponent,
-      AdverseEventsComponent
-    },
-    data () {
-      return {
-      }
-    }
-  }
+export default {
+  name: "AdverseEventsPage",
+  methods: {},
+  components: {
+    PatientInfoComponent,
+    AdverseEventsComponent,
+  },
+  data() {
+    return {};
+  },
+};
 </script>

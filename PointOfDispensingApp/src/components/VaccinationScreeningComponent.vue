@@ -5,16 +5,10 @@
         <v-row>
           <v-radio-group v-model="patientInfoComfirmed" row>
             <template v-slot:label>
-              <div>Patient info confirmed? </div>
+              <div>Patient info confirmed?</div>
             </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
+            <v-radio label="Yes" value="Yes"></v-radio>
+            <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
         </v-row>
         <v-row>
@@ -22,14 +16,8 @@
             <template v-slot:label>
               <div>Consent form signed?<v-spacer></v-spacer></div>
             </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
+            <v-radio label="Yes" value="Yes"></v-radio>
+            <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
         </v-row>
         <v-row>
@@ -37,14 +25,8 @@
             <template v-slot:label>
               <div>Proper screening completed?</div>
             </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
+            <v-radio label="Yes" value="Yes"></v-radio>
+            <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
         </v-row>
         <v-row>
@@ -52,33 +34,21 @@
             <template v-slot:label>
               <div>VIS fact sheet provided?</div>
             </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
+            <v-radio label="Yes" value="Yes"></v-radio>
+            <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
       <v-col cols="6">
         <v-card color="accent" dark>
           <v-card-title style="center" class="headline">
-              Proceed with vaccination?
+            Proceed with vaccination?
           </v-card-title>
           <v-row align="center" justify="center">
             <v-col cols="12">
               <v-radio-group v-model="row" row>
-                <v-radio
-                  label="Yes"
-                  value="Yes"
-                ></v-radio>
-                <v-radio
-                  label="No"
-                  value="No"
-                ></v-radio>
+                <v-radio label="Yes" value="Yes"></v-radio>
+                <v-radio label="No" value="No"></v-radio>
               </v-radio-group>
             </v-col>
           </v-row>
@@ -94,17 +64,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'VaccinationScreeningComponent',
-    methods: 
-    {
-    },
-    components: 
-    {
-    },
-    data () {
-      return {
-      }
-    }
-  }
+export default {
+  name: "VaccinationScreeningComponent",
+  methods: {},
+  components: {},
+  data() {
+    return {};
+  },
+};
 </script>
