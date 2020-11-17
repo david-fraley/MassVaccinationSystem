@@ -4,23 +4,24 @@
       <!-- Last name -->
       <v-col class="d-flex" cols="6" sm="6">
         <v-text-field
-			label="Last Name"
-			required
-			:rules="[v => !!v || 'Last name field is required']"
-			v-model="emergencyContactFamilyName"
-			prepend-icon="mdi-menu-right"
+          label="Last Name"
+          required
+          :rules="[(v) => !!v || 'Last name field is required']"
+          v-model="emergencyContactFamilyName"
+          prepend-icon="mdi-menu-right"
         ></v-text-field>
-		</v-col>
+      </v-col>
 
       <!-- First name -->
       <v-col class="d-flex" cols="6" sm="6">
-        <v-text-field 
-			label="First Name"
-			required
-			:rules="[v => !!v || 'First name field is required']"
-			v-model="emergencyContactGivenName">
+        <v-text-field
+          label="First Name"
+          required
+          :rules="[(v) => !!v || 'First name field is required']"
+          v-model="emergencyContactGivenName"
+        >
         </v-text-field>
-		</v-col>
+      </v-col>
     </v-row>
 
     <v-row>
@@ -29,93 +30,87 @@
         <v-text-field
           label="Phone Number"
           required
-          :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+          :rules="[(v) => v.length === 13 || 'Phone number must be 10 digits']"
           placeholder="(###)###-####"
           v-mask="'(###)###-####'"
           v-model="emergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
-		</v-col>
+      </v-col>
 
       <!-- Phone Number Type -->
       <v-col class="d-flex" cols="6" sm="3">
         <v-select
-			v-model="emergencyContactPhoneNumberType"
-			:items="phoneType"
-			label="Phone Number Type"
+          v-model="emergencyContactPhoneNumberType"
+          :items="phoneType"
+          label="Phone Number Type"
         ></v-select>
-		</v-col>
-		<v-col class="d-flex" cols="5" sm="2"> </v-col>
+      </v-col>
+      <v-col class="d-flex" cols="5" sm="2"> </v-col>
     </v-row>
-	</v-container>
+  </v-container>
 </template>
 
 <script>
-import EventBus from '../eventBus'
+import EventBus from "../eventBus";
 
 export default {
   name: "SinglePatientEmergencyContact",
   data() {
     return {
       phoneType: ["Cell", "Home"],
-      emergencyContactFamilyName: '',
-      emergencyContactGivenName: '',
-      emergencyContactPhoneNumber: '',
-      emergencyContactPhoneNumberType: ''
+      emergencyContactFamilyName: "",
+      emergencyContactGivenName: "",
+      emergencyContactPhoneNumber: "",
+      emergencyContactPhoneNumberType: "",
     };
   },
   methods: {
-    sendEmergencyContactInfoToReviewPage()
-    {
+    sendEmergencyContactInfoToReviewPage() {
       const emergencyContactPayload = {
         emergencyContactFamilyName: this.emergencyContactFamilyName,
         emergencyContactGivenName: this.emergencyContactGivenName,
         emergencyContactPhoneNumber: this.emergencyContactPhoneNumber,
-        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType
-      }
-      EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
+        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType,
+      };
+      EventBus.$emit(
+        "DATA_EMERGENCY_CONTACT_INFO_PUBLISHED",
+        emergencyContactPayload
+      );
     },
-    verifyFormContents()
-    {
-		//add logic to check form contents
-		var valid = true
-		var message = "Woops! You need to enter the following field(s):"
-		
-		if(this.emergencyContactFamilyName == "")  
-		{
-			message += " Last Name"
-			valid = false
-		}
-		
-		if(this.emergencyContactGivenName == "") 
-		{
-		if(!valid)
-				{
-				message +=","
-				}
-			message += " First Name"
-			valid = false
-		}
-		
-		
-		if (this.emergencyContactPhoneNumber == "") 
-		{
-		if(!valid)
-				{
-				message +=","
-				}
-			message += " Phone Number"
-			valid = false
-		}
-		
-		if (valid == false) 
-		{
-				alert(message)
-				return false
-		}
-	this.sendEmergencyContactInfoToReviewPage();
-	return true;
-    }
-},
+    verifyFormContents() {
+      //add logic to check form contents
+      var valid = true;
+      var message = "Woops! You need to enter the following field(s):";
+
+      if (this.emergencyContactFamilyName == "") {
+        message += " Last Name";
+        valid = false;
+      }
+
+      if (this.emergencyContactGivenName == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message += " First Name";
+        valid = false;
+      }
+
+      if (this.emergencyContactPhoneNumber == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message += " Phone Number";
+        valid = false;
+      }
+
+      if (valid == false) {
+        alert(message);
+        return false;
+      }
+      this.sendEmergencyContactInfoToReviewPage();
+      return true;
+    },
+  },
 };
 </script>
