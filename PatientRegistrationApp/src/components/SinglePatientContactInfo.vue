@@ -33,6 +33,19 @@
 	</v-col>
     </v-row>
 
+	<v-row>
+     <v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="emailAddressAvailable"
+      >
+        <v-col align="right" cols="12">
+          <v-radio label="I have an E-mail address" value="yes" @change="EmailAddressAvailable()"></v-radio>
+          <v-radio label="I do not have an E-mail address" value="no" @change="EmailAddressNotAvailable()"></v-radio>
+        </v-col>
+      </v-radio-group>
+    </v-row>
+	
     <v-row>
 	<v-col cols="12" sm="6" md="6">
         <v-text-field
@@ -40,19 +53,13 @@
 			:rules="emailRules"
 			label="E-mail Address"
 			v-model="patientEmail"
+			v-bind:disabled="emailAddressDisabled"
 			prepend-icon="mdi-menu-right"
         ></v-text-field>
 	</v-col>
     </v-row>
 	
-	<v-row>
-    <v-col cols="6" sm="6" md="3">
-      <v-checkbox
-        v-model="checkbox"
-        label="I have no e-mail address"
-      ></v-checkbox>
-    </v-col></v-row>
-	
+
 
     <v-row><v-col cols="12" sm="6" md="6">
       <v-radio-group
@@ -89,7 +96,9 @@ export default {
       patientPhoneNumber: '',
       patientPhoneNumberType: '',
       patientEmail: '',
-      approval: ''
+      approval: '',
+	EmailAddressDisabled: false,
+	EmailAddressAvailable: 'yes',
     };
   },
   methods: {
@@ -114,6 +123,8 @@ export default {
         message += " Phone Number"
         valid = false
 			}
+	if(!this.emailAddressDisabled)
+		{
 			if(this.patientEmail == "") 
 			{
 			if(!valid)
@@ -123,6 +134,7 @@ export default {
         message += " E-mail"
         valid = false
 			}
+		}
 			if(this.approval == "") 
 			{
 			if(!valid)
@@ -141,6 +153,22 @@ export default {
 		this.sendContactInfoInfoToReviewPage();
 		return true;
 		}
-	},
+	EmailAddressAvailable()
+    {
+		this.emailAddressDisabled = false
+		this.patientEmail=""
+    },
+    EmailAddressNotAvailable()
+    {
+		this.emailAddressDisabled = true
+		this.patientEmail="Not Available"
+    },
+  },
 }
 </script>
+<style lang="css" scoped> 
+
+	.v-input--is-disabled {
+		background-color: #E0E0E0;
+	}
+</style>
