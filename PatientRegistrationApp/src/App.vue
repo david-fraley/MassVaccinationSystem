@@ -74,7 +74,7 @@
 								<!-- Single Patient: Review and Submit -->
 								<v-stepper-content step="6">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientReviewSubmit/></v-card>
 								</v-stepper-content>
@@ -135,7 +135,7 @@
 								<!-- Household: Review and submit -->
 								<v-stepper-content step="8">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Please ensure your household's information is correct</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdReviewSubmit/></v-card>				
 								</v-stepper-content>
