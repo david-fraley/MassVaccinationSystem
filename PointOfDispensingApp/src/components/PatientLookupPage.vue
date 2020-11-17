@@ -1,8 +1,16 @@
 <template>
   <v-container>
     <v-row>
+      <h2 class="font-weight-medium primary--text">Retrieve Patient Record</h2>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-divider></v-divider>
+      </v-col>
+    </v-row>
+    <v-row>
         <v-col cols="12">
-          <p>Retrieve the patient's record by scanning their QR code.</p>
+          <div class="font-weight-medium secondary--text">Retrieve the patient's record by scanning their QR code.</div>
         </v-col>
     </v-row>
     <v-row>
@@ -19,7 +27,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <p>If the QR code is not available, search for the patient record by name and/or DOB.</p>
+        <div class="font-weight-medium secondary--text">If the QR code is not available, search for the patient record by name and/or DOB.</div>
       </v-col>
     </v-row>
     <v-row>
