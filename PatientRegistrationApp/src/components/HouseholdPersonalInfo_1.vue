@@ -94,8 +94,8 @@
 		<v-spacer></v-spacer>
     </v-row>
 
-    <v-row align="center" justify="center">
-		<v-col class="d-flex" cols="12" sm="12">
+    <v-row align="left" justify="left">
+		<v-col class="d-flex" cols="5" sm="5">
         <!-- Current Photo -->
         <v-file-input
 			:rules="rules"
