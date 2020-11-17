@@ -5,8 +5,14 @@
 			<v-layout justify-center align-center>
 				<v-card flat height="100%" width="100%" class="d-flex flex-column"> 
 					<v-stepper v-model="page" class="elevation-0">	
-						<v-toolbar flat color="primary" dark>
-							<v-toolbar-title style="font-size:2em" class="font-weight-bold">{{title}}</v-toolbar-title>
+						<v-toolbar flat height="100" color="primary" dark>
+							<v-toolbar-title style="font-size:3em" class="font-weight-bold">{{title}}</v-toolbar-title>
+							<v-spacer></v-spacer>
+							<v-img
+								max-height="100"
+								max-width="130"
+								src="./assets/Logo.png"
+							></v-img>
 						</v-toolbar>
 						<v-stepper-header class="elevation-0">
 							<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">

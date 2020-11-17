@@ -7,6 +7,7 @@
 					:rules="[v => !!v || 'Phone number is required']"
 					label="Primary Phone Number"
 					v-model="primaryPhoneNumber"
+					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="6" sm="2">
@@ -47,6 +48,7 @@
 					:rules="emailRules"
 					label="Primary E-mail Address"
 					v-model="primaryEmail"
+					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
 			<v-col cols="12" sm="12" md="6">
@@ -57,24 +59,25 @@
 				></v-text-field>
 			</v-col>
 		</v-row>
-			<v-col cols="6" sm="6" md="3">
+			<v-row><v-col cols="6" sm="6" md="3">
 				<v-checkbox
 					v-model="checkbox"
 					label="I have no email address"
 				></v-checkbox>
-			</v-col>
-		<v-row>
+			</v-col></v-row>
+		<v-row><v-col cols="12" sm="6" md="6">
 			<v-radio-group
 				required
 				:rules="[v => !!v || 'This field is required']"
 				v-model="approval"
+				prepend-icon="mdi-menu-right"
 				label="May we contact you regarding follow up vaccination information?"
 			>
 				<v-col align="right" cols="3" sm="3" md="3">
 					<v-radio label="Yes" value="yes"></v-radio>
 					<v-radio label="No" value="no"></v-radio>
 				</v-col>
-			</v-radio-group>
+			</v-radio-group></v-col>
 		</v-row>
 	</v-container>
 </template>
@@ -119,21 +122,33 @@ import EventBus from '../eventBus'
 		verifyFormContents()
 		{
 			var valid = true
-			var message = "Woops! You need to enter the following fields:"
+			var message = "Woops! You need to enter the following field(s):"
 		
-			if(this.primaryPhoneNumber == "") {
-				message += "*Primary Phone Number"
+			if(this.primaryPhoneNumber == "") 
+			{
+				message += " Primary Phone Number"
 				valid = false
 			}
-			if(this.primaryEmail == "") {
-				message += "*Primary E-mail"
+			if(this.primaryEmail == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Primary E-mail"
 				valid = false
 			}
-			if(this.approval == "") {
-				message += "*Follow up consent"
+			if(this.approval == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Follow up consent"
 				valid = false
 			}
-			if (valid == false) {
+			if (valid == false) 
+			{
 				alert (message)
 				return false
 			}
