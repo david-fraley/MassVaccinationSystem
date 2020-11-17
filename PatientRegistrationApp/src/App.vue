@@ -10,8 +10,8 @@
 							<v-spacer></v-spacer>
 							<v-img
 								max-height="100"
-								max-width="150"
-								src="./assets/MassVaxx_bg.png"
+								max-width="130"
+								src="./assets/Logo.png"
 							></v-img>
 						</v-toolbar>
 						<v-stepper-header class="elevation-0">
