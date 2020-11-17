@@ -1,12 +1,25 @@
 <template>
   <v-container fluid>
     <v-row>
+     <v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="phoneNumberAvailable"
+      >
+        <v-col align="right" cols="12">
+          <v-radio label="I have a phone number" value="yes" @change="PhoneNumberAvailable()"></v-radio>
+          <v-radio label="I do not have a phone number" value="no" @change="PhoneNumberNotAvailable()"></v-radio>
+        </v-col>
+      </v-radio-group>
+    </v-row>
+    <v-row>
       <v-col cols="12" sm="6" md="3">
         <v-text-field
           required
           :rules="[v => !!v || 'Phone number is required']"
           label="Phone Number"
           v-model="patientPhoneNumber"
+          v-bind:disabled="phoneNumberDisabled"
         ></v-text-field>
       </v-col>
 
@@ -17,16 +30,8 @@
           v-model="patientPhoneNumberType"
           :items="phonetype"
           label="Phone Type"
+          v-bind:disabled="phoneNumberDisabled"
         ></v-select>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="6" sm="6" md="3">
-        <v-checkbox
-          v-model="checkbox"
-          label="I have no phone number"
-        ></v-checkbox>
       </v-col>
     </v-row>
 
@@ -80,7 +85,9 @@ export default {
       patientPhoneNumber: '',
       patientPhoneNumberType: '',
       patientEmail: '',
-      approval: ''
+      approval: '',
+      phoneNumberDisabled: false,
+      phoneNumberAvailable: 'yes',
     };
   },
   methods: {
@@ -119,7 +126,15 @@ export default {
 	
       this.sendContactInfoInfoToReviewPage();
       return true;
-    }
+    },
+    PhoneNumberAvailable()
+    {
+      this.phoneNumberDisabled = false
+    },
+    PhoneNumberNotAvailable()
+    {
+      this.phoneNumberDisabled = true
+    },
   },
 }
 </script>
