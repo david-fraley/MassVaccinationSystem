@@ -47,7 +47,7 @@
 					color="primary"
 					v-bind="attrs"
 					v-on="on"
-					height="15em"
+					height="13em"
 					width="17em"
 					@click="singleRegistration"
 				>
@@ -65,7 +65,7 @@
 							color="primary"
 							v-bind="attrs"
 							v-on="on"
-							height="15em"
+							height="13em"
 							width="17em"
 							@click="householdRegistration"
 							>
