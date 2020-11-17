@@ -116,6 +116,8 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
 	
+		if(!this.phoneNumberDisabled)
+		{	
 			if(this.patientPhoneNumber == "") 
 			{
         message += " Phone Number"
@@ -130,6 +132,7 @@ export default {
         message += " E-mail"
         valid = false
 			}
+		}
 			if(this.approval == "") 
 			{
 			if(!valid)
