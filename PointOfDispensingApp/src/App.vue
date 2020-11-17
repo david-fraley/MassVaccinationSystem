@@ -36,6 +36,13 @@
 </template>
 
 <script>
+import UserLoginPage from './components/UserLoginPage';
+import PatientCheckInPage from './components/PatientCheckInPage';
+import PatientHistoryPage from './components/PatientHistoryPage';
+import VaccinationEventPage from './components/VaccinationEventPage';
+import AdverseEventsPage from './components/AdverseEventsPage';
+import DischargePage from './components/DischargePage';
+
   export default {
     name: 'App',
     methods: 
