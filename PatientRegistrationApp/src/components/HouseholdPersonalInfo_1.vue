@@ -4,11 +4,11 @@
 		<!-- Last name -->
 		<v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
-			label="Last Name" 
-			id="lastName" 
-			required
-			:rules="[v => !!v || 'Last name field is required']"
-			v-model="householdFamilyName"
+          label="Last Name" 
+          id="lastName" 
+          required
+          :rules="[v => !!v || 'Last name field is required']"
+          v-model="householdFamilyName"
 			prepend-icon="mdi-menu-right"
         ></v-text-field>
 		</v-col>
@@ -82,11 +82,11 @@
 		<v-col class="d-flex" cols="5" sm="5">
         <!-- Gender identity -->
         <v-select
-			:items="genderID"
-			label="Gender identity"
-			required
-			:rules="[v => !!v || 'Gender identity field is required']"
-			v-model="householdGender"
+          :items="genderID"
+          label="Gender identity"
+          required
+          :rules="[v => !!v || 'Gender identity field is required']"
+          v-model="householdGender"
 			prepend-icon="mdi-menu-right"
         ></v-select>
 	</v-col>
@@ -112,11 +112,11 @@
 		<v-col class="d-flex" cols="5" sm="5">
         <!-- Race -->
         <v-select
-			v-model="householdRaceSelections"
-			:items="race"
-			label="Race (select all that apply)"
+          v-model="householdRaceSelections"
+          :items="race"
+          label="Race (select all that apply)"
 			prepend-icon="mdi-menu-right"
-			multiple
+          multiple
         ></v-select>
 		</v-col>
 		<v-spacer></v-spacer>
@@ -126,9 +126,9 @@
 		<v-col class="d-flex" cols="5" sm="5">
         <!-- Ethnicity -->
         <v-select
-			v-model="householdEthnicitySelection"
-			:items="ethnicity"
-			label="Ethnicity"
+          v-model="householdEthnicitySelection"
+          :items="ethnicity"
+          label="Ethnicity"
 			prepend-icon="mdi-menu-right"
         ></v-select>
 		</v-col>

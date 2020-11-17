@@ -1,8 +1,8 @@
 <template>
-	<v-container fluid>
-    <v-row align="center" justify="center">
-		<!-- Last name -->
-		<v-col class="d-flex" cols="5" sm="5">
+  <v-container fluid>
+    <v-row>
+      <!-- Last name -->
+      <v-col class="d-flex" cols="6" sm="6">
         <v-text-field
 			label="Last Name"
 			required
@@ -12,8 +12,8 @@
         ></v-text-field>
 		</v-col>
 
-		<!-- First name -->
-		<v-col class="d-flex" cols="5" sm="5">
+      <!-- First name -->
+      <v-col class="d-flex" cols="6" sm="6">
         <v-text-field 
 			label="First Name"
 			required
@@ -23,9 +23,9 @@
 		</v-col>
     </v-row>
 
-    <v-row align="center" justify="center">
-		<!-- Phone Number -->
-		<v-col class="d-flex" cols="5" sm="5">
+    <v-row>
+      <!-- Phone Number -->
+      <v-col class="d-flex" cols="12" sm="6">
         <v-text-field
           label="Phone Number"
           required
@@ -37,8 +37,8 @@
         ></v-text-field>
 		</v-col>
 
-		<!-- Phone Number Type -->
-		<v-col class="d-flex" cols="5" sm="3">
+      <!-- Phone Number Type -->
+      <v-col class="d-flex" cols="6" sm="3">
         <v-select
 			v-model="emergencyContactPhoneNumberType"
 			:items="phoneType"

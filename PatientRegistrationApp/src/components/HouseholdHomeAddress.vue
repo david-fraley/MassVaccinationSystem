@@ -8,6 +8,7 @@
 					:rules="[v => !!v || 'Address field is required']"
 					label="Home Address"
 					v-model="householdLineAddress"
+					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
 		</v-row>
@@ -19,6 +20,7 @@
 					:rules="[v => !!v || 'City field is required']"
 					label="City"
 					v-model="householdCityAddress"
+					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="1" sm="1" md="1">
@@ -98,7 +100,7 @@ import EventBus from '../eventBus'
 			householdCityAddress: '',
 			householdDistrictAddress: '',
 			householdStateAddress: '',
-			householdCountryAddress: '',
+			householdCountryAddress: 'USA',
 			householdPostalCode: ''
 		}
 		

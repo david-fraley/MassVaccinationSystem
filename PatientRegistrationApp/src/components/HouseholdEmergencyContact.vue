@@ -1,19 +1,19 @@
 <template>
 	<v-container fluid>
-	<v-row align="center" justify="center">
-		<!-- Last name -->
-		<v-col class="d-flex" cols="5" sm="5">
+		<v-row>
+      <!-- Last name -->
+      <v-col class="d-flex" cols="6" sm="6">
         <v-text-field
-			label="Last Name"
-			required
-			:rules="[v => !!v || 'Last name field is required']"
-			v-model="householdEmergencyContactFamilyName"
+          label="Last Name"
+          required
+          :rules="[v => !!v || 'Last name field is required']"
+          v-model="householdEmergencyContactFamilyName"
 			prepend-icon="mdi-menu-right"
         ></v-text-field>
 		</v-col>
 
-		<!-- First name -->
-		<v-col class="d-flex" cols="5" sm="5">
+      <!-- First name -->
+      <v-col class="d-flex" cols="6" sm="6">
         <v-text-field 
 			label="First Name"
 			required
@@ -23,20 +23,20 @@
 		</v-col>
     </v-row>
 
-    <v-row align="center" justify="center">
-		<!-- Phone Number -->
-		<v-col class="d-flex" cols="5" sm="5">
+    <v-row>
+      <!-- Phone Number -->
+      <v-col class="d-flex" cols="12" sm="6">
         <v-text-field
-			label="Phone Number"
-			required
-			:rules="[v => !!v || 'Phone number field is required']"
-			v-model="householdEmergencyContactPhoneNumber"
+          label="Phone Number"
+          required
+          :rules="[v => !!v || 'Phone number field is required']"
+          v-model="householdEmergencyContactPhoneNumber"
 			prepend-icon="mdi-menu-right"
         ></v-text-field>
 		</v-col>
 
-		<!-- Phone Number Type -->
-		<v-col class="d-flex" cols="5" sm="3">
+      <!-- Phone Number Type -->
+      <v-col class="d-flex" cols="6" sm="3">
         <v-select
 			v-model="householdEmergencyContactPhoneNumberType"
 			:items="phoneType"

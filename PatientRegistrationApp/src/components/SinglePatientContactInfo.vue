@@ -9,6 +9,7 @@
           placeholder="(###)###-####"
           v-mask="'(###)###-####'"
           v-model="patientPhoneNumber"
+          prepend-icon="mdi-menu-right"
         ></v-text-field>
 	</v-col>
 
@@ -39,28 +40,34 @@
 			:rules="emailRules"
 			label="E-mail Address"
 			v-model="patientEmail"
+			prepend-icon="mdi-menu-right"
         ></v-text-field>
 	</v-col>
     </v-row>
-    <v-col cols="12" sm="6" md="3">
-		<v-checkbox
-			v-model="checkbox"
-			label="I have no e-mail address"
-	></v-checkbox>
-    </v-col>
+	
+	<v-row>
+    <v-col cols="6" sm="6" md="3">
+      <v-checkbox
+        v-model="checkbox"
+        label="I have no e-mail address"
+      ></v-checkbox>
+    </v-col></v-row>
+	
 
-    <v-row>
-	<v-radio-group
+    <v-row><v-col cols="12" sm="6" md="6">
+      <v-radio-group
         required
         :rules="[v => !!v || 'This field is required']"
         v-model="approval"
+		prepend-icon="mdi-menu-right"
         label="May we contact you regarding follow up vaccination information?"
 	>
         <v-col align="right" cols="3" sm="3" md="3">
-			<v-radio label="Yes" value="yes"></v-radio>
-			<v-radio label="No" value="no"></v-radio>
+		
+          <v-radio label="Yes" value="yes"></v-radio>
+          <v-radio label="No" value="no"></v-radio>
         </v-col>
-	</v-radio-group>
+      </v-radio-group></v-col>
     </v-row>
 	</v-container>
 </template>
