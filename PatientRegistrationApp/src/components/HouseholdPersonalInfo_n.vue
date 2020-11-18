@@ -181,7 +181,7 @@ export default {
       ],
       languageOptions: ["English", "Spanish"],
       relationshipOptions: ["Child", "Foster Child", "Spouse", "Domestic Partner", "Parent", "In-Law", "Grandparent", "Other Family Member"],
-      householdFamilyName: '',
+      
       householdGivenName: '',
       householdSuffix: '',
       householdBirthDate: '',
@@ -195,7 +195,8 @@ export default {
   },
   props:
   {
-    householdMemberNumber: Number
+    householdMemberNumber: Number,
+	householdFamilyName: Text
   },
   methods: {
     sendHouseholdPersonalInfoDataToReviewPage()
