@@ -1,16 +1,18 @@
 <template>
 	<v-container fluid>
 		<v-row>
-			<v-col cols="12" sm="6" md="3">
+			<v-col cols="12" sm="12" md="12">
 				<v-text-field
 					id = "addr"
 					required
 					:rules="[v => !!v || 'Address field is required']"
 					label="Home Address"
 					v-model="lineAddress"
+					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
-
+		</v-row>
+		<v-row>
 			<v-col cols="6" sm="4" md="3">
 				<v-text-field
 					id = "city"
@@ -18,11 +20,10 @@
 					:rules="[v => !!v || 'City field is required']"
 					label="City"
 					v-model="cityAddress"
+					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
-		</v-row>
-		<v-row>
-			<v-col class="d-flex" cols="4" sm="2" md="3">
+				<v-col class="d-flex" cols="1" sm="1" md="1">
 				<v-select
 				id = "state"
 					required
@@ -32,7 +33,7 @@
                     label="State"
 				></v-select>
 			</v-col>
-			<v-col class="d-flex" cols="6" sm="4">
+			<v-col class="d-flex" cols="3" sm="3">
 				<v-text-field
 				id = "county"
 					required
@@ -41,7 +42,7 @@
 					v-model="districtAddress"
 				></v-text-field>
 			</v-col>
-			<v-col class="d-flex" cols="4" sm="2">
+			<v-col class="d-flex" cols="2" sm="2">
 				<v-select
 				id = "country"
 					required
@@ -51,7 +52,7 @@
                     label="Country"
 				></v-select>
 			</v-col>
-			<v-col cols="6" sm="4" md="3">
+			<v-col cols="3" sm="3" md="3">
 				<v-text-field
 					id = "zipcode"
 					required
@@ -82,40 +83,40 @@ import EventBus from '../eventBus'
         (v) => !!v || "Zip code is required",
 			(v) =>
 			/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
-          "Zip code must be in format of ##### or #####-####",
-      ],
+			"Zip code must be in format of ##### or #####-####",
+		],
 			
 			state:[
-		'Alabama', 'Alaska', 'American Samoa', 'Arizona',
-		'Arkansas', 'California', 'Colorado', 'Connecticut',
-		'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-		'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-		'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-		'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-		'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-		'Missouri', 'Montana', 'Nebraska', 'Nevada',
-		'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-		'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-		'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-		'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-		'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-		'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
+		'AL', 'AK', 'AS', 'AZ',
+		'AR', 'CA', 'CO', 'CT',
+		'DE', 'DC', 'FM',
+		'FL', 'GA', 'GU', 'HI', 'ID',
+		'IL', 'IN', 'IA', 'KS', 'KY',
+		'LA', 'ME', 'MH', 'MD',
+		'MA', 'MI', 'MN', 'MS',
+		'MO', 'MT', 'NE', 'NV',
+		'NH', 'NJ', 'NM', 'NY',
+		'NC', 'ND', 'MP', 'OH',
+		'OK', 'OR', 'PW', 'PA', 'PR',
+		'RI', 'SC', 'SD', 'TN',
+		'TX', 'UT', 'VT', 'VI', 'VA',
+		'WA', 'WV', 'WI', 'WY',
 		],
-			country: ['United States'],
+			country: ['USA'],
 			lineAddress: '',
 			cityAddress: '',
 			districtAddress: '',
 			stateAddress: '',
-			countryAddress: '',
+			countryAddress: 'USA',
 			postalCode: ''
 		}				
 	},
 	
 	rules1: {
         postalCode: [{
-          required: true,
-          message: 'Please enter Mobile Number',
-          trigger: 'blur'
+			required: true,
+			message: 'Please enter Mobile Number',
+			trigger: 'blur'
         }, {
           min: 10,
           max: 10,
@@ -149,47 +150,74 @@ import EventBus from '../eventBus'
 		{
 			//add logic to check form contents
 			var valid = true
-			var message = "Woops! You need to enter the following fields:"
+			var message = "Woops! You need to enter the following field(s):"
 			
 			
-			if(this.lineAddress == "") {
-				message += " *address"
+			if(this.lineAddress == "") 
+			{
+				message += " Address"
 				valid = false
 			}
 			
 			
-			if(this.cityAddress == "") {
-				message += " *city"
-				valid = false
-			}
-				
-			
-			if(this.stateAddress == "") {
-				message += " *state"
-				valid = false
-			}
-				
-			
-			if(this.districtAddress == "") {
-				message += " *county"
+			if(this.cityAddress == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " City"
 				valid = false
 			}
 				
 			
-			if(this.countryAddress == "") {
-				message += " *country"
+			if(this.stateAddress == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " State"
 				valid = false
 			}
 				
 			
-			if(this.postalCode == "") {
-				message += " *zipcode"
+			if(this.districtAddress == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " County"
+				valid = false
+			}
+				
+			
+			if(this.countryAddress == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Country"
+				valid = false
+			}
+				
+			
+			if(this.postalCode == "") 
+			{
+			if(!valid)
+				{
+				message +=","
+				}
+				message += " Zipcode"
 				valid = false
 			}
 			
 	
 
-			if (valid == false) {
+			if (valid == false) 
+			{
 				alert(message)
 				return false
 			}
@@ -198,5 +226,5 @@ import EventBus from '../eventBus'
 			return true;
 		}
 	},
-  }
+}
 </script>

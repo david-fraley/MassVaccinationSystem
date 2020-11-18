@@ -5,9 +5,14 @@
 			<v-layout justify-center align-center>
 				<v-card flat height="100%" width="100%" class="d-flex flex-column"> 
 					<v-stepper v-model="page" class="elevation-0">	
-						<v-toolbar flat color="primary" dark>
-							<!-- We could make the following toolbar dynamic, but for now I just have one title (defined at the end of this file)-->
-							<v-toolbar-title>{{title}}</v-toolbar-title>
+						<v-toolbar flat height="100" color="primary" dark>
+							<v-toolbar-title style="font-size:3em" class="font-weight-bold">{{title}}</v-toolbar-title>
+							<v-spacer></v-spacer>
+							<v-img
+								max-height="100"
+								max-width="130"
+								src="./assets/Logo.png"
+							></v-img>
 						</v-toolbar>
 						<v-stepper-header class="elevation-0">
 							<template v-if="isSinglePatientRegistration() || isHouseholdRegistration()">
@@ -43,7 +48,7 @@
 								<!-- Single Patient: Home Address -->
 								<v-stepper-content step="2">
 									<v-toolbar flat >
-										<v-toolbar-title>Enter your home address</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your home address</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientHomeAddress ref="singlepatienthomeaddress"/></v-card>				
 								</v-stepper-content>
@@ -51,7 +56,7 @@
 								<!-- Single Patient: Contact Info -->
 								<v-stepper-content step="3">
 									<v-toolbar flat>
-										<v-toolbar-title>Enter your contact information</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your contact information</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientContactInfo ref="singlepatientcontactinfo"/></v-card>
 								</v-stepper-content>
@@ -59,7 +64,7 @@
 								<!-- Single Patient: Personal Info -->
 								<v-stepper-content step="4">
 									<v-toolbar flat>
-										<v-toolbar-title>Enter your personal information</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your personal information</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/></v-card>							
 								</v-stepper-content>
@@ -67,7 +72,7 @@
 								<!-- Single Patient: Emergency Contact -->
 								<v-stepper-content step="5">
 									<v-toolbar flat>
-										<v-toolbar-title>Specify an emergency contact</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular"> Specify an emergency contact</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientEmergencyContact ref="singlepatientemergencycontact"/></v-card>
 								</v-stepper-content>
@@ -75,7 +80,7 @@
 								<!-- Single Patient: Review and Submit -->
 								<v-stepper-content step="6">
 									<v-toolbar flat>
-										<v-toolbar-title>Review and submit registration</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientReviewSubmit/></v-card>
 								</v-stepper-content>
@@ -87,7 +92,7 @@
 								<!-- Household: Register Number of People -->
 								<v-stepper-content step="2">
 									<v-toolbar flat>
-										<v-toolbar-title>Register your household</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Register your household</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdRegisterNumber ref="householdregisternumber"/></v-card>				
 								</v-stepper-content>
@@ -95,7 +100,7 @@
 								<!-- Household: Address -->
 								<v-stepper-content step="3">
 									<v-toolbar flat>
-										<v-toolbar-title>Enter your household address</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your household address</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdHomeAddress ref="householdhomeaddress"/></v-card>				
 								</v-stepper-content>
@@ -103,7 +108,7 @@
 								<!-- Household: Contact Info -->
 								<v-stepper-content step="4">
 									<v-toolbar flat>
-										<v-toolbar-title>Enter your household contact information</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your household contact information</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdContactInfo ref="householdcontactinfo"/></v-card>				
 								</v-stepper-content>
@@ -111,7 +116,7 @@
 								<!-- Household: Personal Info -->
 								<v-stepper-content step="5">
 									<v-toolbar flat>
-										<v-toolbar-title>Enter your personal information</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your personal information</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"/></v-card>				
 								</v-stepper-content>
@@ -119,7 +124,7 @@
 								<!-- Household: Emergency Contact -->
 								<v-stepper-content step="6">
 									<v-toolbar flat>
-										<v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-toolbar>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Specify your emergency contact</v-toolbar-title></v-toolbar>
 									<v-toolbar flat>
 										<v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader>
 									</v-toolbar>
@@ -129,7 +134,7 @@
 								<!-- Household: Personal Info, household Member #2 -->
 								<v-stepper-content step="7">
 									<v-toolbar flat>
-										<v-toolbar-title>Enter personal information for household member #2</v-toolbar-title>
+										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #2</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_2" v-bind:householdMemberNumber="2"></HouseholdPersonalInfo_n></v-card>				
 								</v-stepper-content>
@@ -138,7 +143,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>2">
 									<v-stepper-content step="8">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #3</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #3</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_3" v-bind:householdMemberNumber="3"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -147,7 +152,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="8">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -157,7 +162,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>3">
 									<v-stepper-content step="9">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #4</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #4</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_4" v-bind:householdMemberNumber="4"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -166,7 +171,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="9">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -176,7 +181,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>4">
 									<v-stepper-content step="10">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #5</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #5</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_5" v-bind:householdMemberNumber="5"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -185,7 +190,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="10">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -195,7 +200,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>5">
 									<v-stepper-content step="11">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #6</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #6</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_6" v-bind:householdMemberNumber="6"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -204,7 +209,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="11">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -214,7 +219,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>6">
 									<v-stepper-content step="12">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #7</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #7</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_7" v-bind:householdMemberNumber="7"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -223,7 +228,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="12">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -233,7 +238,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>7">
 									<v-stepper-content step="13">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #8</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #8</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_8" v-bind:householdMemberNumber="8"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -242,7 +247,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="13">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -252,7 +257,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>8">
 									<v-stepper-content step="14">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #9</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #9</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_9" v-bind:householdMemberNumber="9"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -261,7 +266,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="14">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -271,7 +276,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>9">
 									<v-stepper-content step="15">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #10</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #10</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_10" v-bind:householdMemberNumber="10"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -280,7 +285,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="15">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -290,7 +295,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>10">
 									<v-stepper-content step="16">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #11</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #11</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_11" v-bind:householdMemberNumber="10"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -299,7 +304,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="16">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -309,7 +314,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>11">
 									<v-stepper-content step="17">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #12</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #12</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_12" v-bind:householdMemberNumber="12"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -318,7 +323,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="17">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -328,7 +333,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>12">
 									<v-stepper-content step="18">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #13</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #13</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_13" v-bind:householdMemberNumber="13"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -337,7 +342,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="18">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -347,7 +352,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>13">
 									<v-stepper-content step="19">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #14</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #14</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_14" v-bind:householdMemberNumber="14"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -356,7 +361,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="19">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -366,7 +371,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>14">
 									<v-stepper-content step="20">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #15</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #15</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_15" v-bind:householdMemberNumber="15"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -375,7 +380,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="20">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -385,7 +390,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>15">
 									<v-stepper-content step="21">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #16</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #16</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_16" v-bind:householdMemberNumber="16"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -394,7 +399,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="21">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -404,7 +409,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>16">
 									<v-stepper-content step="22">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #17</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #17</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_17" v-bind:householdMemberNumber="17"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -413,7 +418,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="22">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -423,7 +428,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>17">
 									<v-stepper-content step="23">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #18</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #18</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_18" v-bind:householdMemberNumber="18"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -432,7 +437,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="23">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -442,7 +447,7 @@
 								<template v-if="getNumberOfHouseholdMembers()>18">
 									<v-stepper-content step="24">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #19</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #19</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_19" v-bind:householdMemberNumber="19"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
@@ -451,7 +456,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="24">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -461,14 +466,14 @@
 								<template v-if="getNumberOfHouseholdMembers()>19">
 									<v-stepper-content step="25">
 										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #20</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #20</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_20" v-bind:householdMemberNumber="20"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="26">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
@@ -477,7 +482,7 @@
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="25">
 										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
+											<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Review and submit registration</v-toolbar-title>
 										</v-toolbar>
 										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
 									</v-stepper-content>
