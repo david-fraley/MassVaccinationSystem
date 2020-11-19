@@ -4,7 +4,9 @@
 			<v-col cols="12" sm="6" md="3">
 				<v-text-field
 					required
-					:rules="[v => !!v || 'Phone number is required']"
+					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+					placeholder="(###)###-####"
+					v-mask="'(###)###-####'"
 					label="Primary Phone Number"
 					v-model="primaryPhoneNumber"
 					prepend-icon="mdi-menu-right"
