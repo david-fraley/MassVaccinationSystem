@@ -4,7 +4,7 @@
 		<v-radio-group
         required
         :rules="[v => !!v || 'This field is required']"
-        v-model="phoneNumberAvailable"
+        v-model="phoneNumberAvailableRadioButtons"
 		>
         <v-col align="right" cols="12">
           <v-radio label="I have a phone number" value="yes" @change="PhoneNumberAvailable()"></v-radio>
@@ -20,7 +20,7 @@
 					:rules="[v => !!v || 'Phone number is required']"
 					label="Primary Phone Number"
 					v-model="primaryPhoneNumber"
-					v-bind:disabled="phoneNumberDisabled"
+					v-show="phoneNumberAvailable"
 					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
@@ -31,14 +31,14 @@
 					v-model="primaryPhoneNumberType"
 					:items="phonetype"
 					label="Phone Type"
-					v-bind:disabled="phoneNumberDisabled"
+					v-show="phoneNumberAvailable"
 				></v-select>
 			</v-col>
 			<v-col cols="12" sm="6" md="3">
 				<v-text-field
 					label="Secondary Phone Number"
 					v-model="secondaryPhoneNumber"
-					v-bind:disabled="phoneNumberDisabled"
+					v-show="phoneNumberAvailable"
 				></v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="4" sm="2">			
@@ -46,7 +46,7 @@
 					v-model="secondaryPhoneNumberType"
 					:items="phonetype"
 					label="Phone Type"
-					v-bind:disabled="phoneNumberDisabled"
+					v-show="phoneNumberAvailable"
 				></v-select>
 			</v-col>
 		</v-row>
@@ -113,8 +113,8 @@ import EventBus from '../eventBus'
 			secondaryPhoneNumberType: '',
 			secondaryEmail: '',
 			approval: '',
-			phoneNumberDisabled: false,
-			phoneNumberAvailable: 'yes',
+			phoneNumberAvailable: true,
+			phoneNumberAvailableRadioButtons: 'yes',
 		}
 	},
 	methods: {
@@ -136,13 +136,14 @@ import EventBus from '../eventBus'
 			var valid = true
 			var message = "Woops! You need to enter the following field(s):"
 		
-		if(!this.phoneNumberDisabled)
+		if(!this.phoneNumberAvailable)
 		{
 			if(this.primaryPhoneNumber == "") 
 			{
 				message += " Primary Phone Number"
 				valid = false
 			}
+		}
 			if(this.primaryEmail == "") 
 			{
 			if(!valid)
@@ -152,7 +153,6 @@ import EventBus from '../eventBus'
 				message += " Primary E-mail"
 				valid = false
 			}
-		}
 			if(this.approval == "") 
 			{
 			if(!valid)
@@ -171,14 +171,16 @@ import EventBus from '../eventBus'
 			this.sendHouseholdContactInfoInfoToReviewPage();
 			return true;
 		},
-	PhoneNumberAvailable()
-	{
-	this.phoneNumberDisabled = false
-	},
-	PhoneNumberNotAvailable()
-	{
-      this.phoneNumberDisabled = true
-	},
+    PhoneNumberAvailable()
+    {
+	this.phoneNumberAvailable = true
+	this.primaryPhoneNumber=""
+    },
+    PhoneNumberNotAvailable()
+    {
+	this.phoneNumberAvailable = false
+	this.primaryPhoneNumber="Not Available"
+    },
 	},
 }
 </script>
