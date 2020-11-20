@@ -5,6 +5,7 @@
 				<v-text-field
 					id = "addr"
 					required
+					class="required"
 					:rules="[v => !!v || 'Address field is required']"
 					label="Home Address"
 					v-model="lineAddress"
@@ -17,6 +18,7 @@
 				<v-text-field
 					id = "city"
 					required
+					class="required"
 					:rules="[v => !!v || 'City field is required']"
 					label="City"
 					v-model="cityAddress"
@@ -27,6 +29,7 @@
 				<v-select
 				id = "state"
 					required
+					class="required"
 					:rules="[v => !!v || 'State field is required']"
 					v-model="stateAddress"
                     :items="state"
@@ -37,6 +40,7 @@
 				<v-text-field
 				id = "county"
 					required
+					class="required"
 					:rules="[v => !!v || 'County field is required']"
                     label="County"
 					v-model="districtAddress"
@@ -46,6 +50,7 @@
 				<v-select
 				id = "country"
 					required
+					class="required"
 					:rules="[v => !!v || 'Country field is required']"
 					v-model="countryAddress"
                     :items="country"
@@ -56,6 +61,7 @@
 				<v-text-field
 					id = "zipcode"
 					required
+					class="required"
 					:rules="postalCodeRules"
 					label="Zipcode"
 					v-model="postalCode"					
@@ -228,3 +234,11 @@ import EventBus from '../eventBus'
 	},
 }
 </script>
+
+<style lang="css" scoped>
+.required:before{
+	content:"*";
+	color: red;
+	font-weight:bold;
+}
+</style>
