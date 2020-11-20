@@ -248,7 +248,7 @@ import EventBus from '../eventBus'
 	  this.countryAddress=""
 	  this.postalCode=""
     },
-    PhoneNumberNotAvailable()
+    HomeAddressNotAvailable()
     {
       this.homeAddressAvailable = false
       this.lineAddress="Not Available"
