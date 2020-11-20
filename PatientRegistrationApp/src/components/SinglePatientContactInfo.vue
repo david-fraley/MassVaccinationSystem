@@ -4,7 +4,7 @@
      <v-radio-group
         required
         :rules="[v => !!v || 'This field is required']"
-        v-model="phoneNumberAvailable"
+        v-model="phoneNumberAvailableRadioButtons"
       >
         <v-col align="right" cols="12">
           <v-radio label="I have a phone number" value="yes" @change="PhoneNumberAvailable()"></v-radio>
@@ -21,7 +21,7 @@
           placeholder="(###)###-####"
           v-mask="'(###)###-####'"
           v-model="patientPhoneNumber"
-          v-bind:disabled="phoneNumberDisabled"
+          v-show="phoneNumberAvailable"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
 	</v-col>
@@ -33,7 +33,7 @@
           v-model="patientPhoneNumberType"
           :items="phonetype"
           label="Phone Type"
-          v-bind:disabled="phoneNumberDisabled"
+          v-show="phoneNumberAvailable"
         ></v-select>
 	</v-col>
     </v-row>
@@ -95,8 +95,8 @@ export default {
       patientPhoneNumberType: '',
       patientEmail: '',
       approval: '',
-      phoneNumberDisabled: false,
-      phoneNumberAvailable: 'yes',
+      phoneNumberAvailable: true,
+      phoneNumberAvailableRadioButtons: 'yes',
     };
   },
   methods: {
@@ -116,13 +116,14 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
 	
-		if(!this.phoneNumberDisabled)
+		if(!this.phoneNumberAvailable)
 		{	
 			if(this.patientPhoneNumber == "") 
 			{
         message += " Phone Number"
         valid = false
 			}
+		}
 			if(this.patientEmail == "") 
 			{
 			if(!valid)
@@ -132,7 +133,6 @@ export default {
         message += " E-mail"
         valid = false
 			}
-		}
 			if(this.approval == "") 
 			{
 			if(!valid)
@@ -151,14 +151,16 @@ export default {
       this.sendContactInfoInfoToReviewPage();
       return true;
     },
-    PhoneNumberAvailable()
+	PhoneNumberAvailable()
     {
-      this.phoneNumberDisabled = false
+		this.phoneNumberAvailable = true
+		this.patientPhoneNumber=""
     },
     PhoneNumberNotAvailable()
     {
-      this.phoneNumberDisabled = true
+		this.phoneNumberAvailable = false
+		this.patientPhoneNumber="Not available"
     },
-  },
+},
 }
 </script>
