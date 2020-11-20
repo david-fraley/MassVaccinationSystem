@@ -4,6 +4,7 @@
 		<v-col cols="12" sm="6" md="3">
         <v-text-field
           required
+		class="required"
           label="Phone Number"
           :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
           placeholder="(###)###-####"
@@ -37,6 +38,7 @@
 	<v-col cols="12" sm="6" md="6">
         <v-text-field
 			required
+			class="required"
 			:rules="emailRules"
 			label="E-mail Address"
 			v-model="patientEmail"
@@ -57,6 +59,7 @@
     <v-row><v-col cols="12" sm="6" md="6">
       <v-radio-group
         required
+		class="required"
         :rules="[v => !!v || 'This field is required']"
         v-model="approval"
 		prepend-icon="mdi-menu-right"
@@ -144,3 +147,11 @@ export default {
 	},
 }
 </script>
+
+<style lang="css" scoped>
+.required:before{
+	content:"*";
+	color: red;
+	font-weight:bold;
+}
+</style>
