@@ -136,7 +136,7 @@
 									<v-toolbar flat>
 										<v-toolbar-title>Enter personal information for household member #2</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_2" v-bind:householdMemberNumber="2" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+									<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_2" v-bind:householdMemberNumber="2"></HouseholdPersonalInfo_n></v-card>				
 								</v-stepper-content>
 
 								<!-- Household: Personal Info, household Member #3 -->
@@ -145,7 +145,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #3</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_3" v-bind:householdMemberNumber="3" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_3" v-bind:householdMemberNumber="3"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -164,7 +164,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #4</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_4" v-bind:householdMemberNumber="4" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_4" v-bind:householdMemberNumber="4"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -183,7 +183,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #5</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_5" v-bind:householdMemberNumber="5" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_5" v-bind:householdMemberNumber="5"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -202,7 +202,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #6</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_6" v-bind:householdMemberNumber="6" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_6" v-bind:householdMemberNumber="6"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -221,7 +221,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #7</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_7" v-bind:householdMemberNumber="7" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_7" v-bind:householdMemberNumber="7"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -240,7 +240,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #8</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_8" v-bind:householdMemberNumber="8" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_8" v-bind:householdMemberNumber="8"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -259,7 +259,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #9</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_9" v-bind:householdMemberNumber="9" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_9" v-bind:householdMemberNumber="9"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -278,7 +278,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #10</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_10" v-bind:householdMemberNumber="10" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_10" v-bind:householdMemberNumber="10"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -297,7 +297,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #11</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_11" v-bind:householdMemberNumber="11" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_11" v-bind:householdMemberNumber="11"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -316,7 +316,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #12</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_12" v-bind:householdMemberNumber="12" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_12" v-bind:householdMemberNumber="12"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -335,7 +335,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #13</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_13" v-bind:householdMemberNumber="13" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_13" v-bind:householdMemberNumber="13"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -354,7 +354,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #14</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_14" v-bind:householdMemberNumber="14" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_14" v-bind:householdMemberNumber="14"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -373,7 +373,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #15</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_15" v-bind:householdMemberNumber="15" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_15" v-bind:householdMemberNumber="15"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -392,7 +392,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #16</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_16" v-bind:householdMemberNumber="16" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_16" v-bind:householdMemberNumber="16"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -411,7 +411,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #17</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_17" v-bind:householdMemberNumber="17" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_17" v-bind:householdMemberNumber="17"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -430,7 +430,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #18</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_18" v-bind:householdMemberNumber="18" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_18" v-bind:householdMemberNumber="18"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -449,7 +449,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #19</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_19" v-bind:householdMemberNumber="19" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_19" v-bind:householdMemberNumber="19"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 								</template>
 								<template v-else>
@@ -468,7 +468,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #20</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_20" v-bind:householdMemberNumber="20" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_20" v-bind:householdMemberNumber="20"></HouseholdPersonalInfo_n></v-card>				
 									</v-stepper-content>
 									<!-- Household: Review and submit -->
 									<v-stepper-content step="26">
@@ -580,11 +580,25 @@ export default {
 		},
 		setHouseholdFamilyName(householdFamilyName)
 		{
-			this.householdFamilyName = householdFamilyName;
-		},
-		getHouseholdFamilyName()
-		{
-			return this.householdFamilyName;
+			this.$refs.householdPersonalInfo_2.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_3.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_4.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_5.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_6.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_7.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_8.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_9.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_10.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_11.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_12.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_13.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_14.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_15.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_16.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_17.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_18.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_19.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_20.setHouseholdFamilyName(householdFamilyName)
 		},
 		isSinglePatientRegistration() {
 			let returnValue = true;
@@ -834,8 +848,7 @@ export default {
 			page: config.registrationPages.GREETING_PAGE,
 			title: 'COVID-19 Vaccination Registration',
 			registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
-			numberOfHouseholdMembers: 2,
-			householdFamilyName: ''
+			numberOfHouseholdMembers: 2
 			}
 		},
   }
