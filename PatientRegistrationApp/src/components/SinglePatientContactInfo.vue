@@ -40,8 +40,8 @@
         v-model="emailAvailableRadioButtons"
       >
         <v-col align="right" cols="12">
-          <v-radio label="I have a phone number" value="yes" @change="EmailAvailable()"></v-radio>
-          <v-radio label="I do not have a phone number" value="no" @change="EmailNotAvailable()"></v-radio>
+          <v-radio label="I have an E-mail address" value="yes" @change="EmailAvailable()"></v-radio>
+          <v-radio label="I do not have an E-mail address" value="no" @change="EmailNotAvailable()"></v-radio>
         </v-col>
       </v-radio-group>
     </v-row>

@@ -41,6 +41,20 @@
 				></v-checkbox>
 			</v-col>
 		</v-row>
+		
+	<v-row>
+	<v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="emailAvailableRadioButtons"
+	>
+        <v-col align="right" cols="12">
+			<v-radio label="I have an E-mail address" value="yes" @change="EmailAvailable()"></v-radio>
+			<v-radio label="I do not have an E-mail address" value="no" @change="EmailNotAvailable()"></v-radio>
+        </v-col>
+	</v-radio-group>
+    </v-row>
+	
 		<v-row>
 			<v-col cols="12" sm="12" md="6">
 				<v-text-field
@@ -48,6 +62,7 @@
 					:rules="emailRules"
 					label="Primary E-mail Address"
 					v-model="primaryEmail"
+					v-show="emailAvailable"
 					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
@@ -56,15 +71,11 @@
 					:rules="emailRules"
 					label="Secondary E-mail Address"
 					v-model="secondaryEmail"
+					v-show="emailAvailable"
 				></v-text-field>
 			</v-col>
 		</v-row>
-			<v-row><v-col cols="6" sm="6" md="3">
-				<v-checkbox
-					v-model="checkbox"
-					label="I have no email address"
-				></v-checkbox>
-			</v-col></v-row>
+
 		<v-row><v-col cols="12" sm="6" md="6">
 			<v-radio-group
 				required
@@ -102,7 +113,9 @@ import EventBus from '../eventBus'
 			secondaryPhoneNumber: '',
 			secondaryPhoneNumberType: '',
 			secondaryEmail: '',
-			approval: ''
+			approval: '',
+			emailAvailable: true,
+			emailAvailableRadioButtons: 'yes'
 		}
 	},
 	methods: {
@@ -129,6 +142,8 @@ import EventBus from '../eventBus'
 				message += " Primary Phone Number"
 				valid = false
 			}
+		if(this.emailAvailable == "")
+		{
 			if(this.primaryEmail == "") 
 			{
 			if(!valid)
@@ -138,6 +153,7 @@ import EventBus from '../eventBus'
 				message += " Primary E-mail"
 				valid = false
 			}
+		}
 			if(this.approval == "") 
 			{
 			if(!valid)
@@ -155,7 +171,17 @@ import EventBus from '../eventBus'
 		
 			this.sendHouseholdContactInfoInfoToReviewPage();
 			return true;
-		}
-	},
-  }
+		},
+	EmailAvailable()
+    {
+      this.emailAvailable = true
+      this.primaryEmail=""
+    },
+    EmailNotAvailable()
+    {
+      this.emailAvailable = false
+      this.primaryEmail="Not available"
+    },
+  },
+}
 </script>
