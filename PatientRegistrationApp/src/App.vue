@@ -152,36 +152,52 @@
 					<v-footer absolute color="white">
 						<template v-if="isGreetingPage()">
 							<v-spacer></v-spacer>
-							<v-icon large color="secondary" @click="goToNextPage()">
-								mdi-chevron-right
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToNextPage()">
+								Continue
+								<v-icon right large color="white">
+									mdi-chevron-right
+								</v-icon>
+							</v-btn>
 						</template>
 						<template v-else-if="isSinglePatientReviewSubmit() && isSinglePatientRegistration()">
-							<v-icon large color="secondary" @click="goToPreviousPage()">
-								mdi-chevron-left
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
+								<v-icon left large color="white">
+									mdi-chevron-left
+								</v-icon>
+								Back
+							</v-btn>
+							
 							<v-spacer></v-spacer>
 							<v-btn large color="secondary" @click="submit()">
 								Submit
 							</v-btn>
 						</template>
 						<template v-else-if="isHouseholdPatientReviewSubmit()  && isHouseholdRegistration()">
-							<v-icon large color="secondary" @click="goToPreviousPage()">
-								mdi-chevron-left
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
+								<v-icon left large color="white">
+									mdi-chevron-left
+								</v-icon>
+								Back
+							</v-btn>
 							<v-spacer></v-spacer>
 							<v-btn large color="secondary" @click="submit()">
 								Submit
 							</v-btn>
 						</template>
 						<template v-else>
-							<v-icon large color="secondary" @click="goToPreviousPage()">
-								mdi-chevron-left
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
+								<v-icon left large color="white">
+									mdi-chevron-left
+								</v-icon>
+								Back
+							</v-btn>
 							<v-spacer></v-spacer>
-							<v-icon large color="secondary" @click="goToNextPage()">
-								mdi-chevron-right
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToNextPage()">
+								Continue
+								<v-icon right large color="white">
+									mdi-chevron-right
+								</v-icon>
+							</v-btn>
 						</template>
 					</v-footer>
 				</v-card>
