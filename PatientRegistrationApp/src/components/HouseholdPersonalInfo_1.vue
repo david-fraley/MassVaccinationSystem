@@ -165,6 +165,7 @@ export default {
       householdPatientPhoto: '',
       householdRaceSelections: '',
       householdEthnicitySelection: '',
+      preferredLanguage: ''
     };
   },
   methods: {
@@ -178,7 +179,8 @@ export default {
         householdGender: this.householdGender,
         householdPatientPhoto: this.householdPatientPhoto,
         householdRaceSelections: this.householdRaceSelections,
-        householdEthnicitySelection: this.householdEthnicitySelection
+        householdEthnicitySelection: this.householdEthnicitySelection,
+        preferredLanguage: this.preferredLanguage
       }
       const householdMemberNumber = 1
       EventBus.$emit('DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED', householdPersonalInfoPayload, householdMemberNumber)
@@ -236,5 +238,10 @@ export default {
         return true;
     }
 },
+  mounted() {
+    EventBus.$on('DATA_LANGUAGE_INFO_PUBLISHED', (preferredLanguage) => {
+			this.preferredLanguage = preferredLanguage;
+		});
+  }
 };
 </script>

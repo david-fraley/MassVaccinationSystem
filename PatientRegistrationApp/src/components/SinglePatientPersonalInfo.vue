@@ -155,7 +155,8 @@ export default {
       gender: '',
       patientPhoto: '',
       raceSelections: '',
-      ethnicitySelection: ''
+			ethnicitySelection: '',
+			preferredLanguage: ''
     };
   },
   methods: {
@@ -169,7 +170,8 @@ export default {
         gender: this.gender,
         patientPhoto: this.patientPhoto,
         raceSelections: this.raceSelections,
-        ethnicitySelection: this.ethnicitySelection
+				ethnicitySelection: this.ethnicitySelection,
+				preferredLanguage: this.preferredLanguage
       }
       EventBus.$emit('DATA_PERSONAL_INFO_PUBLISHED', personalInfoPayload)
     },
@@ -225,5 +227,10 @@ export default {
       return true;
     }
 	},
+	mounted() {
+		EventBus.$on('DATA_LANGUAGE_INFO_PUBLISHED', (preferredLanguage) => {
+			this.preferredLanguage = preferredLanguage;
+		});
+	}
 };
 </script>
