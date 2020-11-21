@@ -86,48 +86,7 @@ import EventBus from '../eventBus'
 	export default {
 	data () {
 		return {
-			dataHouseholdPersonalInfo: [ //array for 20 patients
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-				{householdFamilyName: '', householdGivenName: '', householdSuffix: '', householdBirthDate: '', 
-					householdGender: '', householdPatientPhoto: '', householdRaceSelections: 'N/A', householdEthnicitySelection: 'N/A'},
-			],
+			dataHouseholdPersonalInfo: [],
 			dataHouseholdEmergencyContact:
 			{
 				householdEmergencyContactFamilyName: '',
@@ -169,7 +128,11 @@ import EventBus from '../eventBus'
 			this.dataHouseholdContactInfo = householdContactInfoPayload
 		},
 		updateHouseholdPersonalInfoData(householdPersonalInfoPayload, householdMemberNumber) {
-			this.$set(this.dataHouseholdPersonalInfo, householdMemberNumber-1, householdPersonalInfoPayload)
+			if (householdMemberNumber-1 == this.dataHouseholdPersonalInfo.length) {
+				this.dataHouseholdPersonalInfo.push(householdPersonalInfoPayload);
+			} else if (householdMemberNumber-1 < this.dataHouseholdPersonalInfo.length) {
+				this.$set(this.dataHouseholdPersonalInfo, householdMemberNumber-1, householdPersonalInfoPayload);
+			}
 		},
 		updateHouseholdEmergencyContactData(householdEmergencyContactPayload) {
 			this.dataHouseholdEmergencyContact = householdEmergencyContactPayload

@@ -131,362 +131,25 @@
 									<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
 								</v-stepper-content>
 
+								<template v-for="n in getNumberOfHouseholdMembers()-1">
 								<!-- Household: Personal Info, household Member #2 -->
-								<v-stepper-content step="7">
+									<v-stepper-content
+									:key="`${n+1}-member`"
+									:step="n+6">
+										<v-toolbar flat>
+											<v-toolbar-title>Enter personal information for household member #{{n+1}}</v-toolbar-title>
+										</v-toolbar>
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo" v-bind:householdMemberNumber="n+1" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>
+									</v-stepper-content>
+								</template>
+
+								<!-- Household: Review and submit -->
+								<v-stepper-content :step="getNumberOfSteps()">
 									<v-toolbar flat>
-										<v-toolbar-title>Enter personal information for household member #2</v-toolbar-title>
+										<v-toolbar-title>Review and submit registration</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_2" v-bind:householdMemberNumber="2" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
+									<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
-
-								<!-- Household: Personal Info, household Member #3 -->
-								<template v-if="getNumberOfHouseholdMembers()>2">
-									<v-stepper-content step="8">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #3</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_3" v-bind:householdMemberNumber="3" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="8">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-								
-								<!-- Household: Personal Info, household Member #4 -->
-								<template v-if="getNumberOfHouseholdMembers()>3">
-									<v-stepper-content step="9">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #4</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_4" v-bind:householdMemberNumber="4" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="9">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #5 -->
-								<template v-if="getNumberOfHouseholdMembers()>4">
-									<v-stepper-content step="10">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #5</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_5" v-bind:householdMemberNumber="5" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="10">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #6 -->
-								<template v-if="getNumberOfHouseholdMembers()>5">
-									<v-stepper-content step="11">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #6</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_6" v-bind:householdMemberNumber="6" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="11">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #7 -->
-								<template v-if="getNumberOfHouseholdMembers()>6">
-									<v-stepper-content step="12">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #7</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_7" v-bind:householdMemberNumber="7" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="12">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #8 -->
-								<template v-if="getNumberOfHouseholdMembers()>7">
-									<v-stepper-content step="13">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #8</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_8" v-bind:householdMemberNumber="8" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="13">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #9 -->
-								<template v-if="getNumberOfHouseholdMembers()>8">
-									<v-stepper-content step="14">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #9</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_9" v-bind:householdMemberNumber="9" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="14">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #10 -->
-								<template v-if="getNumberOfHouseholdMembers()>9">
-									<v-stepper-content step="15">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #10</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_10" v-bind:householdMemberNumber="10" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="15">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #11 -->
-								<template v-if="getNumberOfHouseholdMembers()>10">
-									<v-stepper-content step="16">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #11</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_11" v-bind:householdMemberNumber="11" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="16">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #12 -->
-								<template v-if="getNumberOfHouseholdMembers()>11">
-									<v-stepper-content step="17">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #12</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_12" v-bind:householdMemberNumber="12" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="17">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #13 -->
-								<template v-if="getNumberOfHouseholdMembers()>12">
-									<v-stepper-content step="18">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #13</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_13" v-bind:householdMemberNumber="13" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="18">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #14 -->
-								<template v-if="getNumberOfHouseholdMembers()>13">
-									<v-stepper-content step="19">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #14</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_14" v-bind:householdMemberNumber="14" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="19">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #15 -->
-								<template v-if="getNumberOfHouseholdMembers()>14">
-									<v-stepper-content step="20">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #15</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_15" v-bind:householdMemberNumber="15" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="20">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #16 -->
-								<template v-if="getNumberOfHouseholdMembers()>15">
-									<v-stepper-content step="21">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #16</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_16" v-bind:householdMemberNumber="16" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="21">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #17 -->
-								<template v-if="getNumberOfHouseholdMembers()>16">
-									<v-stepper-content step="22">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #17</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_17" v-bind:householdMemberNumber="17" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="22">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #18 -->
-								<template v-if="getNumberOfHouseholdMembers()>17">
-									<v-stepper-content step="23">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #18</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_18" v-bind:householdMemberNumber="18" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="23">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #19 -->
-								<template v-if="getNumberOfHouseholdMembers()>18">
-									<v-stepper-content step="24">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #19</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_19" v-bind:householdMemberNumber="19" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="24">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-
-								<!-- Household: Personal Info, household Member #20 -->
-								<template v-if="getNumberOfHouseholdMembers()>19">
-									<v-stepper-content step="25">
-										<v-toolbar flat>
-											<v-toolbar-title>Enter personal information for household member #20</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_20" v-bind:householdMemberNumber="20" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>				
-									</v-stepper-content>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="26">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
-								<template v-else>
-									<!-- Household: Review and submit -->
-									<v-stepper-content step="25">
-										<v-toolbar flat>
-											<v-toolbar-title>Review and submit registration</v-toolbar-title>
-										</v-toolbar>
-										<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>				
-									</v-stepper-content>
-								</template>
 
 							</template>
 						</v-stepper-items>
@@ -656,133 +319,43 @@ export default {
 			}
 			else if(this.isHouseholdRegistration())
 			{
-				switch(this.page)
+				switch(true)
 				{
-					case config.registrationPages.GREETING_PAGE:
+					case (this.page == config.registrationPages.GREETING_PAGE):
 						if(this.$refs.greetingpage.verifyFormContents())
 						{
 							this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE)
 						}
 						break;
-					case config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE):
 						this.$refs.householdregisternumber.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE) :
 						this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE):
 						this.$refs.householdhomeaddress.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE):
 						this.$refs.householdcontactinfo.verifyFormContents()?
 						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE):
 						this.$refs.householdPersonalInfo_1.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
 						this.$refs.householdemergencycontact.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE: //patient #2
-						this.$refs.householdPersonalInfo_2.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+1: //patient #3
-						this.$refs.householdPersonalInfo_3.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+2):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+1);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+2: //patient #4
-						this.$refs.householdPersonalInfo_4.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+3):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+2);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+3: //patient #5
-						this.$refs.householdPersonalInfo_5.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+4):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+3);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+4: //patient #6
-						this.$refs.householdPersonalInfo_6.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+5):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+4);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+5: //patient #7
-						this.$refs.householdPersonalInfo_7.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+6):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+5);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+6: //patient #8
-						this.$refs.householdPersonalInfo_8.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+7):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+6);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+7: //patient #9
-						this.$refs.householdPersonalInfo_9.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+8):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+7);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+8: //patient #10
-						this.$refs.householdPersonalInfo_10.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+9):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+8);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+9: //patient #11
-						this.$refs.householdPersonalInfo_11.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+10):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+9);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+10: //patient #12
-						this.$refs.householdPersonalInfo_12.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+11):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+10);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+11: //patient #13
-						this.$refs.householdPersonalInfo_13.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+12):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+11);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+12: //patient #14
-						this.$refs.householdPersonalInfo_14.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+13):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+12);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+13: //patient #15
-						this.$refs.householdPersonalInfo_15.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+14):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+13);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+14: //patient #16
-						this.$refs.householdPersonalInfo_16.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+15):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+14);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+15: //patient #17
-						this.$refs.householdPersonalInfo_17.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+16):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+15);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+16: //patient #18
-						this.$refs.householdPersonalInfo_18.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+17):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+16);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+17: //patient #19
-						this.$refs.householdPersonalInfo_19.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+18):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+17);
-						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+18: //patient #20
-						this.$refs.householdPersonalInfo_20.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+19):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE+18);
+					case (this.page - config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE <= 18):
+						if (this.$refs.householdPersonalInfo[this.page - config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE].verifyFormContents()) {
+							this.page++;
+						}
 						break;
 					default:
 						alert(this.page)
