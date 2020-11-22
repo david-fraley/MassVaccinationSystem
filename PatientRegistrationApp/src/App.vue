@@ -131,8 +131,8 @@
 									<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
 								</v-stepper-content>
 
+								<!-- Household: Personal Info #n -->
 								<template v-for="n in getNumberOfHouseholdMembers()-1">
-								<!-- Household: Personal Info, household Member #2 -->
 									<v-stepper-content
 									:key="`${n+1}-member`"
 									:step="n+6">

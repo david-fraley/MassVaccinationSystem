@@ -128,8 +128,10 @@ import EventBus from '../eventBus'
 			this.dataHouseholdContactInfo = householdContactInfoPayload
 		},
 		updateHouseholdPersonalInfoData(householdPersonalInfoPayload, householdMemberNumber) {
+			// if member is next in line, add to array of members
 			if (householdMemberNumber-1 == this.dataHouseholdPersonalInfo.length) {
 				this.dataHouseholdPersonalInfo.push(householdPersonalInfoPayload);
+			// else if member already exists in array, update the member
 			} else if (householdMemberNumber-1 < this.dataHouseholdPersonalInfo.length) {
 				this.$set(this.dataHouseholdPersonalInfo, householdMemberNumber-1, householdPersonalInfoPayload);
 			}
