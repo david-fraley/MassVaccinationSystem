@@ -8,6 +8,7 @@
 			:items="languageOptions"
 			label="Preferred language"
 			required
+			class="required"
 			:rules="[v => !!v || 'Preferred language field is required']"
 			v-model="preferredLanguage"
 			prepend-icon="mdi-menu-right"
@@ -24,6 +25,7 @@
 			label="Last Name" 
 			id="lastName" 
 			required
+			class="required"
 			:rules="[v => !!v || 'Last name field is required']"
 			v-model="householdFamilyName"
 			prepend-icon="mdi-menu-right"
@@ -36,6 +38,7 @@
 			label="First Name" 
 			id="firstName" 
 			required
+			class="required"
 			:rules="[v => !!v || 'First name field is required']"
 			v-model="householdGivenName">
         </v-text-field>
@@ -66,6 +69,7 @@
             <v-text-field
 				v-model="householdDate"
 				label="Date of Birth"
+				class="required"
 				prepend-icon="mdi-calendar"
 				readonly
 				v-bind="attrs"
@@ -93,6 +97,7 @@
 			:items="genderID"
 			label="Gender identity"
 			required
+			class="required"
 			:rules="[v => !!v || 'Gender identity field is required']"
 			v-model="householdGender"
 			prepend-icon="mdi-menu-right"
@@ -108,6 +113,7 @@
 			:items="relationshipOptions"
 			label="Relationship: this person is your"
 			required
+			class="required"
 			:rules="[v => !!v || 'Relationship field is required']"
 			v-model="relationship"
 			prepend-icon="mdi-menu-right"
@@ -282,3 +288,12 @@ export default {
 },
 };
 </script>
+
+<style lang="css" scoped>
+.required:before{
+	content:"*";
+	color: red;
+	font-weight:bold;
+}
+</style>
+

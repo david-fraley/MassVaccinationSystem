@@ -7,6 +7,7 @@
 			label="Last Name" 
 			id="lastName" 
 			required
+			class="required"
 			:rules="[v => !!v || 'Last name field is required']"
 			v-model="familyName"
 			prepend-icon="mdi-menu-right"
@@ -19,6 +20,7 @@
 			label="First Name" 
 			id="firstName" 
 			required
+			class="required"
 			:rules="[v => !!v || 'First name field is required']"
 			v-model="givenName">
 			</v-text-field>
@@ -49,6 +51,7 @@
             <v-text-field
 				v-model="date"
 				label="Date of Birth"
+				class="required"
 				prepend-icon="mdi-calendar"
 				readonly
 				v-bind="attrs"
@@ -76,6 +79,7 @@
 			:items="genderID"
 			label="Gender identity"
 			required
+			class="required"
 			:rules="[v => !!v || 'Gender identity field is required']"
 			v-model="gender"
 			prepend-icon="mdi-menu-right"
@@ -227,3 +231,11 @@ export default {
 	},
 };
 </script>
+
+<style lang="css" scoped>
+.required:before{
+	content:"*";
+	color: red;
+	font-weight:bold;
+}
+</style>

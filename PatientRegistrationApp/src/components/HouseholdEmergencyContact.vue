@@ -5,7 +5,8 @@
       <v-col class="d-flex" cols="6" sm="6">
         <v-text-field
           label="Last Name"
-          required
+		required
+		class="required"
           :rules="[v => !!v || 'Last name field is required']"
           v-model="householdEmergencyContactFamilyName"
 			prepend-icon="mdi-menu-right"
@@ -17,6 +18,7 @@
         <v-text-field 
 			label="First Name"
 			required
+			class="required"
 			:rules="[v => !!v || 'First name field is required']"
 			v-model="householdEmergencyContactGivenName">
         </v-text-field>
@@ -28,7 +30,8 @@
       <v-col class="d-flex" cols="12" sm="6">
         <v-text-field
           label="Phone Number"
-          required
+		required
+		class="required"
           :rules="[v => !!v || 'Phone number field is required']"
           v-model="householdEmergencyContactPhoneNumber"
 			prepend-icon="mdi-menu-right"
@@ -115,3 +118,12 @@ export default {
 },
 };
 </script>
+
+<style lang="css" scoped>
+.required:before{
+	content:"*";
+	color: red;
+	font-weight:bold;
+}
+</style>
+

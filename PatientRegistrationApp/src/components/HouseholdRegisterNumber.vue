@@ -5,6 +5,7 @@
 				<v-select
 					v-model="numberOfPatients"
 					required
+					class="required"
 					:items="[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]"
 					label="How many people will you be registering (including yourself)?"
 					prepend-icon="mdi-account-group"
@@ -51,3 +52,12 @@ methods: {
 }
 }
 </script>
+
+<style lang="css" scoped>
+.required:before{
+	content:"*";
+	color: red;
+	font-weight:bold;
+}
+</style>
+
