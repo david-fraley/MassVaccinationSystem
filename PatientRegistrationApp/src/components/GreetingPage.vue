@@ -3,11 +3,11 @@
     <v-row align="left" justify="left">
       <v-col cols="4"> </v-col>
       <v-col cols="4">
-        <span
-          ><p style="font-size: 1.5em" class="font-weight-regular">
+        <span>
+          <p style="font-size: 1.5em" class="font-weight-regular">
             Select your preferred language
-          </p></span
-        >
+          </p>
+          </span>
       </v-col>
       <v-col cols="4"> </v-col>
     </v-row>
