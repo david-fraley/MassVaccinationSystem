@@ -175,11 +175,13 @@ import EventBus from '../eventBus'
     {
 	this.phoneNumberAvailable = true
 	this.primaryPhoneNumber=""
+	this.secondaryPhoneNumber=""
     },
     PhoneNumberNotAvailable()
     {
 	this.phoneNumberAvailable = false
 	this.primaryPhoneNumber="Not Available"
+	this.secondaryPhoneNumber="Not Available"
     },
 	},
 }
