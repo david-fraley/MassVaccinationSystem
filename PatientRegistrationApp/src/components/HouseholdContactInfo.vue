@@ -174,13 +174,15 @@ import EventBus from '../eventBus'
 		},
 	EmailAvailable()
     {
-      this.emailAvailable = true
-      this.primaryEmail=""
+		this.emailAvailable = true
+		this.primaryEmail=""
+		this secondaryEmail=""
     },
     EmailNotAvailable()
     {
-      this.emailAvailable = false
-      this.primaryEmail="Not available"
+		this.emailAvailable = false
+		this.primaryEmail="Not available"
+		this.secondaryEmail="Not available"
     },
   },
 }

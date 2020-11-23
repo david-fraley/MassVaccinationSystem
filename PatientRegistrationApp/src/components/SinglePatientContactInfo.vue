@@ -152,7 +152,7 @@ export default {
 	
 		this.sendContactInfoInfoToReviewPage();
 		return true;
-		}
+		},
 	EmailAvailable()
     {
       this.emailAvailable = true
