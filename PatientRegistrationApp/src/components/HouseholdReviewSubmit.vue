@@ -51,6 +51,11 @@
 						{{dataHouseholdEmergencyContact.householdEmergencyContactGivenName}}</span></div>
 						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumber}} 
 						({{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumberType}})</span></div>
+						<v-card-actions>
+							<v-btn outlined small color="primary" @click="editPersonalInfo(1)">
+								Edit
+							</v-btn>
+						</v-card-actions>
 					</v-card>
 
 					<template v-for="index in getNumberOfHouseholdMembers()-1">
@@ -69,6 +74,11 @@
 							{{dataHouseholdPersonalInfo[0].householdGivenName}}</span></div>
 							<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
 							({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
+							<v-card-actions>
+							<v-btn outlined small color="primary" @click="editPersonalInfo(index+1)">
+								Edit
+							</v-btn>
+						</v-card-actions>
 						</v-card>
 					</template>
 				</v-card>
@@ -144,6 +154,10 @@ import EventBus from '../eventBus'
 		getNumberOfHouseholdMembers()
 		{
 			return this.numberOfHouseholdMembers;
+		},
+		editPersonalInfo(householdMemberNumber)
+		{
+			EventBus.$emit('DATA_HOUSEHOLD_PERSONAL_INFO_EDIT', householdMemberNumber)
 		}
 	},
 	mounted() 
