@@ -139,7 +139,7 @@
 										<v-toolbar flat>
 											<v-toolbar-title>Enter personal information for household member #{{n+1}}</v-toolbar-title>
 										</v-toolbar>
-										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo" v-bind:householdMemberNumber="n+1" v-bind:householdFamilyName="getHouseholdFamilyName()"></HouseholdPersonalInfo_n></v-card>
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo" v-bind:householdMemberNumber="n+1"></HouseholdPersonalInfo_n></v-card>
 									</v-stepper-content>
 								</template>
 
@@ -244,6 +244,11 @@ export default {
 		setHouseholdFamilyName(householdFamilyName)
 		{
 			this.householdFamilyName = householdFamilyName;
+			
+			for(var i=0;i<this.getNumberOfHouseholdMembers();i++)
+			{
+				this.$refs.householdPersonalInfo[i].setHouseholdFamilyName(this.householdFamilyName)
+			}
 		},
 		getHouseholdFamilyName()
 		{
