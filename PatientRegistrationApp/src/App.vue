@@ -412,8 +412,7 @@ export default {
 			page: config.registrationPages.GREETING_PAGE,
 			title: 'COVID-19 Vaccination Registration',
 			registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
-			numberOfHouseholdMembers: 2,
-			householdFamilyName: ''
+			numberOfHouseholdMembers: 2
 			}
 		},
   }
