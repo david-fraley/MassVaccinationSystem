@@ -3,66 +3,107 @@
     <v-row>
       <v-col cols="6">
         <v-row>
-          <v-radio-group v-model="patientInfoComfirmed" row>
-            <template v-slot:label>
-              <div>Patient info confirmed? </div>
-            </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
-          </v-radio-group>
+          <v-col cols="6">
+            <v-row>
+              <v-radio-group>
+                <template v-slot:label>
+                  <div>Patient info confirmed? </div>
+                </template>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+          <v-col cols="6">
+            <v-row>
+              <v-radio-group v-model="patientInfoComfirmed" row>
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+        </v-row> 
+        <v-row>
+          <v-col cols="6">
+            <v-row>
+              <v-radio-group>
+                <template v-slot:label>
+                  <div>Consent form signed?</div>
+                </template>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+          <v-col cols="6">
+            <v-row>
+              <v-radio-group v-model="consentFormSigned" row>
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
+            </v-row>
+          </v-col>
         </v-row>
         <v-row>
-          <v-radio-group v-model="consentFormSigned" row>
-            <template v-slot:label>
-              <div>Consent form signed?<v-spacer></v-spacer></div>
-            </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
-          </v-radio-group>
+          <v-col cols="6">
+            <v-row>
+              <v-radio-group>
+                <template v-slot:label>
+                  <div>Proper screening completed?</div>
+                </template>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+          <v-col cols="6">
+            <v-row>
+              <v-radio-group v-model="screeningCompleted" row>
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
+            </v-row>
+          </v-col>
         </v-row>
         <v-row>
-          <v-radio-group v-model="screeningCompleted" row>
-            <template v-slot:label>
-              <div>Proper screening completed?</div>
-            </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
-          </v-radio-group>
-        </v-row>
-        <v-row>
-          <v-radio-group v-model="factSheetProvided" row>
-            <template v-slot:label>
-              <div>VIS fact sheet provided?</div>
-            </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
-          </v-radio-group>
+          <v-col cols="6">
+            <v-row>
+              <v-radio-group>
+                <template v-slot:label>
+                  <div>VIS fact sheet provided?</div>
+                </template>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+          <v-col cols="6">
+            <v-row>
+              <v-radio-group v-model="factSheetProvided" row>
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
+            </v-row>
+          </v-col>
         </v-row>
       </v-col>
+                
       <v-col cols="6">
         <v-card color="accent" dark>
           <v-card-title style="center" class="headline">
