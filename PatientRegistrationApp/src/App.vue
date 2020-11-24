@@ -168,7 +168,7 @@
 							</v-btn>
 							
 							<v-spacer></v-spacer>
-							<v-btn large color="secondary" @click="submit()">
+							<v-btn color="secondary" class="ma-2 white--text" @click="submit()">
 								Submit
 							</v-btn>
 						</template>
@@ -180,7 +180,7 @@
 								Back
 							</v-btn>
 							<v-spacer></v-spacer>
-							<v-btn large color="secondary" @click="submit()">
+							<v-btn color="secondary" class="ma-2 white--text" @click="submit()">
 								Submit
 							</v-btn>
 						</template>
@@ -403,3 +403,11 @@ export default {
 		},
   }
 </script>
+<style lang="css" scoped>
+
+.v-btn:not(.v-btn--round).v-size--default {
+    font-size: 1.2rem;
+	min-width: 200px;
+}
+
+</style>
