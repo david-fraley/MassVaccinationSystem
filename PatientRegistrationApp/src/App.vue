@@ -243,11 +243,25 @@ export default {
 		},
 		setHouseholdFamilyName(householdFamilyName)
 		{
-			this.householdFamilyName = householdFamilyName;
-		},
-		getHouseholdFamilyName()
-		{
-			return this.householdFamilyName;
+			this.$refs.householdPersonalInfo_2.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_3.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_4.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_5.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_6.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_7.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_8.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_9.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_10.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_11.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_12.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_13.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_14.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_15.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_16.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_17.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_18.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_19.setHouseholdFamilyName(householdFamilyName)
+			this.$refs.householdPersonalInfo_20.setHouseholdFamilyName(householdFamilyName)
 		},
 		isSinglePatientRegistration() {
 			let returnValue = true;
@@ -407,8 +421,7 @@ export default {
 			page: config.registrationPages.GREETING_PAGE,
 			title: 'COVID-19 Vaccination Registration',
 			registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
-			numberOfHouseholdMembers: 2,
-			householdFamilyName: ''
+			numberOfHouseholdMembers: 2
 			}
 		},
   }

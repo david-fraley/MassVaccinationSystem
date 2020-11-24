@@ -181,7 +181,7 @@ export default {
       ],
       languageOptions: ["English", "Spanish"],
       relationshipOptions: ["Child", "Foster Child", "Spouse", "Domestic Partner", "Parent", "In-Law", "Grandparent", "Other Family Member"],
-      
+      householdFamilyName: '',
       householdGivenName: '',
       householdSuffix: '',
       householdBirthDate: '',
@@ -195,8 +195,7 @@ export default {
   },
   props:
   {
-    householdMemberNumber: Number,
-	householdFamilyName: Text
+    householdMemberNumber: Number
   },
   methods: {
     sendHouseholdPersonalInfoDataToReviewPage()
@@ -219,60 +218,60 @@ export default {
       var message = "Woops! You need to enter the following field(s):"
       
 		if(this.preferredLanguage == "")  
-	{
-        message += " Preferred Language"
-        valid = false
-	}
+		{
+			message += " Preferred Language"
+			valid = false
+		}
 
 		if(this.householdFamilyName == "")  
-	{
-		if(!valid)
-				{
+		{
+			if(!valid)
+			{
 				message +=","
-				}
-        message += " Last Name"
-        valid = false
-	}
-      
+			}
+			message += " Last Name"
+			valid = false
+		}
+		
 		if(this.householdGivenName == "") 
-	{
-		if(!valid)
-				{
+		{
+			if(!valid)
+			{
 				message +=","
-				}
-        message += " First Name"
-        valid = false
-	}
-      
+			}
+			message += " First Name"
+			valid = false
+		}
+		
 		if (this.householdDate == null) 
-	{
-		if(!valid)
-				{
+		{
+			if(!valid)
+			{
 				message +=","
-				}
-        message += " Date of birth"
-        valid = false
-	}
-      
+			}
+			message += " Date of birth"
+			valid = false
+		}
+		
 		if(this.householdGender == "") 
-	{
-		if(!valid)
-				{
+		{
+			if(!valid)
+			{
 				message +=","
-				}
-        message += " Gender Identity" 
-        valid = false
-	}
+			}
+			message += " Gender Identity" 
+			valid = false
+		}
 
 		if(this.relationship == "") 
-	{
-		if(!valid)
-				{
+		{
+			if(!valid)
+			{
 				message +=","
-				}
-        message += " Relationship" 
-        valid = false
-	}
+			}
+			message += " Relationship" 
+			valid = false
+		}
       
 		if (valid == false) 
 		{
@@ -282,7 +281,11 @@ export default {
       
         this.sendHouseholdPersonalInfoDataToReviewPage();
         return true;
-    }
+    },
+	setHouseholdFamilyName(householdFamilyName)
+	{
+		this.householdFamilyName = householdFamilyName
+	}
 },
 };
 </script>
