@@ -154,7 +154,7 @@ import EventBus from '../eventBus'
 				message += " Primary E-mail"
 				valid = false
 			}
-		}
+		
 			if(this.approval == "") 
 			{
 			if(!valid)
