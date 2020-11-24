@@ -127,7 +127,7 @@ export default {
         message += " E-mail"
         valid = false
 			}
-		}
+		
 			if(this.approval == "") 
 			{
 			if(!valid)
