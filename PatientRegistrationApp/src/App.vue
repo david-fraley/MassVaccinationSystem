@@ -279,6 +279,16 @@ export default {
 			(this.page == this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE) ? returnValue = true: returnValue = false;
 			return returnValue;
 		},
+		jumpToHouseholdPersonalInfoPage(householdMemberNumber) {
+			if(householdMemberNumber == 1)
+			{
+				this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE)
+			}
+			else
+			{
+				this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE + householdMemberNumber - 1)
+			}
+		},
 		goToPreviousPage() {
 			let currentPage = this.page;
 			(currentPage > config.registrationPages.GREETING_PAGE) ? currentPage-- : currentPage;
@@ -389,6 +399,9 @@ export default {
 		}),
 		EventBus.$on('DATA_HOUSEHOLD_FAMILY_NAME', (householdFamilyName) => {
 			this.setHouseholdFamilyName(householdFamilyName)
+		}),
+		EventBus.$on('DATA_HOUSEHOLD_PERSONAL_INFO_EDIT', (householdMemberNumber) => {
+			this.jumpToHouseholdPersonalInfoPage(householdMemberNumber)
 		})
 	},
 	components: 
