@@ -189,11 +189,6 @@ export default {
         //all household members have the same last name
         EventBus.$emit('DATA_HOUSEHOLD_FAMILY_NAME', this.householdFamilyName)
       }
-      else
-      {
-        EventBus.$emit('DATA_HOUSEHOLD_FAMILY_NAME', '')
-      }
-      
     },
     verifyFormContents()
     {
