@@ -211,22 +211,20 @@ import EventBus from '../eventBus'
 	HomeAddressAvailable()
     {
 	this.homeAddressAvailable = true
-	this.householdlineAddress=""
-	this.householdcityAddress=""
-	this.householdstateAddress=""
-	this.householddistrictAddress=""
-	this.householdcountryAddress=""
-	this.householdpostalCode=""
+	this.householdLineAddress=""
+	this.householdCityAddress=""
+	this.householdStateAddress=""
+	this.householdDistrictAddress=""
+	this.householdPostalCode=""
     },
     HomeAddressNotAvailable()
     {
 	this.homeAddressAvailable = false
-	this.householdlineAddress="Not Available"
-	this.householdcityAddress="Not Available"
-	this.householdstateAddress="Not Available"
-	this.householddistrictAddress="Not Available"
-	this.householdcountryAddress="Not Available"
-	this.householdpostalCode="Not Available"
+	this.householdLineAddress="Not Available"
+	this.householdCityAddress="Not Available"
+	this.householdStateAddress="Not Available"
+	this.householdDistrictAddress="Not Available"
+	this.householdPostalCode="Not Available"
     },
 	},
 }

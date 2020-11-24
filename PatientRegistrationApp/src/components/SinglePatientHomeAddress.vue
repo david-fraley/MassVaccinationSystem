@@ -245,7 +245,6 @@ import EventBus from '../eventBus'
 	this.cityAddress=""
 	this.stateAddress=""
 	this.districtAddress=""
-	this.countryAddress=""
 	this.postalCode=""
     },
     HomeAddressNotAvailable()
@@ -255,7 +254,6 @@ import EventBus from '../eventBus'
 	this.cityAddress="Not Available"
 	this.stateAddress="Not Available"
 	this.districtAddress="Not Available"
-	this.countryAddress="Not Available"
 	this.postalCode="Not Available"
     },
 	},
