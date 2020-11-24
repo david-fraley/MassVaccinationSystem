@@ -153,32 +153,32 @@ import EventBus from '../eventBus'
 			var valid = true
 			var message = "Woops! You need to enter the following field(s):"
 		
-		if(!this.phoneNumberAvailable)
-		{
-			if(this.primaryPhoneNumber == "") 
+			if(this.phoneNumberAvailable)
 			{
-				message += " Primary Phone Number"
-				valid = false
-			}
-		}
-		if(this.emailAvailable == "")
-		{
-			if(this.primaryEmail == "") 
-			{
-			if(!valid)
+				if(this.primaryPhoneNumber == "") 
 				{
-				message +=","
+					message += " Primary Phone Number"
+					valid = false
 				}
-				message += " Primary E-mail"
-				valid = false
 			}
-		}
+			if(this.emailAvailable)
+			{
+				if(this.primaryEmail == "") 
+				{
+				if(!valid)
+					{
+					message +=","
+					}
+					message += " Primary E-mail"
+					valid = false
+				}
+			}
 		
 			if(this.approval == "") 
 			{
-			if(!valid)
+				if(!valid)
 				{
-				message +=","
+					message +=","
 				}
 				message += " Follow up consent"
 				valid = false

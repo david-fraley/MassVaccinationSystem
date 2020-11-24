@@ -125,31 +125,31 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
 	
-		if(!this.phoneNumberAvailable)
-		{	
-			if(this.patientPhoneNumber == "") 
-			{
-        message += " Phone Number"
-        valid = false
-			}
-		}
-		if(this.emailAvailable == "")
-		{
-			if(this.patientEmail == "") 
-			{
-			if(!valid)
-				{
-				message +=","
-				}
-        message += " E-mail"
-        valid = false
-			}
-		}
+      if(this.phoneNumberAvailable)
+      {	
+        if(this.patientPhoneNumber == "") 
+        {
+          message += " Phone Number"
+          valid = false
+        }
+      }
+      if(this.emailAvailable)
+      {
+        if(this.patientEmail == "") 
+        {
+        if(!valid)
+          {
+          message +=","
+          }
+          message += " E-mail"
+          valid = false
+        }
+      }
 			if(this.approval == "") 
 			{
-			if(!valid)
+        if(!valid)
 				{
-				message +=","
+          message +=","
 				}
         message += " Follow up consent"
         valid = false
