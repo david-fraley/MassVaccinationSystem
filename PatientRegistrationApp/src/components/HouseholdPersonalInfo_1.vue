@@ -184,6 +184,16 @@ export default {
       }
       const householdMemberNumber = 1
       EventBus.$emit('DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED', householdPersonalInfoPayload, householdMemberNumber)
+      if(this.checkbox)
+      {
+        //all household members have the same last name
+        EventBus.$emit('DATA_HOUSEHOLD_FAMILY_NAME', this.householdFamilyName)
+      }
+      else
+      {
+        EventBus.$emit('DATA_HOUSEHOLD_FAMILY_NAME', '')
+      }
+      
     },
     verifyFormContents()
     {
