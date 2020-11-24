@@ -39,7 +39,20 @@
     </v-row>
 
     <v-row>
-      <v-col cols="12" sm="6" md="6">
+	<v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="emailAvailableRadioButtons"
+	>
+        <v-col align="right" cols="12">
+          <v-radio label="I have an E-mail address" value="yes" @change="EmailAvailable()"></v-radio>
+          <v-radio label="I do not have an E-mail address" value="no" @change="EmailNotAvailable()"></v-radio>
+        </v-col>
+	</v-radio-group>
+    </v-row>
+	
+    <v-row>
+	<v-col cols="12" sm="6" md="6">
         <v-text-field
 			required
 			:rules="emailRules"
@@ -85,12 +98,14 @@ export default {
           /^[\s]*$|.+@.+\..+/.test(v) ||
           "Please provide a valid e-mail address",
       ],
-      patientPhoneNumber: '',
-      patientPhoneNumberType: '',
-      patientEmail: '',
-      approval: '',
-      phoneNumberAvailable: true,
-      phoneNumberAvailableRadioButtons: 'yes',
+	patientPhoneNumber: '',
+	patientPhoneNumberType: '',
+	patientEmail: '',
+	approval: '',
+	phoneNumberAvailable: true,
+	phoneNumberAvailableRadioButtons: 'yes',
+	emailAvailable: true,
+	emailAvailableRadioButtons: 'yes'
     };
   },
   methods: {
@@ -110,29 +125,31 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
 	
-		if(!this.phoneNumberAvailable)
-		{	
-			if(this.patientPhoneNumber == "") 
-			{
-        message += " Phone Number"
-        valid = false
-			}
-		}
-			if(this.patientEmail == "") 
-			{
-			if(!valid)
-				{
-				message +=","
-				}
-        message += " E-mail"
-        valid = false
-			}
-		
+      if(this.phoneNumberAvailable)
+      {	
+        if(this.patientPhoneNumber == "") 
+        {
+          message += " Phone Number"
+          valid = false
+        }
+      }
+      if(this.emailAvailable)
+      {
+        if(this.patientEmail == "") 
+        {
+        if(!valid)
+          {
+          message +=","
+          }
+          message += " E-mail"
+          valid = false
+        }
+      }
 			if(this.approval == "") 
 			{
-			if(!valid)
+        if(!valid)
 				{
-				message +=","
+          message +=","
 				}
         message += " Follow up consent"
         valid = false
@@ -155,6 +172,16 @@ export default {
     {
 		this.phoneNumberAvailable = false
 		this.patientPhoneNumber="Not available"
+    },
+		EmailAvailable()
+    {
+	this.emailAvailable = true
+	this.patientEmail=""
+    },
+    EmailNotAvailable()
+    {
+	this.emailAvailable = false
+	this.patientEmail="Not available"
     },
 },
 }
