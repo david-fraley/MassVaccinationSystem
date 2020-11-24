@@ -3,6 +3,10 @@
     
     <v-app-bar app clipped-right flat height="69" color="primary">
       <h1 class="font-weight-medium white--text">Point of Dispensing Application</h1>
+      <v-spacer></v-spacer>
+      <img
+        src="./assets/logo.png"
+        height="100%">
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app width="20em">

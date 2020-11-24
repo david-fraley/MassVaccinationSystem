@@ -29,7 +29,9 @@
         <v-text-field
           label="Phone Number"
           required
-          :rules="[v => !!v || 'Phone number field is required']"
+          :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+          placeholder="(###)###-####"
+          v-mask="'(###)###-####'"
           v-model="householdEmergencyContactPhoneNumber"
 			prepend-icon="mdi-menu-right"
         ></v-text-field>

@@ -201,6 +201,7 @@ export default {
     sendHouseholdPersonalInfoDataToReviewPage()
     {
       const householdPersonalInfoPayload = {
+		preferredLanguage: this.preferredLanguage,
         householdFamilyName: this.householdFamilyName,
         householdGivenName: this.householdGivenName,
         householdSuffix: this.householdSuffix,
