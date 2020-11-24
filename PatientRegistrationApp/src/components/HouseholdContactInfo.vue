@@ -176,7 +176,7 @@ import EventBus from '../eventBus'
     {
 		this.emailAvailable = true
 		this.primaryEmail=""
-		this secondaryEmail=""
+		this.secondaryEmail=""
     },
     EmailNotAvailable()
     {
