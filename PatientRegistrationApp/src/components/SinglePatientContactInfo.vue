@@ -45,19 +45,13 @@
 			:rules="emailRules"
 			label="E-mail Address"
 			v-model="patientEmail"
+			v-show="emailAvailable"
 			prepend-icon="mdi-menu-right"
         ></v-text-field>
 	</v-col>
     </v-row>
 	
-	<v-row>
-    <v-col cols="6" sm="6" md="3">
-      <v-checkbox
-        v-model="checkbox"
-        label="I have no e-mail address"
-      ></v-checkbox>
-    </v-col></v-row>
-	
+
 
     <v-row><v-col cols="12" sm="6" md="6">
       <v-radio-group
@@ -133,6 +127,7 @@ export default {
         message += " E-mail"
         valid = false
 			}
+		}
 			if(this.approval == "") 
 			{
 			if(!valid)
