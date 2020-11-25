@@ -57,8 +57,8 @@
           <v-date-picker
             ref="picker"
             v-model="date"
-            :max="new Date().toISOString().substr(0, 10)"
             min="1900-01-01"
+            :max="maxDateStr"
             @change="save"
           ></v-date-picker>
         </v-menu>
@@ -213,6 +213,18 @@ export default {
 
       this.sendPersonalInfoDataToReviewPage();
       return true;
+    },
+  },
+  computed: {
+    maxDateStr: function() {
+      let d = new Date();
+      let date = [
+        d.getFullYear(),
+        ("0" + (d.getMonth() + 1)).slice(-2),
+        ("0" + d.getDate()).slice(-2),
+      ].join("-");
+
+      return date;
     },
   },
   mounted() {
