@@ -109,21 +109,18 @@
           <v-card-title class="headline justify-center">
               Proceed with vaccination?
           </v-card-title>
+
           <v-row align="center" justify="center">
-            <v-col cols="2">
-                <v-radio
-                  v-model="vaccinationYes"
-                  label="Yes"
-                  value="Yes"
-                ></v-radio>
-            </v-col>
-            <v-col cols="2">   
-                <v-radio
-                  v-model="vaccinationNo"
-                  label="No"
-                  value="No"
-                ></v-radio>
-            </v-col>
+            <v-radio-group v-model="vaccinationProceed" row>
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
           </v-row>
         </v-card>
       </v-col>
@@ -141,6 +138,10 @@
     name: 'VaccinationScreeningComponent',
     methods: 
     {
+      vaccinationSelected()
+      {
+        alert('selected')
+      }
     },
     components: 
     {
