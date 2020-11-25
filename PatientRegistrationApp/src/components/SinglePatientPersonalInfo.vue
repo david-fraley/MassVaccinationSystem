@@ -36,30 +36,29 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Date of Birth -->
         <v-menu
-          ref="menu"
-          v-model="menu"
+          attach
           :close-on-content-click="false"
           transition="scale-transition"
           offset-y
           min-width="290px"
         >
-          <template v-slot:activator="{ on, attrs }">
+          <template v-slot:activator="{ on }">
             <v-text-field
               v-model="date"
               label="Date of Birth"
+              :rules="birthdateRules"
+              placeholder="YYYY-MM-DD"
+              v-mask="'####-##-##'"
               prepend-icon="mdi-calendar"
-              readonly
-              v-bind="attrs"
-              v-on="on"
+              @click:prepend="on.click"
             ></v-text-field>
           </template>
 
           <v-date-picker
-            ref="picker"
+            reactive
             v-model="date"
-            min="1900-01-01"
+            :min="minDateStr"
             :max="maxDateStr"
-            @change="save"
           ></v-date-picker>
         </v-menu>
       </v-col>
@@ -149,15 +148,28 @@ export default {
       familyName: "",
       givenName: "",
       suffix: "",
-      birthDate: "",
+      date: "",
       gender: "",
       patientPhoto: "",
       raceSelections: "",
       ethnicitySelection: "",
       preferredLanguage: "",
+      minDateStr: "1900-01-01",
+      birthdateRules: [
+        (v) => !!v || "DOB is required",
+        (v) => v.length == 10 || "DOB must be in specified format",
+        (v) => this.validBirthdate(v) || "Invalid DOB",
+      ],
     };
   },
   methods: {
+    validBirthdate(birthdate) {
+      var minDate = Date.parse(this.minDateStr);
+      var maxDate = Date.parse(this.maxDateStr);
+      var date = Date.parse(birthdate);
+
+      return !Number.isNaN(date) && minDate <= date && date <= maxDate;
+    },
     sendPersonalInfoDataToReviewPage() {
       const personalInfoPayload = {
         familyName: this.familyName,
