@@ -14,7 +14,7 @@
           </v-col>
           <v-col cols="6">
             <v-row no-gutters>
-              <v-radio-group v-model="patientInfoComfirmed" row>
+              <v-radio-group v-model="patientInfoComfirmed" row @change="screeningChecklistUpdate()">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -39,7 +39,7 @@
           </v-col>
           <v-col cols="6">
             <v-row no-gutters>
-              <v-radio-group v-model="consentFormSigned" row>
+              <v-radio-group v-model="consentFormSigned" row @change="screeningChecklistUpdate()">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -64,7 +64,7 @@
           </v-col>
           <v-col cols="6">
             <v-row no-gutters>
-              <v-radio-group v-model="screeningCompleted" row>
+              <v-radio-group v-model="screeningCompleted" row @change="screeningChecklistUpdate()">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -89,7 +89,7 @@
           </v-col>
           <v-col cols="6">
             <v-row no-gutters>
-              <v-radio-group v-model="factSheetProvided" row>
+              <v-radio-group v-model="factSheetProvided" row @change="screeningChecklistUpdate()">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -105,7 +105,7 @@
       </v-col>
                 
       <v-col cols="6">
-        <v-card color="accent" dark height="50%" v-show="true">
+        <v-card color="accent" dark height="50%" v-show="screeningComplete">
           <v-card-title class="headline justify-center">
               Proceed with vaccination?
           </v-card-title>
@@ -134,20 +134,33 @@
 </template>
 
 <script>
+
   export default {
     name: 'VaccinationScreeningComponent',
     methods: 
     {
-      vaccinationSelected()
-      {
-        alert('selected')
-      }
+     screeningChecklistUpdate()
+     {
+       if(this.isScreeningChecklistComplete())
+       {
+         this.screeningComplete = true
+       }
+       else
+       {
+         this.screeningComplete = false
+       }
+     },
+     isScreeningChecklistComplete()
+     {
+       return (this.patientInfoComfirmed && this.consentFormSigned && this.screeningCompleted && this.factSheetProvided); 
+     }
     },
     components: 
     {
     },
     data () {
       return {
+        screeningComplete: false
       }
     }
   }
