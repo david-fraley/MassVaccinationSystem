@@ -31,7 +31,7 @@
 		<v-row>
 		<v-col cols="4">
 		<v-select
-			v-model="reactionList"
+			v-model="reactionList_1"
 			:items="reactionList"
 			label="Reaction List"
 			prepend-icon="mdi-menu-right"
@@ -39,15 +39,15 @@
 
 		<v-col cols="4">
         <v-text-field 
-			id="adverseReactionTimeStamp" 
-			v-model="adverseReactionTimeStamp"
+			id="adverseReactionTimeStamp_1" 
+			v-model="adverseReactionTimeStamp_1"
 			placeholder="MM/DD/YYYY HH/MM/SS"
         ></v-text-field></v-col>
 		
 		<v-col cols="4">
         <v-text-field 
-			id="notes" 
-			v-model="notes"
+			id="notes_1" 
+			v-model="notes_1"
 			placeholder="If other, list reaction"
         ></v-text-field></v-col>
     </v-row>
@@ -55,7 +55,7 @@
 		<v-row>
 		<v-col cols="4">
 		<v-select
-			v-model="reactionList"
+			v-model="reactionList_2"
 			:items="reactionList"
 			label="Reaction List"
 			prepend-icon="mdi-menu-right"
@@ -63,15 +63,15 @@
 
 		<v-col cols="4">
         <v-text-field 
-			id="adverseReactionTimeStamp" 
-			v-model="adverseReactionTimeStamp"
+			id="adverseReactionTimeStamp_2" 
+			v-model="adverseReactionTimeStamp_2"
 			placeholder="MM/DD/YYYY HH/MM/SS"
         ></v-text-field></v-col>
 		
 		<v-col cols="4">
         <v-text-field 
-			id="notes" 
-			v-model="notes"
+			id="notes_2" 
+			v-model="notes_2"
 			placeholder="If other, list reaction"
         ></v-text-field></v-col>
     </v-row>
@@ -79,7 +79,7 @@
 		<v-row>
 		<v-col cols="4">
 		<v-select
-			v-model="reactionList"
+			v-model="reactionList_3"
 			:items="reactionList"
 			label="Reaction List"
 			prepend-icon="mdi-menu-right"
@@ -87,15 +87,15 @@
 
 		<v-col cols="4">
         <v-text-field 
-			id="adverseReactionTimeStamp" 
-			v-model="adverseReactionTimeStamp"
+			id="adverseReactionTimeStamp_3" 
+			v-model="adverseReactionTimeStamp_3"
 			placeholder="MM/DD/YYYY HH/MM/SS"
         ></v-text-field></v-col>
 		
 		<v-col cols="4">
         <v-text-field 
-			id="notes" 
-			v-model="notes"
+			id="notes_3" 
+			v-model="notes_3"
 			placeholder="If other, list reaction"
         ></v-text-field></v-col>
     </v-row>
@@ -103,7 +103,7 @@
 		<v-row>
 		<v-col cols="4">
 		<v-select
-			v-model="reactionList"
+			v-model="reactionList_4"
 			:items="reactionList"
 			label="Reaction List"
 			prepend-icon="mdi-menu-right"
@@ -111,15 +111,15 @@
 
 		<v-col cols="4">
         <v-text-field 
-			id="adverseReactionTimeStamp" 
-			v-model="adverseReactionTimeStamp"
+			id="adverseReactionTimeStamp_4" 
+			v-model="adverseReactionTimeStamp_4"
 			placeholder="MM/DD/YYYY HH/MM/SS"
         ></v-text-field></v-col>
 		
 		<v-col cols="4">
         <v-text-field 
-			id="notes" 
-			v-model="notes"
+			id="notes_4" 
+			v-model="notes_4"
 			placeholder="If other, list reaction"
         ></v-text-field></v-col>
     </v-row>
@@ -127,7 +127,7 @@
 		<v-row>
 		<v-col cols="4">
 		<v-select
-			v-model="reactionList"
+			v-model="reactionList_5"
 			:items="reactionList"
 			label="Reaction List"
 			prepend-icon="mdi-menu-right"
@@ -135,15 +135,15 @@
 
 		<v-col cols="4">
         <v-text-field 
-			id="adverseReactionTimeStamp" 
-			v-model="adverseReactionTimeStamp"
+			id="adverseReactionTimeStamp_5" 
+			v-model="adverseReactionTimeStamp_5"
 			placeholder="MM/DD/YYYY HH/MM/SS"
         ></v-text-field></v-col>
 		
 		<v-col cols="4">
         <v-text-field 
-			id="notes" 
-			v-model="notes"
+			id="notes_5" 
+			v-model="notes_5"
 			placeholder="If other, list reaction"
         ></v-text-field></v-col>
     </v-row>
@@ -151,7 +151,7 @@
 		<v-row>
 		<v-col cols="4">
 		<v-select
-			v-model="reactionList"
+			v-model="reactionList_6"
 			:items="reactionList"
 			label="Reaction List"
 			prepend-icon="mdi-menu-right"
@@ -159,15 +159,15 @@
 
 		<v-col cols="4">
         <v-text-field 
-			id="adverseReactionTimeStamp" 
-			v-model="adverseReactionTimeStamp"
+			id="adverseReactionTimeStamp_6" 
+			v-model="adverseReactionTimeStamp_6"
 			placeholder="MM/DD/YYYY HH/MM/SS"
         ></v-text-field></v-col>
 		
 		<v-col cols="4">
         <v-text-field 
-			id="notes" 
-			v-model="notes"
+			id="notes_6" 
+			v-model="notes_6"
 			placeholder="If other, list reaction"
         ></v-text-field></v-col>
     </v-row>
@@ -175,7 +175,7 @@
 		<v-row>
 		<v-col cols="4">
 		<v-select
-			v-model="reactionList"
+			v-model="reactionList_7"
 			:items="reactionList"
 			label="Reaction List"
 			prepend-icon="mdi-menu-right"
@@ -183,15 +183,15 @@
 
 		<v-col cols="4">
         <v-text-field 
-			id="adverseReactionTimeStamp" 
-			v-model="adverseReactionTimeStamp"
+			id="adverseReactionTimeStamp_7" 
+			v-model="adverseReactionTimeStamp_7"
 			placeholder="MM/DD/YYYY HH/MM/SS"
         ></v-text-field></v-col>
 		
 		<v-col cols="4">
         <v-text-field 
-			id="notes" 
-			v-model="notes"
+			id="notes_7" 
+			v-model="notes_7"
 			placeholder="If other, list reaction"
         ></v-text-field></v-col>
     </v-row>
