@@ -105,24 +105,23 @@
       </v-col>
                 
       <v-col cols="6">
-        <v-card color="accent" dark height="50%" v-show="screeningComplete">
-          <v-card-title class="headline justify-center">
-              Proceed with vaccination?
-          </v-card-title>
-
-          <v-row align="center" justify="center">
-            <v-radio-group v-model="vaccinationProceed" row>
-                  <v-radio
-                    label="Yes"
-                    value="Yes"
-                  ></v-radio>
-                  <v-radio
-                    label="No"
-                    value="No"
-                  ></v-radio>
-              </v-radio-group>
-          </v-row>
-        </v-card>
+          <v-card class="mx-auto my-12" color="accent" dark height="50%" v-show="screeningComplete">
+            <v-card-title class="headline justify-center">
+                Proceed with vaccination?
+            </v-card-title>
+            <v-row align="center" justify="center">
+              <v-radio-group v-model="vaccinationProceed" row>
+                    <v-radio
+                      label="Yes"
+                      value="Yes"
+                    ></v-radio>
+                    <v-radio
+                      label="No"
+                      value="No"
+                    ></v-radio>
+                </v-radio-group>
+            </v-row>
+          </v-card>
       </v-col>
     </v-row>
     <v-row>
