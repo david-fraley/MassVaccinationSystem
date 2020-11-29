@@ -4,7 +4,7 @@
 			<v-col cols="4">
 			</v-col>
 			<v-col cols="4">
-				<span><p style="font-size:1.5em" class="font-weight-regular">Select your preferred language</p></span>
+				<span class="red--text"><strong>* </strong></span><span><p style="font-size:1.5em" class="font-weight-regular">Select your preferred language</p></span>
 			</v-col>
 			<v-col cols="4">
 			</v-col>
@@ -15,7 +15,6 @@
 			</v-col>
 			<v-col cols="4">
 				<v-select required dense
-				class="required"
 					:items="preferredLanguageOptions"
 					:rules="[v => !!v || 'Preferred language field is required']"
 					v-model="preferredLanguage"
@@ -140,9 +139,5 @@ export default {
 .v-select >>> .v-list-item__title {
     font-size: 1.5em;
 }
-.required:before{
-	content:"*";
-	color: red;
-	font-weight:bold;
-}
+
 </style>

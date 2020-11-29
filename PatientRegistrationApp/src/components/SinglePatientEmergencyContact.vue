@@ -37,7 +37,7 @@
           v-mask="'(###)###-####'"
           v-model="emergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right">
-		  	<template #label>
+			<template #label>
 			<span class="red--text"><strong>* </strong></span>Phone Number
 			</template>
         </v-text-field>
