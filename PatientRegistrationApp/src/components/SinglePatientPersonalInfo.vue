@@ -150,7 +150,7 @@ export default {
       suffix: "",
       date: "",
       gender: "",
-      patientPhoto: "",
+      patientPhoto: undefined,
       raceSelections: "",
       ethnicitySelection: "",
       preferredLanguage: "",
@@ -178,7 +178,7 @@ export default {
         birthDate: this.date,
         gender: this.gender,
         patientPhoto: this.patientPhoto,
-        patientPhotoSrc: URL.createObjectURL( this.patientPhoto ),
+        patientPhotoSrc:  this.patientPhoto  ? URL.createObjectURL( this.patientPhoto ) : undefined,
         raceSelections: this.raceSelections,
         ethnicitySelection: this.ethnicitySelection,
         preferredLanguage: this.preferredLanguage,
@@ -217,6 +217,19 @@ export default {
         }
         message += " Gender Identity";
         valid = false;
+      }
+
+      if( this.patientPhoto ) {
+        if (this.patientPhoto.size > 2097152) {
+          if (!valid) {
+            message += "\n";
+            message += "Photo is over 2mb's";
+          }
+          else {
+            message = "Photo is over 2mb's";
+          }
+          valid = false;
+        }
       }
 
       if (valid == false) {
