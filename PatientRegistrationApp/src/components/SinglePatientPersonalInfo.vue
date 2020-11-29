@@ -86,8 +86,8 @@
       <v-col class="d-flex" cols="5" sm="5">
         <!-- Current Photo -->
         <v-file-input
-          :rules="rules"
           accept="image/png, image/jpeg, image/bmp"
+          :rules="[(v) => !v || v.size < 2097152 || 'Image size should be less than 2 MB!']"
           placeholder="Upload a recent photo"
           v-model="patientPhoto"
           label="Photo"
@@ -178,6 +178,7 @@ export default {
         birthDate: this.date,
         gender: this.gender,
         patientPhoto: this.patientPhoto,
+        patientPhotoSrc: URL.createObjectURL( this.patientPhoto ),
         raceSelections: this.raceSelections,
         ethnicitySelection: this.ethnicitySelection,
         preferredLanguage: this.preferredLanguage,

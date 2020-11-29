@@ -38,6 +38,11 @@
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
 					<v-card class="pa-2" flat min-width=33%>
+						<v-img
+							max-height="100"
+							max-width="100" 
+							:src="dataHouseholdPersonalInfo[0].householdPatientPhotoSrc">
+						</v-img>
 						<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
 						{{dataHouseholdPersonalInfo[0].householdGivenName}} {{dataHouseholdPersonalInfo[0].householdSuffix}}</span></div>
@@ -61,6 +66,11 @@
 					<template v-for="index in getNumberOfHouseholdMembers()-1">
 						<v-card class="pa-2" flat min-width=33%
 						:key="index">
+							<v-img
+								max-height="100"
+								max-width="100" 
+								:src="dataHouseholdPersonalInfo[index].householdPatientPhotoSrc">
+							</v-img>
 							<div class="font-weight-medium primary--text">Personal Info: Household Member #{{index+1}}</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdFamilyName}}, 
 							{{dataHouseholdPersonalInfo[index].householdGivenName}} {{dataHouseholdPersonalInfo[index].householdSuffix}}</span></div>

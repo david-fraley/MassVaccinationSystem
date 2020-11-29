@@ -13,7 +13,7 @@
 					style="float:left"		
 					max-height="100"
 					max-width="100" 
-					src="../assets/blankPicture.png">
+					:src="dataPersonalInfo.patientPhotoSrc">
 				</v-img>
 			</v-col>  
 			<v-col cols="8" sm="6">
