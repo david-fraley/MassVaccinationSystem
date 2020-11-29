@@ -3,26 +3,28 @@
     <v-row align="center" justify="center">
 		<!-- Last name -->
 		<v-col class="d-flex" cols="5" sm="5">
-        <v-text-field 
-			label="Last Name" 
+        <v-text-field  
 			id="lastName" 
 			required
-			class="required"
 			:rules="[v => !!v || 'Last name field is required']"
 			v-model="familyName"
-			prepend-icon="mdi-menu-right"
-        ></v-text-field>
+			prepend-icon="mdi-menu-right">
+        <template #label>
+				<span class="red--text"><strong>* </strong></span>Last Name
+				</template>
+        </v-text-field>
 		</v-col>
 
 		<!-- First name -->
 		<v-col class="d-flex" cols="5" sm="5">
 			<v-text-field 
-			label="First Name" 
 			id="firstName" 
 			required
-			class="required"
 			:rules="[v => !!v || 'First name field is required']"
 			v-model="givenName">
+        <template #label>
+				<span class="red--text"><strong>* </strong></span>First Name
+				</template>
 			</v-text-field>
 		</v-col>
 
@@ -49,8 +51,6 @@
           <template v-slot:activator="{ on }">
             <v-text-field
 				v-model="date"
-				label="Date of Birth"
-				class="required"
 				:rules="birthdateRules"
               placeholder="YYYY-MM-DD"
               v-mask="'####-##-##'"
@@ -58,8 +58,11 @@
               @click:prepend="on.click"
 				readonly
 				v-bind="attrs"
-				v-on="on"
-            ></v-text-field>
+				v-on="on">
+            <template #label>
+            <span class="red--text"><strong>* </strong></span>Date of Birth
+            </template>
+            </v-text-field>
           </template>
 
           <v-date-picker
@@ -79,13 +82,14 @@
         <!-- Gender identity -->
         <v-select
 			:items="genderID"
-			label="Gender identity"
 			required
-			class="required"
 			:rules="[v => !!v || 'Gender identity field is required']"
 			v-model="gender"
-			prepend-icon="mdi-menu-right"
-		></v-select>
+			prepend-icon="mdi-menu-right">
+        <template #label>
+        <span class="red--text"><strong>* </strong></span>Gender Identity
+        </template>
+		</v-select>
 		</v-col>
 
 		<v-spacer></v-spacer>
@@ -256,10 +260,3 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-.required:before{
-	content:"*";
-	color: red;
-	font-weight:bold;
-}
-</style>

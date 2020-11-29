@@ -4,25 +4,27 @@
 		<!-- Last name -->
 		<v-col class="d-flex" cols="5" sm="5">
         <v-text-field 
-          label="Last Name" 
           id="lastName" 
 		required
-		class="required"
           :rules="[v => !!v || 'Last name field is required']"
           v-model="householdFamilyName"
-          prepend-icon="mdi-menu-right"
-        ></v-text-field>
+          prepend-icon="mdi-menu-right">
+			<template #label>
+			<span class="red--text"><strong>* </strong></span>Last Name
+			</template>
+        </v-text-field>
 		</v-col>
 
 		<!-- First name -->
 		<v-col class="d-flex" cols="5" sm="5">
-        <v-text-field 
-			label="First Name" 
+        <v-text-field  
 			id="firstName" 
 			required
-			class="required"
 			:rules="[v => !!v || 'First name field is required']"
 			v-model="householdGivenName">
+				<template #label>
+				<span class="red--text"><strong>* </strong></span>First Name
+				</template>
         </v-text-field>
       </v-col>
 
@@ -55,8 +57,6 @@
           <template v-slot:activator="{ on }">
             <v-text-field
 				v-model="householdDate"
-				label="Date of Birth"
-				class="required"
 				:rules="birthdateRules"
               placeholder="YYYY-MM-DD"
               v-mask="'####-##-##'"
@@ -65,7 +65,11 @@
 				readonly
 				v-bind="attrs"
 				v-on="on"
-            ></v-text-field>
+            >
+				<template #label>
+				<span class="red--text"><strong>* </strong></span>Date of Birth
+				</template>
+			</v-text-field>
           </template>
 
           <v-date-picker
@@ -85,12 +89,13 @@
         <!-- Gender identity -->
         <v-select
           :items="genderID"
-          label="Gender identity"
 		required
-		class="required"
           :rules="[v => !!v || 'Gender identity field is required']"
           v-model="householdGender"
-          prepend-icon="mdi-menu-right"
+          prepend-icon="mdi-menu-right">
+			<template #label>
+			<span class="red--text"><strong>* </strong></span>Gender Identity
+			</template>
         ></v-select>
       </v-col>
 
@@ -273,11 +278,4 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-.required:before{
-	content:"*";
-	color: red;
-	font-weight:bold;
-}
-</style>
 

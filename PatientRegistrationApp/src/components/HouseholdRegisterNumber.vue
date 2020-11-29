@@ -5,11 +5,12 @@
 				<v-select
 					v-model="numberOfPatients"
 					required
-					class="required"
 					:items="[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]"
-					label="How many people will you be registering (including yourself)?"
-					prepend-icon="mdi-account-group"
-				></v-select>
+					prepend-icon="mdi-account-group">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>How many people will you be registering (including yourself)?
+						</template>
+				</v-select>
 			</v-col>
 		</v-row>
 	</v-container>

@@ -20,11 +20,13 @@
 					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
 					placeholder="(###)###-####"
 					v-mask="'(###)###-####'"
-					label="Primary Phone Number"
 					v-model="primaryPhoneNumber"
 					v-show="phoneNumberAvailable"
-					prepend-icon="mdi-menu-right"
-				></v-text-field>
+					prepend-icon="mdi-menu-right">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>Primary Phone Number
+						</template>
+				</v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="6" sm="2">
 				<v-select
@@ -73,12 +75,13 @@
 			<v-col cols="12" sm="12" md="6">
 				<v-text-field
 					required
-					class="required"
 					:rules="emailRules"
-					label="Primary E-mail Address"
 					v-model="primaryEmail"
 					v-show="emailAvailable"
-					prepend-icon="mdi-menu-right"
+					prepend-icon="mdi-menu-right">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>E-mail Address
+						</template>
 				></v-text-field>
 			</v-col>
 			<v-col cols="12" sm="12" md="6">
@@ -94,12 +97,12 @@
 		<v-row><v-col cols="12" sm="6" md="6">
 			<v-radio-group
 				required
-				class="required"
 				:rules="[v => !!v || 'This field is required']"
 				v-model="approval"
-				prepend-icon="mdi-menu-right"
-				label="May we contact you regarding follow up vaccination information?"
-			>
+				prepend-icon="mdi-menu-right">
+					<template #label>
+					<span class="red--text"><strong>* </strong></span>May we contact you regarding follow up vaccination information
+					</template>
 				<v-col align="right" cols="3" sm="3" md="3">
 					<v-radio label="Yes" value="yes"></v-radio>
 					<v-radio label="No" value="no"></v-radio>
@@ -222,11 +225,3 @@ import EventBus from '../eventBus'
 }
 </script>
 
-<style lang="css" scoped>
-.required:before{
-	content:"*";
-	color: red;
-	font-weight:bold;
-}
-</style>
-		
