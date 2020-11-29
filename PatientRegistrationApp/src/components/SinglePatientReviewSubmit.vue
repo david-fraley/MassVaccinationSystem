@@ -23,6 +23,7 @@
 				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.gender}}</span></div>
 				<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
 				<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataPersonalInfo.ethnicitySelection}}</span></div>
+				<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataPersonalInfo.preferredLanguage}}</span></div>
 			</v-col>
 		</v-row>
 		<v-row>
@@ -66,6 +67,11 @@
 					{{dataEmergencyContact.emergencyContactGivenName}}</span></div>
 				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactPhoneNumber}} 
 					({{dataEmergencyContact.emergencyContactPhoneNumberType}})</span></div>
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-col cols="12">
+			<p> </p>
 			</v-col>
 		</v-row>
 	</v-container>

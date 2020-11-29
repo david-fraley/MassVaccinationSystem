@@ -1,13 +1,28 @@
 <template>
 	<v-container fluid>
 		<v-row>
+		<v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="phoneNumberAvailableRadioButtons"
+		>
+        <v-col align="right" cols="12">
+          <v-radio label="I have a phone number" value="yes" @change="PhoneNumberAvailable()"></v-radio>
+          <v-radio label="I do not have a phone number" value="no" @change="PhoneNumberNotAvailable()"></v-radio>
+		</v-col>
+		</v-radio-group>
+		</v-row>
+		
+		<v-row>
 			<v-col cols="12" sm="6" md="3">
 				<v-text-field
 					required
-					class="required"
-					:rules="[v => !!v || 'Phone number is required']"
+					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+					placeholder="(###)###-####"
+					v-mask="'(###)###-####'"
 					label="Primary Phone Number"
 					v-model="primaryPhoneNumber"
+					v-show="phoneNumberAvailable"
 					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
@@ -18,12 +33,17 @@
 					v-model="primaryPhoneNumberType"
 					:items="phonetype"
 					label="Phone Type"
+					v-show="phoneNumberAvailable"
 				></v-select>
 			</v-col>
 			<v-col cols="12" sm="6" md="3">
 				<v-text-field
+					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+					placeholder="(###)###-####"
+					v-mask="'(###)###-####'"
 					label="Secondary Phone Number"
 					v-model="secondaryPhoneNumber"
+					v-show="phoneNumberAvailable"
 				></v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="4" sm="2">			
@@ -31,17 +51,24 @@
 					v-model="secondaryPhoneNumberType"
 					:items="phonetype"
 					label="Phone Type"
+					v-show="phoneNumberAvailable"
 				></v-select>
 			</v-col>
 		</v-row>
+		
 		<v-row>
-			<v-col cols="6" sm="6" md="3">
-				<v-checkbox
-					v-model="checkbox"
-					label="I have no phone number"
-				></v-checkbox>
-			</v-col>
-		</v-row>
+		<v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="emailAvailableRadioButtons"
+		>
+		<v-col align="right" cols="12">
+			<v-radio label="I have an E-mail address" value="yes" @change="EmailAvailable()"></v-radio>
+			<v-radio label="I do not have an E-mail address" value="no" @change="EmailNotAvailable()"></v-radio>
+        </v-col>
+	</v-radio-group>
+    </v-row>
+	
 		<v-row>
 			<v-col cols="12" sm="12" md="6">
 				<v-text-field
@@ -50,6 +77,7 @@
 					:rules="emailRules"
 					label="Primary E-mail Address"
 					v-model="primaryEmail"
+					v-show="emailAvailable"
 					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
@@ -58,15 +86,11 @@
 					:rules="emailRules"
 					label="Secondary E-mail Address"
 					v-model="secondaryEmail"
+					v-show="emailAvailable"
 				></v-text-field>
 			</v-col>
 		</v-row>
-			<v-row><v-col cols="6" sm="6" md="3">
-				<v-checkbox
-					v-model="checkbox"
-					label="I have no email address"
-				></v-checkbox>
-			</v-col></v-row>
+
 		<v-row><v-col cols="12" sm="6" md="6">
 			<v-radio-group
 				required
@@ -105,7 +129,11 @@ import EventBus from '../eventBus'
 			secondaryPhoneNumber: '',
 			secondaryPhoneNumberType: '',
 			secondaryEmail: '',
-			approval: ''
+			approval: '',
+			phoneNumberAvailable: true,
+			phoneNumberAvailableRadioButtons: 'yes',
+			emailAvailable: true,
+			emailAvailableRadioButtons: 'yes',
 		}
 	},
 	methods: {
@@ -127,25 +155,32 @@ import EventBus from '../eventBus'
 			var valid = true
 			var message = "Woops! You need to enter the following field(s):"
 		
-			if(this.primaryPhoneNumber == "") 
+			if(this.phoneNumberAvailable)
 			{
-				message += " Primary Phone Number"
-				valid = false
-			}
-			if(this.primaryEmail == "") 
-			{
-			if(!valid)
+				if(this.primaryPhoneNumber == "") 
 				{
-				message +=","
+					message += " Primary Phone Number"
+					valid = false
 				}
-				message += " Primary E-mail"
-				valid = false
 			}
+			if(this.emailAvailable)
+			{
+				if(this.primaryEmail == "") 
+				{
+				if(!valid)
+					{
+					message +=","
+					}
+					message += " Primary E-mail"
+					valid = false
+				}
+			}
+		
 			if(this.approval == "") 
 			{
-			if(!valid)
+				if(!valid)
 				{
-				message +=","
+					message +=","
 				}
 				message += " Follow up consent"
 				valid = false
@@ -158,9 +193,33 @@ import EventBus from '../eventBus'
 		
 			this.sendHouseholdContactInfoInfoToReviewPage();
 			return true;
-		}
-	},
-  }
+		},
+    PhoneNumberAvailable()
+    {
+	this.phoneNumberAvailable = true
+	this.primaryPhoneNumber=""
+	this.secondaryPhoneNumber=""
+    },
+    PhoneNumberNotAvailable()
+    {
+	this.phoneNumberAvailable = false
+	this.primaryPhoneNumber="Not Available"
+	this.secondaryPhoneNumber="Not Available"
+    },
+		EmailAvailable()
+    {
+	this.emailAvailable = true
+	this.primaryEmail=""
+	this.secondaryEmail=""
+    },
+    EmailNotAvailable()
+    {
+	this.emailAvailable = false
+	this.primaryEmail="Not available"
+	this.secondaryEmail="Not available"
+    },
+  },
+}
 </script>
 
 <style lang="css" scoped>
@@ -170,3 +229,4 @@ import EventBus from '../eventBus'
 	font-weight:bold;
 }
 </style>
+		

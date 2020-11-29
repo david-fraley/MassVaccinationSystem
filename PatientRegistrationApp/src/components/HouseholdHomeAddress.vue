@@ -1,5 +1,17 @@
 <template>
 	<v-container fluid>
+	<v-row>
+     <v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="homeAddressAvailableRadioButtons"
+      >
+        <v-col align="right" cols="12">
+          <v-radio label="I have a home address" value="yes" @change="HomeAddressAvailable()"></v-radio>
+          <v-radio label="I do not have a home address" value="no" @change="HomeAddressNotAvailable()"></v-radio>
+        </v-col>
+      </v-radio-group>
+    </v-row>
 		<v-row>
 			<v-col cols="12" sm="12" md="12">
 				<v-text-field
@@ -9,6 +21,7 @@
 					:rules="[v => !!v || 'Address field is required']"
 					label="Home Address"
 					v-model="householdLineAddress"
+					v-show="homeAddressAvailable"
 					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
@@ -22,6 +35,7 @@
 					:rules="[v => !!v || 'City field is required']"
 					label="City"
 					v-model="householdCityAddress"
+					v-show="homeAddressAvailable"
 					prepend-icon="mdi-menu-right"
 				></v-text-field>
 			</v-col>
@@ -32,6 +46,7 @@
 					class="required"
 					:rules="[v => !!v || 'State field is required']"
 					v-model="householdStateAddress"
+					v-show="homeAddressAvailable"
                     :items="state"
                     label="State"
 				></v-select>
@@ -44,6 +59,7 @@
 					:rules="[v => !!v || 'County field is required']"
                     label="County"
 					v-model="householdDistrictAddress"
+					v-show="homeAddressAvailable"
 				></v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="2" sm="2">
@@ -53,6 +69,7 @@
 					class="required"
 					:rules="[v => !!v || 'Country field is required']"
 					v-model="householdCountryAddress"
+					v-show="homeAddressAvailable"
                     :items="country"
                     label="Country"
 				></v-select>
@@ -65,17 +82,10 @@
 					:rules="[v => !!v || 'Zipcode field is required']"
 					label="Zipcode"
 					v-model="householdPostalCode"
+					v-show="homeAddressAvailable"
 				></v-text-field>
 			</v-col>
 		</v-row>	
-		<v-row align="center" justify="center">
-			<v-col cols="12" sm="6" md="3">
-				<v-checkbox
-					v-model="checkbox"
-					label="I/We have no home address"
-				></v-checkbox>
-			</v-col>	  		
-		</v-row>
 	</v-container>
 </template>
 
@@ -107,7 +117,9 @@ import EventBus from '../eventBus'
 			householdDistrictAddress: '',
 			householdStateAddress: '',
 			householdCountryAddress: 'USA',
-			householdPostalCode: ''
+			householdPostalCode: '',
+			homeAddressAvailable: true,
+			homeAddressAvailableRadioButtons: 'yes'
 		}
 		
 	},
@@ -130,7 +142,8 @@ import EventBus from '../eventBus'
 			var valid = true
 			var message = "Woops! You need to enter the following field(s):"
 			
-			
+		if(this.homeAddressAvailable)
+		{	
 			if(this.householdLineAddress == "") 
 			{
 				message += " Address"
@@ -191,7 +204,7 @@ import EventBus from '../eventBus'
 				message += " Zipcode"
 				valid = false
 			}
-
+		}
 			if (valid == false) 
 			{
 				alert(message)
@@ -200,7 +213,25 @@ import EventBus from '../eventBus'
 			
 			this.sendHouseholdHomeAddressInfoToReviewPage();
 			return true;
-		}
+		},
+	HomeAddressAvailable()
+    {
+	this.homeAddressAvailable = true
+	this.householdLineAddress=""
+	this.householdCityAddress=""
+	this.householdStateAddress=""
+	this.householdDistrictAddress=""
+	this.householdPostalCode=""
+    },
+    HomeAddressNotAvailable()
+    {
+	this.homeAddressAvailable = false
+	this.householdLineAddress="Not Available"
+	this.householdCityAddress="Not Available"
+	this.householdStateAddress="Not Available"
+	this.householdDistrictAddress="Not Available"
+	this.householdPostalCode="Not Available"
+    },
 	},
   }
 </script>

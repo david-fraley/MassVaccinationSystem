@@ -105,10 +105,7 @@ export default {
 			},
 		sendGreetingPageInfoToReviewPage()
 		{
-			const greetingPagePayload = {
-				preferredLanguage: this.preferredLanguage,
-			}
-			EventBus.$emit('DATA_LANGUAGE_INFO_PUBLISHED', greetingPagePayload)
+			EventBus.$emit('DATA_LANGUAGE_INFO_PUBLISHED', this.preferredLanguage);
 		}, 
 		verifyFormContents()
 		{

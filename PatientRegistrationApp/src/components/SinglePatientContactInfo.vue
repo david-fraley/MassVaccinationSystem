@@ -1,7 +1,19 @@
 <template>
 	<v-container fluid>
     <v-row>
-		<v-col cols="12" sm="6" md="3">
+     <v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="phoneNumberAvailableRadioButtons"
+      >
+        <v-col align="right" cols="12">
+          <v-radio label="I have a phone number" value="yes" @change="PhoneNumberAvailable()"></v-radio>
+          <v-radio label="I do not have a phone number" value="no" @change="PhoneNumberNotAvailable()"></v-radio>
+        </v-col>
+      </v-radio-group>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="6" md="3">
         <v-text-field
           required
 		class="required"
@@ -10,30 +22,36 @@
           placeholder="(###)###-####"
           v-mask="'(###)###-####'"
           v-model="patientPhoneNumber"
+          v-show="phoneNumberAvailable"
           prepend-icon="mdi-menu-right"
         ></v-text-field>
 	</v-col>
 
 	<v-col class="d-flex" cols="6" sm="2">
         <v-select
-			required
-			:rules="[v => !!v || 'Phone type is required']"
-			v-model="patientPhoneNumberType"
-			:items="phonetype"
-			label="Phone Type"
+          required
+          :rules="[v => !!v || 'Phone type is required']"
+          v-model="patientPhoneNumberType"
+          :items="phonetype"
+          label="Phone Type"
+          v-show="phoneNumberAvailable"
         ></v-select>
 	</v-col>
     </v-row>
 
     <v-row>
-	<v-col cols="6" sm="6" md="3">
-        <v-checkbox
-			v-model="checkbox"
-			label="I have no phone number"
-        ></v-checkbox>
-	</v-col>
+	<v-radio-group
+        required
+        :rules="[v => !!v || 'This field is required']"
+        v-model="emailAvailableRadioButtons"
+	>
+        <v-col align="right" cols="12">
+          <v-radio label="I have an E-mail address" value="yes" @change="EmailAvailable()"></v-radio>
+          <v-radio label="I do not have an E-mail address" value="no" @change="EmailNotAvailable()"></v-radio>
+        </v-col>
+	</v-radio-group>
     </v-row>
-
+	
     <v-row>
 	<v-col cols="12" sm="6" md="6">
         <v-text-field
@@ -42,19 +60,13 @@
 			:rules="emailRules"
 			label="E-mail Address"
 			v-model="patientEmail"
+			v-show="emailAvailable"
 			prepend-icon="mdi-menu-right"
         ></v-text-field>
 	</v-col>
     </v-row>
 	
-	<v-row>
-    <v-col cols="6" sm="6" md="3">
-      <v-checkbox
-        v-model="checkbox"
-        label="I have no e-mail address"
-      ></v-checkbox>
-    </v-col></v-row>
-	
+
 
     <v-row><v-col cols="12" sm="6" md="6">
       <v-radio-group
@@ -89,10 +101,14 @@ export default {
           /^[\s]*$|.+@.+\..+/.test(v) ||
           "Please provide a valid e-mail address",
       ],
-      patientPhoneNumber: '',
-      patientPhoneNumberType: '',
-      patientEmail: '',
-      approval: ''
+	patientPhoneNumber: '',
+	patientPhoneNumberType: '',
+	patientEmail: '',
+	approval: '',
+	phoneNumberAvailable: true,
+	phoneNumberAvailableRadioButtons: 'yes',
+	emailAvailable: true,
+	emailAvailableRadioButtons: 'yes'
     };
   },
   methods: {
@@ -112,25 +128,31 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
 	
-			if(this.patientPhoneNumber == "") 
-			{
-        message += " Phone Number"
-        valid = false
-			}
-			if(this.patientEmail == "") 
-			{
-			if(!valid)
-				{
-				message +=","
-				}
-        message += " E-mail"
-        valid = false
-			}
+      if(this.phoneNumberAvailable)
+      {	
+        if(this.patientPhoneNumber == "") 
+        {
+          message += " Phone Number"
+          valid = false
+        }
+      }
+      if(this.emailAvailable)
+      {
+        if(this.patientEmail == "") 
+        {
+        if(!valid)
+          {
+          message +=","
+          }
+          message += " E-mail"
+          valid = false
+        }
+      }
 			if(this.approval == "") 
 			{
-			if(!valid)
+        if(!valid)
 				{
-				message +=","
+          message +=","
 				}
         message += " Follow up consent"
         valid = false
@@ -141,10 +163,30 @@ export default {
 				return false
 			}
 	
-		this.sendContactInfoInfoToReviewPage();
-		return true;
-		}
-	},
+      this.sendContactInfoInfoToReviewPage();
+      return true;
+    },
+	PhoneNumberAvailable()
+    {
+		this.phoneNumberAvailable = true
+		this.patientPhoneNumber=""
+    },
+    PhoneNumberNotAvailable()
+    {
+		this.phoneNumberAvailable = false
+		this.patientPhoneNumber="Not available"
+    },
+		EmailAvailable()
+    {
+	this.emailAvailable = true
+	this.patientEmail=""
+    },
+    EmailNotAvailable()
+    {
+	this.emailAvailable = false
+	this.patientEmail="Not available"
+    },
+},
 }
 </script>
 
