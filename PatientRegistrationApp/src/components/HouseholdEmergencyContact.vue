@@ -56,7 +56,7 @@ import EventBus from '../eventBus'
 export default {
   data() {
     return {
-      phoneType: ["Cell", "Home"],
+      phoneType: ["Home", "Mobile", "Work"],
       householdEmergencyContactFamilyName: '',
       householdEmergencyContactGivenName: '',
       householdEmergencyContactPhoneNumber: '',
