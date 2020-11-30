@@ -101,11 +101,14 @@
       <v-col cols="12">
 		<template>
 		<v-data-table
+      @click:row="rowClick"
+      item-key="id"
+      single-select
 			:headers="headers"
 			:items="patientLookupTable"
 			:items-per-page="5"
 			class="elevation-1"
-		></v-data-table>
+    ></v-data-table>
 		</template>
 		
       </v-col>
@@ -125,6 +128,10 @@
     name: 'PatientLookupPage',
     methods: 
     {
+      rowClick: function (item, row) {      
+        row.select(true);
+        this.selectedId=item.name
+      }
     },
     components: 
     {
@@ -133,7 +140,8 @@
 	return {
 		patientFamilyName: '',
 		patientGivenName: '',
-		patientDate: '',
+    patientDate: '',
+    selectedId: -1,
 
 		headers: [
           {
@@ -149,7 +157,8 @@
 			],
 		patientLookupTable: [
 			{
-				familyName: 'Johnson',
+        id: 1,
+        familyName: 'Johnson',
 				givenName: 'Jacob',
 				DOB: '10/31/1990',
 				lineAddress: '6585 Lake St',
@@ -157,7 +166,8 @@
 			},
 			
 			{
-				familyName: 'Johnson',
+        id: 2,
+        familyName: 'Johnson',
 				givenName: 'Larry',
 				DOB: '04/15/1972',
 				lineAddress: '721 Hillcrest Dr',
@@ -165,6 +175,7 @@
 			},
 			
 			{
+        id: 3,
 				familyName: 'Johnson',
 				givenName: 'Jennifer',
 				DOB: '01/23/1972',
@@ -173,6 +184,7 @@
 			},
 			
 			{
+        id: 4,
 				familyName: 'Johnson',
 				givenName: 'Joan',
 				DOB: '02/01/1960',
@@ -181,6 +193,7 @@
 			},
 			
 			{
+        id: 5,
 				familyName: 'Johnson',
 				givenName: 'Isaac',
 				DOB: '12/21/2000',
@@ -192,3 +205,9 @@
 	},
 	}
 </script>
+<style>
+  tr.v-data-table__selected {
+    background: #1976D2 !important;
+    color: #FFFFFF
+  }
+</style>
