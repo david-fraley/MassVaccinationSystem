@@ -57,7 +57,7 @@ export default {
   name: "SinglePatientEmergencyContact",
   data() {
     return {
-      phoneType: ["Cell", "Home"],
+      phoneType: ["Home", "Mobile", "Work"],
       emergencyContactFamilyName: '',
       emergencyContactGivenName: '',
       emergencyContactPhoneNumber: '',

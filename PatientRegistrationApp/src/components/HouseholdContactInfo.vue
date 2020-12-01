@@ -114,7 +114,7 @@ import EventBus from '../eventBus'
     name: 'SinglePatientContactInfo',
 	data () {
 		return { 
-			phonetype:['Cell', 'Landline', 'Other'],
+			phonetype:['Home', 'Mobile', 'Work'],
 			radios: 'May we contact you for a follow up vaccination?',
 			emailRules: [
 				(v) =>
