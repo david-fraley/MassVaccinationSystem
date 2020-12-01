@@ -62,10 +62,7 @@
               v-mask="'####-##-##'"
               prepend-icon="mdi-calendar"
               @click:prepend="on.click"
-				readonly
-				v-bind="attrs"
-				v-on="on"
-            >
+              >
 				<template #label>
 				<span class="red--text"><strong>* </strong></span>Date of Birth
 				</template>
