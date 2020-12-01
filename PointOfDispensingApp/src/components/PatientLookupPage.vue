@@ -115,7 +115,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent">
+        <v-btn color="accent" @click="retrievePatientRecord()">
           Retrieve patient record
         </v-btn>
       </v-col>
@@ -130,7 +130,14 @@
     {
       rowClick: function (item, row) {      
         row.select(true);
-        this.selectedId=item.name
+        this.selectedId=item.id
+        this.selectedFamilyName=item.familyName
+        this.selectedGivenName=item.givenName
+        this.selectedDOB=item.DOB
+      },
+      retrievePatientRecord()
+      {
+        alert(this.selectedFamilyName + ', ' + this.selectedGivenName + ', ' + this.selectedDOB)
       }
     },
     components: 
@@ -142,6 +149,9 @@
 		patientGivenName: '',
     patientDate: '',
     selectedId: -1,
+    selectedFamilyName: '',
+    selectedGivenName: '',
+    selectedDOB: '',
 
 		headers: [
           {
