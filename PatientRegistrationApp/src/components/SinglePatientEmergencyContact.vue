@@ -4,21 +4,25 @@
       <!-- Last name -->
       <v-col class="d-flex" cols="6" sm="6">
         <v-text-field
-			label="Last Name"
 			required
 			:rules="[v => !!v || 'Last name field is required']"
 			v-model="emergencyContactFamilyName"
-			prepend-icon="mdi-menu-right"
-        ></v-text-field>
+			prepend-icon="mdi-menu-right">
+				<template #label>
+				<span class="red--text"><strong>* </strong></span>Last Name
+				</template>
+        </v-text-field>
 		</v-col>
 
       <!-- First name -->
       <v-col class="d-flex" cols="6" sm="6">
         <v-text-field 
-			label="First Name"
 			required
 			:rules="[v => !!v || 'First name field is required']"
 			v-model="emergencyContactGivenName">
+				<template #label>
+				<span class="red--text"><strong>* </strong></span>First Name
+				</template>
         </v-text-field>
 		</v-col>
     </v-row>
@@ -27,14 +31,16 @@
       <!-- Phone Number -->
       <v-col class="d-flex" cols="12" sm="6">
         <v-text-field
-          label="Phone Number"
-          required
+		required
           :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
           placeholder="(###)###-####"
           v-mask="'(###)###-####'"
           v-model="emergencyContactPhoneNumber"
-          prepend-icon="mdi-menu-right"
-        ></v-text-field>
+          prepend-icon="mdi-menu-right">
+			<template #label>
+			<span class="red--text"><strong>* </strong></span>Phone Number
+			</template>
+        </v-text-field>
 		</v-col>
 
       <!-- Phone Number Type -->
@@ -119,3 +125,5 @@ export default {
 },
 };
 </script>
+
+
