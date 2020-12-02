@@ -15,15 +15,24 @@
 		<v-row>
 			<v-col cols="12" sm="12" md="12">
 				<v-text-field
-					id = "addr"
 					required
 					:rules="[v => !!v || 'Address field is required']"
-					v-model="lineAddress"
+					v-model="lineAddress1"
 					v-show="homeAddressAvailable"
 					prepend-icon="mdi-menu-right">
 						<template #label>
-						<span class="red--text"><strong>* </strong></span>Home Address
+						<span class="red--text"><strong>* </strong></span>Address Line 1
 						</template>
+				</v-text-field>
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-col cols="12" sm="12" md="12">
+				<v-text-field
+					v-model="lineAddress2"
+					v-show="homeAddressAvailable"
+					prepend-icon="mdi-menu-right"
+					label="Address Line 2">
 				</v-text-field>
 			</v-col>
 		</v-row>
@@ -125,7 +134,8 @@ import EventBus from '../eventBus'
 		'WA', 'WV', 'WI', 'WY',
 		],
 			country: ['USA'],
-			lineAddress: '',
+			lineAddress1: '',
+			lineAddress2: '',
 			cityAddress: '',
 			districtAddress: '',
 			stateAddress: '',
@@ -161,7 +171,8 @@ import EventBus from '../eventBus'
 		sendHomeAddressInfoToReviewPage()
 		{
 		const homeAddressPayload = {
-			lineAddress: this.lineAddress,
+			lineAddress1: this.lineAddress1,
+			lineAddress2: this.lineAddress2,
 			cityAddress: this.cityAddress,
 			districtAddress: this.districtAddress,
 			stateAddress: this.stateAddress,
@@ -178,7 +189,7 @@ import EventBus from '../eventBus'
 			
 		if(this.homeAddressAvailable)
 		{	
-			if(this.lineAddress == "") 
+			if(this.lineAddress1 == "") 
 			{
 				message += " Address"
 				valid = false
@@ -253,7 +264,8 @@ import EventBus from '../eventBus'
 	HomeAddressAvailable()
     {
 	this.homeAddressAvailable = true
-	this.lineAddress=""
+	this.lineAddress1=""
+	this.lineAddress2=""
 	this.cityAddress=""
 	this.stateAddress=""
 	this.districtAddress=""
@@ -262,7 +274,8 @@ import EventBus from '../eventBus'
     HomeAddressNotAvailable()
     {
 	this.homeAddressAvailable = false
-	this.lineAddress="Not Available"
+	this.lineAddress1="Not Available"
+	this.lineAddress2="Not Available"
 	this.cityAddress="Not Available"
 	this.stateAddress="Not Available"
 	this.districtAddress="Not Available"
