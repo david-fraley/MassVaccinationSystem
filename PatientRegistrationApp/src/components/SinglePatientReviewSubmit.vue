@@ -34,7 +34,10 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-regular">{{dataHomeAddress.lineAddress1}} {{dataHomeAddress.lineAddress2}}</div>
+				<div class="font-weight-regular">{{dataHomeAddress.lineAddress1}}</div>
+				<template v-if="dataHomeAddress.lineAddress2 != ''">
+					<div class="font-weight-regular">{{dataHomeAddress.lineAddress2}}</div>
+				</template>
 				<div class="font-weight-regular">{{dataHomeAddress.cityAddress}}, 
 					{{dataHomeAddress.districtAddress}}, {{dataHomeAddress.stateAddress}}, {{dataHomeAddress.countryAddress}}, {{dataHomeAddress.postalCode}}</div>
 			</v-col>

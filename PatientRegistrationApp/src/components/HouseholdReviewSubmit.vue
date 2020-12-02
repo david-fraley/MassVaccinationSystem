@@ -10,7 +10,10 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress1}} {{dataHouseholdHomeAddress.householdLineAddress2}}</div>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress1}}</div>
+				<template v-if="dataHouseholdHomeAddress.householdLineAddress2 != ''">
+					<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress2}}</div>
+				</template>
 				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, {{dataHouseholdHomeAddress.householdDistrictAddress}}, 
 					{{dataHouseholdHomeAddress.householdStateAddress}}, {{dataHouseholdHomeAddress.householdCountryAddress}}, 
 					{{dataHouseholdHomeAddress.householdPostalCode}}</div>
