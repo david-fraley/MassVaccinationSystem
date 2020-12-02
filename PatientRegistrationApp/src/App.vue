@@ -3,7 +3,7 @@
     <v-main>
 		<v-container fill-height>
 			<v-layout justify-center align-center>
-				<v-card flat height="105%" width="100%" class="d-flex flex-column"> 
+				<v-card flat height="101%" width="100%" class="d-flex flex-column"> 
 					<v-stepper v-model="page" class="elevation-0">	
 						<v-toolbar flat height="100" color="primary" dark>
 							<v-toolbar-title style="font-size:3em" class="font-weight-bold">{{title}}</v-toolbar-title>
@@ -450,7 +450,7 @@ export default {
 
 	.v-btn:not(.v-btn--round).v-size--default {
 		font-size: 1.2rem;
-		min-width: 200px;
+		min-width: 12rem;
 	}
 	.v-stepper__step {
 		padding: 16px;
