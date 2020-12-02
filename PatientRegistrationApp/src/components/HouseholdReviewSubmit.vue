@@ -14,9 +14,8 @@
 				<template v-if="dataHouseholdHomeAddress.householdLineAddress2 != ''">
 					<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress2}}</div>
 				</template>
-				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, {{dataHouseholdHomeAddress.householdDistrictAddress}}, 
-					{{dataHouseholdHomeAddress.householdStateAddress}}, {{dataHouseholdHomeAddress.householdCountryAddress}}, 
-					{{dataHouseholdHomeAddress.householdPostalCode}}</div>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, {{dataHouseholdHomeAddress.householdStateAddress}}, 
+					{{dataHouseholdHomeAddress.householdCountryAddress}}, {{dataHouseholdHomeAddress.householdPostalCode}}</div>
 			</v-col>
 		</v-row>
 
