@@ -167,6 +167,7 @@
           { text: 'DOB', value: 'DOB' },
           { text: 'Address', value: 'lineAddress' },
           { text: 'City', value: 'city' },
+			{ text: 'Zipcode', value: 'postalCode' },
 			],
 		patientLookupTable: [
 			{
@@ -176,6 +177,7 @@
 				DOB: '10/31/1990',
 				lineAddress: '6585 Lake St',
 				city: 'Glendale',
+				postalCode: '53209',
 			},
 			
 			{
@@ -185,6 +187,7 @@
 				DOB: '04/15/1972',
 				lineAddress: '721 Hillcrest Dr',
 				city: 'Bayside',
+				postalCode: '53217',
 			},
 			
 			{
@@ -194,6 +197,7 @@
 				DOB: '01/23/1972',
 				lineAddress: '1234 Right Lane',
 				city: 'New Berlin',
+				postalCode: '53146',
 			},
 			
 			{
@@ -203,6 +207,7 @@
 				DOB: '02/01/1960',
 				lineAddress: '2 Valley Rd',
 				city: 'Germantown',
+				postalCode: '',
 			},
 			
 			{
@@ -212,6 +217,7 @@
 				DOB: '12/21/2000',
 				lineAddress: '3823 Pine St',
 				city: 'Brown Deer',
+				postalCode: '53223',
 			},
 		],
     }
