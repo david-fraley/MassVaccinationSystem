@@ -48,7 +48,7 @@
 								<!-- Single Patient: Home Address -->
 								<v-stepper-content step="2">
 									<v-toolbar flat >
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your home address</v-toolbar-title>
+										<v-toolbar-title>Enter your home address</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientHomeAddress ref="singlepatienthomeaddress"/></v-card>				
 								</v-stepper-content>
@@ -56,7 +56,7 @@
 								<!-- Single Patient: Contact Info -->
 								<v-stepper-content step="3">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your contact information</v-toolbar-title>
+										<v-toolbar-title>Enter your contact information</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientContactInfo ref="singlepatientcontactinfo"/></v-card>
 								</v-stepper-content>
@@ -64,7 +64,7 @@
 								<!-- Single Patient: Personal Info -->
 								<v-stepper-content step="4">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your personal information</v-toolbar-title>
+										<v-toolbar-title>Enter your personal information</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/></v-card>							
 								</v-stepper-content>
@@ -72,7 +72,7 @@
 								<!-- Single Patient: Emergency Contact -->
 								<v-stepper-content step="5">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular"> Specify an emergency contact</v-toolbar-title>
+										<v-toolbar-title> Specify an emergency contact</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientEmergencyContact ref="singlepatientemergencycontact"/></v-card>
 								</v-stepper-content>
@@ -80,7 +80,7 @@
 								<!-- Single Patient: Review and Submit -->
 								<v-stepper-content step="6">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Please ensure your information is correct</v-toolbar-title>
+										<v-toolbar-title>Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientReviewSubmit/></v-card>
 								</v-stepper-content>
@@ -92,7 +92,7 @@
 								<!-- Household: Register Number of People -->
 								<v-stepper-content step="2">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Register your household</v-toolbar-title>
+										<v-toolbar-title>Register your household</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdRegisterNumber ref="householdregisternumber"/></v-card>				
 								</v-stepper-content>
@@ -100,7 +100,7 @@
 								<!-- Household: Address -->
 								<v-stepper-content step="3">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your household address</v-toolbar-title>
+										<v-toolbar-title>Enter your household address</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdHomeAddress ref="householdhomeaddress"/></v-card>				
 								</v-stepper-content>
@@ -108,7 +108,7 @@
 								<!-- Household: Contact Info -->
 								<v-stepper-content step="4">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your household contact information</v-toolbar-title>
+										<v-toolbar-title>Enter your household contact information</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdContactInfo ref="householdcontactinfo"/></v-card>				
 								</v-stepper-content>
@@ -116,7 +116,7 @@
 								<!-- Household: Personal Info -->
 								<v-stepper-content step="5">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter your personal information</v-toolbar-title>
+										<v-toolbar-title>Enter your personal information</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"/></v-card>				
 								</v-stepper-content>
@@ -124,30 +124,37 @@
 								<!-- Household: Emergency Contact -->
 								<v-stepper-content step="6">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Specify your emergency contact</v-toolbar-title></v-toolbar>
+										<v-toolbar-title>Specify your emergency contact</v-toolbar-title></v-toolbar>
 									<v-toolbar flat>
 										<v-subheader>Note: You will be specified as the emergency contact for the rest of your household.</v-subheader>
 									</v-toolbar>
 									<v-card flat><HouseholdEmergencyContact ref="householdemergencycontact"/></v-card>				
 								</v-stepper-content>
 
-								<v-stepper-content step="7">
-									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Enter personal information for household member #2</v-toolbar-title>
-									</v-toolbar>
-									<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo_n"/></v-card>				
-								</v-stepper-content>
+								<!-- Household: Personal Info #n -->
+								<template v-for="n in getNumberOfHouseholdMembers()-1">
+									<v-stepper-content
+									:key="`${n+1}-member`"
+									:step="n+6">
+										<v-toolbar flat>
+											<v-toolbar-title>Enter personal information for household member #{{n+1}}</v-toolbar-title>
+										</v-toolbar>
+										<v-card flat><HouseholdPersonalInfo_n ref="householdPersonalInfo" v-bind:householdMemberNumber="n+1"></HouseholdPersonalInfo_n></v-card>
+									</v-stepper-content>
+								</template>
 
 								<!-- Household: Review and submit -->
-								<v-stepper-content step="8">
+								<v-stepper-content :step="getNumberOfSteps()">
 									<v-toolbar flat>
-										<v-toolbar-title style="font-size:1.5em" class="font-weight-regular">Please ensure your household's information is correct</v-toolbar-title>
+										<v-toolbar-title>Review and submit registration</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><HouseholdReviewSubmit/></v-card>				
+									<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
+
 							</template>
 						</v-stepper-items>
 					</v-stepper>
+					
 					<!--navigation footer along the bottom of the page -->
 					<v-footer absolute color="white">
 						<template v-if="isGreetingPage()">
@@ -225,7 +232,27 @@ export default {
 		},
 		setNumberOfHouseholdMembers(householdCountPayload)
 		{
-			this.numberOfHouseholdMembers = householdCountPayload.householdCount
+			if(this.numberOfHouseholdMembers != householdCountPayload.householdCount)
+			{
+				this.numberOfHouseholdMembers = householdCountPayload.householdCount;
+			}
+		},
+		getNumberOfHouseholdMembers()
+		{
+			return this.numberOfHouseholdMembers;
+		},
+		setHouseholdFamilyName(householdFamilyName)
+		{
+			this.householdFamilyName = householdFamilyName;
+			
+			for(var i=0;i<this.getNumberOfHouseholdMembers();i++)
+			{
+				this.$refs.householdPersonalInfo[i].setHouseholdFamilyName(this.householdFamilyName)
+			}
+		},
+		getHouseholdFamilyName()
+		{
+			return this.householdFamilyName;
 		},
 		isSinglePatientRegistration() {
 			let returnValue = true;
@@ -249,8 +276,18 @@ export default {
 		},
 		isHouseholdPatientReviewSubmit() {
 			let returnValue = true;
-			(this.page == config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE) ? returnValue = true: returnValue = false;
+			(this.page == this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE) ? returnValue = true: returnValue = false;
 			return returnValue;
+		},
+		jumpToHouseholdPersonalInfoPage(householdMemberNumber) {
+			if(householdMemberNumber == 1)
+			{
+				this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE)
+			}
+			else
+			{
+				this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE + householdMemberNumber - 1)
+			}
 		},
 		goToPreviousPage() {
 			let currentPage = this.page;
@@ -297,43 +334,43 @@ export default {
 			}
 			else if(this.isHouseholdRegistration())
 			{
-				switch(this.page)
+				switch(true)
 				{
-					case config.registrationPages.GREETING_PAGE:
+					case (this.page == config.registrationPages.GREETING_PAGE):
 						if(this.$refs.greetingpage.verifyFormContents())
 						{
 							this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE)
 						}
 						break;
-					case config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE):
 						this.$refs.householdregisternumber.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE) :
 						this.goToPage(config.registrationPages.HOUSEHOLD_REGISTER_NUMBER_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE):
 						this.$refs.householdhomeaddress.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE) :
+						this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_HOME_ADDRESS_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE):
 						this.$refs.householdcontactinfo.verifyFormContents()?
 						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_CONTACT_INFO_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE):
 						this.$refs.householdPersonalInfo_1.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE:
+					case (this.page == config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE):
 						this.$refs.householdemergencycontact.verifyFormContents() ?
 						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 						break;
-					case config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE:
-						this.$refs.householdPersonalInfo_n.verifyFormContents() ?
-						this.goToPage(config.registrationPages.HOUSEHOLD_REVIEW_SUBMIT_PAGE):
-						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE);
+					case (this.page - config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE <= 18):
+						if (this.$refs.householdPersonalInfo[this.page - config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE].verifyFormContents()) {
+							this.page++;
+						}
 						break;
 					default:
 						alert(this.page)
@@ -359,6 +396,12 @@ export default {
 	{
 		EventBus.$on('DATA_HOUSEHOLD_COUNT_UPDATED', (householdCountPayload) => {
 			this.setNumberOfHouseholdMembers(householdCountPayload)
+		}),
+		EventBus.$on('DATA_HOUSEHOLD_FAMILY_NAME', (householdFamilyName) => {
+			this.setHouseholdFamilyName(householdFamilyName)
+		}),
+		EventBus.$on('DATA_HOUSEHOLD_PERSONAL_INFO_EDIT', (householdMemberNumber) => {
+			this.jumpToHouseholdPersonalInfoPage(householdMemberNumber)
 		})
 	},
 	components: 
@@ -387,3 +430,14 @@ export default {
 		},
   }
 </script>
+<style lang="css" scoped>
+
+	.v-stepper__step {
+		padding: 16px;
+	}
+
+	.v-toolbar__title {
+		font-size:1.5rem
+	} 
+
+</style>
