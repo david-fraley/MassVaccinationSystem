@@ -106,8 +106,11 @@
       single-select
 			:headers="headers"
 			:items="patientLookupTable"
-			:items-per-page="5"
 			class="elevation-1"
+			:footer-props="{
+				'items-per-page-options':[5]
+			}"
+			:items-per-page="5"
     ></v-data-table>
 		</template>
 		
