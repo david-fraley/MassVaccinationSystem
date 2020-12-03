@@ -66,6 +66,14 @@
               v-model="FirstName"
             ></v-text-field>
           </v-col>
+          <v-col cols="4">
+            <div class="secondary--text">Zip Code</div>
+          </v-col>
+          <v-col cols="8">
+            <v-text-field outlined dense 
+              v-model="PostalCode"
+            ></v-text-field>
+          </v-col>
         </v-row>
       </v-col>
     </v-row> 	
