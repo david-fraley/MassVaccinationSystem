@@ -10,6 +10,7 @@
 
 		<v-row>	
 			<v-col cols="12">
+				<div class="font-weight-medium">Address Type:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.addressType}}</span></div>
 				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress1}}</div>
 				<template v-if="dataHouseholdHomeAddress.householdLineAddress2 != ''">
 					<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress2}}</div>
