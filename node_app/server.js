@@ -26,41 +26,70 @@ app.all(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
-// Check-in
+// Check-in given either
+// a) appointment id from QR code
+// b) patient id from patient lookup
 app.get("/check-in", (req, res) => {
-  // ensure subject id (patient/group resource) is provided
-  if (req.query.hasOwnProperty("subject")) {
-    let subject = req.query.subject;
+  let url;
+  if (req.query.hasOwnProperty("patient")) {
+    url = `${base}/Appointment?actor=${req.query.patient}&status=booked`;
+  } else if (req.query.hasOwnProperty("appointment")) {
+    url = `${base}/Appointment/${req.query.appointment}`;
+  }
 
+  if (url) {
     axios
-      // subjects may have multiple encounters, so limit search to planned encounters
-      .get(`${base}/Encounter?subject=${subject}&status=planned`)
+      .get(url)
       .then((response) => {
-        let bundle = response.data;
-        try {
-          // update encounter status to in-progress
-          let encounter = bundle.entry[0].resource;
-          encounter.status = "in-progress";
-
-          // update the database with new encounter
-          axios
-            .put(`${base}/Encounter/${encounter.id}`, encounter, headers)
-            .catch((error) => handleError(res, error));
-          // update appointment for each member in group
-        } catch (e) {
-          // handle error
-          console.log(bundle);
-        }
+        checkin(response.data, res);
       })
       .catch((error) => handleError(res, error))
       .then(function () {
         // always executed
       });
   } else {
-    // inform user subject id is required
+    res.send("error");
   }
-  res.send("");
 });
+
+function checkin(bundle, res) {
+  // update appointment
+  try {
+    // update status to checked-in
+    let appt = bundle.entry[0].resource;
+    appt.status = "checked-in";
+
+    // update the database with new appointment
+    axios
+      .put(`${base}/Appointment/${appt.id}`, appt, headers)
+      .catch((error) => handleError(res, error));
+
+    // update encounter
+    axios
+      .get(`${base}/Encounter?appointment=${appt.id}`)
+      .then((response) => {
+        let bundle = response.data;
+        // update status to in-progress
+        let encounter = bundle.entry[0].resource;
+        encounter.status = "arrived";
+        // update status history
+
+        // update the database with new encounter
+        axios
+          .put(`${base}/Encounter/${encounter.id}`, encounter, headers)
+          .catch((error) => handleError(res, error));
+      })
+      .catch((error) => handleError(res, error))
+      .then(function () {
+        // always executed
+      });
+    res.send("success");
+  } catch (e) {
+    // handle error
+    console.log(bundle);
+    console.log(e);
+  }
+}
 
 function handleError(res, error) {
   if (error.response) {
