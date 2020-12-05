@@ -96,7 +96,7 @@
         <!-- Current Photo -->
         <v-file-input
           accept="image/png, image/jpeg, image/bmp"
-          :rules="[(v) => !v || v.size < 2097152 || 'Image size should be less than 2 MB!']"
+          :rules="[(v) => v.size < 2097152 || 'Image size should be less than 2 MB!']"
           placeholder="Upload a recent photo"
           v-model="householdPatientPhoto"
           label="Photo"
@@ -237,6 +237,19 @@ export default {
         }
         message += " Gender Identity";
         valid = false;
+      }
+ 
+      if( this.householdPatientPhoto ) {
+        if (this.householdPatientPhoto.size > 2097152) {
+          if (!valid) {
+            message += "\n";
+            message += "The selected photo file size is above 2MB. Please upload a file less than 2MB.";
+          }
+          else {
+            message = "The selected photo file size is above 2MB. Please upload a file less than 2MB.";
+          }
+          valid = false;
+        }
       }
 
       if (valid == false) {
