@@ -171,11 +171,43 @@
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
+	<template> 
+		<div class="text-center">
+		<v-dialog
+			v-model="dialog"
+			width="500"
+		>
+		<template v-slot:activator="{ on, attrs }">
       <v-col cols="6">
-        <v-btn block color="accent" @click="submitVaccinationRecord()">
+        <v-btn block color="accent" v-bind="attrs" v-on="on">
           Submit vaccination record
-        </v-btn>
-      </v-col>
+	</v-btn>
+	</v-col>
+	</template>
+	
+	<v-card>
+		<v-card-title class="headline grey lighten-2"> 
+		Confirm Vaccination Record
+		</v-card-title>
+		
+		<v-card-text>
+			confirm vaccination record
+        </v-card-text>
+		
+		<v-card-actions>
+		<v-spacer></v-spacer>
+		<v-btn	
+			color="primary"
+			text
+			@click="dialog = false">
+			Confirm Vaccine Administerd
+		</v-btn>
+		</v-card-actions>
+		</v-card>
+		</v-dialog>
+		</div>
+		</template>
+
     </v-row>
   </v-container>
 </template>
