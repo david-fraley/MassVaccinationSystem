@@ -11,13 +11,27 @@ Patient {
   }
   email : array of strings
   gender : enum (male, female, other, unknown)
-  birthdate : date
+  birthdate : string
   race : enum (American Indian or Alaskan Native, Asian, Native Hawaiian or Other Pacific Islander, Black or African-American, White, Other Race)
-  ethnicity: Hispanic, Not Hispanic
+  ethnicity: enum (Hispanic, Not Hispanic)
   permissionToFollowup: boolean
   address: {
-    
+    line: string
+    city: string
+    state: string
+    postalCode: string
+    country: string
   }
+  contact: {
+    relationship: enum (C Emergency Contact, E Employer, F Federal Agency, I Insurance Company, N Next-of-Kin, S State Agency, U Unknown)
+    family: string
+    given: string
+    phone: {
+      value: string
+      use: enum (home, work, temp, old, mobile)
+    }
+  }
+  language: enum (English, Spanish)
 }
 
 {
