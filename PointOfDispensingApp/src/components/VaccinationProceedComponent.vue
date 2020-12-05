@@ -186,21 +186,23 @@
 	</template>
 	
 	<v-card>
-		<v-card-title class="headline grey lighten-2"> 
-		Confirm Vaccination Record
+		<v-card-title class="headline grey lighten-2 justify-center"> 
+		Are you sure you want to submit?
 		</v-card-title>
 		
-		<v-card-text>
-			confirm vaccination record
-        </v-card-text>
-		
 		<v-card-actions>
+		<v-btn	
+			color="primary"
+			text
+			@click="dialog = false">
+			Back
+		</v-btn>
 		<v-spacer></v-spacer>
 		<v-btn	
 			color="primary"
 			text
 			@click="dialog = false">
-			Confirm Vaccine Administerd
+			Submit
 		</v-btn>
 		</v-card-actions>
 		</v-card>
