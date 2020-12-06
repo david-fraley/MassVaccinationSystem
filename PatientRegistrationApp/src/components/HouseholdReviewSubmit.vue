@@ -38,10 +38,12 @@
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
 					<v-card class="pa-2" flat min-width=33%>
-						<v-img
-							max-height="100"
-							max-width="100" 
-							:src="dataHouseholdPersonalInfo[0].householdPatientPhotoSrc">
+						<v-img 
+							contain		
+							max-height="300"
+							max-width="300" 
+							:src="dataHouseholdPersonalInfo[0].householdPatientPhotoSrc"
+							v-bind:class="{ hidden: !dataHouseholdPersonalInfo[0].householdPatientPhotoSrc }">
 						</v-img>
 						<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
@@ -67,9 +69,11 @@
 						<v-card class="pa-2" flat min-width=33%
 						:key="index">
 							<v-img
-								max-height="100"
-								max-width="100" 
-								:src="dataHouseholdPersonalInfo[index].householdPatientPhotoSrc">
+								contain		
+								max-height="300"
+								max-width="300" 
+								:src="dataHouseholdPersonalInfo[index].householdPatientPhotoSrc"
+								v-bind:class="{ hidden: !dataHouseholdPersonalInfo[index].householdPatientPhotoSrc }">
 							</v-img>
 							<div class="font-weight-medium primary--text">Personal Info: Household Member #{{index+1}}</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdFamilyName}}, 
@@ -187,3 +191,10 @@ import EventBus from '../eventBus'
 	},
 }
 </script>
+<style lang="css" scoped>
+
+	.hidden {
+		display: none;
+	}
+
+</style>

@@ -187,7 +187,7 @@ export default {
         householdBirthDate: this.householdDate,
         householdGender: this.householdGender,
         householdPatientPhoto: this.householdPatientPhoto,
-        householdPatientPhotoSrc: URL.createObjectURL( this.householdPatientPhoto ),
+        householdPatientPhotoSrc: this.householdPatientPhoto  ? URL.createObjectURL( this.householdPatientPhoto ) : undefined,
         householdRaceSelections: this.householdRaceSelections,
         householdEthnicitySelection: this.householdEthnicitySelection,
         preferredLanguage: this.preferredLanguage,
