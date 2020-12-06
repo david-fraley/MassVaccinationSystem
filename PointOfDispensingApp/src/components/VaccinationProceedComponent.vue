@@ -201,7 +201,7 @@
 		<v-btn	
 			color="primary"
 			text
-			@click="dialog = false">
+			@click="submitVaccinationRecord()">
 			Submit
 		</v-btn>
 		</v-card-actions>
@@ -220,7 +220,8 @@
     methods: 
     {
       submitVaccinationRecord() {
-        alert('You clicked Submit Vaccination Record')
+        this.dialog = false;
+        this.$router.push("Discharge")
       }
     },
     components: 
@@ -228,6 +229,7 @@
     },
     data () {
       return {
+        dialog: false,
         doseNumberOptions: ['1', '2'],
         doseQuantityOptions: ['0.1 mL', '0.2 mL', '0.5 mL', '1.0 mL'],
         vaccinationSiteOptions: ['Left arm', 'Right arm'],
