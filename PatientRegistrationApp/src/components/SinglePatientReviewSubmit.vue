@@ -8,11 +8,12 @@
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="4" sm="3">
+			<v-col cols="4" sm="3" v-bind:class="{ hidden: !dataPersonalInfo.patientPhotoSrc }">
 				<v-img
-					style="float:left"		
-					max-height="100"
-					max-width="100" 
+					style="float:left"
+					contain		
+					max-height="300"
+					max-width="300" 
 					:src="dataPersonalInfo.patientPhotoSrc">
 				</v-img>
 			</v-col>  
@@ -150,4 +151,10 @@ import EventBus from '../eventBus'
 	}
 }
 </script>
+<style lang="css" scoped>
 
+	.hidden {
+		display: none;
+	}
+
+</style>
