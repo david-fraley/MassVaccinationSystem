@@ -222,10 +222,10 @@ export default {
       if (this.patientPhoto && this.patientPhoto.size > 2097152) {
         if (!valid) {
           message += "\n";
-          message += "The selected photo file size is above 2MB. Please upload a file less than 2MB.";
+          message += "Your selected photo is too large. Please resubmit one under 2MBs.";
         }
         else {
-          message = "The selected photo file size is above 2MB. Please upload a file less than 2MB.";
+          message = "Your selected photo is too large. Please resubmit one under 2MBs.";
         }
         valid = false;
       }
