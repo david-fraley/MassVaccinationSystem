@@ -16,14 +16,16 @@
       <v-col cols="12" sm="6" md="3">
         <v-text-field
           required
-          label="Phone Number"
           :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
           placeholder="(###)###-####"
           v-mask="'(###)###-####'"
           v-model="patientPhoneNumber"
           v-show="phoneNumberAvailable"
-          prepend-icon="mdi-menu-right"
-        ></v-text-field>
+          prepend-icon="mdi-menu-right">
+			<template #label>
+			<span class="red--text"><strong>* </strong></span>Phone Number
+			</template>
+        </v-text-field>
 	</v-col>
 
 	<v-col class="d-flex" cols="6" sm="2">
@@ -56,11 +58,13 @@
         <v-text-field
 			required
 			:rules="emailRules"
-			label="E-mail Address"
 			v-model="patientEmail"
 			v-show="emailAvailable"
-			prepend-icon="mdi-menu-right"
-        ></v-text-field>
+			prepend-icon="mdi-menu-right">
+				<template #label>
+				<span class="red--text"><strong>* </strong></span>E-mail Address
+				</template>
+        </v-text-field>
 	</v-col>
     </v-row>
 	
@@ -71,9 +75,10 @@
         required
         :rules="[v => !!v || 'This field is required']"
         v-model="approval"
-		prepend-icon="mdi-menu-right"
-        label="May we contact you regarding follow up vaccination information?"
-	>
+		prepend-icon="mdi-menu-right">
+			<template #label>
+			<span class="red--text"><strong>* </strong></span>May we contact you regarding follow up vaccination information
+			</template>
         <v-col align="right" cols="3" sm="3" md="3">
 		
           <v-radio label="Yes" value="yes"></v-radio>
@@ -91,7 +96,7 @@ export default {
   name: "SinglePatientContactInfo",
   data() {
     return {
-      phonetype: ["Cell", "Landline", "Other"],
+      phonetype: ["Home", "Mobile", "Work"],
       radios: "May we contact you for a follow up vaccination?",
       emailRules: [
         (v) =>

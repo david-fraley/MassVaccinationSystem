@@ -20,11 +20,13 @@
 					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
 					placeholder="(###)###-####"
 					v-mask="'(###)###-####'"
-					label="Primary Phone Number"
 					v-model="primaryPhoneNumber"
 					v-show="phoneNumberAvailable"
-					prepend-icon="mdi-menu-right"
-				></v-text-field>
+					prepend-icon="mdi-menu-right">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>Primary Phone Number
+						</template>
+				</v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="6" sm="2">
 				<v-select
@@ -74,10 +76,12 @@
 				<v-text-field
 					required
 					:rules="emailRules"
-					label="Primary E-mail Address"
 					v-model="primaryEmail"
 					v-show="emailAvailable"
-					prepend-icon="mdi-menu-right"
+					prepend-icon="mdi-menu-right">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>E-mail Address
+						</template>
 				></v-text-field>
 			</v-col>
 			<v-col cols="12" sm="12" md="6">
@@ -95,9 +99,10 @@
 				required
 				:rules="[v => !!v || 'This field is required']"
 				v-model="approval"
-				prepend-icon="mdi-menu-right"
-				label="May we contact you regarding follow up vaccination information?"
-			>
+				prepend-icon="mdi-menu-right">
+					<template #label>
+					<span class="red--text"><strong>* </strong></span>May we contact you regarding follow up vaccination information
+					</template>
 				<v-col align="right" cols="3" sm="3" md="3">
 					<v-radio label="Yes" value="yes"></v-radio>
 					<v-radio label="No" value="no"></v-radio>
@@ -114,7 +119,7 @@ import EventBus from '../eventBus'
     name: 'SinglePatientContactInfo',
 	data () {
 		return { 
-			phonetype:['Cell', 'Landline', 'Other'],
+			phonetype:['Home', 'Mobile', 'Work'],
 			radios: 'May we contact you for a follow up vaccination?',
 			emailRules: [
 				(v) =>
@@ -219,3 +224,4 @@ import EventBus from '../eventBus'
   },
 }
 </script>
+
