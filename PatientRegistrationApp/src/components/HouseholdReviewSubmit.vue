@@ -4,15 +4,19 @@
 		</v-row>
 		<v-row>
 			<v-col cols="12" sm="6" md="3">
-				<div class="font-weight-medium primary--text">Household Home Address </div>
+				<div class="font-weight-medium primary--text">Household Address</div>
 			</v-col>
 		</v-row>
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress}}</span></div>
-				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, 
-					{{dataHouseholdHomeAddress.householdDistrictAddress}}, {{dataHouseholdHomeAddress.householdStateAddress}}, {{dataHouseholdHomeAddress.householdCountryAddress}}, {{dataHouseholdHomeAddress.householdPostalCode}}</span></div>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress1}}</div>
+				<template v-if="dataHouseholdHomeAddress.householdLineAddress2 != ''">
+					<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress2}}</div>
+				</template>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, {{dataHouseholdHomeAddress.householdDistrictAddress}}, 
+					{{dataHouseholdHomeAddress.householdStateAddress}}, {{dataHouseholdHomeAddress.householdCountryAddress}}, 
+					{{dataHouseholdHomeAddress.householdPostalCode}}</div>
 			</v-col>
 		</v-row>
 
