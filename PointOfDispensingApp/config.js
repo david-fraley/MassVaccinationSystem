@@ -1,5 +1,3 @@
-//file name is 'config.js'
-
 export default {
     vaccinationDecisionState:
     {

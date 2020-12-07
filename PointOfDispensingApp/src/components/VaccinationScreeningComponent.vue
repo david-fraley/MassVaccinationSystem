@@ -159,7 +159,7 @@
        {
          this.$emit('VaccinationProceed_Yes')
        }
-       else if(this.vaccinationProceed == "No")
+       else
        {
          this.$emit('VaccinationProceed_No')
        }

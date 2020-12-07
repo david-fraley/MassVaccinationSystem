@@ -14,7 +14,7 @@
       <template v-if="wasDecisionMadeToProceed()">
       <VaccinationProceedComponent />
       </template>
-      <template v-if="wasDecisionMadeToCancel()">
+      <template v-else-if="wasDecisionMadeToCancel()">
       <VaccinationCanceledComponent />
       </template>
     </v-row>
@@ -34,14 +34,8 @@ import config from '../../config.js';
     {
       setVaccinationProceedDecision(decision)
       {
-        if(decision == true)
-        {
-          this.vaccinationProceedDecision = config.vaccinationDecisionState.VACCINATION_PROCEED_YES
-        }
-        else
-        {
-          this.vaccinationProceedDecision = config.vaccinationDecisionState.VACCINATION_PROCEED_NO
-        }
+        decision ? (this.vaccinationProceedDecision = config.vaccinationDecisionState.VACCINATION_PROCEED_YES) :
+        (this.vaccinationProceedDecision = config.vaccinationDecisionState.VACCINATION_PROCEED_NO);
       },
       wasDecisionMadeToProceed()
       {
