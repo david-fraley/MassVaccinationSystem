@@ -26,6 +26,38 @@ app.all(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
+app.post("/Encounter", (req, res) => {
+  let encounter = req.body.encounter;
+  let resource = {
+    resourceType: "Encounter",
+    status: encounter.status,
+    class: {
+      system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      code: encounter.class,
+      display: encounter.class,
+    },
+    subject: encounter.subject,
+    appointment: encounter.appointment,
+    period: {
+      start: encounter.start,
+      end: encounter.end,
+    },
+    location: [
+      {
+        location: encounter.location,
+      },
+    ],
+  };
+
+  // post resource
+  axios
+    .post(`${base}/Encounter`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
