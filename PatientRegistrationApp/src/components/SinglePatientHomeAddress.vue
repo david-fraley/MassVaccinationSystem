@@ -37,7 +37,7 @@
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="6" sm="4" md="3">
+			<v-col cols="5" sm="5" md="5">
 				<v-text-field
 					id = "city"
 					required
@@ -50,7 +50,7 @@
 						</template>
 				</v-text-field>
 			</v-col>
-				<v-col class="d-flex" cols="1" sm="1" md="1">
+				<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "state"
 					required
@@ -63,19 +63,7 @@
 						</template>
 				</v-select>
 			</v-col>
-			<v-col class="d-flex" cols="3" sm="3">
-				<v-text-field
-				id = "county"
-					required
-					:rules="[v => !!v || 'County field is required']"
-					v-model="districtAddress"
-					v-show="homeAddressAvailable">
-						<template #label>
-						<span class="red--text"><strong>* </strong></span>County
-						</template>
-				</v-text-field>
-			</v-col>
-			<v-col class="d-flex" cols="2" sm="2">
+			<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "country"
 					required
@@ -137,7 +125,6 @@ import EventBus from '../eventBus'
 			lineAddress1: '',
 			lineAddress2: '',
 			cityAddress: '',
-			districtAddress: '',
 			stateAddress: '',
 			countryAddress: 'USA',
 			postalCode: '',
@@ -174,7 +161,6 @@ import EventBus from '../eventBus'
 			lineAddress1: this.lineAddress1,
 			lineAddress2: this.lineAddress2,
 			cityAddress: this.cityAddress,
-			districtAddress: this.districtAddress,
 			stateAddress: this.stateAddress,
 			countryAddress: this.countryAddress,
 			postalCode: this.postalCode
@@ -218,17 +204,6 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.districtAddress == "") 
-			{
-			if(!valid)
-				{
-				message +=","
-				}
-				message += " County"
-				valid = false
-			}
-				
-			
 			if(this.countryAddress == "") 
 			{
 			if(!valid)
@@ -268,7 +243,6 @@ import EventBus from '../eventBus'
 	this.lineAddress2=""
 	this.cityAddress=""
 	this.stateAddress=""
-	this.districtAddress=""
 	this.postalCode=""
     },
     HomeAddressNotAvailable()
@@ -278,7 +252,6 @@ import EventBus from '../eventBus'
 	this.lineAddress2="Not Available"
 	this.cityAddress="Not Available"
 	this.stateAddress="Not Available"
-	this.districtAddress="Not Available"
 	this.postalCode="Not Available"
     },
 	},

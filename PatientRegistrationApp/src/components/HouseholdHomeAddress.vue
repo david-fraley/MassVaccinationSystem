@@ -37,7 +37,7 @@
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="6" sm="4" md="3">
+			<v-col cols="5" sm="5" md="5">
 				<v-text-field
 					id = "city"
 					required
@@ -50,7 +50,7 @@
 						</template>
 				</v-text-field>
 			</v-col>
-			<v-col class="d-flex" cols="1" sm="1" md="1">
+			<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "state"
 					required
@@ -63,19 +63,7 @@
 						</template>
 				</v-select>
 			</v-col>
-			<v-col class="d-flex" cols="3" sm="3">
-				<v-text-field
-				id = "county"
-					required
-					:rules="[v => !!v || 'County field is required']"
-					v-model="householdDistrictAddress"
-					v-show="homeAddressAvailable">
-						<template #label>
-						<span class="red--text"><strong>* </strong></span>County
-						</template>
-				</v-text-field>
-			</v-col>
-			<v-col class="d-flex" cols="2" sm="2">
+			<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "country"
 					required
@@ -130,7 +118,6 @@ import EventBus from '../eventBus'
 			householdLineAddress1: '',
 			householdLineAddress2: '',
 			householdCityAddress: '',
-			householdDistrictAddress: '',
 			householdStateAddress: '',
 			householdCountryAddress: 'USA',
 			householdPostalCode: '',
@@ -146,7 +133,6 @@ import EventBus from '../eventBus'
 				householdLineAddress1: this.householdLineAddress1,
 				householdLineAddress2: this.householdLineAddress2,
 				householdCityAddress: this.householdCityAddress,
-				householdDistrictAddress: this.householdDistrictAddress,
 				householdStateAddress: this.householdStateAddress,
 				householdCountryAddress: this.householdCountryAddress,
 				householdPostalCode: this.householdPostalCode
@@ -190,17 +176,6 @@ import EventBus from '../eventBus'
 			}
 				
 			
-			if(this.householdDistrictAddress == "") 
-			{
-			if(!valid)
-				{
-				message +=","
-				}
-				message += " County"
-				valid = false
-			}
-				
-			
 			if(this.householdCountryAddress == "") 
 			{
 			if(!valid)
@@ -238,7 +213,6 @@ import EventBus from '../eventBus'
 	this.householdLineAddress2=""
 	this.householdCityAddress=""
 	this.householdStateAddress=""
-	this.householdDistrictAddress=""
 	this.householdPostalCode=""
     },
     HomeAddressNotAvailable()
@@ -248,7 +222,6 @@ import EventBus from '../eventBus'
 	this.householdLineAddress2="Not Available"
 	this.householdCityAddress="Not Available"
 	this.householdStateAddress="Not Available"
-	this.householdDistrictAddress="Not Available"
 	this.householdPostalCode="Not Available"
     },
 	},
