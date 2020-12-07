@@ -26,6 +26,42 @@ app.all(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
+app.post("/Appointment", (req, res) => {
+  let appt = req.body.Appointment;
+  let resource = {
+    resourceType: "Appointment",
+    status: appt.status,
+    slot: [appt.slot],
+    participant: [
+      // add later
+    ],
+  };
+  // add participants
+  for (participant of appt.participant) {
+    resource.participant.push({
+      type: [
+        {
+          coding: [
+            {
+              system: "",
+              code: participant.type,
+              display: participant.type,
+            },
+          ],
+        },
+      ],
+      actor: participant.actor,
+    });
+  }
+  // post resource
+  axios
+    .post(`${base}/Appointment`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
