@@ -18,11 +18,13 @@
 					id = "addr"
 					required
 					:rules="[v => !!v || 'Address field is required']"
-					label="Home Address"
 					v-model="lineAddress"
 					v-show="homeAddressAvailable"
-					prepend-icon="mdi-menu-right"
-				></v-text-field>
+					prepend-icon="mdi-menu-right">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>Home Address
+						</template>
+				</v-text-field>
 			</v-col>
 		</v-row>
 		<v-row>
@@ -31,11 +33,13 @@
 					id = "city"
 					required
 					:rules="[v => !!v || 'City field is required']"
-					label="City"
 					v-model="cityAddress"
 					v-show="homeAddressAvailable"
-					prepend-icon="mdi-menu-right"
-				></v-text-field>
+					prepend-icon="mdi-menu-right">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>City
+						</template>
+				</v-text-field>
 			</v-col>
 				<v-col class="d-flex" cols="1" sm="1" md="1">
 				<v-select
@@ -44,19 +48,23 @@
 					:rules="[v => !!v || 'State field is required']"
 					v-model="stateAddress"
 					v-show="homeAddressAvailable"
-                    :items="state"
-                    label="State"
-				></v-select>
+                    :items="state">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>State
+						</template>
+				</v-select>
 			</v-col>
 			<v-col class="d-flex" cols="3" sm="3">
 				<v-text-field
 				id = "county"
 					required
 					:rules="[v => !!v || 'County field is required']"
-                    label="County"
 					v-model="districtAddress"
-					v-show="homeAddressAvailable"
-				></v-text-field>
+					v-show="homeAddressAvailable">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>County
+						</template>
+				</v-text-field>
 			</v-col>
 			<v-col class="d-flex" cols="2" sm="2">
 				<v-select
@@ -65,19 +73,23 @@
 					:rules="[v => !!v || 'Country field is required']"
 					v-model="countryAddress"
 					v-show="homeAddressAvailable"
-                    :items="country"
-                    label="Country"
-				></v-select>
+                    :items="country">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>Country
+						</template>
+				</v-select>
 			</v-col>
 			<v-col cols="3" sm="3" md="3">
 				<v-text-field
 					id = "zipcode"
 					required
 					:rules="postalCodeRules"
-					label="Zipcode"
 					v-model="postalCode"
-					v-show="homeAddressAvailable"					
-				></v-text-field>
+					v-show="homeAddressAvailable">
+						<template #label>
+						<span class="red--text"><strong>* </strong></span>Zipcode
+						</template>
+				</v-text-field>
 			</v-col>
 		</v-row>	
 	</v-container>

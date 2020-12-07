@@ -1,26 +1,30 @@
 <template>
-	<v-container fluid>
+  <v-container fluid>
     <v-row align="center" justify="center">
 		<!-- Last name -->
 		<v-col class="d-flex" cols="5" sm="5">
-        <v-text-field 
-			label="Last Name" 
+        <v-text-field  
 			id="lastName" 
 			required
 			:rules="[v => !!v || 'Last name field is required']"
 			v-model="familyName"
-			prepend-icon="mdi-menu-right"
-        ></v-text-field>
+			prepend-icon="mdi-menu-right">
+        <template #label>
+				<span class="red--text"><strong>* </strong></span>Last Name
+				</template>
+        </v-text-field>
 		</v-col>
 
 		<!-- First name -->
 		<v-col class="d-flex" cols="5" sm="5">
 			<v-text-field 
-			label="First Name" 
 			id="firstName" 
 			required
 			:rules="[v => !!v || 'First name field is required']"
 			v-model="givenName">
+        <template #label>
+				<span class="red--text"><strong>* </strong></span>First Name
+				</template>
 			</v-text-field>
 		</v-col>
 
@@ -35,101 +39,105 @@
     </v-row>
 
     <v-row align="center" justify="center">
-		<v-col class="d-flex" cols="5" sm="5">
+      <v-col class="d-flex" cols="5" sm="5">
         <!-- Date of Birth -->
         <v-menu
-			ref="menu"
-			v-model="menu"
-				:close-on-content-click="false"
-				transition="scale-transition"
-				offset-y
+          attach
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
           min-width="290px"
         >
-		<template v-slot:activator="{ on, attrs }">
+          <template v-slot:activator="{ on }">
             <v-text-field
 				v-model="date"
-				label="Date of Birth"
-				prepend-icon="mdi-calendar"
-				readonly
-				v-bind="attrs"
-				v-on="on"
-            ></v-text-field>
-		</template>
+				:rules="birthdateRules"
+              placeholder="YYYY-MM-DD"
+              v-mask="'####-##-##'"
+              prepend-icon="mdi-calendar"
+              @click:prepend="on.click"
+            >
+            <template #label>
+            <span class="red--text"><strong>* </strong></span>Date of Birth
+            </template>
+            </v-text-field>
+          </template>
 
-		<v-date-picker
-            ref="picker"
+          <v-date-picker
+            reactive
             v-model="date"
-            :max="new Date().toISOString().substr(0, 10)"
-            min="1900-01-01"
-            @change="save"
-		></v-date-picker>
+            :min="minDateStr"
+            :max="maxDateStr"
+          ></v-date-picker>
         </v-menu>
-		</v-col>
+      </v-col>
 
-		<v-spacer></v-spacer>
+      <v-spacer></v-spacer>
     </v-row>
 
     <v-row align="center" justify="center">
-		<v-col class="d-flex" cols="5" sm="5">
+      <v-col class="d-flex" cols="5" sm="5">
         <!-- Gender identity -->
         <v-select
 			:items="genderID"
-			label="Gender identity"
 			required
 			:rules="[v => !!v || 'Gender identity field is required']"
 			v-model="gender"
-			prepend-icon="mdi-menu-right"
-		></v-select>
+			prepend-icon="mdi-menu-right">
+        <template #label>
+        <span class="red--text"><strong>* </strong></span>Gender Identity
+        </template>
+		</v-select>
 		</v-col>
 
 		<v-spacer></v-spacer>
     </v-row>
 
     <v-row align="left" justify="left">
-		<v-col class="d-flex" cols="5" sm="5">
+      <v-col class="d-flex" cols="5" sm="5">
         <!-- Current Photo -->
         <v-file-input
-			:rules="rules"
-			accept="image/png, image/jpeg, image/bmp"
-			placeholder="Upload a recent photo"
-			v-model="patientPhoto"
-			label="Photo"
-			prepend-icon="mdi-camera"
+          :rules="rules"
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="Upload a recent photo"
+          v-model="patientPhoto"
+          label="Photo"
+          prepend-icon="mdi-camera"
         ></v-file-input>
-		</v-col>
+      </v-col>
     </v-row>
 
     <v-row align="center" justify="center">
-		<v-col class="d-flex" cols="5" sm="5">
+      <v-col class="d-flex" cols="5" sm="5">
         <!-- Race -->
         <v-select
-			v-model="raceSelections"
-			:items="race"
-			label="Race (select all that apply)"
-			prepend-icon="mdi-menu-right"
-			multiple
+          v-model="raceSelections"
+          :items="race"
+          label="Race (select all that apply)"
+          prepend-icon="mdi-menu-right"
+          multiple
         ></v-select>
-		</v-col>
-		<v-spacer></v-spacer>
+      </v-col>
+      <v-spacer></v-spacer>
     </v-row>
 
     <v-row align="center" justify="center">
-		<v-col class="d-flex" cols="5" sm="5">
+      <v-col class="d-flex" cols="5" sm="5">
         <!-- Ethnicity -->
         <v-select
-			v-model="ethnicitySelection"
-			:items="ethnicity"
-			label="Ethnicity"
-			prepend-icon="mdi-menu-right"
+          v-model="ethnicitySelection"
+          :items="ethnicity"
+          label="Ethnicity"
+          prepend-icon="mdi-menu-right"
         ></v-select>
-		</v-col>
-		<v-spacer></v-spacer>
+      </v-col>
+      <v-spacer></v-spacer>
     </v-row>
-	</v-container>
+  </v-container>
 </template>
 
 <script>
-import EventBus from '../eventBus'
+import EventBus from "../eventBus";
 
 export default {
   data() {
@@ -148,20 +156,32 @@ export default {
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
       ],
-      familyName: '',
-      givenName: '',
-      suffix: '',
-      birthDate: '',
-      gender: '',
-      patientPhoto: '',
-      raceSelections: '',
-			ethnicitySelection: '',
-			preferredLanguage: ''
+      familyName: "",
+      givenName: "",
+      suffix: "",
+      date: "",
+      gender: "",
+      patientPhoto: "",
+      raceSelections: "",
+      ethnicitySelection: "",
+      preferredLanguage: "",
+      minDateStr: "1900-01-01",
+      birthdateRules: [
+        (v) => !!v || "DOB is required",
+        (v) => v.length == 10 || "DOB must be in specified format",
+        (v) => this.validBirthdate(v) || "Invalid DOB",
+      ],
     };
   },
   methods: {
-    sendPersonalInfoDataToReviewPage()
-    {
+    validBirthdate(birthdate) {
+      var minDate = Date.parse(this.minDateStr);
+      var maxDate = Date.parse(this.maxDateStr);
+      var date = Date.parse(birthdate);
+
+      return !Number.isNaN(date) && minDate <= date && date <= maxDate;
+    },
+    sendPersonalInfoDataToReviewPage() {
       const personalInfoPayload = {
         familyName: this.familyName,
         givenName: this.givenName,
@@ -170,67 +190,71 @@ export default {
         gender: this.gender,
         patientPhoto: this.patientPhoto,
         raceSelections: this.raceSelections,
-				ethnicitySelection: this.ethnicitySelection,
-				preferredLanguage: this.preferredLanguage
-      }
-      EventBus.$emit('DATA_PERSONAL_INFO_PUBLISHED', personalInfoPayload)
+        ethnicitySelection: this.ethnicitySelection,
+        preferredLanguage: this.preferredLanguage,
+      };
+      EventBus.$emit("DATA_PERSONAL_INFO_PUBLISHED", personalInfoPayload);
     },
-    verifyFormContents()
-    {
-		//add logic to check form contents
-		var valid = true
-		var message = "Woops! You need to enter the following field(s):"
-		
-		if(this.familyName == "")  {
-			message += " Last Name"
-			valid = false
-		}
-		
-		if(this.givenName == "") 
-		{
-		if(!valid)
-				{
-				message +=","
-				}
-			message += " First Name"
-			valid = false
-		}
-		
-		
-		if (this.date == null) 
-		{
-		if(!valid)
-				{
-				message +=","
-				}
-			message += " Date of birth"
-			valid = false
-		}
-		
-		if(this.gender == "") 
-		{
-		if(!valid)
-				{
-				message +=","
-				}
-			message += " Gender Identity" 
-			valid = false
-		}
-		
-		if (valid == false) 
-		{
-				alert(message)
-				return false
-		}
-		
+    verifyFormContents() {
+      //add logic to check form contents
+      var valid = true;
+      var message = "Woops! You need to enter the following field(s):";
+
+      if (this.familyName == "") {
+        message += " Last Name";
+        valid = false;
+      }
+
+      if (this.givenName == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message += " First Name";
+        valid = false;
+      }
+
+      if (this.date == null) {
+        if (!valid) {
+          message += ",";
+        }
+        message += " Date of birth";
+        valid = false;
+      }
+
+      if (this.gender == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message += " Gender Identity";
+        valid = false;
+      }
+
+      if (valid == false) {
+        alert(message);
+        return false;
+      }
+
       this.sendPersonalInfoDataToReviewPage();
       return true;
-    }
-	},
-	mounted() {
-		EventBus.$on('DATA_LANGUAGE_INFO_PUBLISHED', (preferredLanguage) => {
-			this.preferredLanguage = preferredLanguage;
-		});
-	}
+    },
+  },
+  computed: {
+    maxDateStr: function() {
+      let d = new Date();
+      let date = [
+        d.getFullYear(),
+        ("0" + (d.getMonth() + 1)).slice(-2),
+        ("0" + d.getDate()).slice(-2),
+      ].join("-");
+
+      return date;
+    },
+  },
+  mounted() {
+    EventBus.$on("DATA_LANGUAGE_INFO_PUBLISHED", (preferredLanguage) => {
+      this.preferredLanguage = preferredLanguage;
+    });
+  },
 };
 </script>
+
