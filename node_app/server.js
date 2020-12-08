@@ -27,7 +27,7 @@ app.all(generalEndpoints, (req, res) => {
 });
 
 app.post("/Encounter", (req, res) => {
-  let encounter = req.body.encounter;
+  let encounter = req.body.Encounter;
   let resource = {
     resourceType: "Encounter",
     status: encounter.status,
@@ -36,15 +36,21 @@ app.post("/Encounter", (req, res) => {
       code: encounter.class,
       display: encounter.class,
     },
-    subject: encounter.subject,
-    appointment: encounter.appointment,
+    subject: {
+      reference: encounter.subject
+    },
+    appointment: {
+      reference: encounter.appointment
+    },
     period: {
       start: encounter.start,
       end: encounter.end,
     },
     location: [
       {
-        location: encounter.location,
+        location: {
+          reference: encounter.location
+        }
       },
     ],
   };
