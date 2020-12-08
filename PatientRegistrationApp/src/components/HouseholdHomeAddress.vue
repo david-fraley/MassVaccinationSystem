@@ -15,20 +15,29 @@
 		<v-row>
 			<v-col cols="12" sm="12" md="12">
 				<v-text-field
-					id = "addr"
 					required
 					:rules="[v => !!v || 'Address field is required']"
-					v-model="householdLineAddress"
+					v-model="householdLineAddress1"
 					v-show="homeAddressAvailable"
 					prepend-icon="mdi-menu-right">
 						<template #label>
-						<span class="red--text"><strong>* </strong></span>Home Address
+						<span class="red--text"><strong>* </strong></span>Address Line 1
 						</template>
 				</v-text-field>
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="6" sm="4" md="3">
+			<v-col cols="12" sm="12" md="12">
+				<v-text-field
+					v-model="householdLineAddress2"
+					v-show="homeAddressAvailable"
+					prepend-icon="mdi-menu-right"
+					label="Address Line 2">
+				</v-text-field>
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-col cols="5" sm="5" md="5">
 				<v-text-field
 					id = "city"
 					required
@@ -41,7 +50,7 @@
 						</template>
 				</v-text-field>
 			</v-col>
-			<v-col class="d-flex" cols="1" sm="1" md="1">
+			<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "state"
 					required
@@ -54,19 +63,7 @@
 						</template>
 				</v-select>
 			</v-col>
-			<v-col class="d-flex" cols="3" sm="3">
-				<v-text-field
-				id = "county"
-					required
-					:rules="[v => !!v || 'County field is required']"
-					v-model="householdDistrictAddress"
-					v-show="homeAddressAvailable">
-						<template #label>
-						<span class="red--text"><strong>* </strong></span>County
-						</template>
-				</v-text-field>
-			</v-col>
-			<v-col class="d-flex" cols="2" sm="2">
+			<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "country"
 					required
@@ -125,9 +122,9 @@ import EventBus from '../eventBus'
 		'WA', 'WV', 'WI', 'WY',
 		],
 			country: ['USA'],
-			householdLineAddress: '',
+			householdLineAddress1: '',
+			householdLineAddress2: '',
 			householdCityAddress: '',
-			householdDistrictAddress: '',
 			householdStateAddress: '',
 			householdCountryAddress: 'USA',
 			householdPostalCode: '',
@@ -140,9 +137,9 @@ import EventBus from '../eventBus'
 		sendHouseholdHomeAddressInfoToReviewPage()
 		{
 			const householdHomeAddressPayload = {
-				householdLineAddress: this.householdLineAddress,
+				householdLineAddress1: this.householdLineAddress1,
+				householdLineAddress2: this.householdLineAddress2,
 				householdCityAddress: this.householdCityAddress,
-				householdDistrictAddress: this.householdDistrictAddress,
 				householdStateAddress: this.householdStateAddress,
 				householdCountryAddress: this.householdCountryAddress,
 				householdPostalCode: this.householdPostalCode
@@ -157,7 +154,7 @@ import EventBus from '../eventBus'
 			
 		if(this.homeAddressAvailable)
 		{	
-			if(this.householdLineAddress == "") 
+			if(this.householdLineAddress1 == "") 
 			{
 				message += " Address"
 				valid = false
@@ -182,17 +179,6 @@ import EventBus from '../eventBus'
 				message +=","
 				}
 				message += " State"
-				valid = false
-			}
-				
-			
-			if(this.householdDistrictAddress == "") 
-			{
-			if(!valid)
-				{
-				message +=","
-				}
-				message += " County"
 				valid = false
 			}
 				
@@ -230,19 +216,19 @@ import EventBus from '../eventBus'
 	HomeAddressAvailable()
     {
 	this.homeAddressAvailable = true
-	this.householdLineAddress=""
+	this.householdLineAddress1=""
+	this.householdLineAddress2=""
 	this.householdCityAddress=""
 	this.householdStateAddress=""
-	this.householdDistrictAddress=""
 	this.householdPostalCode=""
     },
     HomeAddressNotAvailable()
     {
 	this.homeAddressAvailable = false
-	this.householdLineAddress="Not Available"
+	this.householdLineAddress1="Not Available"
+	this.householdLineAddress2="Not Available"
 	this.householdCityAddress="Not Available"
 	this.householdStateAddress="Not Available"
-	this.householdDistrictAddress="Not Available"
 	this.householdPostalCode="Not Available"
     },
 	},
