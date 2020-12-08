@@ -31,7 +31,11 @@ app.post("/Appointment", (req, res) => {
   let resource = {
     resourceType: "Appointment",
     status: appt.status,
-    slot: [appt.slot],
+    slot: [
+      {
+        reference: appt.slot,
+      },
+    ],
     participant: [
       // add later
     ],
@@ -50,7 +54,9 @@ app.post("/Appointment", (req, res) => {
           ],
         },
       ],
-      actor: participant.actor,
+      actor: {
+        reference: participant.actor,
+      },
     });
   }
   // post resource
