@@ -133,27 +133,6 @@ import EventBus from '../eventBus'
 		}				
 	},
 	
-	rules1: {
-        postalCode: [{
-			required: true,
-			message: 'Please enter Mobile Number',
-			trigger: 'blur'
-        }, {
-          min: 10,
-          max: 10,
-          message: 'Length must be 10',
-          trigger: 'blur'
-        }, {
-          pattern: /^\d*$/,
-          message: 'Must be all numbers',
-          trigger: 'blur'
-        }, {
-          pattern: /^[789]/,
-          message: 'Must start 7, 8 or 9',
-          trigger: 'blur'
-        }]
-      },
-	
 	methods: {
 		sendHomeAddressInfoToReviewPage()
 		{
