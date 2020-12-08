@@ -26,6 +26,67 @@ app.all(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
+app.post("/Observation", (req, res) => {
+  let observation = req.body.Observation;
+  let resource = {
+    resourceType: "Observation",
+    status: observation.status,
+    category: [
+      {
+        coding: [
+          {
+            system: "http://hl7.org/fhir/ValueSet/observation-category",
+            code: observation.category,
+            display: observation.category,
+          },
+        ],
+      },
+    ],
+    code: {
+      coding: [
+        {
+          system: "http://loinc.org",
+          code: observation.code,
+          display: observation.code,
+        },
+      ],
+    },
+    subject: {
+      reference: observation.subject,
+    },
+    encounter: {
+      reference: observation.encounter,
+    },
+    effectivePeriod: {
+      start: observation.effectiveStart,
+      end: observation.effectiveEnd,
+    },
+    performer: [
+      // add later
+    ],
+    partOf: [
+      {
+        reference: observation.partOf,
+      },
+    ],
+  };
+
+  // add performers
+  let performer;
+  for (performer of observation.performer) {
+    resource.performer.push({
+      reference: performer,
+    });
+  }
+  // post resource
+  axios
+    .post(`${base}/Observation`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
