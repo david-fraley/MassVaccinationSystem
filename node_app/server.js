@@ -26,6 +26,34 @@ app.all(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
+app.post("/Organization", (req, res) => {
+  let org = req.body.Organization;
+  let resource = {
+    resourceType: "Organization",
+    active: org.active,
+    type: [
+      {
+        coding: [
+          {
+            system: "http://hl7.org/fhir/ValueSet/organization-type",
+            code: org.type,
+            display: org.type,
+          },
+        ],
+      },
+    ],
+    name: org.name,
+  };
+
+  // post resource
+  axios
+    .post(`${base}/Organization`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
