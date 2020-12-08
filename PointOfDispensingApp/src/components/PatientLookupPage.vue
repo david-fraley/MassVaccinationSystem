@@ -40,6 +40,8 @@
           <v-col cols="8">
             <v-text-field outlined dense 
               v-model="LastName"
+              required
+              :rules="[v => !!v || 'Last Name is required']"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -49,6 +51,8 @@
             <v-text-field outlined dense 
               v-model="DOB"
               placeholder="MM/DD/YYYY"
+              required
+              :rules="[v => !!v || 'Date of Birth is required']"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -64,6 +68,8 @@
           <v-col cols="8">
             <v-text-field outlined dense 
               v-model="FirstName"
+              required
+              :rules="[v => !!v || 'First Name is required']"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
