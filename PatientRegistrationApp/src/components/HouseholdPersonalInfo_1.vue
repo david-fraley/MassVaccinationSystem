@@ -208,9 +208,7 @@ export default {
       if (this.checkbox) {
         //all household members have the same last name
         EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", this.householdFamilyName);
-      } else {
-        EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", "");
-      }
+      } 
     },
     verifyFormContents() {
       //add logic to check form contents
