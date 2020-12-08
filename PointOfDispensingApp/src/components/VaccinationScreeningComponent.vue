@@ -1,88 +1,127 @@
 <template>
-  <v-container>
-    <v-row>
+  <v-container fill-height fluid>
+    <v-row no-gutters>
       <v-col cols="6">
-        <v-row>
-          <v-radio-group v-model="patientInfoComfirmed" row>
-            <template v-slot:label>
-              <div>Patient info confirmed? </div>
-            </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
-          </v-radio-group>
+        <v-row no-gutters>
+          <v-col cols="6">
+            <v-row no-gutters>
+              <v-radio-group>
+                <template v-slot:label>
+                  <div>Patient info confirmed? </div>
+                </template>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+          <v-col cols="6">
+            <v-row no-gutters>
+              <v-radio-group v-model="patientInfoComfirmed" row @change="screeningChecklistUpdate()">
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+        </v-row> 
+        <v-row no-gutters>
+          <v-col cols="6">
+            <v-row no-gutters>
+              <v-radio-group>
+                <template v-slot:label>
+                  <div>Consent form signed?</div>
+                </template>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+          <v-col cols="6">
+            <v-row no-gutters>
+              <v-radio-group v-model="consentFormSigned" row @change="screeningChecklistUpdate()">
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
+            </v-row>
+          </v-col>
         </v-row>
-        <v-row>
-          <v-radio-group v-model="consentFormSigned" row>
-            <template v-slot:label>
-              <div>Consent form signed?<v-spacer></v-spacer></div>
-            </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
-          </v-radio-group>
+        <v-row no-gutters>
+          <v-col cols="6">
+            <v-row no-gutters>
+              <v-radio-group>
+                <template v-slot:label>
+                  <div>Proper screening completed?</div>
+                </template>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+          <v-col cols="6">
+            <v-row no-gutters>
+              <v-radio-group v-model="screeningCompleted" row @change="screeningChecklistUpdate()">
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
+            </v-row>
+          </v-col>
         </v-row>
-        <v-row>
-          <v-radio-group v-model="screeningCompleted" row>
-            <template v-slot:label>
-              <div>Proper screening completed?</div>
-            </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
-          </v-radio-group>
-        </v-row>
-        <v-row>
-          <v-radio-group v-model="factSheetProvided" row>
-            <template v-slot:label>
-              <div>VIS fact sheet provided?</div>
-            </template>
-            <v-radio
-              label="Yes"
-              value="Yes"
-            ></v-radio>
-            <v-radio
-              label="No"
-              value="No"
-            ></v-radio>
-          </v-radio-group>
+        <v-row no-gutters>
+          <v-col cols="6">
+            <v-row no-gutters>
+              <v-radio-group>
+                <template v-slot:label>
+                  <div>VIS fact sheet provided?</div>
+                </template>
+              </v-radio-group>
+            </v-row>
+          </v-col>
+          <v-col cols="6">
+            <v-row no-gutters>
+              <v-radio-group v-model="factSheetProvided" row @change="screeningChecklistUpdate()">
+                  <v-radio
+                    label="Yes"
+                    value="Yes"
+                  ></v-radio>
+                  <v-radio
+                    label="No"
+                    value="No"
+                  ></v-radio>
+              </v-radio-group>
+            </v-row>
+          </v-col>
         </v-row>
       </v-col>
+                
       <v-col cols="6">
-        <v-card color="accent" dark>
-          <v-card-title style="center" class="headline">
-              Proceed with vaccination?
-          </v-card-title>
-          <v-row align="center" justify="center">
-            <v-col cols="12">
-              <v-radio-group v-model="row" row>
-                <v-radio
-                  label="Yes"
-                  value="Yes"
-                ></v-radio>
-                <v-radio
-                  label="No"
-                  value="No"
-                ></v-radio>
-              </v-radio-group>
-            </v-col>
-          </v-row>
-        </v-card>
+          <v-card class="mx-auto my-12" color="accent" dark height="50%" v-show="screeningComplete">
+            <v-card-title class="headline justify-center">
+                Proceed with vaccination?
+            </v-card-title>
+            <v-row align="center" justify="center">
+              <v-radio-group v-model="vaccinationProceed" row>
+                    <v-radio
+                      label="Yes"
+                      value="Yes"
+                    ></v-radio>
+                    <v-radio
+                      label="No"
+                      value="No"
+                    ></v-radio>
+                </v-radio-group>
+            </v-row>
+          </v-card>
       </v-col>
     </v-row>
     <v-row>
@@ -94,16 +133,33 @@
 </template>
 
 <script>
+
   export default {
     name: 'VaccinationScreeningComponent',
     methods: 
     {
+     screeningChecklistUpdate()
+     {
+       if(this.isScreeningChecklistComplete())
+       {
+         this.screeningComplete = true
+       }
+       else
+       {
+         this.screeningComplete = false
+       }
+     },
+     isScreeningChecklistComplete()
+     {
+       return (this.patientInfoComfirmed && this.consentFormSigned && this.screeningCompleted && this.factSheetProvided); 
+     }
     },
     components: 
     {
     },
     data () {
       return {
+        screeningComplete: false
       }
     }
   }

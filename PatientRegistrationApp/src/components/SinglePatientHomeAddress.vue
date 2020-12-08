@@ -15,20 +15,29 @@
 		<v-row>
 			<v-col cols="12" sm="12" md="12">
 				<v-text-field
-					id = "addr"
 					required
 					:rules="[v => !!v || 'Address field is required']"
-					v-model="lineAddress"
+					v-model="lineAddress1"
 					v-show="homeAddressAvailable"
 					prepend-icon="mdi-menu-right">
 						<template #label>
-						<span class="red--text"><strong>* </strong></span>Home Address
+						<span class="red--text"><strong>* </strong></span>Address Line 1
 						</template>
 				</v-text-field>
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="6" sm="4" md="3">
+			<v-col cols="12" sm="12" md="12">
+				<v-text-field
+					v-model="lineAddress2"
+					v-show="homeAddressAvailable"
+					prepend-icon="mdi-menu-right"
+					label="Address Line 2">
+				</v-text-field>
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-col cols="5" sm="5" md="5">
 				<v-text-field
 					id = "city"
 					required
@@ -41,7 +50,7 @@
 						</template>
 				</v-text-field>
 			</v-col>
-				<v-col class="d-flex" cols="1" sm="1" md="1">
+				<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "state"
 					required
@@ -54,19 +63,7 @@
 						</template>
 				</v-select>
 			</v-col>
-			<v-col class="d-flex" cols="3" sm="3">
-				<v-text-field
-				id = "county"
-					required
-					:rules="[v => !!v || 'County field is required']"
-					v-model="districtAddress"
-					v-show="homeAddressAvailable">
-						<template #label>
-						<span class="red--text"><strong>* </strong></span>County
-						</template>
-				</v-text-field>
-			</v-col>
-			<v-col class="d-flex" cols="2" sm="2">
+			<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "country"
 					required
@@ -125,9 +122,9 @@ import EventBus from '../eventBus'
 		'WA', 'WV', 'WI', 'WY',
 		],
 			country: ['USA'],
-			lineAddress: '',
+			lineAddress1: '',
+			lineAddress2: '',
 			cityAddress: '',
-			districtAddress: '',
 			stateAddress: '',
 			countryAddress: 'USA',
 			postalCode: '',
@@ -136,34 +133,13 @@ import EventBus from '../eventBus'
 		}				
 	},
 	
-	rules1: {
-        postalCode: [{
-			required: true,
-			message: 'Please enter Mobile Number',
-			trigger: 'blur'
-        }, {
-          min: 10,
-          max: 10,
-          message: 'Length must be 10',
-          trigger: 'blur'
-        }, {
-          pattern: /^\d*$/,
-          message: 'Must be all numbers',
-          trigger: 'blur'
-        }, {
-          pattern: /^[789]/,
-          message: 'Must start 7, 8 or 9',
-          trigger: 'blur'
-        }]
-      },
-	
 	methods: {
 		sendHomeAddressInfoToReviewPage()
 		{
 		const homeAddressPayload = {
-			lineAddress: this.lineAddress,
+			lineAddress1: this.lineAddress1,
+			lineAddress2: this.lineAddress2,
 			cityAddress: this.cityAddress,
-			districtAddress: this.districtAddress,
 			stateAddress: this.stateAddress,
 			countryAddress: this.countryAddress,
 			postalCode: this.postalCode
@@ -178,7 +154,7 @@ import EventBus from '../eventBus'
 			
 		if(this.homeAddressAvailable)
 		{	
-			if(this.lineAddress == "") 
+			if(this.lineAddress1 == "") 
 			{
 				message += " Address"
 				valid = false
@@ -203,17 +179,6 @@ import EventBus from '../eventBus'
 				message +=","
 				}
 				message += " State"
-				valid = false
-			}
-				
-			
-			if(this.districtAddress == "") 
-			{
-			if(!valid)
-				{
-				message +=","
-				}
-				message += " County"
 				valid = false
 			}
 				
@@ -253,19 +218,19 @@ import EventBus from '../eventBus'
 	HomeAddressAvailable()
     {
 	this.homeAddressAvailable = true
-	this.lineAddress=""
+	this.lineAddress1=""
+	this.lineAddress2=""
 	this.cityAddress=""
 	this.stateAddress=""
-	this.districtAddress=""
 	this.postalCode=""
     },
     HomeAddressNotAvailable()
     {
 	this.homeAddressAvailable = false
-	this.lineAddress="Not Available"
+	this.lineAddress1="Not Available"
+	this.lineAddress2="Not Available"
 	this.cityAddress="Not Available"
 	this.stateAddress="Not Available"
-	this.districtAddress="Not Available"
 	this.postalCode="Not Available"
     },
 	},
