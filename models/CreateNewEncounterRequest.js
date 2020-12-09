@@ -2,11 +2,11 @@
 Encounter {
   status : enum (planned, arrived, in-progress, finished, cancelled)
   class : enum (FLD)
-  subject : string
-  appointment : string
-  start : string
-  end : string
-  location : string
+  subject : string "Patient/id"
+  appointment : string "Appointment/id"
+  start : string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
+  end : string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
+  location : string "Location/id"
 }
 {
   "Encounter": {
