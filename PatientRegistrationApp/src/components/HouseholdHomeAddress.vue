@@ -78,7 +78,7 @@
 				<v-text-field
 					id = "zipcode"
 					required
-					:rules="[v => !!v || 'Zipcode field is required']"
+					:rules="postalCodeRules"
 					v-model="householdPostalCode">
 						<template #label>
 						<span class="red--text"><strong>* </strong></span>Zipcode
@@ -95,6 +95,13 @@ import EventBus from '../eventBus'
   export default {
 	data () {
 		return {
+			postalCodeRules: [
+        (v) => !!v || "Zip code is required",
+			(v) =>
+			/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+			"Zip code must be in format of ##### or #####-####",
+		],
+		
 			state:[
 		'AL', 'AK', 'AS', 'AZ',
 		'AR', 'CA', 'CO', 'CT',
