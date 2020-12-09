@@ -4,18 +4,18 @@ Appointment {
   participant : [ 
     {
       type : "patient" // note that this type is an extensible
-      actor : string
+      actor : string "Patient/id"
     },
     {
       type : "practitioner" // note that this type is an extensible
-      actor : string
+      actor : string "Practitioner/id"
     },
     {
       type : "location" // note that this type is an extensible
-      actor : string
+      actor : string "Location/id"
     },
   ]
-  slot : string // note that this is not needed until scheduling is implemented
+  slot : string "Slot/id" // note that this is not needed until scheduling is implemented
 }
 {
   "Appointment":

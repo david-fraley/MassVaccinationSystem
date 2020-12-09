@@ -41,6 +41,7 @@ app.post("/Appointment", (req, res) => {
     ],
   };
   // add participants
+  let participant;
   for (participant of appt.participant) {
     resource.participant.push({
       type: [
