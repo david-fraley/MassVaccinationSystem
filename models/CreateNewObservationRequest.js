@@ -3,12 +3,12 @@ Observation {
   status : enum (final, amended, corrected)
   category : enum (vital-signs, procedure, exam)
   code : enum (?)
-  subject : string
-  encounter : string
-  effectiveStart: string
-  effectiveEnd: string
-  performer : [string]
-  partOf : string
+  subject : string "Patient/id"
+  encounter : string "Encounter/id"
+  effectiveStart: string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
+  effectiveEnd: string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
+  performer : [string] "{Practitioner/PractitionerRole/Organization}/id"
+  partOf : string "Immunization/id"
 }
 {
   "Observation": {
