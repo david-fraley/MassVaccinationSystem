@@ -1,60 +1,57 @@
 <template>
-	<v-container fluid>
-	<v-row align="center" justify="left">
-		<!-- Last name -->
-		<v-col class="d-flex" cols="4" sm="4">
-        <v-text-field 
-          id="lastName" 
-		required
-          :rules="[v => !!v || 'Last name field is required']"
-          v-model="householdFamilyName"
-          prepend-icon="mdi-menu-right">
-			<template #label>
-			<span class="red--text"><strong>* </strong></span>Last Name
-			</template>
-        </v-text-field>
-		</v-col>
+	<v-container>
+    <v-row align="center" justify="start">
 
-		<!-- First name -->
-		<v-col class="d-flex" cols="3" sm="3">
+      <!-- Last name -->
+      <v-col cols="4">
+        <v-text-field 
+          required
+          :rules="[v => !!v || 'Last name field is required']"
+          v-model="familyName"
+          prepend-icon="mdi-menu-right">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Last Name
+          </template>
+        </v-text-field>
+      </v-col>
+
+      <!-- First name -->
+      <v-col cols="3">
         <v-text-field  
-			id="firstName" 
-			required
-			:rules="[v => !!v || 'First name field is required']"
-			v-model="householdGivenName">
-				<template #label>
-				<span class="red--text"><strong>* </strong></span>First Name
-				</template>
+          required
+          :rules="[v => !!v || 'First name field is required']"
+          v-model="givenName">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>First Name
+          </template>
         </v-text-field>
       </v-col>
 
       <!-- Middle name -->
-		<v-col class="d-flex" cols="3" sm="3">
-      <v-text-field  
-			id="middleNameID" 
-			v-model="householdMiddleName"
-      label="Middle Name">
-      </v-text-field>
-    </v-col>
-
-      <!-- Suffix -->
-      <v-col class="d-flex" cols="2" sm="2">
-        <v-text-field label="Suffix" id="suffix" v-model="householdSuffix">
+      <v-col cols="3">
+        <v-text-field  
+          v-model="middleName"
+          label="Middle Name">
         </v-text-field>
       </v-col>
-    </v-row>
 
-    <v-row>
-      <v-col cols="12" sm="12" md="12">
+      <!-- Suffix -->
+      <v-col cols="2">
+        <v-text-field 
+          label="Suffix" 
+          v-model="suffix">
+        </v-text-field>
+      </v-col>
+      <v-col cols="12">
         <v-checkbox
           v-model="checkbox"
           label="All household members have the same last name"
         ></v-checkbox>
       </v-col>
     </v-row>
+    <v-row align="center" justify="space-between">
+      <v-col cols="5">
 
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
         <!-- Date of Birth -->
         <v-menu
           attach
@@ -65,88 +62,77 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-				v-model="householdDate"
-				:rules="birthdateRules"
+              v-model="birthDate"
+              :rules="birthdateRules"
               placeholder="YYYY-MM-DD"
               v-mask="'####-##-##'"
               prepend-icon="mdi-calendar"
               @click:prepend="on.click"
               >
-				<template #label>
-				<span class="red--text"><strong>* </strong></span>Date of Birth
-				</template>
-			</v-text-field>
+              <template #label>
+                <span class="red--text"><strong>* </strong></span>Date of Birth
+              </template>
+            </v-text-field>
           </template>
-
           <v-date-picker
             reactive
-            v-model="householdDate"
+            v-model="birthDate"
             :min="minDateStr"
             :max="maxDateStr"
           ></v-date-picker>
         </v-menu>
       </v-col>
+      <v-col cols="5">
 
-      <v-spacer></v-spacer>
-    </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
         <!-- Gender identity -->
         <v-select
-          :items="genderID"
-		required
+          :items="genderIDOptions"
+          required
           :rules="[v => !!v || 'Gender identity field is required']"
-          v-model="householdGender"
+          v-model="gender"
           prepend-icon="mdi-menu-right">
-			<template #label>
-			<span class="red--text"><strong>* </strong></span>Gender Identity
-			</template>
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Gender Identity
+          </template>
         ></v-select>
       </v-col>
-
-      <v-spacer></v-spacer>
     </v-row>
+    <v-row align="center" justify="space-between">
+      <v-col cols="5">
 
-    <v-row align="left" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
-        <!-- Current Photo -->
-        <v-file-input
-          :rules="rules"
-          accept="image/png, image/jpeg, image/bmp"
-          placeholder="Upload a recent photo"
-          v-model="householdPatientPhoto"
-          label="Photo"
-          prepend-icon="mdi-camera"
-        ></v-file-input>
-      </v-col>
-    </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
         <!-- Race -->
         <v-select
-          v-model="householdRaceSelections"
-          :items="race"
+          v-model="race"
+          :items="raceOptions"
           label="Race (select all that apply)"
           prepend-icon="mdi-menu-right"
           multiple
         ></v-select>
       </v-col>
-      <v-spacer></v-spacer>
-    </v-row>
+      <v-col cols="5">
 
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
         <!-- Ethnicity -->
         <v-select
-          v-model="householdEthnicitySelection"
-          :items="ethnicity"
+          v-model="ethnicity"
+          :items="ethnicityOptions"
           label="Ethnicity"
           prepend-icon="mdi-menu-right"
         ></v-select>
       </v-col>
-      <v-spacer></v-spacer>
+    </v-row>
+    <v-row align="left" justify="space-between">
+      <v-col cols="5">
+
+        <!-- Current Photo -->
+        <v-file-input
+          :rules="rules"
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="Upload a recent photo"
+          v-model="patientPhoto"
+          label="Photo"
+          prepend-icon="mdi-camera"
+        ></v-file-input>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -157,8 +143,8 @@ import EventBus from "../eventBus";
 export default {
   data() {
     return {
-      genderID: ["Male", "Female", "Other", "Decline to answer"],
-      race: [
+      genderIDOptions: ["Male", "Female", "Other", "Decline to answer"],
+      raceOptions: [
         "Black or African American",
         "White",
         "Asian",
@@ -166,20 +152,20 @@ export default {
         "Native Hawaiian or other Pacific Islander",
         "Other",
       ],
-      ethnicity: [
+      ethnicityOptions: [
         "Hispanic or Latino",
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
       ],
-      householdFamilyName: "",
-      householdGivenName: "",
-      householdMiddleName: "",
-      householdSuffix: "",
-      householdDate: "",
-      householdGender: "",
-      householdPatientPhoto: "",
-      householdRaceSelections: "",
-      householdEthnicitySelection: "",
+      familyName: "",
+      givenName: "",
+      middleName: "",
+      suffix: "",
+      birthDate: "",
+      gender: "",
+      patientPhoto: "",
+      race: "",
+      ethnicity: "",
       preferredLanguage: "",
       minDateStr: "1900-01-01",
       birthdateRules: [
@@ -199,15 +185,15 @@ export default {
     },
     sendHouseholdPersonalInfoDataToReviewPage() {
       const householdPersonalInfoPayload = {
-        householdFamilyName: this.householdFamilyName,
-        householdGivenName: this.householdGivenName,
-        householdMiddleName: this.householdMiddleName,
-        householdSuffix: this.householdSuffix,
-        householdBirthDate: this.householdDate,
-        householdGender: this.householdGender,
-        householdPatientPhoto: this.householdPatientPhoto,
-        householdRaceSelections: this.householdRaceSelections,
-        householdEthnicitySelection: this.householdEthnicitySelection,
+        familyName: this.familyName,
+        givenName: this.givenName,
+        middleName: this.middleName,
+        suffix: this.suffix,
+        birthDate: this.birthDate,
+        gender: this.gender,
+        patientPhoto: this.patientPhoto,
+        race: this.race,
+        ethnicity: this.ethnicity,
         preferredLanguage: this.preferredLanguage,
       };
       const householdMemberNumber = 1;
@@ -226,12 +212,12 @@ export default {
       var valid = true;
       var message = "Woops! You need to enter the following field(s):";
 
-      if (this.householdFamilyName == "") {
+      if (this.familyName == "") {
         message += " Last Name";
         valid = false;
       }
 
-      if (this.householdGivenName == "") {
+      if (this.givenName == "") {
         if (!valid) {
           message += ",";
         }
@@ -239,7 +225,7 @@ export default {
         valid = false;
       }
 
-      if (this.householdDate == null) {
+      if (this.birthDate == null) {
         if (!valid) {
           message += ",";
         }
@@ -247,7 +233,7 @@ export default {
         valid = false;
       }
 
-      if (this.householdGender == "") {
+      if (this.gender == "") {
         if (!valid) {
           message += ",";
         }

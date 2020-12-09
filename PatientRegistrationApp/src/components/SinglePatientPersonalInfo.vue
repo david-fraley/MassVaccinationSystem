@@ -1,54 +1,51 @@
 <template>
-  <v-container fluid>
-    <v-row align="center" justify="left">
-		<!-- Last name -->
-		<v-col class="d-flex" cols="4" sm="4">
+  <v-container> 
+    <v-row align="center" justify="start">
+      <!-- Last name -->
+      <v-col cols="4">
         <v-text-field  
-			id="lastName" 
-			required
-			:rules="[v => !!v || 'Last name field is required']"
-			v-model="familyName"
-			prepend-icon="mdi-menu-right">
-        <template #label>
-				<span class="red--text"><strong>* </strong></span>Last Name
-				</template>
+          required
+          :rules="[v => !!v || 'Last name field is required']"
+          v-model="familyName"
+          prepend-icon="mdi-menu-right">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Last Name
+          </template>
         </v-text-field>
-		</v-col>
+      </v-col>
 
-		<!-- First name -->
-		<v-col class="d-flex" cols="3" sm="3">
-			<v-text-field 
-			id="firstName" 
-			required
-			:rules="[v => !!v || 'First name field is required']"
-			v-model="givenName">
-        <template #label>
-				<span class="red--text"><strong>* </strong></span>First Name
-				</template>
-			</v-text-field>
-		</v-col>
+      <!-- First name -->
+      <v-col cols="3">
+        <v-text-field 
+          required
+          :rules="[v => !!v || 'First name field is required']"
+          v-model="givenName">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>First Name
+          </template>
+        </v-text-field>
+      </v-col>
 
-    <!-- Middle name -->
-		<v-col class="d-flex" cols="3" sm="3">
-			<v-text-field 
-			id="middleNameID" 
-			v-model="middleName"
-      label="Middle Name">
-			</v-text-field>
-		</v-col>
+      <!-- Middle name -->
+      <v-col cols="3">
+        <v-text-field 
+          v-model="middleName"
+          label="Middle Name">
+        </v-text-field>
+      </v-col>
 
-		<!-- Suffix -->
-		<v-col class="d-flex" cols="2" sm="2">
-			<v-text-field 
-			label="Suffix" 
-			id="suffix" 
-			v-model="suffix">
-			</v-text-field>
-		</v-col>
+      <!-- Suffix -->
+      <v-col cols="2">
+        <v-text-field 
+          label="Suffix" 
+          id="suffix" 
+          v-model="suffix">
+        </v-text-field>
+      </v-col>
     </v-row>
 
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
+    <v-row align="center" justify="space-between">
+      <v-col cols="5">
         <!-- Date of Birth -->
         <v-menu
           attach
@@ -59,15 +56,15 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-				v-model="date"
-				:rules="birthdateRules"
+              v-model="date"
+              :rules="birthdateRules"
               placeholder="YYYY-MM-DD"
               v-mask="'####-##-##'"
               prepend-icon="mdi-calendar"
               @click:prepend="on.click"
             >
             <template #label>
-            <span class="red--text"><strong>* </strong></span>Date of Birth
+              <span class="red--text"><strong>* </strong></span>Date of Birth
             </template>
             </v-text-field>
           </template>
@@ -81,29 +78,44 @@
         </v-menu>
       </v-col>
 
-      <v-spacer></v-spacer>
-    </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
+      <v-col cols="5">
         <!-- Gender identity -->
         <v-select
-			:items="genderID"
-			required
-			:rules="[v => !!v || 'Gender identity field is required']"
-			v-model="gender"
-			prepend-icon="mdi-menu-right">
-        <template #label>
-        <span class="red--text"><strong>* </strong></span>Gender Identity
-        </template>
-		</v-select>
-		</v-col>
-
-		<v-spacer></v-spacer>
+          :items="genderIDOptions"
+          required
+          :rules="[v => !!v || 'Gender identity field is required']"
+          v-model="gender">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Gender Identity
+          </template>
+        </v-select>
+      </v-col>
     </v-row>
 
-    <v-row align="left" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
+    <v-row align="center" justify="space-between">
+      <v-col cols="5">
+        <!-- Race -->
+        <v-select
+          v-model="race"
+          :items="raceOptions"
+          label="Race (select all that apply)"
+          prepend-icon="mdi-menu-right"
+          multiple
+        ></v-select>
+      </v-col>
+    
+      <v-col cols="5">
+        <!-- Ethnicity -->
+        <v-select
+          v-model="ethnicity"
+          :items="ethnicityOptions"
+          label="Ethnicity"
+        ></v-select>
+      </v-col>
+    </v-row>
+
+    <v-row align="center" justify="start">
+      <v-col cols="5">
         <!-- Current Photo -->
         <v-file-input
           :rules="rules"
@@ -115,33 +127,6 @@
         ></v-file-input>
       </v-col>
     </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
-        <!-- Race -->
-        <v-select
-          v-model="raceSelections"
-          :items="race"
-          label="Race (select all that apply)"
-          prepend-icon="mdi-menu-right"
-          multiple
-        ></v-select>
-      </v-col>
-      <v-spacer></v-spacer>
-    </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
-        <!-- Ethnicity -->
-        <v-select
-          v-model="ethnicitySelection"
-          :items="ethnicity"
-          label="Ethnicity"
-          prepend-icon="mdi-menu-right"
-        ></v-select>
-      </v-col>
-      <v-spacer></v-spacer>
-    </v-row>
   </v-container>
 </template>
 
@@ -151,8 +136,8 @@ import EventBus from "../eventBus";
 export default {
   data() {
     return {
-      genderID: ["Male", "Female", "Other", "Decline to answer"],
-      race: [
+      genderIDOptions: ["Male", "Female", "Other", "Decline to answer"],
+      raceOptions: [
         "Black or African American",
         "White",
         "Asian",
@@ -160,7 +145,7 @@ export default {
         "Native Hawaiian or other Pacific Islander",
         "Other",
       ],
-      ethnicity: [
+      ethnicityOptions: [
         "Hispanic or Latino",
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
@@ -172,8 +157,8 @@ export default {
       date: "",
       gender: "",
       patientPhoto: "",
-      raceSelections: "",
-      ethnicitySelection: "",
+      race: "",
+      ethnicity: "",
       preferredLanguage: "",
       minDateStr: "1900-01-01",
       birthdateRules: [
@@ -200,8 +185,8 @@ export default {
         birthDate: this.date,
         gender: this.gender,
         patientPhoto: this.patientPhoto,
-        raceSelections: this.raceSelections,
-        ethnicitySelection: this.ethnicitySelection,
+        race: this.race,
+        ethnicity: this.ethnicity,
         preferredLanguage: this.preferredLanguage,
       };
       EventBus.$emit("DATA_PERSONAL_INFO_PUBLISHED", personalInfoPayload);
