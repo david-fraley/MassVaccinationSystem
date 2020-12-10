@@ -22,16 +22,11 @@ app.post("/Practitioner", (req, res) => {
                 given: [practitioner.given],
                 suffix: [practitioner.suffix]
              }
-
             ],
-
             telecom: [ //add later
-
-            ],
-
+                ],
             gender: practitioner.gender,
             birthdate: practitioner.birthdate,
-
             address: [
                 {
                     line: [practitioner.address.line],
@@ -41,15 +36,12 @@ app.post("/Practitioner", (req, res) => {
                     country: practitioner.address.country,
                 },
             ],
-
             photo: [
                 {
                     url: "", //add later
-                    title: 'Photo of ${practitioner.given} ${practitioner.family} ${patient.suffix',
-
+                    title: 'Photo of ${practitioner.given} ${practitioner.family} ${patient.suffix}',
                 },
             ],
-
             qualification: [
                 {
                     code: {
@@ -58,16 +50,12 @@ app.post("/Practitioner", (req, res) => {
                                     code: practitioner.qualificationCode
                                 }
                             ],
-
                             text: "",
-
-
 
                     }
                     
                 }
             ],            
-
 
         };
         
