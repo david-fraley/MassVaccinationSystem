@@ -11,7 +11,7 @@ let headers = {
 }
 
 
-app.post("/Patient", (req, res) => {
+app.post("/Practitioner", (req, res) => {
   let obj = req.body;
   for (practitioner of obj.Practitioner) {
     let resource = {
