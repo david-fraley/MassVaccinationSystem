@@ -26,6 +26,21 @@ app.all(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
+
+
+app.post("/Location", (req, res) => {
+    let loc = req.body.Location;
+    
+
+
+
+
+
+})
+
+
+
+
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
