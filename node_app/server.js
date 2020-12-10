@@ -11,42 +11,44 @@ let headers = {
 }
 
 
-app.post("/Practitioner", (req, res) => {
-    let prac= req.body.Practitioner:
-        let resource = {
-            resourceType: "Practitioner",
-            name: [
-             {
-                family: prac.family,
-                given: [prac.given],
-                suffix: [prac.suffix]
-             }
-            ],
-            telecom: [ //add later
-                ],
-            gender: prac.gender,
-            birthdate: prac.birthdate,
-            address: [
-                {
-                    line: [prac.address.line],
-                    city: prac.address.city,
-                    state: prac.address.state,
-                    postalCode: prac.address.postalCode,
-                    country: prac.address.country,
-                },
-            ],
-            photo: [
-                {
-                    url: "", //add later
-                    title: 'Photo of ${prac.given} ${prac.family} ${prac.suffix}',
-                },
-            ],
-            qualification: [
+app.post("/Patient", (req, res) => {
+  let obj = req.body;
+  for (practitioner of obj.Practitioner) {
+    let resource = {
+      resourceType: "Practitioner",
+      name: [
+        {
+          family: practitioner.family,
+          given: [practitioner.given],
+          suffix: [practitioner.suffix],
+        },
+      ],
+      telecom: [
+        // add later
+      ],
+      gender: practitioner.gender,
+      birthDate: practitioner.birthDate,
+      address: [
+        {
+          line: [practitioner.address.line],
+          city: practitioner.address.city,
+          state: practitioner.address.state,
+          postalCode: practitioner.address.postalCode,
+          country: practitioner.address.country,
+        },
+      ],
+      photo: [
+        {
+          url: "", // add later
+          title: `Photo of ${practitioner.given} ${practitioner.family} ${practitioner.suffix}`,
+        },
+      ],
+      qualification: [
                 {
                     code: {
                             coding: [
                                 {
-                                    code: prac.qualificationCode
+                                    code: practitioner.qualificationCode
                                 }
                             ],
                             text: "",
@@ -54,51 +56,15 @@ app.post("/Practitioner", (req, res) => {
                     }
                     
                 }
-            ],            
-
-        };
-        
+        ],
+    // post resource
     axios
-    .post(`${base}/Practitioner`, resource, headers)
-    .then((response) => {
-      res.json(response.data);
-    })
-    .catch((e) => res.send(e));
-
-});
-
-
-
-// Pass request to HAPI FHIR server
-app.all('/Practitioner*', (req, res) => {
-
-    axios({
-        method: req.method,
-        url: `${base}${req.url}`,
-        data: req.body,
-        headers: headers
-    })
-    .then((response) => {
-        // handle success
+      .post(`${base}/Practitioner`, resource, headers)
+      .then((response) => {
         res.json(response.data);
-    })
-    .catch(function (error) {
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            let errorCode = error.response.status;
-            res.status(errorCode).send(error.response.data);
-        } else if (error.request) {
-            // The request was made but no response was received
-            console.log(error.request);
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-        }
-        console.log(error.config);
-    })
-    .then(function () {
-        // always executed
-    });
+      })
+      .catch((e) => res.send(e));
+  }
 });
 
 
