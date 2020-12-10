@@ -5,6 +5,7 @@ import PatientHistoryPage from './components/PatientHistoryPage.vue';
 import VaccinationEventPage from './components/VaccinationEventPage.vue';
 import AdverseEventsPage from './components/AdverseEventsPage.vue';
 import DischargePage from './components/DischargePage.vue';
+import CreateLocationResourcePage from './components/CreateLocationResourcePage.vue';
 
 export default [
   // Redirects to /route-one as the default route.
@@ -40,5 +41,9 @@ export default [
   {
     path: '/Discharge',
     component: DischargePage,
+  },
+  {
+    path: '/LocationResource',
+    component: CreateLocationResourcePage,
   }
 ];
