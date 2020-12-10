@@ -6,13 +6,13 @@ app.use(express.json());
 app.set("json spaces", 2);
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
-const generalEndpoints = ["/Patient*"];
+const generalEndpoints = ["/Patient*", "/Encounter*"];
 const headers = {
   "content-type": "application/fhir+json",
 };
 
-// Pass request to HAPI FHIR server
-app.all(generalEndpoints, (req, res) => {
+// Pass GET requests to HAPI FHIR server
+app.get(generalEndpoints, (req, res) => {
   axios({
     method: req.method,
     url: `${base}${req.url}`,
@@ -37,10 +37,10 @@ app.post("/Encounter", (req, res) => {
       display: encounter.class,
     },
     subject: {
-      reference: encounter.subject
+      reference: encounter.subject,
     },
     appointment: {
-      reference: encounter.appointment
+      reference: encounter.appointment,
     },
     period: {
       start: encounter.start,
@@ -49,8 +49,8 @@ app.post("/Encounter", (req, res) => {
     location: [
       {
         location: {
-          reference: encounter.location
-        }
+          reference: encounter.location,
+        },
       },
     ],
   };
