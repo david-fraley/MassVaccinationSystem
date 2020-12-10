@@ -47,7 +47,7 @@
         <v-select
 			v-model="emergencyContactPhoneNumberType"
 			:items="phoneType"
-			label="Phone Number Type"
+			label="Phone Type"
         ></v-select>
 		</v-col>
 		<v-col class="d-flex" cols="5" sm="2"> </v-col>

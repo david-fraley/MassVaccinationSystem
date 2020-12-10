@@ -44,7 +44,7 @@
 					v-model="primaryPhoneNumberType"
 					:disabled="!permission"
 					:items="phoneTypeOptions"
-					label="Primary Phone Type"
+					label="Phone Type"
 				></v-select>
 			</v-col>
 			<v-col cols="2">
@@ -64,7 +64,7 @@
 					v-model="secondaryPhoneNumberType"
 					:disabled="!primaryPhoneNumber"
 					:items="phoneTypeOptions"
-					label="Secondary Phone Type"
+					label="Phone Type"
 				></v-select>
 			</v-col>
 		</v-row>
