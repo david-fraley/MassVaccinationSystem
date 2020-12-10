@@ -70,7 +70,7 @@ app.post("/Practitioner", (req, res) => {
 
 
 // Pass request to HAPI FHIR server
-app.all('/Patient*', (req, res) => {
+app.all('/Practitioner*', (req, res) => {
 
     axios({
         method: req.method,
