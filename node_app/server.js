@@ -10,6 +10,86 @@ let headers = {
     'content-type': 'application/fhir+json'
 }
 
+
+app.post("/Practitioner", (req, res) => {
+    let obj = req.body:
+    for (practitioner of obj.Practitioner) {
+        let resource = {
+            resourceType: "Practitioner",
+            name: [
+             {
+                family: practitioner.family,
+                given: [practitioner.given],
+                suffix: [practitioner.suffix]
+             }
+
+            ],
+
+            telecom: [ //add later
+
+            ],
+
+            gender: practitioner.gender,
+            birthdate: practitioner.birthdate,
+
+            address: [
+                {
+                    line: [practitioner.address.line],
+                    city: practitioner.address.city,
+                    state: practitioner.address.state,
+                    postalCode: practitioner.address.postalCode,
+                    country: practitioner.address.country,
+                },
+            ],
+
+            photo: [
+                {
+                    url: "", //add later
+                    title: 'Photo of ${practitioner.given} ${practitioner.family} ${patient.suffix',
+
+                },
+            ],
+
+            qualification: [
+                {
+                    code: {
+                            coding: [
+                                {
+                                    code: "practitioner.qualificationCode"
+                                }
+                            ],
+
+                            text: "",
+
+
+
+                    }
+                    
+                }
+            ],            
+
+
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Pass request to HAPI FHIR server
 app.all('/Patient*', (req, res) => {
 
@@ -41,6 +121,8 @@ app.all('/Patient*', (req, res) => {
         // always executed
     });
 });
+
+
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}`));
