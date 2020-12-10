@@ -69,10 +69,10 @@ app.post("/Practitioner", (req, res) => {
             ],            
 
 
-        }
+        };
 
     }
-}
+});
 
 
 
