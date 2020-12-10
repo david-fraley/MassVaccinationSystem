@@ -70,6 +70,13 @@ app.post("/Practitioner", (req, res) => {
 
 
         };
+        
+    axios
+    .post(`${base}/Organization`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
 
     }
 });
