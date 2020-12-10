@@ -55,7 +55,7 @@ app.post("/Practitioner", (req, res) => {
                     code: {
                             coding: [
                                 {
-                                    code: "practitioner.qualificationCode"
+                                    code: practitioner.qualificationCode
                                 }
                             ],
 
@@ -73,20 +73,6 @@ app.post("/Practitioner", (req, res) => {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
