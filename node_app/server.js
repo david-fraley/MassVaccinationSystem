@@ -60,7 +60,7 @@ app.post("/Practitioner", (req, res) => {
         };
         
     axios
-    .post(`${base}/Organization`, resource, headers)
+    .post(`${base}/Practitioner`, resource, headers)
     .then((response) => {
       res.json(response.data);
     })
