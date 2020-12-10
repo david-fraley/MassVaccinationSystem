@@ -12,34 +12,33 @@ let headers = {
 
 
 app.post("/Practitioner", (req, res) => {
-    let obj = req.body:
-    for (practitioner of obj.Practitioner) {
+    let prac= req.body.Practitioner:
         let resource = {
             resourceType: "Practitioner",
             name: [
              {
-                family: practitioner.family,
-                given: [practitioner.given],
-                suffix: [practitioner.suffix]
+                family: prac.family,
+                given: [prac.given],
+                suffix: [prac.suffix]
              }
             ],
             telecom: [ //add later
                 ],
-            gender: practitioner.gender,
-            birthdate: practitioner.birthdate,
+            gender: prac.gender,
+            birthdate: prac.birthdate,
             address: [
                 {
-                    line: [practitioner.address.line],
-                    city: practitioner.address.city,
-                    state: practitioner.address.state,
-                    postalCode: practitioner.address.postalCode,
-                    country: practitioner.address.country,
+                    line: [prac.address.line],
+                    city: prac.address.city,
+                    state: prac.address.state,
+                    postalCode: prac.address.postalCode,
+                    country: prac.address.country,
                 },
             ],
             photo: [
                 {
                     url: "", //add later
-                    title: 'Photo of ${practitioner.given} ${practitioner.family} ${patient.suffix}',
+                    title: 'Photo of ${prac.given} ${prac.family} ${prac.suffix}',
                 },
             ],
             qualification: [
@@ -47,7 +46,7 @@ app.post("/Practitioner", (req, res) => {
                     code: {
                             coding: [
                                 {
-                                    code: practitioner.qualificationCode
+                                    code: prac.qualificationCode
                                 }
                             ],
                             text: "",
@@ -66,7 +65,6 @@ app.post("/Practitioner", (req, res) => {
     })
     .catch((e) => res.send(e));
 
-    }
 });
 
 
