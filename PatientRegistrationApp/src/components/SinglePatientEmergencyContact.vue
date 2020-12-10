@@ -33,7 +33,6 @@
         <v-text-field
 		required
           :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
-          placeholder="(###)###-####"
           v-mask="'(###)###-####'"
           v-model="emergencyContactPhoneNumber"
           prepend-icon="mdi-menu-right">

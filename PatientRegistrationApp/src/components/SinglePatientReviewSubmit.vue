@@ -52,10 +52,19 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.patientPhoneNumber}} 
-					({{dataContactInfo.patientPhoneNumberType}})</span></div>
-				<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.patientEmail}}</span></div>
-				<div class="font-weight-medium">Follow-up approval: <span class="font-weight-regular">{{dataContactInfo.approval}}</span></div>
+				<template v-if="dataContactInfo.patientPhoneNumber != ''">
+					<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.patientPhoneNumber}} 
+						({{dataContactInfo.patientPhoneNumberType}})</span></div>
+				</template>
+				<template v-else>
+					<div class="font-weight-medium">Phone: <span class="font-weight-regular">Not provided</span></div>
+				</template>
+				<template v-if="dataContactInfo.patientEmail != ''">
+					<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.patientEmail}}</span></div>
+				</template>
+				<template v-else>
+					<div class="font-weight-medium">E-mail: <span class="font-weight-regular">Not provided</span></div>
+				</template>
 			</v-col>
 		</v-row>
 
