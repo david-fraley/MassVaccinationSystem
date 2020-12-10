@@ -110,7 +110,7 @@
                 Proceed with vaccination?
             </v-card-title>
             <v-row align="center" justify="center">
-              <v-radio-group v-model="vaccinationProceed" row>
+              <v-radio-group v-model="vaccinationProceed" row @change="vaccinationProceedDecision()">
                     <v-radio
                       label="Yes"
                       value="Yes"
@@ -152,6 +152,17 @@
      isScreeningChecklistComplete()
      {
        return (this.patientInfoComfirmed && this.consentFormSigned && this.screeningCompleted && this.factSheetProvided); 
+     },
+     vaccinationProceedDecision()
+     {
+       if(this.vaccinationProceed == "Yes")
+       {
+         this.$emit('VaccinationProceed_Yes')
+       }
+       else
+       {
+         this.$emit('VaccinationProceed_No')
+       }
      }
     },
     components: 
