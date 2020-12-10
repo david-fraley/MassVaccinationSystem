@@ -12,7 +12,7 @@ let headers = {
 
 
 app.post("/Practitioner", (req, res) => {
-    let prac= req.body.Practitioner:
+    let prac= req.body.Practitioner;
         let resource = {
             resourceType: "Practitioner",
             name: [
