@@ -11,8 +11,8 @@ const headers = {
   "content-type": "application/fhir+json",
 };
 
-// Pass request to HAPI FHIR server
-app.all(generalEndpoints, (req, res) => {
+// Pass GET requests to HAPI FHIR server
+app.get(generalEndpoints, (req, res) => {
   axios({
     method: req.method,
     url: `${base}${req.url}`,
