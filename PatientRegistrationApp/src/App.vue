@@ -245,6 +245,7 @@ export default {
 	{
 		submit() {
 			alert('You clicked submit!');
+			this.goToNextPage()
 		},
 		goToPage(pageNum) {
 			this.page=pageNum
@@ -353,9 +354,7 @@ export default {
 						this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE);
 						break;
 					case config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE:
-						this.$refs.singlepatientreviewsubmit.verifyFormContents() ? 
-						this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE) : 
-						this.goToPage(config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE);
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE)
 						break;
 					default:
 						alert(this.page)
@@ -412,7 +411,7 @@ export default {
 			let numberOfSteps = 0;
 			if(this.isSinglePatientRegistration())
 			{
-				numberOfSteps = config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE;
+				numberOfSteps = config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE;
 			}
 			else if(this.isHouseholdRegistration())
 			{
