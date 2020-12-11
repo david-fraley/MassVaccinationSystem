@@ -6,7 +6,7 @@ app.use(express.json());
 app.set("json spaces", 2);
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
-const generalEndpoints = ["/Patient*", "/Organization*", "/Location*", "/Practitioner*"];
+const generalEndpoints = ["/Patient*", "/Organization*", "/Practitioner*", "/Location*", "/EpisodeOfCare*"];
 const headers = {
   "content-type": "application/fhir+json",
 };
@@ -31,51 +31,51 @@ app.post("/Location", (req, res) => {
     let loc = req.body.Location;
     let resource = {
         resourceType: "Location",
-        status: loc.status,
         name: loc.name,
+        status: loc.status,
         mode: loc.mode,
         type: [
           {
-            coding: [
-              {
-                code: loc.type,
-                display: loc.type,
-              },
-            ],
+              coding: [
+                {
+                    code: loc.type,
+                    display: loc.type,
+                },
+              ],
           },
         ],
 
-        address: [
-        {
+        address: {
           line: [loc.address.line],
           city: loc.address.city,
           state: loc.address.state,
           postalCode: loc.address.postalCode,
           country: loc.address.country,
         },
-      ],
 
         physicalType: {
-            coding: [
-                {
-                    code: loc.physicalType,
-                    display: loc.physicalType,
-                },
+          coding: [
+              {
+                system:"http://hl7.org/fhir/ValueSet/location-physical-type",
+                code: loc.physicalType,
+                display: loc.physicalType,
+              },
             ],
-        },
 
+        },
+    
     };
 
-    axios
+
+
+     axios
     .post(`${base}/Location`, resource, headers)
     .then((response) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
 
-
 });
-
 
 
 // Check-in given either
