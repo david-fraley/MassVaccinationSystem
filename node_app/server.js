@@ -28,13 +28,14 @@ app.post("/Location", (req, res) => {
               ],
           },
         ],
-        address: {
+        address: [{
           line: [loc.address.line],
           city: loc.address.city,
           state: loc.address.state,
           postalCode: loc.address.postalCode,
           country: loc.address.country,
         },
+        ],
 
         physicalType: {
           coding: [
