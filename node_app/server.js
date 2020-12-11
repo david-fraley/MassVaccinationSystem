@@ -30,13 +30,51 @@ app.all(generalEndpoints, (req, res) => {
 
 app.post("/Location", (req, res) => {
     let loc = req.body.Location;
-    
+    let resource = {
+        resourceType: "Location",
+        status: loc.status,
+        name: loc.name,
+        mode: loc.mode ,
+        type: [
+            {
+                coding: [
+                    {
+                        code: loc.type,
+                        display: loc.type
+                    },
+                ],
+
+            },
+        ],
+
+        address: {
+            line: [loc.address.line],
+            city: loc.address.city,
+            state: loc.address.state,
+            postalCode: loc.address,postalCode,
+            country: loc.address.country,
+        },
+
+        physicalType: {
+            coding: [
+                {
+                    code: loc.physicalType,
+                    display: loc.physicalType,
+                },
+            ],
+        },
+
+    };
+
+    axios
+    .post(`${base}/Location`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
 
 
-
-
-
-})
+});
 
 
 
