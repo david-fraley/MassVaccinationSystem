@@ -187,6 +187,14 @@
 								Submit
 							</v-btn>
 						</template>
+						<template v-else-if="isSinglePatientFollowUp() && isSinglePatientRegistration()">
+							<v-btn color="secondary" class="ma-2 white--text">
+								Print QR Code
+							</v-btn>
+							<v-btn color="secondary" class="ma-2 white--text">
+								Download QR Code
+							</v-btn>
+						</template>
 						<template v-else-if="isHouseholdPatientReviewSubmit()  && isHouseholdRegistration()">
 							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
 								<v-icon left large color="white">
