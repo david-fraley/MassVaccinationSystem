@@ -188,12 +188,7 @@
 							</v-btn>
 						</template>
 						<template v-else-if="isSinglePatientFollowUp() && isSinglePatientRegistration()">
-							<v-btn color="secondary" class="ma-2 white--text">
-								Print QR Code
-							</v-btn>
-							<v-btn color="secondary" class="ma-2 white--text">
-								Download QR Code
-							</v-btn>
+							<!--display no buttons-->
 						</template>
 						<template v-else-if="isHouseholdPatientReviewSubmit()  && isHouseholdRegistration()">
 							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
@@ -312,6 +307,11 @@ export default {
 			let returnValue = true;
 			(this.page == this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE) ? returnValue = true: returnValue = false;
 			return returnValue;
+		},
+		isSinglePatientFollowUp() {
+				let returnValue = true;
+				(this.page == config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE) ? returnValue = true: returnValue = false;
+				return returnValue;
 		},
 		jumpToHouseholdPersonalInfoPage(householdMemberNumber) {
 			if(householdMemberNumber == 1)
