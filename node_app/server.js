@@ -35,15 +35,14 @@ app.post("/Location", (req, res) => {
         name: loc.name,
         mode: loc.mode,
         type: [
-            {
-                coding: [
-                    {
-                        code: loc.type,
-                        display: loc.type,
-                    },
-                ],
-
-            },
+          {
+            coding: [
+              {
+                code: loc.type,
+                display: loc.type,
+              },
+            ],
+          },
         ],
 
         address: [
