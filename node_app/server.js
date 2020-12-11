@@ -35,7 +35,7 @@ app.post("/Location", (req, res) => {
             line: [loc.address.line],
             city: loc.address.city,
             state: loc.address.state,
-            postalCode: loc.address,postalCode,
+            postalCode: loc.address.postalCode,
             country: loc.address.country,
         },
 
