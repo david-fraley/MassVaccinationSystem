@@ -152,7 +152,7 @@
 								</template>
 
 								<!-- Household: Review and submit -->
-								<v-stepper-content :step="getNumberOfSteps()">
+								<v-stepper-content :step="getNumberOfSteps()-1">
 									<v-toolbar flat>
 										<v-toolbar-title>Review and submit registration</v-toolbar-title>
 									</v-toolbar>
@@ -439,7 +439,7 @@ export default {
 			}
 			else if(this.isHouseholdRegistration())
 			{
-				numberOfSteps = this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE;
+				numberOfSteps = this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE-2;
 			}
 				
 			return numberOfSteps;
