@@ -84,6 +84,14 @@
 									</v-toolbar>
 									<v-card flat><SinglePatientReviewSubmit/></v-card>
 								</v-stepper-content>
+
+								<!-- Single Patient: Follow up -->
+								<v-stepper-content step="7">
+									<v-toolbar flat>
+										<v-toolbar-title>QR Code Page</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><SinglePatientFollowUp/></v-card>
+								</v-stepper-content>
 							</template>
 
 							<!--Logic to check for the "household" registration path-->
@@ -221,6 +229,7 @@ import SinglePatientContactInfo from './components/SinglePatientContactInfo';
 import SinglePatientPersonalInfo from './components/SinglePatientPersonalInfo';
 import SinglePatientEmergencyContact from './components/SinglePatientEmergencyContact';
 import SinglePatientReviewSubmit from './components/SinglePatientReviewSubmit';
+import SinglePatientFollowUp from './components/SinglePatientFollowUp';
 import HouseholdRegisterNumber from './components/HouseholdRegisterNumber';
 import HouseholdHomeAddress from './components/HouseholdHomeAddress';
 import HouseholdContactInfo from './components/HouseholdContactInfo';
@@ -343,6 +352,11 @@ export default {
 						this.goToPage(config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE) : 
 						this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE);
 						break;
+					case config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE:
+						this.$refs.singlepatientreviewsubmit.verifyFormContents() ? 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE) : 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE);
+						break;
 					default:
 						alert(this.page)
 						break;
@@ -428,6 +442,7 @@ export default {
 		SinglePatientContactInfo,
 		SinglePatientEmergencyContact,
 		SinglePatientReviewSubmit,
+		SinglePatientFollowUp,
 		HouseholdRegisterNumber,
 		HouseholdHomeAddress,
 		HouseholdContactInfo,
