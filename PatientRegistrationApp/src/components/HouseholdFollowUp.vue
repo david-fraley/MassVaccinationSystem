@@ -12,17 +12,16 @@
 </template>
  
 <script>
-// import EventBus from '../eventBus'
 
-// 	export default {
-// 	data () {
-// 		return {
+export default {
+data () {
+	return {
 			
-// 		}
-// 	},
-// 	methods:
-// 	{
+	}
+	},
+methods:
+	{
 		
-// 	},
-// }
+	},
+}
 </script>
