@@ -159,6 +159,13 @@
 									<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
 
+								<!-- Household: Follow up -->
+								<v-stepper-content :step="getNumberOfSteps()">
+									<v-toolbar flat>
+										<v-toolbar-title>QR Code Page</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><HouseholdFollowUp/></v-card>
+								</v-stepper-content>
 							</template>
 						</v-stepper-items>
 					</v-stepper>
@@ -202,6 +209,9 @@
 								Submit
 							</v-btn>
 						</template>
+						<template v-else-if="isHouseholdFollowUp() && isHouseholdRegistration()">
+							<!--display no buttons-->
+						</template>
 						<template v-else>
 							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
 								<v-icon left large color="white">
@@ -240,6 +250,7 @@ import HouseholdPersonalInfo_1 from './components/HouseholdPersonalInfo_1';
 import HouseholdEmergencyContact from './components/HouseholdEmergencyContact';
 import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
+import HouseholdFollowUp from './components/HouseholdFollowUp';
 import config from './config.js';
 import EventBus from './eventBus'
 export default {
@@ -311,6 +322,11 @@ export default {
 		isSinglePatientFollowUp() {
 				let returnValue = true;
 				(this.page == config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE) ? returnValue = true: returnValue = false;
+				return returnValue;
+		},
+		isHouseholdFollowUp() {
+				let returnValue = true;
+				(this.page == config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE) ? returnValue = true: returnValue = false;
 				return returnValue;
 		},
 		jumpToHouseholdPersonalInfoPage(householdMemberNumber) {
@@ -423,7 +439,7 @@ export default {
 			}
 			else if(this.isHouseholdRegistration())
 			{
-				numberOfSteps = this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE;
+				numberOfSteps = this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE;
 			}
 				
 			return numberOfSteps;
@@ -456,7 +472,8 @@ export default {
 		HouseholdPersonalInfo_1,
 		HouseholdEmergencyContact,
 		HouseholdPersonalInfo_n,
-		HouseholdReviewSubmit
+		HouseholdReviewSubmit,
+		HouseholdFollowUp,
 	},
 	data () {
 		return {
