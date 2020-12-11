@@ -34,17 +34,7 @@ app.post("/Location", (req, res) => {
         name: loc.name,
         status: loc.status,
         mode: loc.mode,
-        type: [
-          {
-              coding: [
-                {
-                    code: loc.type,
-                    display: loc.type,
-                },
-              ],
-          },
-        ],
-
+        
         address: {
           line: [loc.address.line],
           city: loc.address.city,
@@ -65,8 +55,6 @@ app.post("/Location", (req, res) => {
         },
     
     };
-
-
 
      axios
     .post(`${base}/Location`, resource, headers)
