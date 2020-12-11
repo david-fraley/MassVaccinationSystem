@@ -35,7 +35,16 @@ app.post("/Location", (req, res) => {
         status: loc.status,
         mode: loc.mode,
         
-        
+        type: [
+          {
+              coding: [
+                {
+                    code: loc.type,
+                    display: loc.type,
+                },
+              ],
+          },
+        ],
 
         physicalType: {
           coding: [
