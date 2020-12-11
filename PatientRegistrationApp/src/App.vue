@@ -420,10 +420,13 @@ export default {
 						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 						break;
-					case (this.page - config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE <= 18):
+					case (this.page >= config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE && this.page <= this.getNumberOfHouseholdMembers()+config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE-2):
 						if (this.$refs.householdPersonalInfo[this.page - config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE].verifyFormContents()) {
 							this.page++;
 						}
+						break;
+					case (this.page == this.getNumberOfSteps()-1):
+						this.page++;
 						break;
 					default:
 						alert(this.page)
