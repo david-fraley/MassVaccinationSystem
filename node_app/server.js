@@ -33,26 +33,28 @@ app.post("/Location", (req, res) => {
         resourceType: "Location",
         status: loc.status,
         name: loc.name,
-        mode: loc.mode ,
+        mode: loc.mode,
         type: [
             {
                 coding: [
                     {
                         code: loc.type,
-                        display: loc.type
+                        display: loc.type,
                     },
                 ],
 
             },
         ],
 
-        address: {
-            line: [loc.address.line],
-            city: loc.address.city,
-            state: loc.address.state,
-            postalCode: loc.address.postalCode,
-            country: loc.address.country,
+        address: [
+        {
+          line: [loc.address.line],
+          city: loc.address.city,
+          state: loc.address.state,
+          postalCode: loc.address.postalCode,
+          country: loc.address.country,
         },
+      ],
 
         physicalType: {
             coding: [
