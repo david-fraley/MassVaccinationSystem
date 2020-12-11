@@ -2,6 +2,7 @@
 const configs = require("./config/server.js");
 
 const express = require("express");
+const app = express();
 const axios = require("axios").default;
 const Patient = require("./endpoints/Patient");
 const Organization = require("./models/Organization");
@@ -13,7 +14,6 @@ const EpisodeOfCare = require("./models/EpisodeOfCare");
 const Practitioner = require("./models/Practitioner");
 const SendHL7Message = require("./endpoints/SendHL7Message");
 
-const app = express();
 app.use(express.json());
 app.set("json spaces", 2);
 
