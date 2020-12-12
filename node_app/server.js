@@ -38,10 +38,27 @@ app.post("/Practitioner", (req, res) => {
                 suffix: [prt.suffix],
             },
         ],
-
+        telecom: [
+          {
+            system: "phone",
+            value: prt.phone,
+          },
+          {
+            system: "email",
+            value: prt.email
+          }
+        ],
         gender: prt.gender,
-        birthDate: prt.birthdate,
-
+        birthDate: prt.birthDate,
+        address: [
+          {
+            line: [prt.address.line],
+            city: prt.address.city,
+            state: prt.address.state,
+            postalCode: prt.address.postalCode,
+            country: prt.address.country,
+          },
+        ],
         qualification: [
         {
             code: {
