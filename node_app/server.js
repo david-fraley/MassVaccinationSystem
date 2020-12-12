@@ -26,36 +26,56 @@ app.get(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
-
 app.post("/Practitioner", (req, res) => {
   let prt = req.body.Practitioner;
   let resource = {
+<<<<<<< HEAD
       resourceType: "Practitioner",
       name: [
+=======
+    resourceType: "Practitioner",
+    name: [
+      {
+        family: prt.family,
+        given: [prt.given],
+        suffix: [prt.suffix],
+      },
+    ],
+    telecom: [
+      {
+        system: "phone",
+        value: prt.phone,
+      },
+      {
+        system: "email",
+        value: prt.email,
+      },
+    ],
+    gender: prt.gender,
+    birthDate: prt.birthDate,
+    address: [
+      {
+        line: [prt.address.line],
+        city: prt.address.city,
+        state: prt.address.state,
+        postalCode: prt.address.postalCode,
+        country: prt.address.country,
+      },
+    ],
+    qualification: [
+      {
+        code: {
+          coding: [
+>>>>>>> 5a1f80d96c97f639bd7492b90c43c04e69033063
             {
-                family: prt.family,
-                given: [prt.given],
-                suffix: [prt.suffix],
+              code: prt.qualificationCode,
+              display: prt.QualificationCode,
             },
-        ],
-
-        gender: prt.gender,
-        birthDate: prt.birthdate,
-
-        qualification: [
-        {
-            code: {
-                coding: [
-                            {
-                                code: prt.qualificationCode,
-                                display: prt.QualificationCode,
-                            },
-                        ],
-                    },
-
-                },
-            ],
-    };
+          ],
+        },
+      },
+    ],
+  };
 
   axios
     .post(`${base}/Practitioner`, resource, headers)
@@ -63,8 +83,6 @@ app.post("/Practitioner", (req, res) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
-
-
 });
 
 // Check-in given either
