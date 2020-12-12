@@ -26,62 +26,58 @@ app.get(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
-
 app.post("/Practitioner", (req, res) => {
-    let prt = req.body.Practitioner;
-    let resource = {
-        resourceType: "Practitioner",
-        name: [
+  let prt = req.body.Practitioner;
+  let resource = {
+    resourceType: "Practitioner",
+    name: [
+      {
+        family: prt.family,
+        given: [prt.given],
+        suffix: [prt.suffix],
+      },
+    ],
+    telecom: [
+      {
+        system: "phone",
+        value: prt.phone,
+      },
+      {
+        system: "email",
+        value: prt.email,
+      },
+    ],
+    gender: prt.gender,
+    birthDate: prt.birthDate,
+    address: [
+      {
+        line: [prt.address.line],
+        city: prt.address.city,
+        state: prt.address.state,
+        postalCode: prt.address.postalCode,
+        country: prt.address.country,
+      },
+    ],
+    qualification: [
+      {
+        code: {
+          coding: [
             {
-                family: prt.family,
-                given: [prt.given],
-                suffix: [prt.suffix],
+              code: prt.qualificationCode,
+              display: prt.QualificationCode,
             },
-        ],
-        telecom: [
-          {
-            system: "phone",
-            value: prt.phone,
-          },
-          {
-            system: "email",
-            value: prt.email
-          }
-        ],
-        gender: prt.gender,
-        birthDate: prt.birthDate,
-        address: [
-          {
-            line: [prt.address.line],
-            city: prt.address.city,
-            state: prt.address.state,
-            postalCode: prt.address.postalCode,
-            country: prt.address.country,
-          },
-        ],
-        qualification: [
-        {
-            code: {
-                coding: [
-                            {
-                                code: prt.qualificationCode,
-                                display: prt.QualificationCode,
-                            },
-                        ],
-                    },
+          ],
+        },
+      },
+    ],
+  };
 
-                },
-            ],
-    };
-
-    axios
+  axios
     .post(`${base}/Practitioner`, resource, headers)
     .then((response) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
-
-
 });
 
 // Check-in given either
