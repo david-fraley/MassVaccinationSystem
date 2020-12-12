@@ -5,12 +5,11 @@ EpisodeOfCare {
   managingOrganization : string
 }
 {
-  "EpisodeOfCare": [
+  "EpisodeOfCare":
     {
-      "status" : "planned"
-      "patient" : "1457642"
-      "managingOrganization" : "1703654"
-     }
-   ]
+      "status" : "planned",
+      "patient" : "Patient/example",
+      "managingOrganization" : "Organization/id"
+    }
 }
 */
