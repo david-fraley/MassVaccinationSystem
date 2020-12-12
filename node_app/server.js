@@ -6,7 +6,13 @@ app.use(express.json());
 app.set("json spaces", 2);
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
-const generalEndpoints = ["/Patient*", "/Organization*", "/Practitioner*", "/Location*", "/EpisodeOfCare*"];
+const generalEndpoints = [
+  "/Patient*",
+  "/Organization*",
+  "/Practitioner*",
+  "/Location*",
+  "/EpisodeOfCare*",
+];
 const headers = {
   "content-type": "application/fhir+json",
 };
@@ -26,30 +32,25 @@ app.get(generalEndpoints, (req, res) => {
     .catch((error) => handleError(res, error));
 });
 
-
 app.post("/EpisodeOfCare", (req, res) => {
-    let eoc = req.body.EpisodeOfCare;
-    let resource = {
-        resourceType: "EpisodeOfCare",
-        status: eoc.status,
-        patient: {
-            reference: eoc.patient,
-        },
-        managingOrganization: {
-            reference: eoc.managingOrganization,
-        },
-    
-    };
+  let eoc = req.body.EpisodeOfCare;
+  let resource = {
+    resourceType: "EpisodeOfCare",
+    status: eoc.status,
+    patient: {
+      reference: eoc.patient,
+    },
+    managingOrganization: {
+      reference: eoc.managingOrganization,
+    },
+  };
 
-
-
-     axios
+  axios
     .post(`${base}/EpisodeOfCare`, resource, headers)
     .then((response) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
-
 });
 
 // Check-in given either
