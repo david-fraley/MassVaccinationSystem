@@ -28,10 +28,10 @@ app.get(generalEndpoints, (req, res) => {
 
 
 app.post("/Practitioner", (req, res) => {
-    let prt = req.body.Practitioner;
-    let resource = {
-        resourceType: "Practitioner",
-        name: [
+  let prt = req.body.Practitioner;
+  let resource = {
+      resourceType: "Practitioner",
+      name: [
             {
                 family: prt.family,
                 given: [prt.given],
@@ -57,7 +57,7 @@ app.post("/Practitioner", (req, res) => {
             ],
     };
 
-    axios
+  axios
     .post(`${base}/Practitioner`, resource, headers)
     .then((response) => {
       res.json(response.data);
