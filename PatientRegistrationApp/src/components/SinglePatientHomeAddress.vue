@@ -1,79 +1,74 @@
 <template>
 	<v-container fluid>
 	<v-row>
-     <v-radio-group
-        required
-        :rules="[v => !!v || 'This field is required']"
-        v-model="homeAddressAvailableRadioButtons"
-      >
-        <v-col align="right" cols="12">
-          <v-radio label="I have a home address" value="yes" @change="HomeAddressAvailable()"></v-radio>
-          <v-radio label="I do not have a home address" value="no" @change="HomeAddressNotAvailable()"></v-radio>
-        </v-col>
-      </v-radio-group>
+		<v-col cols="5" sm="5" md="5">
+			<v-select
+				required
+				:rules="[v => !!v || 'Address Type is required']"
+				v-model="addressType"
+				:items="addressTypeOptions"
+				prepend-icon="mdi-menu-right"
+			>
+				<template #label>
+					<span class="red--text"><strong>* </strong></span>Address Type
+				</template>
+			</v-select>
+		</v-col>
     </v-row>
 		<v-row>
 			<v-col cols="12" sm="12" md="12">
 				<v-text-field
-					id = "addr"
 					required
 					:rules="[v => !!v || 'Address field is required']"
-					v-model="lineAddress"
-					v-show="homeAddressAvailable"
+					v-model="lineAddress1"
 					prepend-icon="mdi-menu-right">
 						<template #label>
-						<span class="red--text"><strong>* </strong></span>Home Address
+						<span class="red--text"><strong>* </strong></span>Address Line 1
 						</template>
 				</v-text-field>
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="6" sm="4" md="3">
+			<v-col cols="12" sm="12" md="12">
+				<v-text-field
+					v-model="lineAddress2"
+					prepend-icon="mdi-menu-right"
+					label="Address Line 2">
+				</v-text-field>
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-col cols="5" sm="5" md="5">
 				<v-text-field
 					id = "city"
 					required
 					:rules="[v => !!v || 'City field is required']"
 					v-model="cityAddress"
-					v-show="homeAddressAvailable"
 					prepend-icon="mdi-menu-right">
 						<template #label>
 						<span class="red--text"><strong>* </strong></span>City
 						</template>
 				</v-text-field>
 			</v-col>
-				<v-col class="d-flex" cols="1" sm="1" md="1">
+				<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "state"
 					required
 					:rules="[v => !!v || 'State field is required']"
 					v-model="stateAddress"
-					v-show="homeAddressAvailable"
-                    :items="state">
+					:items="state">
 						<template #label>
 						<span class="red--text"><strong>* </strong></span>State
 						</template>
 				</v-select>
 			</v-col>
-			<v-col class="d-flex" cols="3" sm="3">
-				<v-text-field
-				id = "county"
-					required
-					:rules="[v => !!v || 'County field is required']"
-					v-model="districtAddress"
-					v-show="homeAddressAvailable">
-						<template #label>
-						<span class="red--text"><strong>* </strong></span>County
-						</template>
-				</v-text-field>
-			</v-col>
-			<v-col class="d-flex" cols="2" sm="2">
+			<v-col class="d-flex" cols="2" sm="2" md="2">
 				<v-select
 				id = "country"
 					required
 					:rules="[v => !!v || 'Country field is required']"
 					v-model="countryAddress"
-					v-show="homeAddressAvailable"
-                    :items="country">
+					:items="country">
 						<template #label>
 						<span class="red--text"><strong>* </strong></span>Country
 						</template>
@@ -84,8 +79,7 @@
 					id = "zipcode"
 					required
 					:rules="postalCodeRules"
-					v-model="postalCode"
-					v-show="homeAddressAvailable">
+					v-model="postalCode">
 						<template #label>
 						<span class="red--text"><strong>* </strong></span>Zipcode
 						</template>
@@ -124,46 +118,26 @@ import EventBus from '../eventBus'
 		'TX', 'UT', 'VT', 'VI', 'VA',
 		'WA', 'WV', 'WI', 'WY',
 		],
+			addressTypeOptions: ["Home", "Business", "Temporary"],
 			country: ['USA'],
-			lineAddress: '',
+			addressType: '',
+			lineAddress1: '',
+			lineAddress2: '',
 			cityAddress: '',
-			districtAddress: '',
 			stateAddress: '',
 			countryAddress: 'USA',
 			postalCode: '',
-			homeAddressAvailable: true,
-			homeAddressAvailableRadioButtons: 'yes'
 		}				
 	},
-	
-	rules1: {
-        postalCode: [{
-			required: true,
-			message: 'Please enter Mobile Number',
-			trigger: 'blur'
-        }, {
-          min: 10,
-          max: 10,
-          message: 'Length must be 10',
-          trigger: 'blur'
-        }, {
-          pattern: /^\d*$/,
-          message: 'Must be all numbers',
-          trigger: 'blur'
-        }, {
-          pattern: /^[789]/,
-          message: 'Must start 7, 8 or 9',
-          trigger: 'blur'
-        }]
-      },
 	
 	methods: {
 		sendHomeAddressInfoToReviewPage()
 		{
 		const homeAddressPayload = {
-			lineAddress: this.lineAddress,
+			addressType: this.addressType,
+			lineAddress1: this.lineAddress1,
+			lineAddress2: this.lineAddress2,
 			cityAddress: this.cityAddress,
-			districtAddress: this.districtAddress,
 			stateAddress: this.stateAddress,
 			countryAddress: this.countryAddress,
 			postalCode: this.postalCode
@@ -176,98 +150,74 @@ import EventBus from '../eventBus'
 			var valid = true
 			var message = "Woops! You need to enter the following field(s):"
 			
-		if(this.homeAddressAvailable)
-		{	
-			if(this.lineAddress == "") 
-			{
-				message += " Address"
-				valid = false
+		if(this.addressType == "") 
+		{
+			message += " Address Type"
+			valid = false
+		}
+		
+		if(this.lineAddress1 == "") 
+		{
+			if(!valid) {
+				message +=","
 			}
+			message += " Address"
+			valid = false
+		}
 			
 			
-			if(this.cityAddress == "") 
-			{
+		if(this.cityAddress == "") 
+		{
 			if(!valid)
 				{
 				message +=","
 				}
 				message += " City"
 				valid = false
-			}
+		}
 				
 			
-			if(this.stateAddress == "") 
-			{
+		if(this.stateAddress == "") 
+		{
 			if(!valid)
 				{
 				message +=","
 				}
 				message += " State"
 				valid = false
-			}
+		}
 				
 			
-			if(this.districtAddress == "") 
-			{
-			if(!valid)
-				{
-				message +=","
-				}
-				message += " County"
-				valid = false
-			}
-				
-			
-			if(this.countryAddress == "") 
-			{
+		if(this.countryAddress == "") 
+		{
 			if(!valid)
 				{
 				message +=","
 				}
 				message += " Country"
 				valid = false
-			}
+		}
 				
 			
-			if(this.postalCode == "") 
-			{
+		if(this.postalCode == "") 
+		{
 			if(!valid)
 				{
 				message +=","
 				}
 				message += " Zipcode"
 				valid = false
-			}
-			
 		}
 
-			if (valid == false) 
-			{
-				alert(message)
-				return false
-			}
-			
-			this.sendHomeAddressInfoToReviewPage();
-			return true;
-		},
-	HomeAddressAvailable()
-    {
-	this.homeAddressAvailable = true
-	this.lineAddress=""
-	this.cityAddress=""
-	this.stateAddress=""
-	this.districtAddress=""
-	this.postalCode=""
-    },
-    HomeAddressNotAvailable()
-    {
-	this.homeAddressAvailable = false
-	this.lineAddress="Not Available"
-	this.cityAddress="Not Available"
-	this.stateAddress="Not Available"
-	this.districtAddress="Not Available"
-	this.postalCode="Not Available"
-    },
+		if (valid == false) 
+		{
+			alert(message)
+			return false
+		}
+		
+		this.sendHomeAddressInfoToReviewPage();
+		return true;
 	},
+	}
 }
 </script>

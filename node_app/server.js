@@ -29,10 +29,6 @@ app.get(generalEndpoints, (req, res) => {
 app.post("/Practitioner", (req, res) => {
   let prt = req.body.Practitioner;
   let resource = {
-<<<<<<< HEAD
-      resourceType: "Practitioner",
-      name: [
-=======
     resourceType: "Practitioner",
     name: [
       {
@@ -66,7 +62,6 @@ app.post("/Practitioner", (req, res) => {
       {
         code: {
           coding: [
->>>>>>> 5a1f80d96c97f639bd7492b90c43c04e69033063
             {
               code: prt.qualificationCode,
               display: prt.QualificationCode,
@@ -83,6 +78,24 @@ app.post("/Practitioner", (req, res) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
+const generalEndpoints = ["/Patient*"];
+const headers = {
+  "content-type": "application/fhir+json",
+};
+
+// Pass request to HAPI FHIR server
+app.all(generalEndpoints, (req, res) => {
+  axios({
+    method: req.method,
+    url: `${base}${req.url}`,
+    data: req.body,
+    headers: headers,
+  })
+    .then((response) => {
+      // handle success
+      res.json(response.data);
+    })
+    .catch((error) => handleError(res, error));
 });
 
 // Check-in given either

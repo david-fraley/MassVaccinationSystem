@@ -18,7 +18,7 @@
 			</v-col>  
 			<v-col cols="8" sm="6">
 				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
-					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.suffix}}</span></div>
+					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.middleName}} {{dataPersonalInfo.suffix}}</span></div>
 				<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataPersonalInfo.birthDate}}</span></div>
 				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.gender}}</span></div>
 				<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
@@ -28,15 +28,19 @@
 		</v-row>
 		<v-row>
 			<v-col cols="12" sm="6" md="3">
-				<div class="font-weight-medium primary--text">Home Address </div>
+				<div class="font-weight-medium primary--text">Address</div>
 			</v-col>
 		</v-row>
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">{{dataHomeAddress.lineAddress}}</span></div>
-				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHomeAddress.cityAddress}}, 
-					{{dataHomeAddress.districtAddress}}, {{dataHomeAddress.stateAddress}}, {{dataHomeAddress.countryAddress}}, {{dataHomeAddress.postalCode}}</span></div>
+				<div class="font-weight-medium">Address Type:  <span class="font-weight-regular">{{dataHomeAddress.addressType}}</span></div>
+				<div class="font-weight-regular">{{dataHomeAddress.lineAddress1}}</div>
+				<template v-if="dataHomeAddress.lineAddress2 != ''">
+					<div class="font-weight-regular">{{dataHomeAddress.lineAddress2}}</div>
+				</template>
+				<div class="font-weight-regular">{{dataHomeAddress.cityAddress}}, {{dataHomeAddress.stateAddress}}, 
+					{{dataHomeAddress.countryAddress}}, {{dataHomeAddress.postalCode}}</div>
 			</v-col>
 		</v-row>
 

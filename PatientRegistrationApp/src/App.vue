@@ -3,7 +3,7 @@
     <v-main>
 		<v-container fill-height>
 			<v-layout justify-center align-center>
-				<v-card flat height="100%" width="100%" class="d-flex flex-column"> 
+				<v-card flat height="101%" width="100%" class="d-flex flex-column"> 
 					<v-stepper v-model="page" class="elevation-0">	
 						<v-toolbar flat height="100" color="primary" dark>
 							<v-toolbar-title style="font-size:3em" class="font-weight-bold">{{title}}</v-toolbar-title>
@@ -48,7 +48,7 @@
 								<!-- Single Patient: Home Address -->
 								<v-stepper-content step="2">
 									<v-toolbar flat >
-										<v-toolbar-title>Enter your home address</v-toolbar-title>
+										<v-toolbar-title>Enter your address</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientHomeAddress ref="singlepatienthomeaddress"/></v-card>				
 								</v-stepper-content>
@@ -159,36 +159,52 @@
 					<v-footer absolute color="white">
 						<template v-if="isGreetingPage()">
 							<v-spacer></v-spacer>
-							<v-icon large color="secondary" @click="goToNextPage()">
-								mdi-chevron-right
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToNextPage()">
+								Continue
+								<v-icon right large color="white">
+									mdi-chevron-right
+								</v-icon>
+							</v-btn>
 						</template>
 						<template v-else-if="isSinglePatientReviewSubmit() && isSinglePatientRegistration()">
-							<v-icon large color="secondary" @click="goToPreviousPage()">
-								mdi-chevron-left
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
+								<v-icon left large color="white">
+									mdi-chevron-left
+								</v-icon>
+								Back
+							</v-btn>
+							
 							<v-spacer></v-spacer>
-							<v-btn large color="secondary" @click="submit()">
+							<v-btn color="secondary" class="ma-2 white--text" @click="submit()">
 								Submit
 							</v-btn>
 						</template>
 						<template v-else-if="isHouseholdPatientReviewSubmit()  && isHouseholdRegistration()">
-							<v-icon large color="secondary" @click="goToPreviousPage()">
-								mdi-chevron-left
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
+								<v-icon left large color="white">
+									mdi-chevron-left
+								</v-icon>
+								Back
+							</v-btn>
 							<v-spacer></v-spacer>
-							<v-btn large color="secondary" @click="submit()">
+							<v-btn color="secondary" class="ma-2 white--text" @click="submit()">
 								Submit
 							</v-btn>
 						</template>
 						<template v-else>
-							<v-icon large color="secondary" @click="goToPreviousPage()">
-								mdi-chevron-left
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
+								<v-icon left large color="white">
+									mdi-chevron-left
+								</v-icon>
+								Back
+							</v-btn>
 							<v-spacer></v-spacer>
-							<v-icon large color="secondary" @click="goToNextPage()">
-								mdi-chevron-right
-							</v-icon>
+							<v-btn color="secondary" class="ma-2 white--text" @click="goToNextPage()">
+								Continue
+								<v-icon right large color="white">
+									mdi-chevron-right
+								</v-icon>
+							</v-btn>
 						</template>
 					</v-footer>
 				</v-card>
@@ -432,10 +448,13 @@ export default {
 </script>
 <style lang="css" scoped>
 
+	.v-btn:not(.v-btn--round).v-size--default {
+		font-size: 1.2rem;
+		min-width: 12rem;
+	}
 	.v-stepper__step {
 		padding: 16px;
 	}
-
 	.v-toolbar__title {
 		font-size:1.5rem
 	} 
