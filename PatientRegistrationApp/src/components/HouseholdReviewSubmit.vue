@@ -42,8 +42,9 @@
 							contain		
 							max-height="300"
 							max-width="300" 
-							:src="dataHouseholdPersonalInfo[0].householdPatientPhotoSrc"
-							v-bind:class="{ hidden: !dataHouseholdPersonalInfo[0].householdPatientPhotoSrc }">
+							:src="dataHouseholdPersonalInfo[0] ? dataHouseholdPersonalInfo[0].householdPatientPhotoSrc : undefined"
+							v-bind:class="{ hidden: 
+									dataHouseholdPersonalInfo[0] ? !dataHouseholdPersonalInfo[0].householdPatientPhotoSrc : true }">
 						</v-img>
 						<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
@@ -72,8 +73,9 @@
 								contain		
 								max-height="300"
 								max-width="300" 
-								:src="dataHouseholdPersonalInfo[index].householdPatientPhotoSrc"
-								v-bind:class="{ hidden: !dataHouseholdPersonalInfo[index].householdPatientPhotoSrc }">
+								:src="dataHouseholdPersonalInfo[index] ? dataHouseholdPersonalInfo[index].householdPatientPhotoSrc : undefined"
+								v-bind:class="{ hidden: 
+									dataHouseholdPersonalInfo[index] ? !dataHouseholdPersonalInfo[index].householdPatientPhotoSrc : true }">
 							</v-img>
 							<div class="font-weight-medium primary--text">Personal Info: Household Member #{{index+1}}</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdFamilyName}}, 

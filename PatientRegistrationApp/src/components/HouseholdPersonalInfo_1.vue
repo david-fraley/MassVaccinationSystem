@@ -96,7 +96,7 @@
         <!-- Current Photo -->
         <v-file-input
           accept="image/png, image/jpeg, image/bmp"
-          :rules="[(v) => v.size < 2097152 || 'Image size should be less than 2 MB!']"
+          :rules="[(v) => (v ? v.size : 0) < 2097152 || 'Image size should be less than 2 MB!']"
           placeholder="Upload a recent photo"
           v-model="householdPatientPhoto"
           label="Photo"
@@ -239,17 +239,16 @@ export default {
         valid = false;
       }
  
-      if( this.householdPatientPhoto ) {
-        if (this.householdPatientPhoto.size > 2097152) {
-          if (!valid) {
-            message += "\n";
-            message += "Your selected photo is too large. Please resubmit one under 2MBs.";
-          }
-          else {
-            message = "Your selected photo is too large. Please resubmit one under 2MBs.";
-          }
-          valid = false;
+
+      if (this.householdPatientPhoto && this.householdPatientPhoto.size > 2097152) {
+        if (!valid) {
+          message += "\n";
+          message += "Your selected photo is too large. Please resubmit one under 2MBs.";
         }
+        else {
+          message = "Your selected photo is too large. Please resubmit one under 2MBs.";
+        }
+        valid = false;
       }
 
       if (valid == false) {
