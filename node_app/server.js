@@ -57,6 +57,7 @@ app.post("/Observation", (req, res) => {
     encounter: {
       reference: observation.encounter,
     },
+    valueString: observation.value,
     effectivePeriod: {
       start: observation.effectiveStart,
       end: observation.effectiveEnd,

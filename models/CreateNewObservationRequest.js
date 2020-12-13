@@ -5,6 +5,7 @@ Observation {
   code : enum (?)
   subject : string "Patient/id"
   encounter : string "Encounter/id"
+  value: string
   effectiveStart: string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
   effectiveEnd: string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
   performer : [string] "{Practitioner/PractitionerRole/Organization}/id"
@@ -17,6 +18,7 @@ Observation {
     "code": "45708-5",
     "subject": "Patient/example",
     "encounter": "Encounter/715",
+    "value": "notes",
     "effectiveStart": "2016-05-18T22:33:22Z",
     "effectiveEnd": "2016-05-18T22:38:22Z",
     "performer": [
