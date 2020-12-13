@@ -1,29 +1,41 @@
 <template>
-  <v-container fluid>
-    <v-row align="center" justify="center">
-      <!-- Last name -->
-      <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field
-          label="Last Name"
-          id="lastName"
-          required
-          :rules="[(v) => !!v || 'Last name field is required']"
+	<v-container fluid>
+	<v-row align="center" justify="left">
+		<!-- Last name -->
+		<v-col class="d-flex" cols="4" sm="4">
+        <v-text-field 
+          id="lastName" 
+		required
+          :rules="[v => !!v || 'Last name field is required']"
           v-model="householdFamilyName"
-          prepend-icon="mdi-menu-right"
-        ></v-text-field>
-      </v-col>
+          prepend-icon="mdi-menu-right">
+			<template #label>
+			<span class="red--text"><strong>* </strong></span>Last Name
+			</template>
+        </v-text-field>
+		</v-col>
 
-      <!-- First name -->
-      <v-col class="d-flex" cols="5" sm="5">
-        <v-text-field
-          label="First Name"
-          id="firstName"
-          required
-          :rules="[(v) => !!v || 'First name field is required']"
-          v-model="householdGivenName"
-        >
+		<!-- First name -->
+		<v-col class="d-flex" cols="3" sm="3">
+        <v-text-field  
+			id="firstName" 
+			required
+			:rules="[v => !!v || 'First name field is required']"
+			v-model="householdGivenName">
+				<template #label>
+				<span class="red--text"><strong>* </strong></span>First Name
+				</template>
         </v-text-field>
       </v-col>
+
+      <!-- Middle name -->
+		<v-col class="d-flex" cols="3" sm="3">
+      <v-text-field  
+			id="middleNameID" 
+			v-model="householdMiddleName"
+      label="Middle Name">
+      </v-text-field>
+    </v-col>
 
       <!-- Suffix -->
       <v-col class="d-flex" cols="2" sm="2">
@@ -41,8 +53,8 @@
       </v-col>
     </v-row>
 
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="5" sm="5">
+    <v-row align="center" justify="left">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Date of Birth -->
         <v-menu
           attach
@@ -53,14 +65,17 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              v-model="householdDate"
-              label="Date of Birth"
-              :rules="birthdateRules"
+				v-model="householdDate"
+				:rules="birthdateRules"
               placeholder="YYYY-MM-DD"
               v-mask="'####-##-##'"
               prepend-icon="mdi-calendar"
               @click:prepend="on.click"
-            ></v-text-field>
+              >
+				<template #label>
+				<span class="red--text"><strong>* </strong></span>Date of Birth
+				</template>
+			</v-text-field>
           </template>
 
           <v-date-picker
@@ -75,16 +90,18 @@
       <v-spacer></v-spacer>
     </v-row>
 
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="5" sm="5">
+    <v-row align="center" justify="left">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Gender identity -->
         <v-select
           :items="genderID"
-          label="Gender identity"
-          required
-          :rules="[(v) => !!v || 'Gender identity field is required']"
+		required
+          :rules="[v => !!v || 'Gender identity field is required']"
           v-model="householdGender"
-          prepend-icon="mdi-menu-right"
+          prepend-icon="mdi-menu-right">
+			<template #label>
+			<span class="red--text"><strong>* </strong></span>Gender Identity
+			</template>
         ></v-select>
       </v-col>
 
@@ -92,7 +109,7 @@
     </v-row>
 
     <v-row align="left" justify="left">
-      <v-col class="d-flex" cols="5" sm="5">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Current Photo -->
         <v-file-input
           accept="image/png, image/jpeg, image/bmp"
@@ -105,8 +122,8 @@
       </v-col>
     </v-row>
 
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="5" sm="5">
+    <v-row align="center" justify="left">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Race -->
         <v-select
           v-model="householdRaceSelections"
@@ -119,8 +136,8 @@
       <v-spacer></v-spacer>
     </v-row>
 
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="5" sm="5">
+    <v-row align="center" justify="left">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Ethnicity -->
         <v-select
           v-model="householdEthnicitySelection"
@@ -156,6 +173,7 @@ export default {
       ],
       householdFamilyName: "",
       householdGivenName: "",
+      householdMiddleName: "",
       householdSuffix: "",
       householdDate: "",
       householdGender: "",
@@ -183,6 +201,7 @@ export default {
       const householdPersonalInfoPayload = {
         householdFamilyName: this.householdFamilyName,
         householdGivenName: this.householdGivenName,
+        householdMiddleName: this.householdMiddleName,
         householdSuffix: this.householdSuffix,
         householdBirthDate: this.householdDate,
         householdGender: this.householdGender,
@@ -201,9 +220,7 @@ export default {
       if (this.checkbox) {
         //all household members have the same last name
         EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", this.householdFamilyName);
-      } else {
-        EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", "");
-      }
+      } 
     },
     verifyFormContents() {
       //add logic to check form contents
@@ -279,3 +296,5 @@ export default {
   },
 };
 </script>
+
+

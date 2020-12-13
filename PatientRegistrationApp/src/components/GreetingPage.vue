@@ -4,7 +4,7 @@
 			<v-col cols="4">
 			</v-col>
 			<v-col cols="4">
-				<span><p style="font-size:1.5em" class="font-weight-regular">Select your preferred language</p></span>
+				<span><p style="font-size:1.5em" class="font-weight-regular"><span style="color:red">* </span>Select your preferred language</p></span>
 			</v-col>
 			<v-col cols="4">
 			</v-col>
@@ -32,7 +32,7 @@
 			<v-col cols="4">
 			</v-col>
 			<v-col cols="4">
-				<span><p style="font-size:1.5em" class="font-weight-regular"><br />Select your registration type</p></span>
+				<span><p style="font-size:1.5em" class="font-weight-regular"><br /><span style="color:red">* </span>Select your registration type</p></span>
 			</v-col>
 			<v-col cols="4">
 			</v-col>
@@ -139,4 +139,3 @@ export default {
 }
 
 </style>
-
