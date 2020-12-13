@@ -159,7 +159,7 @@ export default {
       householdSuffix: "",
       householdDate: "",
       householdGender: "",
-      householdPatientPhoto: "",
+      householdPatientPhoto: [],
       householdRaceSelections: "",
       householdEthnicitySelection: "",
       preferredLanguage: "",

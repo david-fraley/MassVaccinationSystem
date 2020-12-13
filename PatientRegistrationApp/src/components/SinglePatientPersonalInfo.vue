@@ -150,7 +150,7 @@ export default {
       suffix: "",
       date: "",
       gender: "",
-      patientPhoto: undefined,
+      patientPhoto: [],
       raceSelections: "",
       ethnicitySelection: "",
       preferredLanguage: "",
