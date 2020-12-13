@@ -8,7 +8,7 @@
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="4" sm="3" v-bind:class="{ hidden: !dataPersonalInfo.patientPhotoSrc }">
+			<v-col style="flex-grow:0" v-bind:class="{ hidden: dataPersonalInfo ? !dataPersonalInfo.patientPhotoSrc : true }">
 				<v-img
 					style="float:left"
 					contain		
