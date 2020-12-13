@@ -178,7 +178,7 @@ export default {
         birthDate: this.date,
         gender: this.gender,
         patientPhoto: this.patientPhoto,
-        patientPhotoSrc:  this.patientPhoto  ? URL.createObjectURL( this.patientPhoto ) : undefined,
+        patientPhotoSrc:  (this.patientPhoto && this.patientPhoto.size) ? URL.createObjectURL( this.patientPhoto ) : undefined,
         raceSelections: this.raceSelections,
         ethnicitySelection: this.ethnicitySelection,
         preferredLanguage: this.preferredLanguage,
