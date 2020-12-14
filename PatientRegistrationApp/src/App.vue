@@ -192,7 +192,7 @@
 							<v-spacer></v-spacer>
 							<v-dialog
 								v-model="dialog"
-								width="500"
+								width="40rem"
 							>
 								<template v-slot:activator="{ on, attrs}">
 									<v-btn color="secondary" class="ma-2 white--text" v-bind="attrs" v-on="on">
@@ -218,7 +218,7 @@
 										<v-btn
 											color="primary"
 											text
-											@click="dialog = false">
+											@click="submit()">
 											Yes
 										</v-btn>
 									</v-card-actions>
@@ -238,7 +238,7 @@
 							<v-spacer></v-spacer>
 							<v-dialog
 								v-model="dialog"
-								width="500"
+								width="40rem"
 							>
 								<template v-slot:activator="{ on, attrs}">
 									<v-btn color="secondary" class="ma-2 white--text" v-bind="attrs" v-on="on">
@@ -264,7 +264,7 @@
 										<v-btn
 											color="primary"
 											text
-											@click="dialog = false">
+											@click="submit()">
 											Yes
 										</v-btn>
 									</v-card-actions>
@@ -320,7 +320,6 @@ export default {
 	methods: 
 	{
 		submit() {
-			alert('You clicked submit!');
 			this.goToNextPage()
 		},
 		goToPage(pageNum) {
