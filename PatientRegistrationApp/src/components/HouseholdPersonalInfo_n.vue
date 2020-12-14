@@ -137,8 +137,8 @@
       <v-col class="d-flex" cols="4" sm="4">
         <!-- Current Photo -->
         <v-file-input
-          :rules="rules"
           accept="image/png, image/jpeg, image/bmp"
+          :rules="[(v) => (v ? v.size : 0) < 2097152 || 'Image size should be less than 2 MB!']"
           placeholder="Upload a recent photo"
           v-model="householdPatientPhoto"
           label="Photo"
@@ -213,7 +213,7 @@ export default {
       householdSuffix: "",
       householdDate: "",
       householdGender: "",
-      householdPatientPhoto: "",
+      householdPatientPhoto: [],
       householdRaceSelections: "",
       householdEthnicitySelection: "",
       preferredLanguage: "",
@@ -247,6 +247,7 @@ export default {
         householdBirthDate: this.householdDate,
         householdGender: this.householdGender,
         householdPatientPhoto: this.householdPatientPhoto,
+        householdPatientPhotoSrc: (this.householdPatientPhoto && this.householdPatientPhoto.size) ? URL.createObjectURL( this.householdPatientPhoto ) : undefined,
         householdRaceSelections: this.householdRaceSelections,
         householdEthnicitySelection: this.householdEthnicitySelection,
       };
@@ -304,6 +305,18 @@ export default {
         message += " Relationship";
         valid = false;
       }
+
+      if (this.householdPatientPhoto && this.householdPatientPhoto.size > 2097152) {
+        if (!valid) {
+          message += "\n";
+          message += "Your selected photo is too large. Please resubmit one under 2MBs.";
+        }
+        else {
+          message = "Your selected photo is too large. Please resubmit one under 2MBs.";
+        }
+        valid = false;
+      }
+      
 
       if (valid == false) {
         alert(message);

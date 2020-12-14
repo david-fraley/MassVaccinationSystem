@@ -61,6 +61,14 @@
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
 					<v-card class="pa-2" flat min-width=33%>
+						<v-img 
+							contain		
+							max-height="300"
+							max-width="300" 
+							:src="dataHouseholdPersonalInfo[0] ? dataHouseholdPersonalInfo[0].householdPatientPhotoSrc : undefined"
+							v-bind:class="{ hidden: 
+									dataHouseholdPersonalInfo[0] ? !dataHouseholdPersonalInfo[0].householdPatientPhotoSrc : true }">
+						</v-img>
 						<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
 						{{dataHouseholdPersonalInfo[0].householdGivenName}} {{dataHouseholdPersonalInfo[0].householdMiddleName}} {{dataHouseholdPersonalInfo[0].householdSuffix}}</span></div>
@@ -84,6 +92,14 @@
 					<template v-for="index in getNumberOfHouseholdMembers()-1">
 						<v-card class="pa-2" flat min-width=33%
 						:key="index">
+							<v-img
+								contain		
+								max-height="300"
+								max-width="300" 
+								:src="dataHouseholdPersonalInfo[index] ? dataHouseholdPersonalInfo[index].householdPatientPhotoSrc : undefined"
+								v-bind:class="{ hidden: 
+									dataHouseholdPersonalInfo[index] ? !dataHouseholdPersonalInfo[index].householdPatientPhotoSrc : true }">
+							</v-img>
 							<div class="font-weight-medium primary--text">Personal Info: Household Member #{{index+1}}</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdFamilyName}}, 
 							{{dataHouseholdPersonalInfo[index].householdGivenName}} {{dataHouseholdPersonalInfo[index].householdMiddleName}} {{dataHouseholdPersonalInfo[index].householdSuffix}}</span></div>
@@ -200,3 +216,10 @@ import EventBus from '../eventBus'
 	},
 }
 </script>
+<style lang="css" scoped>
+
+	.hidden {
+		display: none;
+	}
+
+</style>
