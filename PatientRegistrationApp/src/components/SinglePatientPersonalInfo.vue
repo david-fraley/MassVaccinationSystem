@@ -118,8 +118,8 @@
       <v-col cols="5">
         <!-- Current Photo -->
         <v-file-input
-          :rules="rules"
           accept="image/png, image/jpeg, image/bmp"
+          :rules="[(v) => (v ? v.size : 0) < 2097152 || 'Image size should be less than 2 MB!']"
           placeholder="Upload a recent photo"
           v-model="patientPhoto"
           label="Photo"
@@ -156,7 +156,7 @@ export default {
       suffix: "",
       date: "",
       gender: "",
-      patientPhoto: "",
+      patientPhoto: [],
       race: "",
       ethnicity: "",
       preferredLanguage: "",
@@ -185,6 +185,7 @@ export default {
         birthDate: this.date,
         gender: this.gender,
         patientPhoto: this.patientPhoto,
+        patientPhotoSrc:  (this.patientPhoto && this.patientPhoto.size) ? URL.createObjectURL( this.patientPhoto ) : undefined,
         race: this.race,
         ethnicity: this.ethnicity,
         preferredLanguage: this.preferredLanguage,
@@ -222,6 +223,17 @@ export default {
           message += ",";
         }
         message += " Gender Identity";
+        valid = false;
+      }
+
+      if (this.patientPhoto && this.patientPhoto.size > 2097152) {
+        if (!valid) {
+          message += "\n";
+          message += "Your selected photo is too large. Please resubmit one under 2MBs.";
+        }
+        else {
+          message = "Your selected photo is too large. Please resubmit one under 2MBs.";
+        }
         valid = false;
       }
 
