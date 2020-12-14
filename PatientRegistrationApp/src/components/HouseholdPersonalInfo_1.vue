@@ -243,7 +243,7 @@ export default {
       }
  
 
-      if (this.householdPatientPhoto && this.householdPatientPhoto.size > 2097152) {
+      if (this.patientPhoto && this.patientPhoto.size > 2097152) {
         if (!valid) {
           message += "\n";
           message += "Your selected photo is too large. Please resubmit one under 2MBs.";
