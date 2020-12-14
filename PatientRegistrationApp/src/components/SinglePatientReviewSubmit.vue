@@ -20,7 +20,7 @@
 			<v-col cols="8" sm="6">
 				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
 					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.middleName}} {{dataPersonalInfo.suffix}}</span></div>
-				<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataPersonalInfo.birthDate}}</span></div>
+				<div class="font-weight-medium">Date of Birth:  <span class="font-weight-regular">{{dataPersonalInfo.birthDate}}</span></div>
 				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.gender}}</span></div>
 				<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
 				<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataPersonalInfo.ethnicitySelection}}</span></div>
