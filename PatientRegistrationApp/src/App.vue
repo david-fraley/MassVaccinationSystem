@@ -326,7 +326,7 @@ export default {
 		},
 		isHouseholdFollowUp() {
 				let returnValue = true;
-				(this.page == config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE) ? returnValue = true: returnValue = false;
+				(this.page == config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE + this.getNumberOfHouseholdMembers()-2) ? returnValue = true: returnValue = false;
 				return returnValue;
 		},
 		jumpToHouseholdPersonalInfoPage(householdMemberNumber) {
