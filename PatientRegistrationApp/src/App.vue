@@ -84,6 +84,14 @@
 									</v-toolbar>
 									<v-card flat><SinglePatientReviewSubmit/></v-card>
 								</v-stepper-content>
+
+								<!-- Single Patient: Follow up -->
+								<v-stepper-content step="7">
+									<v-toolbar flat>
+										<v-toolbar-title>QR Code Page</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><SinglePatientFollowUp/></v-card>
+								</v-stepper-content>
 							</template>
 
 							<!--Logic to check for the "household" registration path-->
@@ -144,13 +152,20 @@
 								</template>
 
 								<!-- Household: Review and submit -->
-								<v-stepper-content :step="getNumberOfSteps()">
+								<v-stepper-content :step="getNumberOfSteps()-1">
 									<v-toolbar flat>
 										<v-toolbar-title>Review and submit registration</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
 
+								<!-- Household: Follow up -->
+								<v-stepper-content :step="getNumberOfSteps()">
+									<v-toolbar flat>
+										<v-toolbar-title>QR Code Page</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><HouseholdFollowUp/></v-card>
+								</v-stepper-content>
 							</template>
 						</v-stepper-items>
 					</v-stepper>
@@ -179,40 +194,40 @@
 								v-model="dialog"
 								width="500"
 							>
-							<template v-slot:activator="{ on, attrs}">
-							<v-btn color="secondary" class="ma-2 white--text" v-bind="attrs" v-on="on">
-								Submit
-							</v-btn>
+								<template v-slot:activator="{ on, attrs}">
+									<v-btn color="secondary" class="ma-2 white--text" v-bind="attrs" v-on="on">
+										Submit
+									</v-btn>
+								</template>
+								<v-card>
+									<v-card-title class="headline grey lighten-2 justify-center">
+										Are you sure you want to submit?
+									</v-card-title>
+									<v-card-text class="text-center">
+										Make sure that the information you provided is correct and you want to proceed.
+									</v-card-text>
+									<v-divider></v-divider>
+									<v-card-actions>
+										<v-btn	
+											color="primary"
+											text
+											@click="dialog = false">
+											No
+										</v-btn>
+										<v-spacer></v-spacer>
+										<v-btn
+											color="primary"
+											text
+											@click="dialog = false">
+											Yes
+										</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-dialog>
 						</template>
-						<v-card>
-						<v-card-title class="headline grey lighten-2 justify-center">
-						Are you sure you want to submit?
-						</v-card-title>
-
-						<v-card-text class="text-center">
-						Make sure that the information you provided is correct and you want to proceed.
-						</v-card-text>
-
-						<v-divider></v-divider>
-						<v-card-actions>
-						<v-btn	
-						color="primary"
-						text
-						@click="dialog = false">
-						No
-						</v-btn>
-						<v-spacer></v-spacer>
-					<v-btn
-					color="primary"
-					text
-					@click="dialog = false"
-					>
-					Yes
-				</v-btn>
-			</v-card-actions>
-		</v-card>
-	</v-dialog>
-</template>
+						<template v-else-if="isSinglePatientFollowUp() && isSinglePatientRegistration()">
+						<!--display no buttons-->
+						</template>
 						<template v-else-if="isHouseholdPatientReviewSubmit()  && isHouseholdRegistration()">
 							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
 								<v-icon left large color="white">
@@ -225,40 +240,40 @@
 								v-model="dialog"
 								width="500"
 							>
-							<template v-slot:activator="{ on, attrs}">
-							<v-btn color="secondary" class="ma-2 white--text" v-bind="attrs" v-on="on">
-								Submit
-							</v-btn>
+								<template v-slot:activator="{ on, attrs}">
+									<v-btn color="secondary" class="ma-2 white--text" v-bind="attrs" v-on="on">
+										Submit
+									</v-btn>
+								</template>
+								<v-card>
+									<v-card-title class="headline grey lighten-2 justify-center">
+										Are you sure you want to submit?
+									</v-card-title>
+									<v-card-text class="text-center">
+										Make sure that the information you provided is correct and you want to proceed.
+									</v-card-text>
+									<v-divider></v-divider>
+									<v-card-actions>
+										<v-btn	
+											color="primary"
+											text
+											@click="dialog = false">
+											No
+										</v-btn>
+										<v-spacer></v-spacer>
+										<v-btn
+											color="primary"
+											text
+											@click="dialog = false">
+											Yes
+										</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-dialog>
 						</template>
-						<v-card>
-						<v-card-title class="headline grey lighten-2 justify-center">
-						Are you sure you want to submit?
-						</v-card-title>
-
-						<v-card-text class="text-center">
-						Make sure that the information you provided is correct and you want to proceed.
-						</v-card-text>
-
-						<v-divider></v-divider>
-						<v-card-actions>
-						<v-btn	
-						color="primary"
-						text
-						@click="dialog = false">
-						No
-						</v-btn>
-						<v-spacer></v-spacer>
-					<v-btn
-					color="primary"
-					text
-					@click="dialog = false"
-					>
-					Yes
-				</v-btn>
-			</v-card-actions>
-		</v-card>
-	</v-dialog>
-</template>
+						<template v-else-if="isHouseholdFollowUp() && isHouseholdRegistration()">
+							<!--display no buttons-->
+						</template>
 						<template v-else>
 							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
 								<v-icon left large color="white">
@@ -289,6 +304,7 @@ import SinglePatientContactInfo from './components/SinglePatientContactInfo';
 import SinglePatientPersonalInfo from './components/SinglePatientPersonalInfo';
 import SinglePatientEmergencyContact from './components/SinglePatientEmergencyContact';
 import SinglePatientReviewSubmit from './components/SinglePatientReviewSubmit';
+import SinglePatientFollowUp from './components/SinglePatientFollowUp';
 import HouseholdRegisterNumber from './components/HouseholdRegisterNumber';
 import HouseholdHomeAddress from './components/HouseholdHomeAddress';
 import HouseholdContactInfo from './components/HouseholdContactInfo';
@@ -296,6 +312,7 @@ import HouseholdPersonalInfo_1 from './components/HouseholdPersonalInfo_1';
 import HouseholdEmergencyContact from './components/HouseholdEmergencyContact';
 import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
+import HouseholdFollowUp from './components/HouseholdFollowUp';
 import config from './config.js';
 import EventBus from './eventBus'
 export default {
@@ -304,6 +321,7 @@ export default {
 	{
 		submit() {
 			alert('You clicked submit!');
+			this.goToNextPage()
 		},
 		goToPage(pageNum) {
 			this.page=pageNum
@@ -363,6 +381,16 @@ export default {
 			(this.page == this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE) ? returnValue = true: returnValue = false;
 			return returnValue;
 		},
+		isSinglePatientFollowUp() {
+				let returnValue = true;
+				(this.page == config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE) ? returnValue = true: returnValue = false;
+				return returnValue;
+		},
+		isHouseholdFollowUp() {
+				let returnValue = true;
+				(this.page == config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE + this.getNumberOfHouseholdMembers()-2) ? returnValue = true: returnValue = false;
+				return returnValue;
+		},
 		jumpToHouseholdPersonalInfoPage(householdMemberNumber) {
 			if(householdMemberNumber == 1)
 			{
@@ -411,6 +439,9 @@ export default {
 						this.goToPage(config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE) : 
 						this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE);
 						break;
+					case config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE:
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE)
+						break;
 					default:
 						alert(this.page)
 						break;
@@ -451,10 +482,13 @@ export default {
 						this.goToPage(config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE):
 						this.goToPage(config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE);
 						break;
-					case (this.page - config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE <= 18):
+					case (this.page >= config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE && this.page <= this.getNumberOfHouseholdMembers()+config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE-2):
 						if (this.$refs.householdPersonalInfo[this.page - config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_N_PAGE].verifyFormContents()) {
 							this.page++;
 						}
+						break;
+					case (this.page == this.getNumberOfSteps()-1):
+						this.page++;
 						break;
 					default:
 						alert(this.page)
@@ -466,11 +500,11 @@ export default {
 			let numberOfSteps = 0;
 			if(this.isSinglePatientRegistration())
 			{
-				numberOfSteps = config.registrationPages.SINGLE_PATIENT_REVIEW_SUBMIT_PAGE;
+				numberOfSteps = config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE;
 			}
 			else if(this.isHouseholdRegistration())
 			{
-				numberOfSteps = this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE;
+				numberOfSteps = this.numberOfHouseholdMembers+config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE-2;
 			}
 				
 			return numberOfSteps;
@@ -496,13 +530,15 @@ export default {
 		SinglePatientContactInfo,
 		SinglePatientEmergencyContact,
 		SinglePatientReviewSubmit,
+		SinglePatientFollowUp,
 		HouseholdRegisterNumber,
 		HouseholdHomeAddress,
 		HouseholdContactInfo,
 		HouseholdPersonalInfo_1,
 		HouseholdEmergencyContact,
 		HouseholdPersonalInfo_n,
-		HouseholdReviewSubmit
+		HouseholdReviewSubmit,
+		HouseholdFollowUp,
 	},
 	data () {
 		return {
