@@ -79,15 +79,24 @@
 			<p> </p>
 			</v-col>
 		</v-row>
+		<v-btn @click="sendRequest" class="btn btn-outline-success my-4">
+		Send Request</v-btn>
+		<p class="lead">{{response}}</p>
 	</v-container>
 </template>
  
 <script>
+import axios from 'axios'
+const client = axios.create({
+	basURL: 'http://hapi.fhir.org/baseR4',
+	json: true
+})
 import EventBus from '../eventBus'
 
 	export default {
 	data () {
 		return {
+			response: '',
 			dataPersonalInfo:
 			{
 				familyName: '',
@@ -137,6 +146,43 @@ import EventBus from '../eventBus'
 		},
 		updateContactInfoData(contactInfoPayload) {
 			this.dataContactInfo = contactInfoPayload
+		},
+
+		sendRequest(){
+			client({
+				method: 'get',
+				url: '/Patient/1709156',
+			}).then((res) =>{
+				this.response = res.data
+			}).catch((error) => {
+				this.response = error
+			})
+		},
+		sendRequest2() {
+			client({
+				method:'post',
+				url: '/Patient',
+				data: {
+					resourceType: 'Patient',
+					active: 'true',
+					name:[
+						{
+							use: 'official',
+							family: 'Chalmers',
+							given:[
+							'Peter',
+							'James'
+							]
+						}
+					],
+					gender: 'male',
+					birthDate: '1974-12-25'
+				}
+			}).then((res) => {
+				this.response2 = res.data
+			}).catch((error) => {
+				this.response2 = error
+			})
 		}
 	},
 	mounted() {
