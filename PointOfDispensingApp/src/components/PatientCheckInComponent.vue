@@ -5,12 +5,12 @@
         <div class="font-weight-medium secondary--text">Location</div>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           value="POD identifier"
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           value="POD name"
         ></v-text-field>
       </v-col>
@@ -26,12 +26,12 @@
         <div class="font-weight-medium secondary--text">Encounter status</div>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           value="arrived"
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           value="2020-07-20 14:23:47"
         ></v-text-field>
       </v-col>
