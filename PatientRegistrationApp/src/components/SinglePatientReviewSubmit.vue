@@ -88,7 +88,7 @@
 <script>
 import axios from 'axios'
 const client = axios.create({
-	basURL: 'http://hapi.fhir.org/baseR4',
+	baseURL: 'http://hapi.fhir.org/baseR4',
 	json: true
 })
 import EventBus from '../eventBus'
