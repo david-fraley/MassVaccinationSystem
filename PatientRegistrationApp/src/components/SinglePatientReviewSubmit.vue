@@ -79,16 +79,16 @@
 			<p> </p>
 			</v-col>
 		</v-row>
-		<v-btn @click="sendRequest" class="btn btn-outline-success my-4">
-		Send Request</v-btn>
-		<p class="lead">{{response}}</p>
+		<button @click="sendRequest2" class="btn btn-outline-success my-4">Send Request ></button>
+		<p class="lead">{{ response2 }}</p>
+
 	</v-container>
 </template>
  
 <script>
 import axios from 'axios'
 const client = axios.create({
-	baseURL: 'http://hapi.fhir.org/baseR4',
+	baseURL: 'localhost:3000',
 	json: true
 })
 import EventBus from '../eventBus'
@@ -133,7 +133,7 @@ import EventBus from '../eventBus'
 			}
 		}
 	},
-	methods:
+methods:
 	{
 		updatePersonalInfoData(personalInfoPayload) {
 			this.dataPersonalInfo = personalInfoPayload
@@ -168,15 +168,15 @@ import EventBus from '../eventBus'
 					name:[
 						{
 							use: 'official',
-							family: 'Chalmers',
+							family: 'Sawalhi',
 							given:[
-							'Peter',
+							'Shahd',
 							'James'
 							]
 						}
 					],
-					gender: 'male',
-					birthDate: '1974-12-25'
+					gender: 'female',
+					birthDate: '2000-05-30'
 				}
 			}).then((res) => {
 				this.response2 = res.data

@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 app.set("json spaces", 2);
 
-const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
+const base = "http://hapi.fhir.org/baseR4";
 const generalEndpoints = ["/Patient*"];
 const headers = {
   "content-type": "application/fhir+json",
