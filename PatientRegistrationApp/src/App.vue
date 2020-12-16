@@ -190,12 +190,43 @@
 							</v-btn>
 							
 							<v-spacer></v-spacer>
-							<v-btn color="secondary" class="ma-2 white--text" @click="submit()">
-								Submit
-							</v-btn>
+							<v-dialog
+								v-model="dialog"
+								width="40rem"
+							>
+								<template v-slot:activator="{ on, attrs}">
+									<v-btn color="secondary" class="ma-2 white--text" v-bind="attrs" v-on="on">
+										Submit
+									</v-btn>
+								</template>
+								<v-card>
+									<v-card-title class="headline grey lighten-2 justify-center">
+										Are you sure you want to submit?
+									</v-card-title>
+									<v-card-text class="text-center">
+										Make sure that the information you provided is correct and you want to proceed.
+									</v-card-text>
+									<v-divider></v-divider>
+									<v-card-actions>
+										<v-btn	
+											color="primary"
+											text
+											@click="dialog = false">
+											No
+										</v-btn>
+										<v-spacer></v-spacer>
+										<v-btn
+											color="primary"
+											text
+											@click="submit()">
+											Yes
+										</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-dialog>
 						</template>
 						<template v-else-if="isSinglePatientFollowUp() && isSinglePatientRegistration()">
-							<!--display no buttons-->
+						<!--display no buttons-->
 						</template>
 						<template v-else-if="isHouseholdPatientReviewSubmit()  && isHouseholdRegistration()">
 							<v-btn color="secondary" class="ma-2 white--text" @click="goToPreviousPage()">
@@ -205,9 +236,40 @@
 								Back
 							</v-btn>
 							<v-spacer></v-spacer>
-							<v-btn color="secondary" class="ma-2 white--text" @click="submit()">
-								Submit
-							</v-btn>
+							<v-dialog
+								v-model="dialog"
+								width="40rem"
+							>
+								<template v-slot:activator="{ on, attrs}">
+									<v-btn color="secondary" class="ma-2 white--text" v-bind="attrs" v-on="on">
+										Submit
+									</v-btn>
+								</template>
+								<v-card>
+									<v-card-title class="headline grey lighten-2 justify-center">
+										Are you sure you want to submit?
+									</v-card-title>
+									<v-card-text class="text-center">
+										Make sure that the information you provided is correct and you want to proceed.
+									</v-card-text>
+									<v-divider></v-divider>
+									<v-card-actions>
+										<v-btn	
+											color="primary"
+											text
+											@click="dialog = false">
+											No
+										</v-btn>
+										<v-spacer></v-spacer>
+										<v-btn
+											color="primary"
+											text
+											@click="submit()">
+											Yes
+										</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-dialog>
 						</template>
 						<template v-else-if="isHouseholdFollowUp() && isHouseholdRegistration()">
 							<!--display no buttons-->
@@ -258,7 +320,6 @@ export default {
 	methods: 
 	{
 		submit() {
-			alert('You clicked submit!');
 			this.goToNextPage()
 		},
 		goToPage(pageNum) {
@@ -480,6 +541,7 @@ export default {
 	},
 	data () {
 		return {
+			dialog: false,
 			page: config.registrationPages.GREETING_PAGE,
 			title: 'COVID-19 Vaccination Registration',
 			registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
