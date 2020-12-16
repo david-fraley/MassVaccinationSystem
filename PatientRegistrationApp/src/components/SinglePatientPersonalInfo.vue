@@ -2,7 +2,7 @@
   <v-container> 
     <v-row align="center" justify="start">
       <!-- Last name -->
-      <v-col cols="4">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <v-text-field  
           required
           :rules="[v => !!v || 'Last name field is required']"
@@ -13,9 +13,8 @@
           </template>
         </v-text-field>
       </v-col>
-
       <!-- First name -->
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <v-text-field 
           required
           :rules="[v => !!v || 'First name field is required']"
@@ -25,17 +24,15 @@
           </template>
         </v-text-field>
       </v-col>
-
       <!-- Middle name -->
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="6" lg="3">
         <v-text-field 
           v-model="middleName"
           label="Middle Name">
         </v-text-field>
       </v-col>
-
       <!-- Suffix -->
-      <v-col cols="2">
+      <v-col cols="12" sm="6" md="6" lg="1">
         <v-text-field 
           label="Suffix" 
           id="suffix" 
@@ -43,9 +40,8 @@
         </v-text-field>
       </v-col>
     </v-row>
-
-    <v-row align="center" justify="space-between">
-      <v-col cols="5">
+    <v-row align="center" justify="start">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Date of Birth -->
         <v-menu
           attach
@@ -68,7 +64,6 @@
             </template>
             </v-text-field>
           </template>
-
           <v-date-picker
             reactive
             v-model="date"
@@ -77,11 +72,10 @@
           ></v-date-picker>
         </v-menu>
       </v-col>
-
-      <v-col cols="5">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Gender identity -->
         <v-select
-          :items="genderIDOptions"
+          :items="genderIdOptions"
           required
           :rules="[v => !!v || 'Gender identity field is required']"
           v-model="gender">
@@ -91,9 +85,8 @@
         </v-select>
       </v-col>
     </v-row>
-
-    <v-row align="center" justify="space-between">
-      <v-col cols="5">
+    <v-row align="center" justify="start">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Race -->
         <v-select
           v-model="race"
@@ -103,8 +96,7 @@
           multiple
         ></v-select>
       </v-col>
-    
-      <v-col cols="5">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Ethnicity -->
         <v-select
           v-model="ethnicity"
@@ -113,10 +105,10 @@
         ></v-select>
       </v-col>
     </v-row>
-
     <v-row align="center" justify="start">
-      <v-col cols="5">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Current Photo -->
+        <!-- the "rules" checks that the image size is less than 2 MB -->
         <v-file-input
           accept="image/png, image/jpeg, image/bmp"
           :rules="[(v) => (v ? v.size : 0) < 2097152 || 'Image size should be less than 2 MB!']"
@@ -129,19 +121,18 @@
     </v-row>
   </v-container>
 </template>
-
 <script>
 import EventBus from "../eventBus";
 
 export default {
   data() {
     return {
-      genderIDOptions: ["Male", "Female", "Other", "Decline to answer"],
+      genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
       raceOptions: [
         "Black or African American",
         "White",
         "Asian",
-        "American Indian or Alask a Native",
+        "American Indian or Alaska Native",
         "Native Hawaiian or other Pacific Islander",
         "Other",
       ],
@@ -201,7 +192,6 @@ export default {
         message += " Last Name";
         valid = false;
       }
-
       if (this.givenName == "") {
         if (!valid) {
           message += ",";
@@ -209,7 +199,6 @@ export default {
         message += " First Name";
         valid = false;
       }
-
       if (this.date == null) {
         if (!valid) {
           message += ",";
@@ -217,7 +206,6 @@ export default {
         message += " Date of birth";
         valid = false;
       }
-
       if (this.gender == "") {
         if (!valid) {
           message += ",";
@@ -225,7 +213,6 @@ export default {
         message += " Gender Identity";
         valid = false;
       }
-
       if (this.patientPhoto && this.patientPhoto.size > 2097152) {
         if (!valid) {
           message += "\n";
@@ -236,7 +223,6 @@ export default {
         }
         valid = false;
       }
-
       if (valid == false) {
         alert(message);
         return false;
@@ -253,7 +239,7 @@ export default {
         d.getFullYear(),
         ("0" + (d.getMonth() + 1)).slice(-2),
         ("0" + d.getDate()).slice(-2),
-      ].join("-");
+        ].join("-");
 
       return date;
     },
