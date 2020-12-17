@@ -1,14 +1,8 @@
 <template>
 	<v-container fluid>
-    <v-row>
-
-
-<v-card>
-  <v-card-title prepend-icon="mdi-qrcode">
-    QR code generator
-  </v-card-title>
-  <v-card-text>
-    <v-text-field
+    <v-row justify="center">
+  <v-col class="d-flex" cols="6" sm="6">
+  <v-text-field
       v-model="qrText"
       clearable
       counter
@@ -16,11 +10,14 @@
       label="Type some text here"
       @input="generateQrCode"
     ></v-text-field>
-</v-card-text>
+    </v-col></v-row>
 
+    <v-row justify="center">
+<div class="justify-center" v-if="qrSrc">
+  <img class="preview" :src="qrSrc"> </div>
+    </v-row>
 
-
-  <v-card-actions>
+    <v-row>
     <v-btn
       color="accent"
       :disabled="!qrSrc"
@@ -36,8 +33,7 @@
     >
     Open 
     </v-btn>
-    </v-card-actions>
-    </v-card>
+
     </v-row>
 	</v-container>
 </template>
