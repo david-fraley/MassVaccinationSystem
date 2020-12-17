@@ -120,6 +120,8 @@
       <v-col class="d-flex" cols="4" sm="4">
         <!-- Race -->
         <v-select
+		required
+				:rules="[v => !!v || 'Race is required']"
           v-model="raceSelections"
           :items="race"
           label="Race (select all that apply)"
@@ -134,6 +136,8 @@
       <v-col class="d-flex" cols="4" sm="4">
         <!-- Ethnicity -->
         <v-select
+			required
+				:rules="[v => !!v || 'Ethnicity is required']"
           v-model="ethnicitySelection"
           :items="ethnicity"
           label="Ethnicity"
