@@ -1,8 +1,8 @@
 <template>
 	<v-container fluid>
-	<v-row align="center" justify="center">
+	<v-row align="center" justify="left">
 		<!-- Last name -->
-		<v-col class="d-flex" cols="5" sm="5">
+		<v-col class="d-flex" cols="4" sm="4">
         <v-text-field 
           id="lastName" 
 		required
@@ -16,7 +16,7 @@
 		</v-col>
 
 		<!-- First name -->
-		<v-col class="d-flex" cols="5" sm="5">
+		<v-col class="d-flex" cols="3" sm="3">
         <v-text-field  
 			id="firstName" 
 			required
@@ -27,6 +27,15 @@
 				</template>
         </v-text-field>
       </v-col>
+
+      <!-- Middle name -->
+		<v-col class="d-flex" cols="3" sm="3">
+      <v-text-field  
+			id="middleNameID" 
+			v-model="householdMiddleName"
+      label="Middle Name">
+      </v-text-field>
+    </v-col>
 
       <!-- Suffix -->
       <v-col class="d-flex" cols="2" sm="2">
@@ -44,8 +53,8 @@
       </v-col>
     </v-row>
 
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="5" sm="5">
+    <v-row align="center" justify="left">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Date of Birth -->
         <v-menu
           attach
@@ -81,8 +90,8 @@
       <v-spacer></v-spacer>
     </v-row>
 
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="5" sm="5">
+    <v-row align="center" justify="left">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Gender identity -->
         <v-select
           :items="genderID"
@@ -100,11 +109,11 @@
     </v-row>
 
     <v-row align="left" justify="left">
-      <v-col class="d-flex" cols="5" sm="5">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Current Photo -->
         <v-file-input
-          :rules="rules"
           accept="image/png, image/jpeg, image/bmp"
+          :rules="[(v) => (v ? v.size : 0) < 2097152 || 'Image size should be less than 2 MB!']"
           placeholder="Upload a recent photo"
           v-model="householdPatientPhoto"
           label="Photo"
@@ -113,8 +122,8 @@
       </v-col>
     </v-row>
 
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="5" sm="5">
+    <v-row align="center" justify="left">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Race -->
         <v-select
           v-model="householdRaceSelections"
@@ -127,8 +136,8 @@
       <v-spacer></v-spacer>
     </v-row>
 
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="5" sm="5">
+    <v-row align="center" justify="left">
+      <v-col class="d-flex" cols="4" sm="4">
         <!-- Ethnicity -->
         <v-select
           v-model="householdEthnicitySelection"
@@ -164,10 +173,11 @@ export default {
       ],
       householdFamilyName: "",
       householdGivenName: "",
+      householdMiddleName: "",
       householdSuffix: "",
       householdDate: "",
       householdGender: "",
-      householdPatientPhoto: "",
+      householdPatientPhoto: [],
       householdRaceSelections: "",
       householdEthnicitySelection: "",
       preferredLanguage: "",
@@ -191,10 +201,12 @@ export default {
       const householdPersonalInfoPayload = {
         householdFamilyName: this.householdFamilyName,
         householdGivenName: this.householdGivenName,
+        householdMiddleName: this.householdMiddleName,
         householdSuffix: this.householdSuffix,
         householdBirthDate: this.householdDate,
         householdGender: this.householdGender,
         householdPatientPhoto: this.householdPatientPhoto,
+        householdPatientPhotoSrc: (this.householdPatientPhoto && this.householdPatientPhoto.size) ? URL.createObjectURL( this.householdPatientPhoto ) : undefined,
         householdRaceSelections: this.householdRaceSelections,
         householdEthnicitySelection: this.householdEthnicitySelection,
         preferredLanguage: this.preferredLanguage,
@@ -208,9 +220,7 @@ export default {
       if (this.checkbox) {
         //all household members have the same last name
         EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", this.householdFamilyName);
-      } else {
-        EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", "");
-      }
+      } 
     },
     verifyFormContents() {
       //add logic to check form contents
@@ -243,6 +253,18 @@ export default {
           message += ",";
         }
         message += " Gender Identity";
+        valid = false;
+      }
+ 
+
+      if (this.householdPatientPhoto && this.householdPatientPhoto.size > 2097152) {
+        if (!valid) {
+          message += "\n";
+          message += "Your selected photo is too large. Please resubmit one under 2MBs.";
+        }
+        else {
+          message = "Your selected photo is too large. Please resubmit one under 2MBs.";
+        }
         valid = false;
       }
 
