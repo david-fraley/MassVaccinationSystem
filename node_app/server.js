@@ -6,7 +6,7 @@ app.use(express.json());
 app.set("json spaces", 2);
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
-const generalEndpoints = ["/Patient*"];
+const generalEndpoints = ["/Patient*", "/Organization*"];
 const headers = {
   "content-type": "application/fhir+json",
 };
@@ -25,6 +25,33 @@ app.get(generalEndpoints, (req, res) => {
     })
     .catch((error) => handleError(res, error));
 });
+
+app.post("/Organization", (req, res) => {
+  let org = req.body.Organization;
+  let resource = {
+    resourceType: "Organization",
+    active: org.active,
+    type: [
+      {
+        coding: [
+          {
+            system: "http://hl7.org/fhir/ValueSet/organization-type",
+            code: org.type,
+            display: org.type,
+          },
+        ],
+      },
+    ],
+    name: org.name,
+  };
+
+  // post resource
+  axios
+    .post(`${base}/Organization`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
 
 app.post("/Patient", (req, res) => {
   let obj = req.body;
