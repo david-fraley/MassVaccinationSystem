@@ -39,14 +39,12 @@
 		</v-row>
 		<v-row align="center" justify="center">
 			
-			<v-btn-toggle v-model="text" group>
+			<v-btn-toggle group>
 				<v-btn 
 					class="ma-2"
 					outlined 
 					x-large 
 					color="primary"
-					v-bind="attrs"
-					v-on="on"
 					height="13em"
 					width="17em"
 					@click="singleRegistration"
