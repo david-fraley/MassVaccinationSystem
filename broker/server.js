@@ -12,7 +12,7 @@ const headers = {
 };
 
 //Health check endpoint
-app.get("/test", (req, res) => {
+app.get("/healthcheck", (req, res) => {
 	res.send("Success!");
 });
 
