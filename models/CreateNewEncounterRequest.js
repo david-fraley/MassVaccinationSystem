@@ -12,11 +12,12 @@ Encounter {
   "Encounter": {
     "status" : "planned",
     "class" : "FLD",
-    "subject" : "Patient/example",
-    "appointment" : "Appointment/707",
+    "subject" : "Patient/1",
+    "appointment" : "Appointment/153",
     "start" : "2020-09-17T05:10:19+00:00",
     "end" : "2020-09-18T05:15:19+00:00",
-    "location" : "Location/id"
+    "location" : "Location/304",
+    "serviceProvider" : "Organization/252"
   }
 }
 */

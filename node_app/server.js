@@ -53,6 +53,9 @@ app.post("/Encounter", (req, res) => {
         },
       },
     ],
+    serviceProvider: {
+      reference: encounter.serviceProvider,
+    },
   };
 
   // post resource
