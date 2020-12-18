@@ -28,13 +28,32 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Primary Phone: <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-					({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
-				<div class="font-weight-medium">Secondary Phone: <span class="font-weight-regular">{{dataHouseholdContactInfo.secondaryPhoneNumber}} 
-					({{dataHouseholdContactInfo.secondaryPhoneNumberType}})</span></div>
-				<div class="font-weight-medium">Primary E-mail: <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryEmail}}</span></div>
-				<div class="font-weight-medium">Secondary E-mail: <span class="font-weight-regular">{{dataHouseholdContactInfo.secondaryEmail}}</span></div>
-				<div class="font-weight-medium">Follow-up approval: <span class="font-weight-regular">{{dataHouseholdContactInfo.approval}}</span></div>
+				<template v-if="dataHouseholdContactInfo.primaryPhoneNumber != ''">
+					<div class="font-weight-medium">Primary Phone: <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
+						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
+				</template>
+				<template v-else>
+					<div class="font-weight-medium">Primary Phone: <span class="font-weight-regular">Not provided</span></div>
+				</template>
+				<template v-if="dataHouseholdContactInfo.secondaryPhoneNumber != ''">
+					<div class="font-weight-medium">Secondary Phone: <span class="font-weight-regular">{{dataHouseholdContactInfo.secondaryPhoneNumber}} 
+						({{dataHouseholdContactInfo.secondaryPhoneNumberType}})</span></div>
+				</template>
+				<template v-else>
+					<div class="font-weight-medium">Secondary Phone: <span class="font-weight-regular">Not provided</span></div>
+				</template>
+				<template v-if="dataHouseholdContactInfo.primaryEmail != ''">
+					<div class="font-weight-medium">Primary E-mail: <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryEmail}}</span></div>
+				</template>
+				<template v-else>
+					<div class="font-weight-medium">Primary E-mail: <span class="font-weight-regular">Not provided</span></div>
+				</template>
+				<template v-if="dataHouseholdContactInfo.secondaryEmail != ''">
+					<div class="font-weight-medium">Secondary E-mail: <span class="font-weight-regular">{{dataHouseholdContactInfo.secondaryEmail}}</span></div>
+				</template>
+				<template v-else>
+					<div class="font-weight-medium">Secondary E-mail: <span class="font-weight-regular">Not provided</span></div>
+				</template>
 			</v-col>
 		</v-row>
 
