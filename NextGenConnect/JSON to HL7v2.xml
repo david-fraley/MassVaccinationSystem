@@ -3,7 +3,7 @@
   <nextMetaDataId>2</nextMetaDataId>
   <name>JSON to HL7v2</name>
   <description>This channel converts a JSON request to an HL7 VXU^V04.</description>
-  <revision>25</revision>
+  <revision>12</revision>
   <sourceConnector version="3.10.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -51,7 +51,7 @@ tmp[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;] = DateUtil.getCurre
 tmp[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;] = connectorMessage.getMessageId();</script>
         </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
         <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
-          <name>PID Segment</name>
+          <name>PID Segment </name>
           <sequenceNumber>1</sequenceNumber>
           <enabled>true</enabled>
           <script>//JSON to PID mapping starts here
@@ -83,33 +83,246 @@ for (var i = 0; i &lt; getArrayOrXmlLength(patient[&apos;identifier&apos;]); i++
 }
 tmp[&apos;PID&apos;][&apos;PID.3&apos;] = ids.join(&apos;~&apos;);
 
-
-/*
 //PID-5 patient name
-tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;] = patient[&apos;name&apos;][0][&apos;family&apos;][&apos;@value&apos;].toString();
-tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;] = patient[&apos;name&apos;][0][&apos;given&apos;][&apos;@value&apos;].toString();
-tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.3&apos;] = &quot;&quot;; //not in XML
+tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.1&apos;] = patient[&apos;name&apos;][0][&apos;family&apos;];
+tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.2&apos;] = patient[&apos;name&apos;][0][&apos;given&apos;][0]; //Why is this stored in an array in sample JSON message?
+tmp[&apos;PID&apos;][&apos;PID.5&apos;][&apos;PID.5.7&apos;] = &quot;L&quot;;  // Legal Name		
 
-tmp[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;] = patient[&apos;birthDate&apos;][&apos;@value&apos;].toString();
-tmp[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;] = patient[&apos;gender&apos;][&apos;@value&apos;].toString();
+//PID-6 Mothers Maiden Name -- ??? Try to grab value ?
+
+//PID-7 Birthdate 
+
+var birthDate = patient[&apos;birthDate&apos;];
+
+birthDate.replace(&apos;-&apos;,&apos;&apos;); // Replaces -&apos;s in birthDate
+
+tmp[&apos;PID&apos;][&apos;PID.7&apos;][&apos;PID.7.1&apos;] = birthDate;
+
+
+//PID-8 Administrative Sex -- Needs to be edited for actualy values F/M
+
+if(patient[&apos;gender&apos;] == &apos;female&apos;){  
+	tmp[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;] = &apos;F&apos;;
+}
+else if(patient[&apos;gender&apos;] == &quot;male&quot;){
+	tmp[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;] = &apos;M&apos;;
+	}
+
+else{
+	tmp[&apos;PID&apos;][&apos;PID.8&apos;][&apos;PID.8.1&apos;] = &apos;U&apos;;
+}
+
+//PID-10 Race  -- ??? Try to grab value ?
+
+
 
 //PID-11 address
-tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;] = patient[&apos;address&apos;][&apos;line&apos;][&apos;@value&apos;].toString();
-tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.7&apos;] = patient[&apos;address&apos;][&apos;use&apos;][&apos;@value&apos;].toString();
-tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;] = patient[&apos;address&apos;][&apos;city&apos;][&apos;@value&apos;].toString();
-tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;] = patient[&apos;address&apos;][&apos;state&apos;][&apos;@value&apos;].toString();
-tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;] = patient[&apos;address&apos;][&apos;postalCode&apos;][&apos;@value&apos;].toString();
+tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;] = patient[&apos;address&apos;][0][&apos;line&apos;][0];
+tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;] = patient[&apos;address&apos;][0][&apos;city&apos;];
+tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;] = patient[&apos;address&apos;][0][&apos;state&apos;];
+tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;] = patient[&apos;address&apos;][0][&apos;postalCode&apos;];
+tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.6&apos;] = patient[&apos;address&apos;][0][&apos;country&apos;];
+tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.7&apos;] = &apos;M&apos; // Mailing address
 
-//PID-13 Home Phone Number
-tmp[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;] = patient[&apos;telecom&apos;][0][&apos;value&apos;][&apos;@value&apos;].toString();
+//PID-13 Home Phone Number -- Need to seperate the area code and number if sending...
+tmp[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.1&apos;] = patient[&apos;telecom&apos;][0][&apos;value&apos;];
 
-//PID-14 Work Phone Number
-tmp[&apos;PID&apos;][&apos;PID.14&apos;][&apos;PID.14.1&apos;] = patient[&apos;telecom&apos;][1][&apos;value&apos;][&apos;@value&apos;].toString();
-*/</script>
+
+// PID-22 Ethnic Group -- ??? Try to grab value ?
+
+//PID-24 Multiple Birth Indicator
+var birthBoolean = patient[&apos;multipleBirthBoolean&apos;];
+
+if(birthBoolean === false){
+	tmp[&apos;PID&apos;][&apos;PID.24&apos;][&apos;PID.24.1&apos;] = &apos;N&apos;;
+	}
+else{
+	tmp[&apos;PID&apos;][&apos;PID.24&apos;][&apos;PID.24.1&apos;] = &apos;Y&apos;;
+}</script>
         </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
         <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
-          <name>HTTP request</name>
+          <name>PD1 Segment (RE)</name>
           <sequenceNumber>2</sequenceNumber>
+          <enabled>true</enabled>
+          <script>// WIR message may have 1 PD1 Segment
+
+//PD1-11 - Publicity Code
+
+
+//PD1-12 - Protection Indicator
+
+
+//PD1-13 Effective date for PD1-12
+
+
+//PD1-16 Immunization Registry Status
+
+
+//PD1-17 Effective date for PD1-16
+
+
+//PD1-18 Effective date for PD1-11</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
+          <name>NK1 Segment (RE)</name>
+          <sequenceNumber>3</sequenceNumber>
+          <enabled>true</enabled>
+          <script>// WIR message may have 0+ NK1 Segments
+
+
+// NK1-1 Set ID - Sets the ID for the first related party and so on 1..2..3 for multiple NK1 segments
+// If only listing one contact this always remains 1
+
+tmp[&apos;NK1&apos;][&apos;NK1.1&apos;] = 1;
+
+//NK1-2 Name of responsible person
+
+tmp[&apos;NK1&apos;][&apos;NK1.2&apos;][&apos;NK1.2.1&apos;] = patient[&apos;contact&apos;][1][&apos;family&apos;];
+tmp[&apos;NK1&apos;][&apos;NK1.2&apos;][&apos;NK1.2.2&apos;] = patient[&apos;contact&apos;][1][&apos;given&apos;][0]; // Stored in array??
+tmp[&apos;NK1&apos;][&apos;NK1.2&apos;][&apos;NK1.2.7&apos;] = &quot;L&quot;;  // Legal Name
+
+//NK1-3 Relationship -- Trick one because of 0063 in WIR and 0131 aren&apos;t compatible in FHIR... use something else in FHIR?
+
+
+tmp[&apos;NK1&apos;][&apos;NK1.3&apos;][&apos;NK1.3.1&apos;] = patient[&apos;contact&apos;][0][0][1];
+
+// Need a bunch of if statements accordint to page 44 in WIR implementation guide if relationship == &quot;brother&quot; this = BRO
+// if relationship == cargeiver, this = CGV, and so forth
+
+
+tmp[&apos;NK1&apos;][&apos;NK1.3&apos;][&apos;NK1.3.2&apos;] = &apos;Mother&apos;; // Changes depending on code ^^^^
+
+tmp[&apos;NK1&apos;][&apos;NK1.3&apos;][&apos;NK1.3.3&apos;] = &apos;HL70063&apos;; // This is the default table... maybe find one compatible with FHIR 0131
+
+//NK1-4 Address of responsible person
+
+tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.2&apos;] = patient[&apos;contact&apos;][3][&apos;line&apos;][0];
+tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.3&apos;] = patient[&apos;contact&apos;][3][&apos;city&apos;];
+tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.4&apos;] = patient[&apos;contact&apos;][3][&apos;state&apos;];
+tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.5&apos;] = patient[&apos;contact&apos;][3][&apos;postalCode&apos;];
+tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.6&apos;] = patient[&apos;contact&apos;][3][&apos;country&apos;];
+tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.7&apos;]= &apos;M&apos; // Mailing address
+
+//NK1-5 Phone number -- need to seperate area code and number
+
+tmp[&apos;NK1&apos;][&apos;NK1.5&apos;][&apos;NK1.5.2&apos;] = patient[&apos;contact&apos;][2][&apos;value&apos;];</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
+          <name>ORC Segment </name>
+          <sequenceNumber>4</sequenceNumber>
+          <enabled>true</enabled>
+          <script>// Grab immunization data
+var immunization = msg[&apos;entry&apos;].filter(function (entry){
+    return entry[&apos;resource&apos;][&apos;resourceType&apos;] === &quot;Immunization&quot;;
+})[0][&apos;resource&apos;];
+
+//ORC-1 Order Control - Must contatin value &apos;RE&apos;
+tmp[&apos;ORC&apos;][&apos;ORC.1&apos;] = &apos;RE&apos;;
+
+//ORC-2 Placer Order Number (RE) -- Not required
+
+
+//ORC-3 Filler Order Number(R) -- Is this the lot number in immunization resource? Where can I find this?
+
+tmp[&apos;ORC&apos;][&apos;ORC.3&apos;] = msg[&apos;entry&apos;][0][&apos;resource&apos;][&apos;id&apos;];
+
+//ORC-10 Entered By -- Who entered the order
+
+
+//ORC-12 Ordering Provider
+
+
+//ORC-17 Entering Organization</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
+          <name>RXA Segment</name>
+          <sequenceNumber>5</sequenceNumber>
+          <enabled>true</enabled>
+          <script>//Grab immunization resource
+var immunization = msg[&apos;entry&apos;].filter(function (entry){
+    return entry[&apos;resource&apos;][&apos;resourceType&apos;] === &quot;Immunization&quot;;
+})[0][&apos;resource&apos;];
+
+var location = msg[&apos;entry&apos;].filter(function (entry){
+    return entry[&apos;resource&apos;][&apos;resourceType&apos;] === &quot;Location&quot;;
+})[0][&apos;resource&apos;];
+
+
+//RXA-1 Must be 0
+tmp[&apos;RXA&apos;][&apos;RXA.1&apos;] = 0;
+
+//RXA-2 Must be 1
+tmp[&apos;RXA&apos;][&apos;RXA.2&apos;] = 1;
+
+//RXA-3 Data of Administration -- Need to worry if time component stored
+tmp[&apos;RXA&apos;][&apos;RXA.3&apos;] = immunization[&apos;occurenceDateTime&apos;].replace(&apos;-&apos;,&apos;&apos;);
+
+//RXA-5 Administered Code -- Needs to be CVX -- how are we converting what&apos;s stored in FHIR resource? Hardcode?
+
+// If/switch  statements hard code this in... cvx codes for coronavirus ....
+tmp[&apos;RXA&apos;][&apos;RXA.5.1&apos;][&apos;RXA.5.1.1&apos;]  = immunization[&apos;vaccineCode&apos;][0][&apos;code&apos;];
+tmp[&apos;RXA&apos;][&apos;RXA.5.1&apos;][&apos;RXA.5.1.2&apos;]  = immunization[&apos;vaccineCode&apos;][&apos;text&apos;];
+
+//RXA-6 Administered Amount
+
+tmp[&apos;RXA&apos;][&apos;RXA.6&apos;] = immunization[&apos;doseQuantity&apos;][&apos;value&apos;];
+
+//RXA-7 Administerd Units
+
+tmp[&apos;RXA&apos;][&apos;RXA.7&apos;] = immunization[&apos;doseQuantity&apos;][&apos;code&apos;];
+
+//RXA-9 Administration Notes 00 -&gt; Administered, 01 -&gt; Record
+
+tmp[&apos;RXA&apos;][&apos;RXA.9&apos;] = 00;
+
+
+//RXA-10 Administering Provider -- Need a reference to actor
+
+//tmp[&apos;RXA&apos;][&apos;RXA.10.1.2&apos;] = actor[&apos;name&apos;][&apos;family&apos;];
+//tmp[&apos;RXA&apos;][&apos;RXA.10.1.2&apos;] = actor[&apos;name&apos;][&apos;given&apos;];
+
+//RXA-11 Administer at Location -- Inventory site from WIR ID for fourth component... weird
+
+//tmp[&apos;RXA&apos;][&apos;RXA.11&apos;][&apos;RXA.11.4&apos;] = 
+
+//RXA-15 Substance Lot Number
+
+tmp[&apos;RXA&apos;][&apos;RXA.15&apos;] = immunization[&apos;lotNumber&apos;];
+
+//RXA-16 Substance Expiration Date
+tmp[&apos;RXA&apos;][&apos;RXA.15&apos;] = immunization[&apos;expirationDate&apos;].replace(&apos;-&apos;,&apos;&apos;);
+
+//RXA-17 Substance Manufacturer Name -- Reference to Organization // Hardcode like up above...
+
+
+tmp[&apos;RXA&apos;][&apos;RXA.15&apos;][&apos;RXA.15.1.2&apos;]  = &apos;PFR&apos;;
+tmp[&apos;RXA&apos;][&apos;RXA.15&apos;][&apos;RXA.15.1.2&apos;] = &apos;Pfizer&apos; // organization[&apos;name&apos;]; // Need table 0227 value here as well as in 15.1.1
+tmp[&apos;RXA&apos;][&apos;RXA.15&apos;][&apos;RXA.15.1.3&apos;] = &apos;MVX&apos;;
+
+//RXA-18 Refusal
+
+
+//RXA-20 Completion Status
+
+
+//RXA-21 Action Code
+tmp[&apos;RXA&apos;][&apos;RXA.21&apos;] = &apos;A&apos;;</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
+          <name>RXR Segment</name>
+          <sequenceNumber>6</sequenceNumber>
+          <enabled>true</enabled>
+          <script>// RXR-1 Route of administration -- Immunization-route translation of NCIT to FHIR</script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
+          <name>OBX Segment</name>
+          <sequenceNumber>7</sequenceNumber>
+          <enabled>true</enabled>
+          <script></script>
+        </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
+        <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
+          <name>HTTP</name>
+          <sequenceNumber>8</sequenceNumber>
           <enabled>true</enabled>
           <script>// Create url object
 var url = new java.net.URL(&apos;http://hapi.fhir.org/baseR4/Patient/1228028?_format=json&apos;);
@@ -142,8 +355,164 @@ var patObj = JSON.parse(response);
 tmp[&apos;PID&apos;][&apos;PID.11&apos;] = patObj[&apos;id&apos;];</script>
         </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
       </elements>
-      <inboundTemplate encoding="base64">ewogICJyZXNvdXJjZVR5cGUiOiAiQnVuZGxlIiwKICAiaWQiOiAiYWJhMjk4MjQtMGEwYS00MjViLWIxZmItOGY3NzQyYzNjZGQwIiwKICAibWV0YSI6IHsKICAgICJsYXN0VXBkYXRlZCI6ICIyMDIwLTEyLTA5VDE3OjAyOjE4LjIyOCswMDowMCIKICB9LAogICJ0eXBlIjogInNlYXJjaHNldCIsCiAgInRvdGFsIjogMSwKICAibGluayI6IFsgewogICAgInJlbGF0aW9uIjogInNlbGYiLAogICAgInVybCI6ICJodHRwOi8vaGFwaS5maGlyLm9yZy9iYXNlUjQvSW1tdW5pemF0aW9uP19mb3JtYXQ9anNvbiZfaWQ9NTBhYTA2NmYtNTk5My00ZDRjLWFiZTAtZmU4ODI5OTRiZjdkJl9pbmNsdWRlPUltbXVuaXphdGlvbiUzQWxvY2F0aW9uJl9pbmNsdWRlPUltbXVuaXphdGlvbiUzQXBhdGllbnQmX3ByZXR0eT10cnVlIgogIH0gXSwKICAiZW50cnkiOiBbIHsKICAgICJmdWxsVXJsIjogImh0dHA6Ly9oYXBpLmZoaXIub3JnL2Jhc2VSNC9JbW11bml6YXRpb24vNTBhYTA2NmYtNTk5My00ZDRjLWFiZTAtZmU4ODI5OTRiZjdkIiwKICAgICJyZXNvdXJjZSI6IHsKICAgICAgInJlc291cmNlVHlwZSI6ICJJbW11bml6YXRpb24iLAogICAgICAiaWQiOiAiNTBhYTA2NmYtNTk5My00ZDRjLWFiZTAtZmU4ODI5OTRiZjdkIiwKICAgICAgIm1ldGEiOiB7CiAgICAgICAgInZlcnNpb25JZCI6ICIxIiwKICAgICAgICAibGFzdFVwZGF0ZWQiOiAiMjAyMC0wMy0yNFQyMzo0NjozMS42MDcrMDA6MDAiLAogICAgICAgICJzb3VyY2UiOiAiIzRkdVJsZXMzSVdmVVdpWE8iLAogICAgICAgICJwcm9maWxlIjogWyAiaHR0cDovL2hsNy5vcmcvZmhpci91cy9jb3JlL1N0cnVjdHVyZURlZmluaXRpb24vdXMtY29yZS1pbW11bml6YXRpb24iIF0sCiAgICAgICAgInRhZyI6IFsgewogICAgICAgICAgInN5c3RlbSI6ICJodHRwczovL3NtYXJ0aGVhbHRoaXQub3JnL3RhZ3MiLAogICAgICAgICAgImNvZGUiOiAiQ292aWQxOSBzeW50aGV0aWMgcG9wdWxhdGlvbiBmcm9tIFN5bnRoZWEiCiAgICAgICAgfSBdCiAgICAgIH0sCiAgICAgICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgInZhY2NpbmVDb2RlIjogewogICAgICAgICJjb2RpbmciOiBbIHsKICAgICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL2hsNy5vcmcvZmhpci9zaWQvY3Z4IiwKICAgICAgICAgICJjb2RlIjogIjE0MCIsCiAgICAgICAgICAiZGlzcGxheSI6ICJJbmZsdWVuemEsIHNlYXNvbmFsLCBpbmplY3RhYmxlLCBwcmVzZXJ2YXRpdmUgZnJlZSIKICAgICAgICB9IF0sCiAgICAgICAgInRleHQiOiAiSW5mbHVlbnphLCBzZWFzb25hbCwgaW5qZWN0YWJsZSwgcHJlc2VydmF0aXZlIGZyZWUiCiAgICAgIH0sCiAgICAgICJwYXRpZW50IjogewogICAgICAgICJyZWZlcmVuY2UiOiAiUGF0aWVudC8xY2JjOWYzZC0zZTlhLTQ3ZjktOTQ5Ny1mZWVmODdkOTI3NzkiCiAgICAgIH0sCiAgICAgICJlbmNvdW50ZXIiOiB7CiAgICAgICAgInJlZmVyZW5jZSI6ICJFbmNvdW50ZXIvZDQ1MjUyM2MtYzIxOS00YTNlLTg2ZWItOWJiZDQzMDQ0MWZjIgogICAgICB9LAogICAgICAib2NjdXJyZW5jZURhdGVUaW1lIjogIjIwMTUtMDUtMTBUMDg6MjU6NTQtMDU6MDAiLAogICAgICAicHJpbWFyeVNvdXJjZSI6IHRydWUsCiAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAicmVmZXJlbmNlIjogIkxvY2F0aW9uL2MyNmEzZWJmLTk1NGYtNGFhNy1iMWRlLTJlYWFlN2ZjMzQ2MyIsCiAgICAgICAgImRpc3BsYXkiOiAiR0FTVFJPRU5URVJPTE9HWSBDT05TVUxUQU5UUyBPRiBUSEUgTk9SVEggU0hPUkUiCiAgICAgIH0KICAgIH0sCiAgICAic2VhcmNoIjogewogICAgICAibW9kZSI6ICJtYXRjaCIKICAgIH0KICB9LCB7CiAgICAiZnVsbFVybCI6ICJodHRwOi8vaGFwaS5maGlyLm9yZy9iYXNlUjQvTG9jYXRpb24vYzI2YTNlYmYtOTU0Zi00YWE3LWIxZGUtMmVhYWU3ZmMzNDYzIiwKICAgICJyZXNvdXJjZSI6IHsKICAgICAgInJlc291cmNlVHlwZSI6ICJMb2NhdGlvbiIsCiAgICAgICJpZCI6ICJjMjZhM2ViZi05NTRmLTRhYTctYjFkZS0yZWFhZTdmYzM0NjMiLAogICAgICAibWV0YSI6IHsKICAgICAgICAidmVyc2lvbklkIjogIjEiLAogICAgICAgICJsYXN0VXBkYXRlZCI6ICIyMDIwLTAzLTI0VDIzOjQ2OjMxLjYwNyswMDowMCIsCiAgICAgICAgInNvdXJjZSI6ICIjNGR1UmxlczNJV2ZVV2lYTyIsCiAgICAgICAgInByb2ZpbGUiOiBbICJodHRwOi8vaGw3Lm9yZy9maGlyL3VzL2NvcmUvU3RydWN0dXJlRGVmaW5pdGlvbi91cy1jb3JlLWxvY2F0aW9uIiBdLAogICAgICAgICJ0YWciOiBbIHsKICAgICAgICAgICJzeXN0ZW0iOiAiaHR0cHM6Ly9zbWFydGhlYWx0aGl0Lm9yZy90YWdzIiwKICAgICAgICAgICJjb2RlIjogIkNvdmlkMTkgc3ludGhldGljIHBvcHVsYXRpb24gZnJvbSBTeW50aGVhIgogICAgICAgIH0gXQogICAgICB9LAogICAgICAiaWRlbnRpZmllciI6IFsgewogICAgICAgICJ1c2UiOiAib2ZmaWNpYWwiLAogICAgICAgICJzeXN0ZW0iOiAidXJuOmRpY29tOnVpZCIsCiAgICAgICAgInZhbHVlIjogInVybjpvaWQ6Mi4xNi44NTguMC4yLjE2Ljg2LjEuMC4wLjIxNjMwOTAxMDAxMSIKICAgICAgfSwKICAgICAgewogICAgICAgICJ1c2UiOiAib2ZmaWNpYWwiLAogICAgICAgICJzeXN0ZW0iOiAiV0lSIiwKICAgICAgICAidmFsdWUiOiAiV0lSX0lEXzEyMzQ1IgogICAgICB9IF0sCiAgICAgICJzdGF0dXMiOiAiYWN0aXZlIiwKICAgICAgIm5hbWUiOiAiR0FTVFJPRU5URVJPTE9HWSBDT05TVUxUQU5UUyBPRiBUSEUgTk9SVEggU0hPUkUiLAogICAgICAidGVsZWNvbSI6IFsgewogICAgICAgICJzeXN0ZW0iOiAicGhvbmUiLAogICAgICAgICJ2YWx1ZSI6ICI4NDctMjU2LTI3OTAiCiAgICAgIH0gXSwKICAgICAgImFkZHJlc3MiOiB7CiAgICAgICAgImxpbmUiOiBbICI1MTAgR1JFRU4gQkFZIFJEIiBdLAogICAgICAgICJjaXR5IjogIktFTklMV09SVEgiLAogICAgICAgICJzdGF0ZSI6ICJJTCIsCiAgICAgICAgInBvc3RhbENvZGUiOiAiNjAwNDMtMTAwMiIsCiAgICAgICAgImNvdW50cnkiOiAiVVMiCiAgICAgIH0sCiAgICAgICJwb3NpdGlvbiI6IHsKICAgICAgICAibG9uZ2l0dWRlIjogLTg3LjcxNDUxMiwKICAgICAgICAibGF0aXR1ZGUiOiA0Mi4wODg4MjMKICAgICAgfSwKICAgICAgIm1hbmFnaW5nT3JnYW5pemF0aW9uIjogewogICAgICAgICJyZWZlcmVuY2UiOiAiT3JnYW5pemF0aW9uL2U0ZjQ0ZDM5LWIwNzYtM2Q2NS04YTA2LTFmNDcwYmUyY2VkNSIsCiAgICAgICAgImRpc3BsYXkiOiAiR0FTVFJPRU5URVJPTE9HWSBDT05TVUxUQU5UUyBPRiBUSEUgTk9SVEggU0hPUkUiCiAgICAgIH0KICAgIH0sCiAgICAic2VhcmNoIjogewogICAgICAibW9kZSI6ICJpbmNsdWRlIgogICAgfQogIH0sIHsKICAgICJmdWxsVXJsIjogImh0dHA6Ly9oYXBpLmZoaXIub3JnL2Jhc2VSNC9QYXRpZW50LzFjYmM5ZjNkLTNlOWEtNDdmOS05NDk3LWZlZWY4N2Q5Mjc3OSIsCiAgICAicmVzb3VyY2UiOiB7CiAgICAgICJyZXNvdXJjZVR5cGUiOiAiUGF0aWVudCIsCiAgICAgICJpZCI6ICIxY2JjOWYzZC0zZTlhLTQ3ZjktOTQ5Ny1mZWVmODdkOTI3NzkiLAogICAgICAibWV0YSI6IHsKICAgICAgICAidmVyc2lvbklkIjogIjEiLAogICAgICAgICJsYXN0VXBkYXRlZCI6ICIyMDIwLTAzLTI0VDIzOjQ2OjMxLjYwNyswMDowMCIsCiAgICAgICAgInNvdXJjZSI6ICIjNGR1UmxlczNJV2ZVV2lYTyIsCiAgICAgICAgInByb2ZpbGUiOiBbICJodHRwOi8vaGw3Lm9yZy9maGlyL3VzL2NvcmUvU3RydWN0dXJlRGVmaW5pdGlvbi91cy1jb3JlLXBhdGllbnQiIF0sCiAgICAgICAgInRhZyI6IFsgewogICAgICAgICAgInN5c3RlbSI6ICJodHRwczovL3NtYXJ0aGVhbHRoaXQub3JnL3RhZ3MiLAogICAgICAgICAgImNvZGUiOiAiQ292aWQxOSBzeW50aGV0aWMgcG9wdWxhdGlvbiBmcm9tIFN5bnRoZWEiCiAgICAgICAgfSBdCiAgICAgIH0sCiAgICAgICJ0ZXh0IjogewogICAgICAgICJzdGF0dXMiOiAiZ2VuZXJhdGVkIiwKICAgICAgICAiZGl2IjogIjxkaXYgeG1sbnM9XCJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sXCI+R2VuZXJhdGVkIGJ5IDxhIGhyZWY9XCJodHRwczovL2dpdGh1Yi5jb20vc3ludGhldGljaGVhbHRoL3N5bnRoZWFcIj5TeW50aGVhPC9hPi5WZXJzaW9uIGlkZW50aWZpZXI6IDIxNzdjZmZjXG4gLiAgIFBlcnNvbiBzZWVkOiA5MDExNTI3Mzc2NDcwNTI3MzY1ICBQb3B1bGF0aW9uIHNlZWQ6IDEyMzQ1PC9kaXY+IgogICAgICB9LAogICAgICAiZXh0ZW5zaW9uIjogWyB7CiAgICAgICAgInVybCI6ICJodHRwOi8vaGw3Lm9yZy9maGlyL3VzL2NvcmUvU3RydWN0dXJlRGVmaW5pdGlvbi91cy1jb3JlLXJhY2UiLAogICAgICAgICJleHRlbnNpb24iOiBbIHsKICAgICAgICAgICJ1cmwiOiAiZGV0YWlsZWQiLAogICAgICAgICAgInZhbHVlQ29kaW5nIjogewogICAgICAgICAgICAic3lzdGVtIjogInVybjpvaWQ6Mi4xNi44NDAuMS4xMTM4ODMuNi4yMzgiLAogICAgICAgICAgICAiY29kZSI6ICIyMTMxLTEiLAogICAgICAgICAgICAiZGlzcGxheSI6ICJPdGhlciBSYWNlcyIKICAgICAgICAgIH0KICAgICAgICB9LCB7CiAgICAgICAgICAidXJsIjogInRleHQiLAogICAgICAgICAgInZhbHVlU3RyaW5nIjogIk90aGVyIgogICAgICAgIH0gXQogICAgICB9LCB7CiAgICAgICAgInVybCI6ICJodHRwOi8vaGw3Lm9yZy9maGlyL3VzL2NvcmUvU3RydWN0dXJlRGVmaW5pdGlvbi91cy1jb3JlLWV0aG5pY2l0eSIsCiAgICAgICAgImV4dGVuc2lvbiI6IFsgewogICAgICAgICAgInVybCI6ICJvbWJDYXRlZ29yeSIsCiAgICAgICAgICAidmFsdWVDb2RpbmciOiB7CiAgICAgICAgICAgICJzeXN0ZW0iOiAidXJuOm9pZDoyLjE2Ljg0MC4xLjExMzg4My42LjIzOCIsCiAgICAgICAgICAgICJjb2RlIjogIjIxMzUtMiIsCiAgICAgICAgICAgICJkaXNwbGF5IjogIkhpc3BhbmljIG9yIExhdGlubyIKICAgICAgICAgIH0KICAgICAgICB9LCB7CiAgICAgICAgICAidXJsIjogInRleHQiLAogICAgICAgICAgInZhbHVlU3RyaW5nIjogIkhpc3BhbmljIG9yIExhdGlubyIKICAgICAgICB9IF0KICAgICAgfSwgewogICAgICAgICJ1cmwiOiAiaHR0cDovL2hsNy5vcmcvZmhpci9TdHJ1Y3R1cmVEZWZpbml0aW9uL3BhdGllbnQtbW90aGVyc01haWRlbk5hbWUiLAogICAgICAgICJ2YWx1ZVN0cmluZyI6ICJSdXRoaWU5MDEgSHVlbDYyOCIKICAgICAgfSwgewogICAgICAgICJ1cmwiOiAiaHR0cDovL2hsNy5vcmcvZmhpci91cy9jb3JlL1N0cnVjdHVyZURlZmluaXRpb24vdXMtY29yZS1iaXJ0aHNleCIsCiAgICAgICAgInZhbHVlQ29kZSI6ICJGIgogICAgICB9LCB7CiAgICAgICAgInVybCI6ICJodHRwOi8vaGw3Lm9yZy9maGlyL1N0cnVjdHVyZURlZmluaXRpb24vcGF0aWVudC1iaXJ0aFBsYWNlIiwKICAgICAgICAidmFsdWVBZGRyZXNzIjogewogICAgICAgICAgImNpdHkiOiAiV2hlYXRvbiIsCiAgICAgICAgICAic3RhdGUiOiAiSWxsaW5vaXMiLAogICAgICAgICAgImNvdW50cnkiOiAiVVMiCiAgICAgICAgfQogICAgICB9LCB7CiAgICAgICAgInVybCI6ICJodHRwOi8vc3ludGhldGljaGVhbHRoLmdpdGh1Yi5pby9zeW50aGVhL2Rpc2FiaWxpdHktYWRqdXN0ZWQtbGlmZS15ZWFycyIsCiAgICAgICAgInZhbHVlRGVjaW1hbCI6IDAKICAgICAgfSwgewogICAgICAgICJ1cmwiOiAiaHR0cDovL3N5bnRoZXRpY2hlYWx0aC5naXRodWIuaW8vc3ludGhlYS9xdWFsaXR5LWFkanVzdGVkLWxpZmUteWVhcnMiLAogICAgICAgICJ2YWx1ZURlY2ltYWwiOiA1OQogICAgICB9IF0sCiAgICAgICJpZGVudGlmaWVyIjogWyB7CiAgICAgICAgInN5c3RlbSI6ICJodHRwczovL2dpdGh1Yi5jb20vc3ludGhldGljaGVhbHRoL3N5bnRoZWEiLAogICAgICAgICJ2YWx1ZSI6ICI0OGM1ZTc3YS02ZDk3LTQxNjUtOGViMS1mYjQwNmEzYjdmY2IiCiAgICAgIH0sIHsKICAgICAgICAidHlwZSI6IHsKICAgICAgICAgICJjb2RpbmciOiBbIHsKICAgICAgICAgICAgInN5c3RlbSI6ICJodHRwOi8vdGVybWlub2xvZ3kuaGw3Lm9yZy9Db2RlU3lzdGVtL3YyLTAyMDMiLAogICAgICAgICAgICAiY29kZSI6ICJNUiIsCiAgICAgICAgICAgICJkaXNwbGF5IjogIk1lZGljYWwgUmVjb3JkIE51bWJlciIKICAgICAgICAgIH0gXSwKICAgICAgICAgICJ0ZXh0IjogIk1lZGljYWwgUmVjb3JkIE51bWJlciIKICAgICAgICB9LAogICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL2hvc3BpdGFsLnNtYXJ0aGVhbHRoaXQub3JnIiwKICAgICAgICAidmFsdWUiOiAiNDhjNWU3N2EtNmQ5Ny00MTY1LThlYjEtZmI0MDZhM2I3ZmNiIgogICAgICB9LCB7CiAgICAgICAgInR5cGUiOiB7CiAgICAgICAgICAiY29kaW5nIjogWyB7CiAgICAgICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL3Rlcm1pbm9sb2d5LmhsNy5vcmcvQ29kZVN5c3RlbS92Mi0wMjAzIiwKICAgICAgICAgICAgImNvZGUiOiAiU1MiLAogICAgICAgICAgICAiZGlzcGxheSI6ICJTb2NpYWwgU2VjdXJpdHkgTnVtYmVyIgogICAgICAgICAgfSBdLAogICAgICAgICAgInRleHQiOiAiU29jaWFsIFNlY3VyaXR5IE51bWJlciIKICAgICAgICB9LAogICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL2hsNy5vcmcvZmhpci9zaWQvdXMtc3NuIiwKICAgICAgICAidmFsdWUiOiAiOTk5LTE3LTc0MzYiCiAgICAgIH0sIHsKICAgICAgICAidHlwZSI6IHsKICAgICAgICAgICJjb2RpbmciOiBbIHsKICAgICAgICAgICAgInN5c3RlbSI6ICJodHRwOi8vdGVybWlub2xvZ3kuaGw3Lm9yZy9Db2RlU3lzdGVtL3YyLTAyMDMiLAogICAgICAgICAgICAiY29kZSI6ICJETCIsCiAgICAgICAgICAgICJkaXNwbGF5IjogIkRyaXZlcidzIExpY2Vuc2UiCiAgICAgICAgICB9IF0sCiAgICAgICAgICAidGV4dCI6ICJEcml2ZXIncyBMaWNlbnNlIgogICAgICAgIH0sCiAgICAgICAgInN5c3RlbSI6ICJ1cm46b2lkOjIuMTYuODQwLjEuMTEzODgzLjQuMy4yNSIsCiAgICAgICAgInZhbHVlIjogIlM5OTkzMDUzNiIKICAgICAgfSwgewogICAgICAgICJ0eXBlIjogewogICAgICAgICAgImNvZGluZyI6IFsgewogICAgICAgICAgICAic3lzdGVtIjogImh0dHA6Ly90ZXJtaW5vbG9neS5obDcub3JnL0NvZGVTeXN0ZW0vdjItMDIwMyIsCiAgICAgICAgICAgICJjb2RlIjogIlBQTiIsCiAgICAgICAgICAgICJkaXNwbGF5IjogIlBhc3Nwb3J0IE51bWJlciIKICAgICAgICAgIH0gXSwKICAgICAgICAgICJ0ZXh0IjogIlBhc3Nwb3J0IE51bWJlciIKICAgICAgICB9LAogICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL3N0YW5kYXJkaGVhbHRocmVjb3JkLm9yZy9maGlyL1N0cnVjdHVyZURlZmluaXRpb24vcGFzc3BvcnROdW1iZXIiLAogICAgICAgICJ2YWx1ZSI6ICJYNDAzNDA4MjhYIgogICAgICB9IF0sCiAgICAgICJuYW1lIjogWyB7CiAgICAgICAgInVzZSI6ICJvZmZpY2lhbCIsCiAgICAgICAgImZhbWlseSI6ICJNaWxsZXI1MDMiLAogICAgICAgICJnaXZlbiI6IFsgIk5hbmN5MjY1IiBdLAogICAgICAgICJwcmVmaXgiOiBbICJNcy4iIF0KICAgICAgfSBdLAogICAgICAidGVsZWNvbSI6IFsgewogICAgICAgICJzeXN0ZW0iOiAicGhvbmUiLAogICAgICAgICJ2YWx1ZSI6ICI1NTUtNDcwLTIyMDgiLAogICAgICAgICJ1c2UiOiAiaG9tZSIKICAgICAgfSBdLAogICAgICAiZ2VuZGVyIjogImZlbWFsZSIsCiAgICAgICJiaXJ0aERhdGUiOiAiMTk2MC0wNC0xMCIsCiAgICAgICJhZGRyZXNzIjogWyB7CiAgICAgICAgImV4dGVuc2lvbiI6IFsgewogICAgICAgICAgInVybCI6ICJodHRwOi8vaGw3Lm9yZy9maGlyL1N0cnVjdHVyZURlZmluaXRpb24vZ2VvbG9jYXRpb24iLAogICAgICAgICAgImV4dGVuc2lvbiI6IFsgewogICAgICAgICAgICAidXJsIjogImxhdGl0dWRlIiwKICAgICAgICAgICAgInZhbHVlRGVjaW1hbCI6IDQyLjA4MTQ1NzIxNzQ5ODY2CiAgICAgICAgICB9LCB7CiAgICAgICAgICAgICJ1cmwiOiAibG9uZ2l0dWRlIiwKICAgICAgICAgICAgInZhbHVlRGVjaW1hbCI6IC04Ny42OTg5NDAwNDQxNzM3NQogICAgICAgICAgfSBdCiAgICAgICAgfSBdLAogICAgICAgICJsaW5lIjogWyAiNjU4IEx1ZWlsd2l0eiBTcHVyIEFwdCA1NSIgXSwKICAgICAgICAiY2l0eSI6ICJDaGljYWdvIiwKICAgICAgICAic3RhdGUiOiAiSUwiLAogICAgICAgICJwb3N0YWxDb2RlIjogIjYwMDA3IiwKICAgICAgICAiY291bnRyeSI6ICJVUyIKICAgICAgfSBdLAogICAgICAibWFyaXRhbFN0YXR1cyI6IHsKICAgICAgICAiY29kaW5nIjogWyB7CiAgICAgICAgICAic3lzdGVtIjogImh0dHA6Ly90ZXJtaW5vbG9neS5obDcub3JnL0NvZGVTeXN0ZW0vdjMtTWFyaXRhbFN0YXR1cyIsCiAgICAgICAgICAiY29kZSI6ICJTIiwKICAgICAgICAgICJkaXNwbGF5IjogIlMiCiAgICAgICAgfSBdLAogICAgICAgICJ0ZXh0IjogIlMiCiAgICAgIH0sCiAgICAgICJtdWx0aXBsZUJpcnRoQm9vbGVhbiI6IGZhbHNlLAogICAgICAiY29tbXVuaWNhdGlvbiI6IFsgewogICAgICAgICJsYW5ndWFnZSI6IHsKICAgICAgICAgICJjb2RpbmciOiBbIHsKICAgICAgICAgICAgInN5c3RlbSI6ICJ1cm46aWV0ZjpiY3A6NDciLAogICAgICAgICAgICAiY29kZSI6ICJlbi1VUyIsCiAgICAgICAgICAgICJkaXNwbGF5IjogIkVuZ2xpc2giCiAgICAgICAgICB9IF0sCiAgICAgICAgICAidGV4dCI6ICJFbmdsaXNoIgogICAgICAgIH0KICAgICAgfSBdCiAgICB9LAogICAgInNlYXJjaCI6IHsKICAgICAgIm1vZGUiOiAiaW5jbHVkZSIKICAgIH0KICB9IF0KfQ==</inboundTemplate>
-      <outboundTemplate encoding="base64">TVNIfF5+XCZ8TWFzc1ZheHh8MXx8fDIwMDUwMTEwMDQ1NTA0fHxWWFVeVjA0XlZYVV9WMDR8NTk5MTAyfFR8Mi41LjF8fHxFUnxBTHx8fHx8WjIyXkNEQ1BISU5WUyAKUElEfDF8fF5eXl5efHxeXnx8fHx8MXxeXl5eXl58fHx8fHx8Xl5eXl58fHx8fHx8fHx8fHwg</outboundTemplate>
+      <inboundTemplate encoding="base64">ewogICJyZXNvdXJjZVR5cGUiOiAiQnVuZGxlIiwKICAiaWQiOiAiYWJhMjk4MjQtMGEwYS00MjVi
+LWIxZmItOGY3NzQyYzNjZGQwIiwKICAibWV0YSI6IHsKICAgICJsYXN0VXBkYXRlZCI6ICIyMDIw
+LTEyLTA5VDE3OjAyOjE4LjIyOCswMDowMCIKICB9LAogICJ0eXBlIjogInNlYXJjaHNldCIsCiAg
+InRvdGFsIjogMSwKICAibGluayI6IFsgewogICAgInJlbGF0aW9uIjogInNlbGYiLAogICAgInVy
+bCI6ICJodHRwOi8vaGFwaS5maGlyLm9yZy9iYXNlUjQvSW1tdW5pemF0aW9uP19mb3JtYXQ9anNv
+biZfaWQ9NTBhYTA2NmYtNTk5My00ZDRjLWFiZTAtZmU4ODI5OTRiZjdkJl9pbmNsdWRlPUltbXVu
+aXphdGlvbiUzQWxvY2F0aW9uJl9pbmNsdWRlPUltbXVuaXphdGlvbiUzQXBhdGllbnQmX3ByZXR0
+eT10cnVlIgogIH0gXSwKICAiZW50cnkiOiBbIHsKICAgICJmdWxsVXJsIjogImh0dHA6Ly9oYXBp
+LmZoaXIub3JnL2Jhc2VSNC9JbW11bml6YXRpb24vNTBhYTA2NmYtNTk5My00ZDRjLWFiZTAtZmU4
+ODI5OTRiZjdkIiwKICAgICJyZXNvdXJjZSI6IHsKICAgICAgInJlc291cmNlVHlwZSI6ICJJbW11
+bml6YXRpb24iLAogICAgICAiaWQiOiAiNTBhYTA2NmYtNTk5My00ZDRjLWFiZTAtZmU4ODI5OTRi
+ZjdkIiwKICAgICAgIm1ldGEiOiB7CiAgICAgICAgInZlcnNpb25JZCI6ICIxIiwKICAgICAgICAi
+bGFzdFVwZGF0ZWQiOiAiMjAyMC0wMy0yNFQyMzo0NjozMS42MDcrMDA6MDAiLAogICAgICAgICJz
+b3VyY2UiOiAiIzRkdVJsZXMzSVdmVVdpWE8iLAogICAgICAgICJwcm9maWxlIjogWyAiaHR0cDov
+L2hsNy5vcmcvZmhpci91cy9jb3JlL1N0cnVjdHVyZURlZmluaXRpb24vdXMtY29yZS1pbW11bml6
+YXRpb24iIF0sCiAgICAgICAgInRhZyI6IFsgewogICAgICAgICAgInN5c3RlbSI6ICJodHRwczov
+L3NtYXJ0aGVhbHRoaXQub3JnL3RhZ3MiLAogICAgICAgICAgImNvZGUiOiAiQ292aWQxOSBzeW50
+aGV0aWMgcG9wdWxhdGlvbiBmcm9tIFN5bnRoZWEiCiAgICAgICAgfSBdCiAgICAgIH0sCiAgICAg
+ICJzdGF0dXMiOiAiY29tcGxldGVkIiwKICAgICAgInZhY2NpbmVDb2RlIjogewogICAgICAgICJj
+b2RpbmciOiBbIHsKICAgICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL2hsNy5vcmcvZmhpci9zaWQv
+Y3Z4IiwKICAgICAgICAgICJjb2RlIjogIjE0MCIsCiAgICAgICAgICAiZGlzcGxheSI6ICJJbmZs
+dWVuemEsIHNlYXNvbmFsLCBpbmplY3RhYmxlLCBwcmVzZXJ2YXRpdmUgZnJlZSIKICAgICAgICB9
+IF0sCiAgICAgICAgInRleHQiOiAiSW5mbHVlbnphLCBzZWFzb25hbCwgaW5qZWN0YWJsZSwgcHJl
+c2VydmF0aXZlIGZyZWUiCiAgICAgIH0sCiAgICAgICJwYXRpZW50IjogewogICAgICAgICJyZWZl
+cmVuY2UiOiAiUGF0aWVudC8xY2JjOWYzZC0zZTlhLTQ3ZjktOTQ5Ny1mZWVmODdkOTI3NzkiCiAg
+ICAgIH0sCiAgICAgICJlbmNvdW50ZXIiOiB7CiAgICAgICAgInJlZmVyZW5jZSI6ICJFbmNvdW50
+ZXIvZDQ1MjUyM2MtYzIxOS00YTNlLTg2ZWItOWJiZDQzMDQ0MWZjIgogICAgICB9LAogICAgICAi
+b2NjdXJyZW5jZURhdGVUaW1lIjogIjIwMTUtMDUtMTBUMDg6MjU6NTQtMDU6MDAiLAogICAgICAi
+cHJpbWFyeVNvdXJjZSI6IHRydWUsCiAgICAgICJsb2NhdGlvbiI6IHsKICAgICAgICAicmVmZXJl
+bmNlIjogIkxvY2F0aW9uL2MyNmEzZWJmLTk1NGYtNGFhNy1iMWRlLTJlYWFlN2ZjMzQ2MyIsCiAg
+ICAgICAgImRpc3BsYXkiOiAiR0FTVFJPRU5URVJPTE9HWSBDT05TVUxUQU5UUyBPRiBUSEUgTk9S
+VEggU0hPUkUiCiAgICAgIH0KICAgIH0sCiAgICAic2VhcmNoIjogewogICAgICAibW9kZSI6ICJt
+YXRjaCIKICAgIH0KICB9LCB7CiAgICAiZnVsbFVybCI6ICJodHRwOi8vaGFwaS5maGlyLm9yZy9i
+YXNlUjQvTG9jYXRpb24vYzI2YTNlYmYtOTU0Zi00YWE3LWIxZGUtMmVhYWU3ZmMzNDYzIiwKICAg
+ICJyZXNvdXJjZSI6IHsKICAgICAgInJlc291cmNlVHlwZSI6ICJMb2NhdGlvbiIsCiAgICAgICJp
+ZCI6ICJjMjZhM2ViZi05NTRmLTRhYTctYjFkZS0yZWFhZTdmYzM0NjMiLAogICAgICAibWV0YSI6
+IHsKICAgICAgICAidmVyc2lvbklkIjogIjEiLAogICAgICAgICJsYXN0VXBkYXRlZCI6ICIyMDIw
+LTAzLTI0VDIzOjQ2OjMxLjYwNyswMDowMCIsCiAgICAgICAgInNvdXJjZSI6ICIjNGR1UmxlczNJ
+V2ZVV2lYTyIsCiAgICAgICAgInByb2ZpbGUiOiBbICJodHRwOi8vaGw3Lm9yZy9maGlyL3VzL2Nv
+cmUvU3RydWN0dXJlRGVmaW5pdGlvbi91cy1jb3JlLWxvY2F0aW9uIiBdLAogICAgICAgICJ0YWci
+OiBbIHsKICAgICAgICAgICJzeXN0ZW0iOiAiaHR0cHM6Ly9zbWFydGhlYWx0aGl0Lm9yZy90YWdz
+IiwKICAgICAgICAgICJjb2RlIjogIkNvdmlkMTkgc3ludGhldGljIHBvcHVsYXRpb24gZnJvbSBT
+eW50aGVhIgogICAgICAgIH0gXQogICAgICB9LAogICAgICAiaWRlbnRpZmllciI6IFsgewogICAg
+ICAgICJ1c2UiOiAib2ZmaWNpYWwiLAogICAgICAgICJzeXN0ZW0iOiAidXJuOmRpY29tOnVpZCIs
+CiAgICAgICAgInZhbHVlIjogInVybjpvaWQ6Mi4xNi44NTguMC4yLjE2Ljg2LjEuMC4wLjIxNjMw
+OTAxMDAxMSIKICAgICAgfSwKICAgICAgewogICAgICAgICJ1c2UiOiAib2ZmaWNpYWwiLAogICAg
+ICAgICJzeXN0ZW0iOiAiV0lSIiwKICAgICAgICAidmFsdWUiOiAiV0lSX0lEXzEyMzQ1IgogICAg
+ICB9IF0sCiAgICAgICJzdGF0dXMiOiAiYWN0aXZlIiwKICAgICAgIm5hbWUiOiAiR0FTVFJPRU5U
+RVJPTE9HWSBDT05TVUxUQU5UUyBPRiBUSEUgTk9SVEggU0hPUkUiLAogICAgICAidGVsZWNvbSI6
+IFsgewogICAgICAgICJzeXN0ZW0iOiAicGhvbmUiLAogICAgICAgICJ2YWx1ZSI6ICI4NDctMjU2
+LTI3OTAiCiAgICAgIH0gXSwKICAgICAgImFkZHJlc3MiOiB7CiAgICAgICAgImxpbmUiOiBbICI1
+MTAgR1JFRU4gQkFZIFJEIiBdLAogICAgICAgICJjaXR5IjogIktFTklMV09SVEgiLAogICAgICAg
+ICJzdGF0ZSI6ICJJTCIsCiAgICAgICAgInBvc3RhbENvZGUiOiAiNjAwNDMtMTAwMiIsCiAgICAg
+ICAgImNvdW50cnkiOiAiVVMiCiAgICAgIH0sCiAgICAgICJwb3NpdGlvbiI6IHsKICAgICAgICAi
+bG9uZ2l0dWRlIjogLTg3LjcxNDUxMiwKICAgICAgICAibGF0aXR1ZGUiOiA0Mi4wODg4MjMKICAg
+ICAgfSwKICAgICAgIm1hbmFnaW5nT3JnYW5pemF0aW9uIjogewogICAgICAgICJyZWZlcmVuY2Ui
+OiAiT3JnYW5pemF0aW9uL2U0ZjQ0ZDM5LWIwNzYtM2Q2NS04YTA2LTFmNDcwYmUyY2VkNSIsCiAg
+ICAgICAgImRpc3BsYXkiOiAiR0FTVFJPRU5URVJPTE9HWSBDT05TVUxUQU5UUyBPRiBUSEUgTk9S
+VEggU0hPUkUiCiAgICAgIH0KICAgIH0sCiAgICAic2VhcmNoIjogewogICAgICAibW9kZSI6ICJp
+bmNsdWRlIgogICAgfQogIH0sIHsKICAgICJmdWxsVXJsIjogImh0dHA6Ly9oYXBpLmZoaXIub3Jn
+L2Jhc2VSNC9QYXRpZW50LzFjYmM5ZjNkLTNlOWEtNDdmOS05NDk3LWZlZWY4N2Q5Mjc3OSIsCiAg
+ICAicmVzb3VyY2UiOiB7CiAgICAgICJyZXNvdXJjZVR5cGUiOiAiUGF0aWVudCIsCiAgICAgICJp
+ZCI6ICIxY2JjOWYzZC0zZTlhLTQ3ZjktOTQ5Ny1mZWVmODdkOTI3NzkiLAogICAgICAibWV0YSI6
+IHsKICAgICAgICAidmVyc2lvbklkIjogIjEiLAogICAgICAgICJsYXN0VXBkYXRlZCI6ICIyMDIw
+LTAzLTI0VDIzOjQ2OjMxLjYwNyswMDowMCIsCiAgICAgICAgInNvdXJjZSI6ICIjNGR1UmxlczNJ
+V2ZVV2lYTyIsCiAgICAgICAgInByb2ZpbGUiOiBbICJodHRwOi8vaGw3Lm9yZy9maGlyL3VzL2Nv
+cmUvU3RydWN0dXJlRGVmaW5pdGlvbi91cy1jb3JlLXBhdGllbnQiIF0sCiAgICAgICAgInRhZyI6
+IFsgewogICAgICAgICAgInN5c3RlbSI6ICJodHRwczovL3NtYXJ0aGVhbHRoaXQub3JnL3RhZ3Mi
+LAogICAgICAgICAgImNvZGUiOiAiQ292aWQxOSBzeW50aGV0aWMgcG9wdWxhdGlvbiBmcm9tIFN5
+bnRoZWEiCiAgICAgICAgfSBdCiAgICAgIH0sCiAgICAgICJ0ZXh0IjogewogICAgICAgICJzdGF0
+dXMiOiAiZ2VuZXJhdGVkIiwKICAgICAgICAiZGl2IjogIjxkaXYgeG1sbnM9XCJodHRwOi8vd3d3
+LnczLm9yZy8xOTk5L3hodG1sXCI+R2VuZXJhdGVkIGJ5IDxhIGhyZWY9XCJodHRwczovL2dpdGh1
+Yi5jb20vc3ludGhldGljaGVhbHRoL3N5bnRoZWFcIj5TeW50aGVhPC9hPi5WZXJzaW9uIGlkZW50
+aWZpZXI6IDIxNzdjZmZjXG4gLiAgIFBlcnNvbiBzZWVkOiA5MDExNTI3Mzc2NDcwNTI3MzY1ICBQ
+b3B1bGF0aW9uIHNlZWQ6IDEyMzQ1PC9kaXY+IgogICAgICB9LAogICAgICAiZXh0ZW5zaW9uIjog
+WyB7CiAgICAgICAgInVybCI6ICJodHRwOi8vaGw3Lm9yZy9maGlyL3VzL2NvcmUvU3RydWN0dXJl
+RGVmaW5pdGlvbi91cy1jb3JlLXJhY2UiLAogICAgICAgICJleHRlbnNpb24iOiBbIHsKICAgICAg
+ICAgICJ1cmwiOiAiZGV0YWlsZWQiLAogICAgICAgICAgInZhbHVlQ29kaW5nIjogewogICAgICAg
+ICAgICAic3lzdGVtIjogInVybjpvaWQ6Mi4xNi44NDAuMS4xMTM4ODMuNi4yMzgiLAogICAgICAg
+ICAgICAiY29kZSI6ICIyMTMxLTEiLAogICAgICAgICAgICAiZGlzcGxheSI6ICJPdGhlciBSYWNl
+cyIKICAgICAgICAgIH0KICAgICAgICB9LCB7CiAgICAgICAgICAidXJsIjogInRleHQiLAogICAg
+ICAgICAgInZhbHVlU3RyaW5nIjogIk90aGVyIgogICAgICAgIH0gXQogICAgICB9LCB7CiAgICAg
+ICAgInVybCI6ICJodHRwOi8vaGw3Lm9yZy9maGlyL3VzL2NvcmUvU3RydWN0dXJlRGVmaW5pdGlv
+bi91cy1jb3JlLWV0aG5pY2l0eSIsCiAgICAgICAgImV4dGVuc2lvbiI6IFsgewogICAgICAgICAg
+InVybCI6ICJvbWJDYXRlZ29yeSIsCiAgICAgICAgICAidmFsdWVDb2RpbmciOiB7CiAgICAgICAg
+ICAgICJzeXN0ZW0iOiAidXJuOm9pZDoyLjE2Ljg0MC4xLjExMzg4My42LjIzOCIsCiAgICAgICAg
+ICAgICJjb2RlIjogIjIxMzUtMiIsCiAgICAgICAgICAgICJkaXNwbGF5IjogIkhpc3BhbmljIG9y
+IExhdGlubyIKICAgICAgICAgIH0KICAgICAgICB9LCB7CiAgICAgICAgICAidXJsIjogInRleHQi
+LAogICAgICAgICAgInZhbHVlU3RyaW5nIjogIkhpc3BhbmljIG9yIExhdGlubyIKICAgICAgICB9
+IF0KICAgICAgfSwgewogICAgICAgICJ1cmwiOiAiaHR0cDovL2hsNy5vcmcvZmhpci9TdHJ1Y3R1
+cmVEZWZpbml0aW9uL3BhdGllbnQtbW90aGVyc01haWRlbk5hbWUiLAogICAgICAgICJ2YWx1ZVN0
+cmluZyI6ICJSdXRoaWU5MDEgSHVlbDYyOCIKICAgICAgfSwgewogICAgICAgICJ1cmwiOiAiaHR0
+cDovL2hsNy5vcmcvZmhpci91cy9jb3JlL1N0cnVjdHVyZURlZmluaXRpb24vdXMtY29yZS1iaXJ0
+aHNleCIsCiAgICAgICAgInZhbHVlQ29kZSI6ICJGIgogICAgICB9LCB7CiAgICAgICAgInVybCI6
+ICJodHRwOi8vaGw3Lm9yZy9maGlyL1N0cnVjdHVyZURlZmluaXRpb24vcGF0aWVudC1iaXJ0aFBs
+YWNlIiwKICAgICAgICAidmFsdWVBZGRyZXNzIjogewogICAgICAgICAgImNpdHkiOiAiV2hlYXRv
+biIsCiAgICAgICAgICAic3RhdGUiOiAiSWxsaW5vaXMiLAogICAgICAgICAgImNvdW50cnkiOiAi
+VVMiCiAgICAgICAgfQogICAgICB9LCB7CiAgICAgICAgInVybCI6ICJodHRwOi8vc3ludGhldGlj
+aGVhbHRoLmdpdGh1Yi5pby9zeW50aGVhL2Rpc2FiaWxpdHktYWRqdXN0ZWQtbGlmZS15ZWFycyIs
+CiAgICAgICAgInZhbHVlRGVjaW1hbCI6IDAKICAgICAgfSwgewogICAgICAgICJ1cmwiOiAiaHR0
+cDovL3N5bnRoZXRpY2hlYWx0aC5naXRodWIuaW8vc3ludGhlYS9xdWFsaXR5LWFkanVzdGVkLWxp
+ZmUteWVhcnMiLAogICAgICAgICJ2YWx1ZURlY2ltYWwiOiA1OQogICAgICB9IF0sCiAgICAgICJp
+ZGVudGlmaWVyIjogWyB7CiAgICAgICAgInN5c3RlbSI6ICJodHRwczovL2dpdGh1Yi5jb20vc3lu
+dGhldGljaGVhbHRoL3N5bnRoZWEiLAogICAgICAgICJ2YWx1ZSI6ICI0OGM1ZTc3YS02ZDk3LTQx
+NjUtOGViMS1mYjQwNmEzYjdmY2IiCiAgICAgIH0sIHsKICAgICAgICAidHlwZSI6IHsKICAgICAg
+ICAgICJjb2RpbmciOiBbIHsKICAgICAgICAgICAgInN5c3RlbSI6ICJodHRwOi8vdGVybWlub2xv
+Z3kuaGw3Lm9yZy9Db2RlU3lzdGVtL3YyLTAyMDMiLAogICAgICAgICAgICAiY29kZSI6ICJNUiIs
+CiAgICAgICAgICAgICJkaXNwbGF5IjogIk1lZGljYWwgUmVjb3JkIE51bWJlciIKICAgICAgICAg
+IH0gXSwKICAgICAgICAgICJ0ZXh0IjogIk1lZGljYWwgUmVjb3JkIE51bWJlciIKICAgICAgICB9
+LAogICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL2hvc3BpdGFsLnNtYXJ0aGVhbHRoaXQub3JnIiwK
+ICAgICAgICAidmFsdWUiOiAiNDhjNWU3N2EtNmQ5Ny00MTY1LThlYjEtZmI0MDZhM2I3ZmNiIgog
+ICAgICB9LCB7CiAgICAgICAgInR5cGUiOiB7CiAgICAgICAgICAiY29kaW5nIjogWyB7CiAgICAg
+ICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL3Rlcm1pbm9sb2d5LmhsNy5vcmcvQ29kZVN5c3RlbS92
+Mi0wMjAzIiwKICAgICAgICAgICAgImNvZGUiOiAiU1MiLAogICAgICAgICAgICAiZGlzcGxheSI6
+ICJTb2NpYWwgU2VjdXJpdHkgTnVtYmVyIgogICAgICAgICAgfSBdLAogICAgICAgICAgInRleHQi
+OiAiU29jaWFsIFNlY3VyaXR5IE51bWJlciIKICAgICAgICB9LAogICAgICAgICJzeXN0ZW0iOiAi
+aHR0cDovL2hsNy5vcmcvZmhpci9zaWQvdXMtc3NuIiwKICAgICAgICAidmFsdWUiOiAiOTk5LTE3
+LTc0MzYiCiAgICAgIH0sIHsKICAgICAgICAidHlwZSI6IHsKICAgICAgICAgICJjb2RpbmciOiBb
+IHsKICAgICAgICAgICAgInN5c3RlbSI6ICJodHRwOi8vdGVybWlub2xvZ3kuaGw3Lm9yZy9Db2Rl
+U3lzdGVtL3YyLTAyMDMiLAogICAgICAgICAgICAiY29kZSI6ICJETCIsCiAgICAgICAgICAgICJk
+aXNwbGF5IjogIkRyaXZlcidzIExpY2Vuc2UiCiAgICAgICAgICB9IF0sCiAgICAgICAgICAidGV4
+dCI6ICJEcml2ZXIncyBMaWNlbnNlIgogICAgICAgIH0sCiAgICAgICAgInN5c3RlbSI6ICJ1cm46
+b2lkOjIuMTYuODQwLjEuMTEzODgzLjQuMy4yNSIsCiAgICAgICAgInZhbHVlIjogIlM5OTkzMDUz
+NiIKICAgICAgfSwgewogICAgICAgICJ0eXBlIjogewogICAgICAgICAgImNvZGluZyI6IFsgewog
+ICAgICAgICAgICAic3lzdGVtIjogImh0dHA6Ly90ZXJtaW5vbG9neS5obDcub3JnL0NvZGVTeXN0
+ZW0vdjItMDIwMyIsCiAgICAgICAgICAgICJjb2RlIjogIlBQTiIsCiAgICAgICAgICAgICJkaXNw
+bGF5IjogIlBhc3Nwb3J0IE51bWJlciIKICAgICAgICAgIH0gXSwKICAgICAgICAgICJ0ZXh0Ijog
+IlBhc3Nwb3J0IE51bWJlciIKICAgICAgICB9LAogICAgICAgICJzeXN0ZW0iOiAiaHR0cDovL3N0
+YW5kYXJkaGVhbHRocmVjb3JkLm9yZy9maGlyL1N0cnVjdHVyZURlZmluaXRpb24vcGFzc3BvcnRO
+dW1iZXIiLAogICAgICAgICJ2YWx1ZSI6ICJYNDAzNDA4MjhYIgogICAgICB9IF0sCiAgICAgICJu
+YW1lIjogWyB7CiAgICAgICAgInVzZSI6ICJvZmZpY2lhbCIsCiAgICAgICAgImZhbWlseSI6ICJN
+aWxsZXI1MDMiLAogICAgICAgICJnaXZlbiI6IFsgIk5hbmN5MjY1IiBdLAogICAgICAgICJwcmVm
+aXgiOiBbICJNcy4iIF0KICAgICAgfSBdLAogICAgICAidGVsZWNvbSI6IFsgewogICAgICAgICJz
+eXN0ZW0iOiAicGhvbmUiLAogICAgICAgICJ2YWx1ZSI6ICI1NTUtNDcwLTIyMDgiLAogICAgICAg
+ICJ1c2UiOiAiaG9tZSIKICAgICAgfSBdLAogICAgICAiZ2VuZGVyIjogImZlbWFsZSIsCiAgICAg
+ICJiaXJ0aERhdGUiOiAiMTk2MC0wNC0xMCIsCiAgICAgICJhZGRyZXNzIjogWyB7CiAgICAgICAg
+ImV4dGVuc2lvbiI6IFsgewogICAgICAgICAgInVybCI6ICJodHRwOi8vaGw3Lm9yZy9maGlyL1N0
+cnVjdHVyZURlZmluaXRpb24vZ2VvbG9jYXRpb24iLAogICAgICAgICAgImV4dGVuc2lvbiI6IFsg
+ewogICAgICAgICAgICAidXJsIjogImxhdGl0dWRlIiwKICAgICAgICAgICAgInZhbHVlRGVjaW1h
+bCI6IDQyLjA4MTQ1NzIxNzQ5ODY2CiAgICAgICAgICB9LCB7CiAgICAgICAgICAgICJ1cmwiOiAi
+bG9uZ2l0dWRlIiwKICAgICAgICAgICAgInZhbHVlRGVjaW1hbCI6IC04Ny42OTg5NDAwNDQxNzM3
+NQogICAgICAgICAgfSBdCiAgICAgICAgfSBdLAogICAgICAgICJsaW5lIjogWyAiNjU4IEx1ZWls
+d2l0eiBTcHVyIEFwdCA1NSIgXSwKICAgICAgICAiY2l0eSI6ICJDaGljYWdvIiwKICAgICAgICAi
+c3RhdGUiOiAiSUwiLAogICAgICAgICJwb3N0YWxDb2RlIjogIjYwMDA3IiwKICAgICAgICAiY291
+bnRyeSI6ICJVUyIKICAgICAgfSBdLAogICAgICAibWFyaXRhbFN0YXR1cyI6IHsKICAgICAgICAi
+Y29kaW5nIjogWyB7CiAgICAgICAgICAic3lzdGVtIjogImh0dHA6Ly90ZXJtaW5vbG9neS5obDcu
+b3JnL0NvZGVTeXN0ZW0vdjMtTWFyaXRhbFN0YXR1cyIsCiAgICAgICAgICAiY29kZSI6ICJTIiwK
+ICAgICAgICAgICJkaXNwbGF5IjogIlMiCiAgICAgICAgfSBdLAogICAgICAgICJ0ZXh0IjogIlMi
+CiAgICAgIH0sCiAgICAgICJtdWx0aXBsZUJpcnRoQm9vbGVhbiI6IGZhbHNlLAogICAgICAiY29t
+bXVuaWNhdGlvbiI6IFsgewogICAgICAgICJsYW5ndWFnZSI6IHsKICAgICAgICAgICJjb2Rpbmci
+OiBbIHsKICAgICAgICAgICAgInN5c3RlbSI6ICJ1cm46aWV0ZjpiY3A6NDciLAogICAgICAgICAg
+ICAiY29kZSI6ICJlbi1VUyIsCiAgICAgICAgICAgICJkaXNwbGF5IjogIkVuZ2xpc2giCiAgICAg
+ICAgICB9IF0sCiAgICAgICAgICAidGV4dCI6ICJFbmdsaXNoIgogICAgICAgIH0KICAgICAgfSBd
+CiAgICB9LAogICAgInNlYXJjaCI6IHsKICAgICAgIm1vZGUiOiAiaW5jbHVkZSIKICAgIH0KICB9
+IF0KfQ==</inboundTemplate>
+      <outboundTemplate encoding="base64">TVNIfF5+XCZ8TWFzc1ZheHh8MXx8fDIwMDUwMTEwMDQ1NTA0fHxWWFVeVjA0XlZYVV9WMDR8NTk5
+MTAyfFR8Mi41LjF8fHxFUnxBTHx8fHx8WjIyXkNEQ1BISU5WUyAKUElEfDF8fHx8fHx8fHwxfHx8
+fHx8fHx8fHx8fHx8fHx8fHwgClBEMXx8fHx8fHx8Ck5LMQ==</outboundTemplate>
       <inboundDataType>JSON</inboundDataType>
       <outboundDataType>HL7V2</outboundDataType>
       <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.10.0">
@@ -469,8 +838,8 @@ return;</undeployScript>
     <metadata>
       <enabled>true</enabled>
       <lastModified>
-        <time>1607889627068</time>
-        <timezone>America/Chicago</timezone>
+        <time>1608233439722</time>
+        <timezone>America/New_York</timezone>
       </lastModified>
       <pruningSettings>
         <archiveEnabled>true</archiveEnabled>
