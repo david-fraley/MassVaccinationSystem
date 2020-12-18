@@ -4,38 +4,38 @@ Appointment {
   participant : [ 
     {
       type : "patient" // note that this type is an extensible
-      actor : string
+      actor : string "Patient/id"
     },
     {
       type : "practitioner" // note that this type is an extensible
-      actor : string
+      actor : string "Practitioner/id"
     },
     {
       type : "location" // note that this type is an extensible
-      actor : string
+      actor : string "Location/id"
     },
   ]
-  slot : string // note that this is not needed until scheduling is implemented
+  slot : string "Slot/id" // note that this is not needed until scheduling is implemented
 }
 {
-  "Appointment": [
+  "Appointment":
     {
-      "status" : "booked"
-      "participant" : [ 
+      "status":"booked",
+      "participant":[
         {
-          "type" : "patient"
-          "actor" : "1194419"
+          "type":"patient",
+          "actor":"Patient/example"
         },
         {
-          "type" : "pratitioner"
-          "actor" : "clinFhirQANGUptCIsgYQnfv6WHol1LOFkB2"
+          "type":"pratitioner",
+          "actor":"Practitioner/f201"
         },
         {
-          "type" : "patient"
-          "actor" : "628441"
+          "type":"patient",
+          "actor":"Patient/102"
         }
-      ]
-      "slot" : "1480904"
-   ]
+      ],
+      "slot":"Slot/1253"
+    }
 }
 */

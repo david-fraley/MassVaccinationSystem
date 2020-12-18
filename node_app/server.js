@@ -6,7 +6,15 @@ app.use(express.json());
 app.set("json spaces", 2);
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
-const generalEndpoints = ["/Patient*", "/Organization*"];
+const generalEndpoints = [
+  "/Organization*",
+  "/Patient*",
+  "/Location*",
+  "/Encounter*",
+  "/Appointment*",
+  "/Immunization*",
+  "/Observation*",
+];
 const headers = {
   "content-type": "application/fhir+json",
 };
@@ -52,6 +60,7 @@ app.post("/Organization", (req, res) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
+});
 
 app.post("/Patient", (req, res) => {
   let obj = req.body;
@@ -146,6 +155,297 @@ app.post("/Patient", (req, res) => {
       })
       .catch((e) => res.send(e));
   }
+});
+
+app.post("/Location", (req, res) => {
+  let loc = req.body.Location;
+  let resource = {
+    resourceType: "Location",
+    name: loc.name,
+    status: loc.status,
+    mode: loc.mode,
+    type: [
+      {
+        coding: [
+          {
+            code: loc.type,
+            display: loc.type,
+          },
+        ],
+      },
+    ],
+    address: {
+      line: [loc.address.line],
+      city: loc.address.city,
+      state: loc.address.state,
+      postalCode: loc.address.postalCode,
+      country: loc.address.country,
+    },
+
+    physicalType: {
+      coding: [
+        {
+          system: "http://hl7.org/fhir/ValueSet/location-physical-type",
+          code: loc.physicalType,
+          display: loc.physicalType,
+        },
+      ],
+    },
+  };
+
+  axios
+    .post(`${base}/Location`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
+app.post("/Encounter", (req, res) => {
+  let encounter = req.body.Encounter;
+  let resource = {
+    resourceType: "Encounter",
+    status: encounter.status,
+    class: {
+      system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      code: encounter.class,
+      display: encounter.class,
+    },
+    subject: {
+      reference: encounter.subject,
+    },
+    appointment: {
+      reference: encounter.appointment,
+    },
+    period: {
+      start: encounter.start,
+      end: encounter.end,
+    },
+    location: [
+      {
+        location: {
+          reference: encounter.location,
+        },
+      },
+    ],
+    serviceProvider: {
+      reference: encounter.serviceProvider,
+    },
+  };
+
+  // post resource
+  axios
+    .post(`${base}/Encounter`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
+app.post("/Appointment", (req, res) => {
+  let appt = req.body.Appointment;
+  let resource = {
+    resourceType: "Appointment",
+    status: appt.status,
+    slot: [
+      {
+        reference: appt.slot,
+      },
+    ],
+    participant: [
+      // add later
+    ],
+  };
+  // add participants
+  let participant;
+  for (participant of appt.participant) {
+    resource.participant.push({
+      type: [
+        {
+          coding: [
+            {
+              system: "",
+              code: participant.type,
+              display: participant.type,
+            },
+          ],
+        },
+      ],
+      actor: {
+        reference: participant.actor,
+      },
+    });
+  }
+  // post resource
+  axios
+    .post(`${base}/Appointment`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
+app.post("/Immunization", (req, res) => {
+  let imm = req.body.Immunization;
+  let resource = {
+    resourceType: "Immunization",
+    vaccineCode: {
+      coding: [
+        {
+          system: "",
+          code: imm.vaccine,
+          display: imm.vaccine,
+        },
+      ],
+    },
+    manufacturer: {
+      reference: imm.manufacturer,
+    },
+    lotNumber: imm.lotNumber,
+    expirationDate: imm.expiration,
+    patient: {
+      reference: imm.patient,
+    },
+    encounter: {
+      reference: imm.encounter,
+    },
+    status: imm.status,
+    statusReason: {
+      coding: [
+        {
+          system: "https://www.hl7.org/fhir/v3/ActReason/cs.html",
+          code: imm.statusReason,
+          display: imm.statusReason,
+        },
+      ],
+    },
+    occurrenceDateTime: imm.occurrence,
+    primarySource: imm.primarySource,
+    location: {
+      reference: imm.location,
+    },
+    site: {
+      coding: [
+        {
+          system: "https://www.hl7.org/fhir/v3/ActSite/cs.html",
+          code: imm.site,
+          display: imm.site,
+        },
+      ],
+    },
+    route: {
+      coding: [
+        {
+          system: "https://www.hl7.org/fhir/v3/RouteOfAdministration/cs.html",
+          code: imm.route,
+          display: imm.route,
+        },
+      ],
+    },
+    doseQuantity: {
+      value: imm.doseQuantity,
+      system: "http://unitsofmeasure.org",
+      code: imm.doseUnit,
+    },
+    performer: [
+      // add later
+    ],
+    education: [
+      // add later
+    ],
+    protocolApplied: [
+      {
+        series: imm.series,
+        doseNumberPositiveInt: imm.doseNumber,
+      },
+    ],
+  };
+
+  // add performer
+  let performer;
+  for (performer of imm.performer) {
+    resource.performer.push({
+      actor: {
+        reference: performer,
+      },
+    });
+  }
+  // add education
+  let education;
+  for (education of imm.education) {
+    resource.education.push({
+      reference: education,
+    });
+  }
+  // post resource
+  axios
+    .post(`${base}/Immunization`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
+app.post("/Observation", (req, res) => {
+  let observation = req.body.Observation;
+  let resource = {
+    resourceType: "Observation",
+    status: observation.status,
+    category: [
+      {
+        coding: [
+          {
+            system: "http://hl7.org/fhir/ValueSet/observation-category",
+            code: observation.category,
+            display: observation.category,
+          },
+        ],
+      },
+    ],
+    code: {
+      coding: [
+        {
+          system: "http://loinc.org",
+          code: observation.code,
+          display: observation.code,
+        },
+      ],
+    },
+    subject: {
+      reference: observation.subject,
+    },
+    encounter: {
+      reference: observation.encounter,
+    },
+    valueString: observation.value,
+    effectivePeriod: {
+      start: observation.effectiveStart,
+      end: observation.effectiveEnd,
+    },
+    performer: [
+      // add later
+    ],
+    partOf: [
+      {
+        reference: observation.partOf,
+      },
+    ],
+  };
+
+  // add performers
+  let performer;
+  for (performer of observation.performer) {
+    resource.performer.push({
+      reference: performer,
+    });
+  }
+  // post resource
+  axios
+    .post(`${base}/Observation`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
 });
 
 // Check-in given either
