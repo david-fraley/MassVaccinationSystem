@@ -52,6 +52,7 @@ app.post("/Organization", (req, res) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
+});
 
 app.post("/Patient", (req, res) => {
   let obj = req.body;
@@ -62,7 +63,7 @@ app.post("/Patient", (req, res) => {
         {
           family: patient.family,
           given: [patient.given],
-          suffix: [patient.suffix],
+          // middle and suffix are optional
         },
       ],
       telecom: [
@@ -72,6 +73,7 @@ app.post("/Patient", (req, res) => {
       birthDate: patient.birthDate,
       address: [
         {
+          use: patient.address.use,
           line: [patient.address.line],
           city: patient.address.city,
           state: patient.address.state,
@@ -82,7 +84,7 @@ app.post("/Patient", (req, res) => {
       photo: [
         {
           url: "", // add later
-          title: `Photo of ${patient.given} ${patient.family} ${patient.suffix}`,
+          title: "Photo of user",
         },
       ],
       contact: [
@@ -91,7 +93,6 @@ app.post("/Patient", (req, res) => {
             {
               coding: [
                 {
-                  // unsure
                   system: "http://terminology.hl7.org/CodeSystem/v2-0131",
                   code: patient.contact.relationship,
                   display: patient.contact.relationship,
@@ -121,6 +122,14 @@ app.post("/Patient", (req, res) => {
         },
       ],
     };
+
+    // optional
+    if (patient.hasOwnProperty("middle")) {
+      resource.name[0].given.push(patient.middle);
+    }
+    if (patient.hasOwnProperty("suffix")) {
+      resource.name[0].suffix = [patient.suffix];
+    }
     // add in telecom
     for (idx in patient.phone) {
       resource.telecom.push({
