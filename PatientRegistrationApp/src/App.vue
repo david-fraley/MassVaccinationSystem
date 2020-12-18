@@ -6,7 +6,15 @@
 				<v-card flat height="101%" width="100%"> 
 					<v-stepper v-model="page" class="elevation-0">	
 						<v-toolbar flat height="80em" color="primary" dark>
-							<v-toolbar-title style="font-size:2em" class="font-weight-bold text-wrap">{{title}}</v-toolbar-title>
+							<!--font size for xs & sm screens-->
+							<div class="d-sm-none">
+							<v-toolbar-title style="font-size:1.4rem" class="font-weight-bold text-wrap">{{title}}</v-toolbar-title>
+							</div>
+							<!--font size for screens larger than sm-->
+							<div class="d-none d-sm-block">
+							<v-toolbar-title style="font-size:2rem" class="font-weight-bold text-wrap">{{title}}</v-toolbar-title>
+							</div>
+							
 							<v-spacer></v-spacer>
 							<v-img
 								max-height="5em"
@@ -539,6 +547,14 @@ export default {
 		HouseholdReviewSubmit,
 		HouseholdFollowUp,
 	},
+	computed: {
+		titleFontSize() {
+			switch (this.$vuetify.breakpoint.name) {
+				case 'xs': return '1.5em';
+			default: return '2.2em';
+			}
+		}
+	},
 	data () {
 		return {
 			dialog: false,
@@ -547,7 +563,7 @@ export default {
 			registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
 			numberOfHouseholdMembers: 2
 			}
-		},
+		}
   }
 </script>
 <style lang="css" scoped>
