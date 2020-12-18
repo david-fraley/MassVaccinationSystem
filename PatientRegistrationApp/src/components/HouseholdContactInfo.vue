@@ -1,6 +1,6 @@
 <template>
-	<v-container>
-		<v-row>
+	<v-container fluid>
+		<v-row align="center" justify="start">
 			<v-col cols="12">
 				<div>We ask that you please provide your phone number and/or e-mail address.  This contact information will provide us with the ability to send you important information regarding your vaccination registration, follow-up appointment, and vaccination summary.</div>  
 				<div><br>By withholding your e-mail and/or phone number, it will not be possible to provide you with the important vaccination information.</div>
@@ -11,7 +11,7 @@
 				<div><strong>You understand that we will use the phone number and e-mail that you provide to contact you with vaccination registration and follow-up information.</strong></div>
 			</v-col>
 		</v-row> 
-		<v-row no-gutters>
+		<v-row align="center" justify="start" no-gutters>
 			<v-checkbox
 				v-model="acknowledgement">
 				<template #label>
@@ -19,7 +19,7 @@
 				</template>
 			</v-checkbox>
 		</v-row>
-		<v-row no-gutters>
+		<v-row align="center" justify="start" no-gutters>
 			<v-checkbox
 				v-model="permission"
 				:disabled="!acknowledgement"
@@ -29,7 +29,7 @@
 		</v-row>
 			<v-divider></v-divider>
 		<v-row align="center" justify="start">
-			<v-col cols="3">
+			<v-col cols="12" sm="6" md="6" lg="3">
 				<v-text-field
 					v-model="primaryPhoneNumber"
 					:disabled="!permission"
@@ -39,37 +39,39 @@
 					label="Primary Phone Number">
 				</v-text-field>
 			</v-col>
-			<v-col cols="2">
+			<v-col cols="11" sm="5" md="5" lg="2">
 				<v-select
 					v-model="primaryPhoneNumberType"
 					:disabled="!permission"
 					:items="phoneTypeOptions"
 					label="Phone Type"
+					prepend-icon="mdi-blank"
 				></v-select>
 			</v-col>
-			<v-col cols="2">
+			<v-col cols="1" sm="1" md="1" lg="1">
 			</v-col>
-			<v-col cols="3">
+			<v-col cols="12" sm="6" md="6" lg="3">
 				<v-text-field
 					v-model="secondaryPhoneNumber"
 					:disabled="!primaryPhoneNumber"
 					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
 					v-mask="'(###)###-####'"
-					prepend-icon="mdi-phone"
-					label="Secondary Phone Number">
+					label="Secondary Phone Number"
+					prepend-icon="mdi-phone">
 				</v-text-field>
 			</v-col>
-			<v-col cols="2">
+			<v-col cols="11" sm="5" md="5" lg="2">
 				<v-select
 					v-model="secondaryPhoneNumberType"
 					:disabled="!primaryPhoneNumber"
 					:items="phoneTypeOptions"
 					label="Phone Type"
+					prepend-icon="mdi-blank"
 				></v-select>
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="5">
+			<v-col cols="11" sm="5" md="5" lg="5">
 				<v-text-field
 					v-model="primaryEmail"
 					:disabled="!permission"
@@ -78,9 +80,9 @@
 					label="Primary E-mail Address">
 				</v-text-field>
 			</v-col>
-			<v-col cols="2">
+			<v-col cols="1" sm="1" md="1" lg="1">
 			</v-col>
-			<v-col cols="5">
+			<v-col cols="11" sm="5" md="5" lg="5">
 				<v-text-field
 					v-model="secondaryEmail"
 					:disabled="!primaryEmail"

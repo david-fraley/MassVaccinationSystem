@@ -5,12 +5,12 @@
 			<v-layout justify-center align-center>
 				<v-card flat height="101%" width="100%"> 
 					<v-stepper v-model="page" class="elevation-0">	
-						<v-toolbar flat height="65em" color="primary" dark>
-							<v-toolbar-title style="font-size:2.2em" class="font-weight-bold">{{title}}</v-toolbar-title>
+						<v-toolbar flat height="80em" color="primary" dark>
+							<v-toolbar-title style="font-size:2em" class="font-weight-bold text-wrap">{{title}}</v-toolbar-title>
 							<v-spacer></v-spacer>
 							<v-img
-								max-height="90"
-								max-width="90"
+								max-height="5em"
+								max-width="5em"
 								src="./assets/Logo.png"
 							></v-img>
 						</v-toolbar>
