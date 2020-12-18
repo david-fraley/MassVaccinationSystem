@@ -11,12 +11,12 @@
 		<v-row>	
 			<v-col cols="12">
 				<div class="font-weight-medium">Address Type:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.addressType}}</span></div>
-				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress1}}</div>
-				<template v-if="dataHouseholdHomeAddress.householdLineAddress2 != ''">
-					<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress2}}</div>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.lineAddress1}}</div>
+				<template v-if="dataHouseholdHomeAddress.lineAddress2 != ''">
+					<div class="font-weight-regular">{{dataHouseholdHomeAddress.lineAddress2}}</div>
 				</template>
-				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, {{dataHouseholdHomeAddress.householdStateAddress}}, 
-					{{dataHouseholdHomeAddress.householdCountryAddress}}, {{dataHouseholdHomeAddress.householdPostalCode}}</div>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.cityAddress}}, {{dataHouseholdHomeAddress.stateAddress}}, 
+					{{dataHouseholdHomeAddress.countryAddress}}, {{dataHouseholdHomeAddress.postalCode}}</div>
 			</v-col>
 		</v-row>
 
@@ -59,10 +59,10 @@
 						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].ethnicity}}</span></div>
 						<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].preferredLanguage}}</span></div>
 						<div class="font-weight-light primary--text">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactFamilyName}}, 
-						{{dataHouseholdEmergencyContact.householdEmergencyContactGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumber}} 
-						({{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumberType}})</span></div>
+						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.emergencyContactFamilyName}}, 
+						{{dataHouseholdEmergencyContact.emergencyContactGivenName}}</span></div>
+						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.emergencyContactPhoneNumber}} 
+						({{dataHouseholdEmergencyContact.emergencyContactPhoneNumberType}})</span></div>
 						<v-card-actions>
 							<v-btn outlined small color="primary" @click="editPersonalInfo(1)">
 								Edit
@@ -121,19 +121,18 @@ import EventBus from '../eventBus'
 			dataHouseholdPersonalInfo: [],
 			dataHouseholdEmergencyContact:
 			{
-				householdEmergencyContactFamilyName: '',
-				householdEmergencyContactGivenName: '',
-				householdEmergencyContactPhoneNumber: '',
-				householdEmergencyContactPhoneNumberType: ''
+				emergencyContactFamilyName: '',
+				emergencyContactGivenName: '',
+				emergencyContactPhoneNumber: '',
+				emergencyContactPhoneNumberType: ''
 			},
 			dataHouseholdHomeAddress:
 			{
-				householdLineAddress: '',
-				householdCityAddress: '',
-				householdDistrictAddress: '',
-				householdStateAddress: '',
-				householdCountryAddress: '',
-				householdPostalCode: ''
+				lineAddress: '',
+				cityAddress: '',
+				stateAddress: '',
+				countryAddress: '',
+				postalCode: ''
 			},	
 			dataHouseholdContactInfo:
 			{

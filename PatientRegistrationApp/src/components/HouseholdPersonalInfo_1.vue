@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<v-container fluid>
     <v-row align="center" justify="start">
       <!-- Last name -->
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -7,7 +7,7 @@
           required
           :rules="[v => !!v || 'Last name field is required']"
           v-model="familyName"
-          prepend-icon="mdi-menu-right">
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Last Name
           </template>
@@ -18,7 +18,8 @@
         <v-text-field  
           required
           :rules="[v => !!v || 'First name field is required']"
-          v-model="givenName">
+          v-model="givenName"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>First Name
           </template>
@@ -28,14 +29,16 @@
       <v-col cols="12" sm="6" md="6" lg="3">
         <v-text-field  
           v-model="middleName"
-          label="Middle Name">
+          label="Middle Name"
+          prepend-icon="mdi-blank">
         </v-text-field>
       </v-col>
       <!-- Suffix -->
       <v-col cols="12" sm="6" md="6" lg="1">
         <v-text-field 
           label="Suffix" 
-          v-model="suffix">
+          v-model="suffix"
+          prepend-icon="mdi-blank">
         </v-text-field>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="12">
@@ -84,7 +87,7 @@
           required
           :rules="[v => !!v || 'Gender identity field is required']"
           v-model="gender"
-          prepend-icon="mdi-menu-right">
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Gender Identity
           </template>
@@ -98,7 +101,7 @@
           v-model="race"
           :items="raceOptions"
           label="Race (select all that apply)"
-          prepend-icon="mdi-menu-right"
+          prepend-icon="mdi-blank"
           multiple
         ></v-select>
       </v-col>
@@ -108,7 +111,7 @@
           v-model="ethnicity"
           :items="ethnicityOptions"
           label="Ethnicity"
-          prepend-icon="mdi-menu-right"
+          prepend-icon="mdi-blank"
         ></v-select>
       </v-col>
     </v-row>
