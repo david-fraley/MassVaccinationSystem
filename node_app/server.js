@@ -127,6 +127,7 @@ function updateAppointmentStatus(url, status, res) {
 function handleError(res, error) {
   if (error.response) {
     // The request was made and the server responded with a status code
+    console.log(error)
     let errorCode = error.response.status;
     res.status(errorCode).send(error.response.data);
   } else if (error.request) {

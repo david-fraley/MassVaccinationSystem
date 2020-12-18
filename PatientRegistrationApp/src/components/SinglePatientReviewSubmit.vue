@@ -79,8 +79,8 @@
 			<p> </p>
 			</v-col>
 		</v-row>
-		<button @click="sendRequest2" class="btn btn-outline-success my-4">Send Request ></button>
-		<p class="lead">{{ response2 }}</p>
+		<button @click="sendRequest2" class="btn btn-outline-success my-4">Send Request! ></button>
+		<p class="lead">{{ response }}</p>
 
 	</v-container>
 </template>
@@ -88,7 +88,7 @@
 <script>
 import axios from 'axios'
 const client = axios.create({
-	baseURL: 'localhost:3000',
+	baseURL: 'http://localhost:3000',
 	json: true
 })
 import EventBus from '../eventBus'
@@ -96,7 +96,7 @@ import EventBus from '../eventBus'
 	export default {
 	data () {
 		return {
-			response: '',
+			response: 'thing',
 			dataPersonalInfo:
 			{
 				familyName: '',
@@ -161,6 +161,9 @@ methods:
 		sendRequest2() {
 			client({
 				method:'post',
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': '*',},
 				url: '/Patient',
 				data: {
 					resourceType: 'Patient',
@@ -179,9 +182,10 @@ methods:
 					birthDate: '2000-05-30'
 				}
 			}).then((res) => {
-				this.response2 = res.data
+				this.response = res.data
 			}).catch((error) => {
-				this.response2 = error
+				console.log(error)
+				this.response = error
 			})
 		}
 	},
