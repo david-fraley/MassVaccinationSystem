@@ -1,6 +1,6 @@
 const express = require("express");
 const axios = require("axios").default;
-const model = require("./patient");
+const PatientModel = require("./models/Patient");
 
 const app = express();
 app.use(express.json());
@@ -14,12 +14,8 @@ const headers = {
 
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
-  axios({
-    method: req.method,
-    url: `${base}${req.url}`,
-    data: req.body,
-    headers: headers,
-  })
+  axios
+    .get(`${base}${req.url}`)
     .then((response) => {
       // handle success
       res.json(response.data);
@@ -58,7 +54,7 @@ app.post("/Organization", (req, res) => {
 app.post("/Patient", (req, res) => {
   let obj = req.body;
   for (patient of obj.Patient) {
-    let resource = model.toFHIR(patient);
+    let resource = PatientModel.toFHIR(patient);
 
     // post resource
     axios
