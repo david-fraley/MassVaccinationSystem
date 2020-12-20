@@ -18,20 +18,18 @@
 			</v-btn>
     </v-row>
     
-    <v-row align="center"><div> How do you want to recieve this QR code? </div></v-row>
-    <v-row no-gutters>
-			<v-checkbox>
-				<template #label>
-				Email 
-				</template>
-			</v-checkbox>
-    </v-row>
-    <v-row>
-      <v-checkbox>
-				<template #label>
-				SMS Message 
-				</template>
-			</v-checkbox>
+ 
+
+<v-row justify="center"><v-col cols="12" sm="6" md="6">
+      <v-radio-group class="font-weight-medium">
+			How do you want to receive this QR code?
+        <v-col cols="3" sm="3" md="3">
+		
+          <v-radio label="E-mail"></v-radio>
+          <v-radio label="SMS Message"></v-radio>
+          <v-radio label="Both"></v-radio>
+        </v-col>
+      </v-radio-group></v-col>
     </v-row>
 
     <v-row justify="center">
