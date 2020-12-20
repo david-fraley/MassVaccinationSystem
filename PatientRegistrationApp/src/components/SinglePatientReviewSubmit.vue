@@ -22,7 +22,7 @@
 					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.middleName}} {{dataPersonalInfo.suffix}}</span></div>
 				<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataPersonalInfo.birthDate}}</span></div>
 				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.gender}}</span></div>
-				<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
+				<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
 				<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataPersonalInfo.ethnicitySelection}}</span></div>
 				<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataPersonalInfo.preferredLanguage}}</span></div>
 			</v-col>

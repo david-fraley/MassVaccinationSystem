@@ -138,6 +138,7 @@ export default {
           valid = false
         }
       }
+	
       if(this.emailAvailable)
       {
         if(this.patientEmail == "") 
