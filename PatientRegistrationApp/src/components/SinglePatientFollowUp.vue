@@ -1,36 +1,46 @@
 <template>
 	<v-container fluid>
-    <v-row>
-			<v-col cols="12" sm="6"	md="3">
-				<div class="font-weight-medium primary--text"> QR Code Page</div>
-			</v-col>
-		</v-row>
 
-    <v-row justify="center">
-      <div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
-					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.middleName}} {{dataPersonalInfo.suffix}}</span></div>
-    </v-row>
 
     <v-row justify="center">
       QR Code Placeholder
     </v-row>
+
+     <v-row justify="center">
+      <div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
+					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.middleName}} {{dataPersonalInfo.suffix}}</span></div>
+    </v-row>
+
 
     <v-row justify="center">
       <v-btn color="secondary" class="ma-2 white--text">
 								Download
 			</v-btn>
     </v-row>
-
-    <v-row><v-col cols="12" sm="6" md="6">
-      <v-radio-group>
-			How do you want to receive this QR code?
-        <v-col cols="3" sm="3" md="3">
-		
-          <v-radio label="E-mail"></v-radio>
-          <v-radio label="SMS Message"></v-radio>
-        </v-col>
-      </v-radio-group></v-col>
+    
+    <v-row align="center"><div> How do you want to recieve this QR code? </div></v-row>
+    <v-row no-gutters>
+			<v-checkbox>
+				<template #label>
+				Email 
+				</template>
+			</v-checkbox>
     </v-row>
+    <v-row>
+      <v-checkbox>
+				<template #label>
+				SMS Message 
+				</template>
+			</v-checkbox>
+    </v-row>
+
+    <v-row justify="center">
+      <v-btn color="secondary" class="ma-2 white--text">
+				Send
+			</v-btn>
+    </v-row>
+
+		
 
 	</v-container>
 </template>
