@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios").default;
+const appt_model = require("./models/Appointment");
 
 const app = express();
 app.use(express.json());
@@ -13,12 +14,8 @@ const headers = {
 
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
-  axios({
-    method: req.method,
-    url: `${base}${req.url}`,
-    data: req.body,
-    headers: headers,
-  })
+  axios
+    .get(`${base}${req.url}`)
     .then((response) => {
       // handle success
       res.json(response.data);
@@ -28,38 +25,7 @@ app.get(generalEndpoints, (req, res) => {
 
 app.post("/Appointment", (req, res) => {
   let appt = req.body.Appointment;
-  let resource = {
-    resourceType: "Appointment",
-    status: appt.status,
-    slot: [
-      {
-        reference: appt.slot,
-      },
-    ],
-    participant: [
-      // add later
-    ],
-  };
-  // add participants
-  let participant;
-  for (participant of appt.participant) {
-    resource.participant.push({
-      type: [
-        {
-          coding: [
-            {
-              system: "",
-              code: participant.type,
-              display: participant.type,
-            },
-          ],
-        },
-      ],
-      actor: {
-        reference: participant.actor,
-      },
-    });
-  }
+  let resource = appt_model.toFHIR(appt);
   // post resource
   axios
     .post(`${base}/Appointment`, resource, headers)

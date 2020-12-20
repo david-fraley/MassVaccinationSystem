@@ -39,3 +39,39 @@ Appointment {
     }
 }
 */
+exports.toFHIR = function (appt) {
+  let resource = {
+    resourceType: "Appointment",
+    status: appt.status,
+    slot: [
+      {
+        reference: appt.slot,
+      },
+    ],
+    participant: [
+      // add later
+    ],
+  };
+  // add participants
+  let participant;
+  for (participant of appt.participant) {
+    resource.participant.push({
+      type: [
+        {
+          coding: [
+            {
+              system: "",
+              code: participant.type,
+              display: participant.type,
+            },
+          ],
+        },
+      ],
+      actor: {
+        reference: participant.actor,
+      },
+    });
+  }
+  
+  return resource;
+};
