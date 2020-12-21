@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios").default;
+const Immunization = require("./models/Immunization");
 
 const app = express();
 app.use(express.json());
@@ -13,12 +14,8 @@ const headers = {
 
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
-  axios({
-    method: req.method,
-    url: `${base}${req.url}`,
-    data: req.body,
-    headers: headers,
-  })
+  axios
+    .get(`${base}${req.url}`)
     .then((response) => {
       // handle success
       res.json(response.data);
@@ -28,96 +25,8 @@ app.get(generalEndpoints, (req, res) => {
 
 app.post("/Immunization", (req, res) => {
   let imm = req.body.Immunization;
-  let resource = {
-    resourceType: "Immunization",
-    vaccineCode: {
-      coding: [
-        {
-          system: "",
-          code: imm.vaccine,
-          display: imm.vaccine,
-        },
-      ],
-    },
-    manufacturer: {
-      reference: imm.manufacturer,
-    },
-    lotNumber: imm.lotNumber,
-    expirationDate: imm.expiration,
-    patient: {
-      reference: imm.patient,
-    },
-    encounter: {
-      reference: imm.encounter,
-    },
-    status: imm.status,
-    statusReason: {
-      coding: [
-        {
-          system: "https://www.hl7.org/fhir/v3/ActReason/cs.html",
-          code: imm.statusReason,
-          display: imm.statusReason,
-        },
-      ],
-    },
-    occurrenceDateTime: imm.occurrence,
-    primarySource: imm.primarySource,
-    location: {
-      reference: imm.location,
-    },
-    site: {
-      coding: [
-        {
-          system: "https://www.hl7.org/fhir/v3/ActSite/cs.html",
-          code: imm.site,
-          display: imm.site,
-        },
-      ],
-    },
-    route: {
-      coding: [
-        {
-          system: "https://www.hl7.org/fhir/v3/RouteOfAdministration/cs.html",
-          code: imm.route,
-          display: imm.route,
-        },
-      ],
-    },
-    doseQuantity: {
-      value: imm.doseQuantity,
-      system: "http://unitsofmeasure.org",
-      code: imm.doseUnit,
-    },
-    performer: [
-      // add later
-    ],
-    education: [
-      // add later
-    ],
-    protocolApplied: [
-      {
-        series: imm.series,
-        doseNumberPositiveInt: imm.doseNumber,
-      },
-    ],
-  };
+  let resource = Immunization.toFHIR(imm);
 
-  // add performer
-  let performer;
-  for (performer of imm.performer) {
-    resource.performer.push({
-      actor: {
-        reference: performer,
-      },
-    });
-  }
-  // add education
-  let education;
-  for (education of imm.education) {
-    resource.education.push({
-      reference: education,
-    });
-  }
   // post resource
   axios
     .post(`${base}/Immunization`, resource, headers)
