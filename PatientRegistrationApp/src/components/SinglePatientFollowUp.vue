@@ -20,23 +20,24 @@
     
  
 
-<v-row justify="center"><v-col cols="12" sm="6" md="6">
-      <v-radio-group class="font-weight-medium">
-			How do you want to receive this QR code?
-        <v-col cols="3" sm="3" md="3">
-		
-          <v-radio label="E-mail"></v-radio>
-          <v-radio label="SMS Message"></v-radio>
-          <v-radio label="Both"></v-radio>
-        </v-col>
-      </v-radio-group></v-col>
-    </v-row>
+<v-row justify="center">
+  <div class="font-weight-medium"><br><br>How do you want to receive this QR code?</div>
+</v-row>
+<v-row justify="center">
+  <v-col cols="3" sm="3" md="3">
+  <v-radio-group class="font-weight-medium">
+      <v-radio label="E-mail"></v-radio>
+      <v-radio label="SMS Message"></v-radio>
+      <v-radio label="Both"></v-radio>
+  </v-radio-group>
+   </v-col>
+</v-row>
 
-    <v-row justify="center">
-      <v-btn color="secondary" class="ma-2 white--text">
-				Send
-			</v-btn>
-    </v-row>
+<v-row justify="center">
+  <v-btn color="secondary" class="ma-2 white--text">
+    Send
+  </v-btn>
+</v-row>
 
 		
 
