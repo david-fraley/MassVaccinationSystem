@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios").default;
+const Observation = require("./models/Observation");
 
 const app = express();
 app.use(express.json());
@@ -13,12 +14,8 @@ const headers = {
 
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
-  axios({
-    method: req.method,
-    url: `${base}${req.url}`,
-    data: req.body,
-    headers: headers,
-  })
+  axios
+    .get(`${base}${req.url}`)
     .then((response) => {
       // handle success
       res.json(response.data);
@@ -28,57 +25,8 @@ app.get(generalEndpoints, (req, res) => {
 
 app.post("/Observation", (req, res) => {
   let observation = req.body.Observation;
-  let resource = {
-    resourceType: "Observation",
-    status: observation.status,
-    category: [
-      {
-        coding: [
-          {
-            system: "http://hl7.org/fhir/ValueSet/observation-category",
-            code: observation.category,
-            display: observation.category,
-          },
-        ],
-      },
-    ],
-    code: {
-      coding: [
-        {
-          system: "http://loinc.org",
-          code: observation.code,
-          display: observation.code,
-        },
-      ],
-    },
-    subject: {
-      reference: observation.subject,
-    },
-    encounter: {
-      reference: observation.encounter,
-    },
-    valueString: observation.value,
-    effectivePeriod: {
-      start: observation.effectiveStart,
-      end: observation.effectiveEnd,
-    },
-    performer: [
-      // add later
-    ],
-    partOf: [
-      {
-        reference: observation.partOf,
-      },
-    ],
-  };
+  let resource = Observation.toFHIR(observation);
 
-  // add performers
-  let performer;
-  for (performer of observation.performer) {
-    resource.performer.push({
-      reference: performer,
-    });
-  }
   // post resource
   axios
     .post(`${base}/Observation`, resource, headers)
