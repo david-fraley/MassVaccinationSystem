@@ -124,7 +124,7 @@
           :items="raceOptions"
           prepend-icon="mdi-blank"
           required
-				  :rules="[v => !!v || 'Race is required']"
+          :rules="[v => !!v || 'Race is required']">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Race
           </template>
@@ -137,7 +137,7 @@
           :items="ethnicityOptions"
           prepend-icon="mdi-blank"
           required
-			    :rules="[v => !!v || 'Ethnicity is required']"
+          :rules="[v => !!v || 'Ethnicity is required']">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
           </template>

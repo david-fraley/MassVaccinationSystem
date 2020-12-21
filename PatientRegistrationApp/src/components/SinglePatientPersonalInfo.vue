@@ -96,8 +96,8 @@
           v-model="race"
           :items="raceOptions"
           required
-				  :rules="[v => !!v || 'Race is required']"
-          prepend-icon="mdi-blank"
+          :rules="[v => !!v || 'Race is required']"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Race
           </template>
@@ -109,8 +109,8 @@
           v-model="ethnicity"
           :items="ethnicityOptions"
           required
-				  :rules="[v => !!v || 'Ethnicity is required']"
-          prepend-icon="mdi-blank"
+          :rules="[v => !!v || 'Ethnicity is required']"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
           </template>
