@@ -26,6 +26,7 @@ app.get(generalEndpoints, (req, res) => {
 app.post("/Appointment", (req, res) => {
   let appt = req.body.Appointment;
   let resource = appt_model.toFHIR(appt);
+
   // post resource
   axios
     .post(`${base}/Appointment`, resource, headers)
