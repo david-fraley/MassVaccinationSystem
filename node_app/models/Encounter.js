@@ -21,12 +21,13 @@ Encounter {
   }
 }
 */
+const CLASS_SYSTEM = "http://terminology.hl7.org/CodeSystem/v3-ActCode";
 exports.toFHIR = function (encounter) {
   let resource = {
     resourceType: "Encounter",
     status: encounter.status,
     class: {
-      system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      system: CLASS_SYSTEM,
       code: encounter.class,
       display: encounter.class,
     },
