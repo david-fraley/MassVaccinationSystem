@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios").default;
+const Encounter = require("./models/Encounter");
 
 const app = express();
 app.use(express.json());
@@ -13,12 +14,8 @@ const headers = {
 
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
-  axios({
-    method: req.method,
-    url: `${base}${req.url}`,
-    data: req.body,
-    headers: headers,
-  })
+  axios
+    .get(`${base}${req.url}`)
     .then((response) => {
       // handle success
       res.json(response.data);
@@ -28,35 +25,7 @@ app.get(generalEndpoints, (req, res) => {
 
 app.post("/Encounter", (req, res) => {
   let encounter = req.body.Encounter;
-  let resource = {
-    resourceType: "Encounter",
-    status: encounter.status,
-    class: {
-      system: "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-      code: encounter.class,
-      display: encounter.class,
-    },
-    subject: {
-      reference: encounter.subject,
-    },
-    appointment: {
-      reference: encounter.appointment,
-    },
-    period: {
-      start: encounter.start,
-      end: encounter.end,
-    },
-    location: [
-      {
-        location: {
-          reference: encounter.location,
-        },
-      },
-    ],
-    serviceProvider: {
-      reference: encounter.serviceProvider,
-    },
-  };
+  let resource = Encounter.toFHIR(encounter);
 
   // post resource
   axios
