@@ -30,14 +30,14 @@
 			<v-col cols="12">
 				<template v-if="dataHouseholdContactInfo.primaryPhoneNumber != ''">
 					<div class="font-weight-medium">Primary Phone: <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
+						<span v-if="dataHouseholdContactInfo.primaryPhoneNumberType != ''">({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></span></div>
 				</template>
 				<template v-else>
 					<div class="font-weight-medium">Primary Phone: <span class="font-weight-regular">Not provided</span></div>
 				</template>
 				<template v-if="dataHouseholdContactInfo.secondaryPhoneNumber != ''">
 					<div class="font-weight-medium">Secondary Phone: <span class="font-weight-regular">{{dataHouseholdContactInfo.secondaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.secondaryPhoneNumberType}})</span></div>
+						<span v-if="dataHouseholdContactInfo.secondaryPhoneNumberType != ''">({{dataHouseholdContactInfo.secondaryPhoneNumberType}})</span></span></div>
 				</template>
 				<template v-else>
 					<div class="font-weight-medium">Secondary Phone: <span class="font-weight-regular">Not provided</span></div>
@@ -81,7 +81,7 @@
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.emergencyContactFamilyName}}, 
 						{{dataHouseholdEmergencyContact.emergencyContactGivenName}}</span></div>
 						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.emergencyContactPhoneNumber}} 
-						({{dataHouseholdEmergencyContact.emergencyContactPhoneNumberType}})</span></div>
+						<span v-if="dataHouseholdEmergencyContact.emergencyContactPhoneNumberType != ''">({{dataHouseholdEmergencyContact.emergencyContactPhoneNumberType}})</span></span></div>
 						<v-card-actions>
 							<v-btn outlined small color="primary" @click="editPersonalInfo(1)">
 								Edit
@@ -112,7 +112,7 @@
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
 							{{dataHouseholdPersonalInfo[0].givenName}}</span></div>
 							<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-							({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
+							<span v-if="dataHouseholdContactInfo.primaryPhoneNumberType != ''">({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></span></div>
 							<v-card-actions>
 							<v-btn outlined small color="primary" @click="editPersonalInfo(index+1)">
 								Edit
