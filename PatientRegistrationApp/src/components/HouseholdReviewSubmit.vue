@@ -4,15 +4,19 @@
 		</v-row>
 		<v-row>
 			<v-col cols="12" sm="6" md="3">
-				<div class="font-weight-medium primary--text">Household Home Address </div>
+				<div class="font-weight-medium primary--text">Household Address</div>
 			</v-col>
 		</v-row>
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Street Address:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress}}</span></div>
-				<div class="font-weight-medium">City, County, State, Country, Zip Code:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, 
-					{{dataHouseholdHomeAddress.householdDistrictAddress}}, {{dataHouseholdHomeAddress.householdStateAddress}}, {{dataHouseholdHomeAddress.householdCountryAddress}}, {{dataHouseholdHomeAddress.householdPostalCode}}</span></div>
+				<div class="font-weight-medium">Address Type:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.addressType}}</span></div>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress1}}</div>
+				<template v-if="dataHouseholdHomeAddress.householdLineAddress2 != ''">
+					<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress2}}</div>
+				</template>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, {{dataHouseholdHomeAddress.householdStateAddress}}, 
+					{{dataHouseholdHomeAddress.householdCountryAddress}}, {{dataHouseholdHomeAddress.householdPostalCode}}</div>
 			</v-col>
 		</v-row>
 
@@ -38,9 +42,17 @@
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
 					<v-card class="pa-2" flat min-width=33%>
+						<v-img 
+							contain		
+							max-height="300"
+							max-width="300" 
+							:src="dataHouseholdPersonalInfo[0] ? dataHouseholdPersonalInfo[0].householdPatientPhotoSrc : undefined"
+							v-bind:class="{ hidden: 
+									dataHouseholdPersonalInfo[0] ? !dataHouseholdPersonalInfo[0].householdPatientPhotoSrc : true }">
+						</v-img>
 						<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo[0].householdGivenName}} {{dataHouseholdPersonalInfo[0].householdSuffix}}</span></div>
+						{{dataHouseholdPersonalInfo[0].householdGivenName}} {{dataHouseholdPersonalInfo[0].householdMiddleName}} {{dataHouseholdPersonalInfo[0].householdSuffix}}</span></div>
 						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdBirthDate}}</span></div>
 						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdGender}}</span></div>
 						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdRaceSelections}}</span></div>
@@ -61,9 +73,17 @@
 					<template v-for="index in getNumberOfHouseholdMembers()-1">
 						<v-card class="pa-2" flat min-width=33%
 						:key="index">
+							<v-img
+								contain		
+								max-height="300"
+								max-width="300" 
+								:src="dataHouseholdPersonalInfo[index] ? dataHouseholdPersonalInfo[index].householdPatientPhotoSrc : undefined"
+								v-bind:class="{ hidden: 
+									dataHouseholdPersonalInfo[index] ? !dataHouseholdPersonalInfo[index].householdPatientPhotoSrc : true }">
+							</v-img>
 							<div class="font-weight-medium primary--text">Personal Info: Household Member #{{index+1}}</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdFamilyName}}, 
-							{{dataHouseholdPersonalInfo[index].householdGivenName}} {{dataHouseholdPersonalInfo[index].householdSuffix}}</span></div>
+							{{dataHouseholdPersonalInfo[index].householdGivenName}} {{dataHouseholdPersonalInfo[index].householdMiddleName}} {{dataHouseholdPersonalInfo[index].householdSuffix}}</span></div>
 							<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdBirthDate}}</span></div>
 							<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdGender}}</span></div>
 							<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdRaceSelections}}</span></div>
@@ -177,3 +197,10 @@ import EventBus from '../eventBus'
 	},
 }
 </script>
+<style lang="css" scoped>
+
+	.hidden {
+		display: none;
+	}
+
+</style>
