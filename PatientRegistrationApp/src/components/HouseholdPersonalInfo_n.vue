@@ -144,7 +144,7 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-row align="left" justify="start">
+    <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Current Photo -->
         <!-- the "rules" checks that the image size is less than 2 MB -->
@@ -317,8 +317,8 @@ export default {
       this.sendHouseholdPersonalInfoDataToReviewPage();
       return true;
     },
-    setHouseholdFamilyName(householdFamilyName) {
-      this.householdFamilyName = householdFamilyName;
+    setHouseholdFamilyName(familyName) {
+      this.familyName = familyName;
     },
   },
   computed: {

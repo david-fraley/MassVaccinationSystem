@@ -122,7 +122,7 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-row align="left" justify="start">
+    <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Current Photo -->
         <!-- the "rules" checks that the image size is less than 2 MB -->
@@ -158,6 +158,7 @@ export default {
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
       ],
+      checkbox: false,
       familyName: "",
       givenName: "",
       middleName: "",
@@ -206,7 +207,7 @@ export default {
       );
       if (this.checkbox) {
         //all household members have the same last name
-        EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", this.householdFamilyName);
+        EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", this.familyName);
       } 
     },
     verifyFormContents() {

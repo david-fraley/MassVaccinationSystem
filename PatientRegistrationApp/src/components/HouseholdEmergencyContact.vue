@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row v-row align="center" justify="start">
+    <v-row align="center" justify="start">
     <!-- Last name -->
       <v-col cols="12" sm="6" md="6" lg="4">
         <v-text-field

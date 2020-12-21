@@ -350,18 +350,18 @@ export default {
 		{
 			return this.numberOfHouseholdMembers;
 		},
-		setHouseholdFamilyName(householdFamilyName)
+		setHouseholdFamilyName(familyName)
 		{
-			this.householdFamilyName = householdFamilyName;
+			this.familyName = familyName;
 			
 			for(var i=0;i<this.getNumberOfHouseholdMembers();i++)
 			{
-				this.$refs.householdPersonalInfo[i].setHouseholdFamilyName(this.householdFamilyName)
+				this.$refs.householdPersonalInfo[i].setHouseholdFamilyName(this.familyName)
 			}
 		},
 		getHouseholdFamilyName()
 		{
-			return this.householdFamilyName;
+			return this.familyName;
 		},
 		isSinglePatientRegistration() {
 			let returnValue = true;
@@ -522,8 +522,8 @@ export default {
 		EventBus.$on('DATA_HOUSEHOLD_COUNT_UPDATED', (householdCountPayload) => {
 			this.setNumberOfHouseholdMembers(householdCountPayload)
 		}),
-		EventBus.$on('DATA_HOUSEHOLD_FAMILY_NAME', (householdFamilyName) => {
-			this.setHouseholdFamilyName(householdFamilyName)
+		EventBus.$on('DATA_HOUSEHOLD_FAMILY_NAME', (familyName) => {
+			this.setHouseholdFamilyName(familyName)
 		}),
 		EventBus.$on('DATA_HOUSEHOLD_PERSONAL_INFO_EDIT', (householdMemberNumber) => {
 			this.jumpToHouseholdPersonalInfoPage(householdMemberNumber)
@@ -561,7 +561,8 @@ export default {
 			page: config.registrationPages.GREETING_PAGE,
 			title: 'COVID-19 Vaccination Registration',
 			registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
-			numberOfHouseholdMembers: 2
+			numberOfHouseholdMembers: 2,
+			familyName: '',
 			}
 		}
   }

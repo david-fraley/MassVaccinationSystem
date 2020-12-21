@@ -161,7 +161,6 @@ import EventBus from '../eventBus'
 				secondaryPhoneNumber: '',
 				secondaryPhoneNumberType: '',
 				secondaryEmail: '',
-				approval: ''
 			}
 		}
 	},
