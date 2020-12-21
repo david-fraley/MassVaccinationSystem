@@ -10,11 +10,11 @@
     </v-row>
     <v-row>
       <PatientInfoComponent />
-      <VaccinationScreeningComponent />
-      <template v-if="true">
+      <VaccinationScreeningComponent @VaccinationProceed_Yes="setVaccinationProceedDecision(true)" @VaccinationProceed_No="setVaccinationProceedDecision(false)"/>
+      <template v-if="wasDecisionMadeToProceed()">
       <VaccinationProceedComponent />
       </template>
-      <template v-if="false">
+      <template v-else-if="wasDecisionMadeToCancel()">
       <VaccinationCanceledComponent />
       </template>
     </v-row>
@@ -26,21 +26,36 @@ import PatientInfoComponent from './PatientInfoComponent';
 import VaccinationScreeningComponent from './VaccinationScreeningComponent';
 import VaccinationProceedComponent from './VaccinationProceedComponent';
 import VaccinationCanceledComponent from './VaccinationCanceledComponent';
+import config from '../../config.js';
 
   export default {
     name: 'VaccinationEventPage',
     methods: 
     {
+      setVaccinationProceedDecision(decision)
+      {
+        decision ? (this.vaccinationProceedDecision = config.vaccinationDecisionState.VACCINATION_PROCEED_YES) :
+        (this.vaccinationProceedDecision = config.vaccinationDecisionState.VACCINATION_PROCEED_NO);
+      },
+      wasDecisionMadeToProceed()
+      {
+        return (this.vaccinationProceedDecision == config.vaccinationDecisionState.VACCINATION_PROCEED_YES)
+      },
+      wasDecisionMadeToCancel()
+      {
+        return (this.vaccinationProceedDecision == config.vaccinationDecisionState.VACCINATION_PROCEED_NO)
+      }
     },
     components: 
     {
       PatientInfoComponent,
       VaccinationScreeningComponent,
       VaccinationProceedComponent,
-      VaccinationCanceledComponent
+      VaccinationCanceledComponent,
     },
     data () {
       return {
+        vaccinationProceedDecision: config.vaccinationDecisionState.UNDETERMINED
       }
     }
   }
