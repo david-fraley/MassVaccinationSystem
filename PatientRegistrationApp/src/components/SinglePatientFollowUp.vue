@@ -21,7 +21,7 @@
  
 
 <v-row justify="center"><v-col cols="12" sm="6" md="6">
-      <v-radio-group class="font-weight-medium">
+      <v-radio-group class="font-weight-medium" align-items="center">
 			How do you want to receive this QR code?
         <v-col cols="3" sm="3" md="3">
 		
