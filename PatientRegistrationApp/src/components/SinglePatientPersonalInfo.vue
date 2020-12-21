@@ -95,9 +95,12 @@
         <v-select
           v-model="race"
           :items="raceOptions"
-          label="Race (select all that apply)"
+          required
+				  :rules="[v => !!v || 'Race is required']"
           prepend-icon="mdi-blank"
-          multiple
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Race
+          </template>
         ></v-select>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -105,8 +108,12 @@
         <v-select
           v-model="ethnicity"
           :items="ethnicityOptions"
-          label="Ethnicity"
+          required
+				  :rules="[v => !!v || 'Ethnicity is required']"
           prepend-icon="mdi-blank"
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Ethnicity
+          </template>
         ></v-select>
       </v-col>
     </v-row>
@@ -227,6 +234,20 @@ export default {
           message = "Your selected photo is too large. Please resubmit one under 2MBs.";
         }
         valid = false;
+      }
+      if (this.raceSelections == "") {
+          if (!valid) {
+          message += ",";
+          }
+          message+= " Race"
+          valid = false
+      }
+      if (this.ethnicitySelection == "") {
+        if (!valid) {
+        message += ",";
+          }
+        message += " Ethnicity"
+        valid = false
       }
       if (valid == false) {
         alert(message);

@@ -100,9 +100,12 @@
         <v-select
           v-model="race"
           :items="raceOptions"
-          label="Race (select all that apply)"
+          required
+			    :rules="[v => !!v || 'Race is required']"
           prepend-icon="mdi-blank"
-          multiple
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Race
+          </template>
         ></v-select>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -110,8 +113,12 @@
         <v-select
           v-model="ethnicity"
           :items="ethnicityOptions"
-          label="Ethnicity"
+          required
+			    :rules="[v => !!v || 'Ethnicity is required']"
           prepend-icon="mdi-blank"
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Ethnicity
+          </template>
         ></v-select>
       </v-col>
     </v-row>
@@ -231,6 +238,21 @@ export default {
         }
         message += " Gender Identity";
         valid = false;
+      }
+      if (this.race == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message+= " Race"
+        valid = false
+      }
+      if (this.ethnicity == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message += " Ethnicity"
+        valid = false
+        
       }
       if (this.patientPhoto && this.patientPhoto.size > 2097152) {
         if (!valid) {
