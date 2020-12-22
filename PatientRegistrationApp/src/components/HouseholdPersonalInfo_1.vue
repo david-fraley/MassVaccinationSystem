@@ -237,7 +237,7 @@ export default {
         valid = false;
       }
 
-		if (this.householdRaceSelections == "")
+		if (this.race == "")
 		{
 			if (!valid) {
 				message += ",";
@@ -245,7 +245,7 @@ export default {
 			message+= " Race"
 			valid = false
 		}
-	if (this.householdEthnicitySelection == "")
+	if (this.ethnicity == "")
 	{
 		if (!valid) {
 		message += ",";
