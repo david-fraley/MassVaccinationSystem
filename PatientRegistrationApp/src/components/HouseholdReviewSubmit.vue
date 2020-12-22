@@ -55,7 +55,7 @@
 						{{dataHouseholdPersonalInfo[0].householdGivenName}} {{dataHouseholdPersonalInfo[0].householdMiddleName}} {{dataHouseholdPersonalInfo[0].householdSuffix}}</span></div>
 						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdBirthDate}}</span></div>
 						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdGender}}</span></div>
-						<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdRaceSelections}}</span></div>
+						<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdRaceSelections}}</span></div>
 						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdEthnicitySelection}}</span></div>
 						<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].preferredLanguage}}</span></div>
 						<div class="font-weight-light primary--text">Emergency Contact</div>
@@ -86,7 +86,7 @@
 							{{dataHouseholdPersonalInfo[index].householdGivenName}} {{dataHouseholdPersonalInfo[index].householdMiddleName}} {{dataHouseholdPersonalInfo[index].householdSuffix}}</span></div>
 							<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdBirthDate}}</span></div>
 							<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdGender}}</span></div>
-							<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdRaceSelections}}</span></div>
+							<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdRaceSelections}}</span></div>
 							<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdEthnicitySelection}}</span></div>
 							<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].preferredLanguage}}</span></div>
 							<div class="font-weight-light primary--text">Emergency Contact</div>

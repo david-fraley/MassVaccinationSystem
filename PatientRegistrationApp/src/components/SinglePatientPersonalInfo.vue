@@ -120,12 +120,16 @@
       <v-col class="d-flex" cols="4" sm="4">
         <!-- Race -->
         <v-select
+		required
+				:rules="[v => !!v || 'Race is required']"
           v-model="raceSelections"
           :items="race"
           label="Race (select all that apply)"
-          prepend-icon="mdi-menu-right"
-          multiple
-        ></v-select>
+          prepend-icon="mdi-menu-right">
+		<template #label>
+			<span class="red--text"><strong>* </strong></span>Race
+		</template>
+		</v-select>
       </v-col>
       <v-spacer></v-spacer>
     </v-row>
@@ -134,11 +138,16 @@
       <v-col class="d-flex" cols="4" sm="4">
         <!-- Ethnicity -->
         <v-select
+			required
+				:rules="[v => !!v || 'Ethnicity is required']"
           v-model="ethnicitySelection"
           :items="ethnicity"
           label="Ethnicity"
-          prepend-icon="mdi-menu-right"
-        ></v-select>
+          prepend-icon="mdi-menu-right">
+		<template #label>
+			<span class="red--text"><strong>* </strong></span>Ethnicity
+		</template>
+        </v-select>	
       </v-col>
       <v-spacer></v-spacer>
     </v-row>
@@ -251,6 +260,24 @@ export default {
         }
         valid = false;
       }
+	
+	if (this.raceSelections == "")
+		{
+			if (!valid) {
+			message += ",";
+			}
+			message+= " Race"
+			valid = false
+		}
+	if (this.ethnicitySelection == "")
+	{
+		if (!valid) {
+		message += ",";
+			}
+		message += " Ethnicity"
+		valid = false
+		
+	}
 
       if (valid == false) {
         alert(message);
