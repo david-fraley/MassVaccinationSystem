@@ -1,54 +1,47 @@
 <template>
-  <v-container fluid>
-    <v-row align="center" justify="left">
-		<!-- Last name -->
-		<v-col class="d-flex" cols="4" sm="4">
+  <v-container> 
+    <v-row align="center" justify="start">
+      <!-- Last name -->
+      <v-col cols="12" sm="6" md="6" lg="4">
         <v-text-field  
-			id="lastName" 
-			required
-			:rules="[v => !!v || 'Last name field is required']"
-			v-model="familyName"
-			prepend-icon="mdi-menu-right">
-        <template #label>
-				<span class="red--text"><strong>* </strong></span>Last Name
-				</template>
+          required
+          :rules="[v => !!v || 'Last name field is required']"
+          v-model="familyName"
+          prepend-icon="mdi-menu-right">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Last Name
+          </template>
         </v-text-field>
-		</v-col>
-
-		<!-- First name -->
-		<v-col class="d-flex" cols="3" sm="3">
-			<v-text-field 
-			id="firstName" 
-			required
-			:rules="[v => !!v || 'First name field is required']"
-			v-model="givenName">
-        <template #label>
-				<span class="red--text"><strong>* </strong></span>First Name
-				</template>
-			</v-text-field>
-		</v-col>
-
-    <!-- Middle name -->
-		<v-col class="d-flex" cols="3" sm="3">
-			<v-text-field 
-			id="middleNameID" 
-			v-model="middleName"
-      label="Middle Name">
-			</v-text-field>
-		</v-col>
-
-		<!-- Suffix -->
-		<v-col class="d-flex" cols="2" sm="2">
-			<v-text-field 
-			label="Suffix" 
-			id="suffix" 
-			v-model="suffix">
-			</v-text-field>
-		</v-col>
+      </v-col>
+      <!-- First name -->
+      <v-col cols="12" sm="6" md="6" lg="4">
+        <v-text-field 
+          required
+          :rules="[v => !!v || 'First name field is required']"
+          v-model="givenName">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>First Name
+          </template>
+        </v-text-field>
+      </v-col>
+      <!-- Middle name -->
+      <v-col cols="12" sm="6" md="6" lg="3">
+        <v-text-field 
+          v-model="middleName"
+          label="Middle Name">
+        </v-text-field>
+      </v-col>
+      <!-- Suffix -->
+      <v-col cols="12" sm="6" md="6" lg="1">
+        <v-text-field 
+          label="Suffix" 
+          id="suffix" 
+          v-model="suffix">
+        </v-text-field>
+      </v-col>
     </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
+    <v-row align="center" justify="start">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Date of Birth -->
         <v-menu
           attach
@@ -59,19 +52,18 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-				v-model="date"
-				:rules="birthdateRules"
+              v-model="date"
+              :rules="birthdateRules"
               placeholder="YYYY-MM-DD"
               v-mask="'####-##-##'"
               prepend-icon="mdi-calendar"
               @click:prepend="on.click"
             >
             <template #label>
-            <span class="red--text"><strong>* </strong></span>Date of Birth
+              <span class="red--text"><strong>* </strong></span>Date of Birth
             </template>
             </v-text-field>
           </template>
-
           <v-date-picker
             reactive
             v-model="date"
@@ -80,31 +72,52 @@
           ></v-date-picker>
         </v-menu>
       </v-col>
-
-      <v-spacer></v-spacer>
-    </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Gender identity -->
         <v-select
-			:items="genderID"
-			required
-			:rules="[v => !!v || 'Gender identity field is required']"
-			v-model="gender"
-			prepend-icon="mdi-menu-right">
-        <template #label>
-        <span class="red--text"><strong>* </strong></span>Gender Identity
-        </template>
-		</v-select>
-		</v-col>
-
-		<v-spacer></v-spacer>
+          :items="genderIdOptions"
+          required
+          :rules="[v => !!v || 'Gender identity field is required']"
+          v-model="gender">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Gender Identity
+          </template>
+        </v-select>
+      </v-col>
     </v-row>
-
-    <v-row align="left" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
+    <v-row align="center" justify="start">
+      <v-col cols="12" sm="6" md="6" lg="4">
+        <!-- Race -->
+        <v-select
+          required
+          :rules="[v => !!v || 'Race is required']"
+          v-model="race"
+          :items="raceOptions"
+          label="Race (select all that apply)"
+          prepend-icon="mdi-menu-right">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Race
+          </template>
+		</v-select>
+      </v-col>
+      <v-col cols="12" sm="6" md="6" lg="4">
+        <!-- Ethnicity -->
+        <v-select
+          required
+          :rules="[v => !!v || 'Ethnicity is required']"
+          v-model="ethnicity"
+          :items="ethnicityOptions"
+          label="Ethnicity">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Ethnicity
+          </template>
+        </v-select>	
+      </v-col>
+    </v-row>
+    <v-row align="center" justify="start">
+      <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Current Photo -->
+        <!-- the "rules" checks that the image size is less than 2 MB -->
         <v-file-input
           accept="image/png, image/jpeg, image/bmp"
           :rules="[(v) => (v ? v.size : 0) < 2097152 || 'Image size should be less than 2 MB!']"
@@ -115,52 +128,24 @@
         ></v-file-input>
       </v-col>
     </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
-        <!-- Race -->
-        <v-select
-          v-model="raceSelections"
-          :items="race"
-          label="Race (select all that apply)"
-          prepend-icon="mdi-menu-right"
-          multiple
-        ></v-select>
-      </v-col>
-      <v-spacer></v-spacer>
-    </v-row>
-
-    <v-row align="center" justify="left">
-      <v-col class="d-flex" cols="4" sm="4">
-        <!-- Ethnicity -->
-        <v-select
-          v-model="ethnicitySelection"
-          :items="ethnicity"
-          label="Ethnicity"
-          prepend-icon="mdi-menu-right"
-        ></v-select>
-      </v-col>
-      <v-spacer></v-spacer>
-    </v-row>
   </v-container>
 </template>
-
 <script>
 import EventBus from "../eventBus";
 
 export default {
   data() {
     return {
-      genderID: ["Male", "Female", "Other", "Decline to answer"],
-      race: [
+      genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
+      raceOptions: [
         "Black or African American",
         "White",
         "Asian",
-        "American Indian or Alask a Native",
+        "American Indian or Alaska Native",
         "Native Hawaiian or other Pacific Islander",
         "Other",
       ],
-      ethnicity: [
+      ethnicityOptions: [
         "Hispanic or Latino",
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
@@ -172,8 +157,8 @@ export default {
       date: "",
       gender: "",
       patientPhoto: [],
-      raceSelections: "",
-      ethnicitySelection: "",
+      race: "",
+      ethnicity: "",
       preferredLanguage: "",
       minDateStr: "1900-01-01",
       birthdateRules: [
@@ -201,8 +186,8 @@ export default {
         gender: this.gender,
         patientPhoto: this.patientPhoto,
         patientPhotoSrc:  (this.patientPhoto && this.patientPhoto.size) ? URL.createObjectURL( this.patientPhoto ) : undefined,
-        raceSelections: this.raceSelections,
-        ethnicitySelection: this.ethnicitySelection,
+        race: this.race,
+        ethnicity: this.ethnicity,
         preferredLanguage: this.preferredLanguage,
       };
       EventBus.$emit("DATA_PERSONAL_INFO_PUBLISHED", personalInfoPayload);
@@ -216,7 +201,6 @@ export default {
         message += " Last Name";
         valid = false;
       }
-
       if (this.givenName == "") {
         if (!valid) {
           message += ",";
@@ -224,7 +208,6 @@ export default {
         message += " First Name";
         valid = false;
       }
-
       if (this.date == null) {
         if (!valid) {
           message += ",";
@@ -232,7 +215,6 @@ export default {
         message += " Date of birth";
         valid = false;
       }
-
       if (this.gender == "") {
         if (!valid) {
           message += ",";
@@ -240,7 +222,6 @@ export default {
         message += " Gender Identity";
         valid = false;
       }
-
       if (this.patientPhoto && this.patientPhoto.size > 2097152) {
         if (!valid) {
           message += "\n";
@@ -251,6 +232,24 @@ export default {
         }
         valid = false;
       }
+	
+	if (this.race == "")
+		{
+			if (!valid) {
+			message += ",";
+			}
+			message+= " Race"
+			valid = false
+		}
+	if (this.ethnicity == "")
+	{
+		if (!valid) {
+		message += ",";
+			}
+		message += " Ethnicity"
+		valid = false
+		
+	}
 
       if (valid == false) {
         alert(message);
@@ -268,7 +267,7 @@ export default {
         d.getFullYear(),
         ("0" + (d.getMonth() + 1)).slice(-2),
         ("0" + d.getDate()).slice(-2),
-      ].join("-");
+        ].join("-");
 
       return date;
     },
