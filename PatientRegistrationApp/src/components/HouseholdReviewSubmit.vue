@@ -46,17 +46,17 @@
 							contain		
 							max-height="300"
 							max-width="300" 
-							:src="dataHouseholdPersonalInfo[0] ? dataHouseholdPersonalInfo[0].householdPatientPhotoSrc : undefined"
+							:src="dataHouseholdPersonalInfo[0] ? dataHouseholdPersonalInfo[0].patientPhotoSrc : undefined"
 							v-bind:class="{ hidden: 
-									dataHouseholdPersonalInfo[0] ? !dataHouseholdPersonalInfo[0].householdPatientPhotoSrc : true }">
+									dataHouseholdPersonalInfo[0] ? !dataHouseholdPersonalInfo[0].patientPhotoSrc : true }">
 						</v-img>
 						<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
-						{{dataHouseholdPersonalInfo[0].householdGivenName}} {{dataHouseholdPersonalInfo[0].householdMiddleName}} {{dataHouseholdPersonalInfo[0].householdSuffix}}</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdBirthDate}}</span></div>
-						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdGender}}</span></div>
-						<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdRaceSelections}}</span></div>
-						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdEthnicitySelection}}</span></div>
+						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
+						{{dataHouseholdPersonalInfo[0].givenName}} {{dataHouseholdPersonalInfo[0].middleName}} {{dataHouseholdPersonalInfo[0].suffix}}</span></div>
+						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].birthDate}}</span></div>
+						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].gender}}</span></div>
+						<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].race}}</span></div>
+						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].ethnicity}}</span></div>
 						<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].preferredLanguage}}</span></div>
 						<div class="font-weight-light primary--text">Emergency Contact</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactFamilyName}}, 
@@ -77,21 +77,21 @@
 								contain		
 								max-height="300"
 								max-width="300" 
-								:src="dataHouseholdPersonalInfo[index] ? dataHouseholdPersonalInfo[index].householdPatientPhotoSrc : undefined"
+								:src="dataHouseholdPersonalInfo[index] ? dataHouseholdPersonalInfo[index].patientPhotoSrc : undefined"
 								v-bind:class="{ hidden: 
-									dataHouseholdPersonalInfo[index] ? !dataHouseholdPersonalInfo[index].householdPatientPhotoSrc : true }">
+									dataHouseholdPersonalInfo[index] ? !dataHouseholdPersonalInfo[index].patientPhotoSrc : true }">
 							</v-img>
 							<div class="font-weight-medium primary--text">Personal Info: Household Member #{{index+1}}</div>
-							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdFamilyName}}, 
-							{{dataHouseholdPersonalInfo[index].householdGivenName}} {{dataHouseholdPersonalInfo[index].householdMiddleName}} {{dataHouseholdPersonalInfo[index].householdSuffix}}</span></div>
-							<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdBirthDate}}</span></div>
-							<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdGender}}</span></div>
-							<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdRaceSelections}}</span></div>
-							<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].householdEthnicitySelection}}</span></div>
+							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].familyName}}, 
+							{{dataHouseholdPersonalInfo[index].givenName}} {{dataHouseholdPersonalInfo[index].middleName}} {{dataHouseholdPersonalInfo[index].suffix}}</span></div>
+							<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].birthDate}}</span></div>
+							<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].gender}}</span></div>
+							<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].race}}</span></div>
+							<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].ethnicity}}</span></div>
 							<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].preferredLanguage}}</span></div>
 							<div class="font-weight-light primary--text">Emergency Contact</div>
-							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].householdFamilyName}}, 
-							{{dataHouseholdPersonalInfo[0].householdGivenName}}</span></div>
+							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
+							{{dataHouseholdPersonalInfo[0].givenName}}</span></div>
 							<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
 							({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
 							<v-card-actions>
