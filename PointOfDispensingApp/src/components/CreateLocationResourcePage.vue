@@ -97,26 +97,27 @@
           v-model="createLocationResourceDialog"
           persistent
           max-width="70%"
+          @keydown.esc="createLocationResourceDialog = false"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="accent" v-bind="attrs" v-on="on">
-                Create location resource
+                Create Point of Dispensing Location
               </v-btn>
             </template>
             <v-card>
               <v-card-title class="headline grey lighten-2 justify-center">
-                Create Location Resource
+                Create Point of Dispensing Location
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-row no-gutters>
                     <v-col cols="2">
-                      <div class="secondary--text">Site ID</div>
+                      <div class="secondary--text">Site Name</div>
                     </v-col>
                     <v-col cols="9">
                       <v-text-field outlined dense 
-                        v-model="identifier_value"
-                        placeholder="(Unique identifier)"
+                        v-model="identifier_assigner"
+                        placeholder="(Name of the location)"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -128,17 +129,6 @@
                       <v-text-field outlined dense 
                         v-model="identifier_assigner"
                         placeholder="(Organization responsible for this location)"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row no-gutters>
-                    <v-col cols="2">
-                      <div class="secondary--text">Site Name</div>
-                    </v-col>
-                    <v-col cols="9">
-                      <v-text-field outlined dense 
-                        v-model="identifier_assigner"
-                        placeholder="(Name of the location)"
                       ></v-text-field>
                     </v-col>
                   </v-row>
