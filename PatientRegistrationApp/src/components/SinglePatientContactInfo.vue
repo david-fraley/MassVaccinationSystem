@@ -1,92 +1,68 @@
 <template>
-	<v-container fluid>
+	<v-container>
     <v-row>
-     <v-radio-group
-        required
-        :rules="[v => !!v || 'This field is required']"
-        v-model="phoneNumberAvailableRadioButtons"
-      >
-        <v-col align="right" cols="12">
-          <v-radio label="I have a phone number" value="yes" @change="PhoneNumberAvailable()"></v-radio>
-          <v-radio label="I do not have a phone number" value="no" @change="PhoneNumberNotAvailable()"></v-radio>
-        </v-col>
-      </v-radio-group>
+      <v-col cols="12">
+        <div>We ask that you please provide your phone number and/or e-mail address.  This contact information will provide us with the ability to send you important information regarding your vaccination registration, follow-up appointment, and vaccination summary.</div>  
+        <div><br>By withholding your e-mail and/or phone number, it will not be possible to provide you with the important vaccination information.</div>
+        <div><strong>We strongly encourage you to provide your e-mail and/or phone number as contact information.</strong></div>
+        <div><br></div>
+        <v-divider></v-divider>
+        <div><br>By providing your e-mail and/or phone number as contact information, you agree to the following:</div>
+        <div><strong>You understand that we will use the phone number and e-mail that you provide to contact you with vaccination registration and follow-up information.</strong></div>
+      </v-col>
+    </v-row> 
+    <v-row no-gutters>
+      <v-checkbox
+        v-model="acknowledgement">
+        <template #label>
+          <span class="red--text"><strong>* <br></strong></span>I have read and understood the above.
+        </template>
+      </v-checkbox>
     </v-row>
-    <v-row>
-      <v-col cols="12" sm="6" md="3">
+    <v-row no-gutters>
+      <v-checkbox
+        v-model="permission"
+        :disabled="!acknowledgement"
+        label="I agree to provide and authorize the use of my contact information as outlined above."
+        >
+      </v-checkbox>
+    </v-row>
+    <v-divider></v-divider>
+    <v-row align="center" justify="start">
+      <v-col cols="4">
         <v-text-field
-          required
-          :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
-          placeholder="(###)###-####"
-          v-mask="'(###)###-####'"
           v-model="patientPhoneNumber"
-          v-show="phoneNumberAvailable"
-          prepend-icon="mdi-menu-right">
-			<template #label>
-			<span class="red--text"><strong>* </strong></span>Phone Number
-			</template>
+          :disabled="!permission"
+          :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+          v-mask="'(###)###-####'"
+          prepend-icon="mdi-phone"
+          label="Phone Number">
         </v-text-field>
-	</v-col>
-
-	<v-col class="d-flex" cols="6" sm="2">
+      </v-col>
+      <v-col cols="3">
         <v-select
-          required
-          :rules="[v => !!v || 'Phone type is required']"
           v-model="patientPhoneNumberType"
-          :items="phonetype"
+          :disabled="!permission"
+          :items="phoneTypeOptions"
           label="Phone Type"
-          v-show="phoneNumberAvailable"
         ></v-select>
-	</v-col>
+      </v-col>
     </v-row>
-
     <v-row>
-	<v-radio-group
-        required
-        :rules="[v => !!v || 'This field is required']"
-        v-model="emailAvailableRadioButtons"
-	>
-        <v-col align="right" cols="12">
-          <v-radio label="I have an E-mail address" value="yes" @change="EmailAvailable()"></v-radio>
-          <v-radio label="I do not have an E-mail address" value="no" @change="EmailNotAvailable()"></v-radio>
-        </v-col>
-	</v-radio-group>
-    </v-row>
-	
-    <v-row>
-	<v-col cols="12" sm="6" md="6">
+      <v-col cols="4">
         <v-text-field
-			required
-			:rules="emailRules"
-			v-model="patientEmail"
-			v-show="emailAvailable"
-			prepend-icon="mdi-menu-right">
-				<template #label>
-				<span class="red--text"><strong>* </strong></span>E-mail Address
-				</template>
+          v-model="patientEmail"
+          :disabled="!permission"
+          :rules="emailRules"
+          prepend-icon="mdi-email"
+          label="E-mail Address">
         </v-text-field>
-	</v-col>
+      </v-col>
     </v-row>
-	
-
-
-    <v-row><v-col cols="12" sm="6" md="6">
-      <v-radio-group
-        required
-        :rules="[v => !!v || 'This field is required']"
-        v-model="approval"
-		prepend-icon="mdi-menu-right">
-			<template #label>
-			<span class="red--text"><strong>* </strong></span>May we contact you regarding follow up vaccination information
-			</template>
-        <v-col align="right" cols="3" sm="3" md="3">
-		
-          <v-radio label="Yes" value="yes"></v-radio>
-          <v-radio label="No" value="no"></v-radio>
-        </v-col>
-      </v-radio-group></v-col>
+    <v-row>
+      <p></p>
     </v-row>
-	</v-container>
+  </v-container>
 </template>
 
 <script>
@@ -96,21 +72,17 @@ export default {
   name: "SinglePatientContactInfo",
   data() {
     return {
-      phonetype: ["Home", "Mobile", "Work"],
-      radios: "May we contact you for a follow up vaccination?",
+      phoneTypeOptions: ["Home", "Mobile", "Work"],
       emailRules: [
         (v) =>
           /^[\s]*$|.+@.+\..+/.test(v) ||
           "Please provide a valid e-mail address",
       ],
-	patientPhoneNumber: '',
-	patientPhoneNumberType: '',
-	patientEmail: '',
-	approval: '',
-	phoneNumberAvailable: true,
-	phoneNumberAvailableRadioButtons: 'yes',
-	emailAvailable: true,
-	emailAvailableRadioButtons: 'yes'
+      patientPhoneNumber: '',
+      patientPhoneNumberType: '',
+      patientEmail: '',
+      acknowledgement: false,
+      permission: false,
     };
   },
   methods: {
@@ -120,46 +92,31 @@ export default {
         patientPhoneNumber: this.patientPhoneNumber,
         patientPhoneNumberType: this.patientPhoneNumberType,
         patientEmail: this.patientEmail,
-        approval: this.approval
       }
       EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)
     },
     verifyFormContents()
     {
-      //add logic to check form contents
       var valid = true
-      var message = "Woops! You need to enter the following field(s):"
+      var message
 	
-      if(this.phoneNumberAvailable)
+      if(this.acknowledgement)
       {	
-        if(this.patientPhoneNumber == "") 
+        if(this.permission)
         {
-          message += " Phone Number"
-          valid = false
+          if((this.patientPhoneNumber == "") && (this.patientEmail == ""))
+            {
+              message = "Please provide an e-mail address and/or phone number."
+              valid = false
+            }
         }
       }
-	
-      if(this.emailAvailable)
+      else
       {
-        if(this.patientEmail == "") 
-        {
-        if(!valid)
-          {
-          message +=","
-          }
-          message += " E-mail"
-          valid = false
-        }
-      }
-			if(this.approval == "") 
-			{
-        if(!valid)
-				{
-          message +=","
-				}
-        message += " Follow up consent"
+        message = "Acknowledgement is required."
         valid = false
-			}
+      }
+      
 			if (valid == false) 
 			{
 				alert (message)
@@ -169,26 +126,6 @@ export default {
       this.sendContactInfoInfoToReviewPage();
       return true;
     },
-	PhoneNumberAvailable()
-    {
-		this.phoneNumberAvailable = true
-		this.patientPhoneNumber=""
-    },
-    PhoneNumberNotAvailable()
-    {
-		this.phoneNumberAvailable = false
-		this.patientPhoneNumber="Not available"
-    },
-		EmailAvailable()
-    {
-	this.emailAvailable = true
-	this.patientEmail=""
-    },
-    EmailNotAvailable()
-    {
-	this.emailAvailable = false
-	this.patientEmail="Not available"
-    },
-},
+  },
 }
 </script>
