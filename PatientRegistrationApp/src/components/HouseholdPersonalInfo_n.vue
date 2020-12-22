@@ -115,8 +115,8 @@
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Race -->
         <v-select
-		      required
-				  :rules="[v => !!v || 'Race is required']"
+          required
+          :rules="[v => !!v || 'Race is required']"
           v-model="race"
           :items="raceOptions"
           label="Race (select all that apply)"
@@ -129,12 +129,11 @@
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Ethnicity -->
         <v-select
-			    required
-			    :rules="[v => !!v || 'Ethnicity is required']"
+          required
+          :rules="[v => !!v || 'Ethnicity is required']"
           v-model="ethnicity"
           :items="ethnicityOptions"
-          label="Ethnicity"
-          prepend-icon="mdi-menu-right">
+          label="Ethnicity">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
           </template>

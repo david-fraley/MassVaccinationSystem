@@ -83,8 +83,7 @@
           :items="genderIdOptions"
           required
           :rules="[v => !!v || 'Gender identity field is required']"
-          v-model="gender"
-          prepend-icon="mdi-menu-right">
+          v-model="gender">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Gender Identity
           </template>
@@ -113,8 +112,7 @@
           :items="ethnicityOptions"
           required
           :rules="[v => !!v || 'Ethnicity is required']"
-          label="Ethnicity"
-          prepend-icon="mdi-menu-right">
+          label="Ethnicity">
         <template #label>
           <span class="red--text"><strong>* </strong></span>Ethnicity
         </template>
