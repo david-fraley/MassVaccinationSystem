@@ -58,6 +58,7 @@
           { icon: 'mdi-medical-bag', text: 'Vaccination Event', route: '/VaccinationEvent'},
           { icon: 'mdi-alert', text: 'Adverse Reaction', route: '/AdverseReaction'},
           { icon: 'mdi-checkbox-marked-outline', text: 'Discharge', route: '/Discharge'},
+          { icon: 'mdi-cog', text: 'Configuration', route: '/LocationResource'}
        ]
       }
     }
