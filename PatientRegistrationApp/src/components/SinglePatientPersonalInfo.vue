@@ -89,20 +89,30 @@
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Race -->
         <v-select
+		      required
+				  :rules="[v => !!v || 'Race is required']"
           v-model="race"
           :items="raceOptions"
           label="Race (select all that apply)"
-          prepend-icon="mdi-menu-right"
-          multiple
-        ></v-select>
+          prepend-icon="mdi-menu-right">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Race
+          </template>
+		</v-select>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Ethnicity -->
         <v-select
+			    required
+				  :rules="[v => !!v || 'Ethnicity is required']"
           v-model="ethnicity"
           :items="ethnicityOptions"
           label="Ethnicity"
-        ></v-select>
+          prepend-icon="mdi-menu-right">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Ethnicity
+          </template>
+        </v-select>	
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
@@ -223,6 +233,25 @@ export default {
         }
         valid = false;
       }
+	
+	if (this.race == "")
+		{
+			if (!valid) {
+			message += ",";
+			}
+			message+= " Race"
+			valid = false
+		}
+	if (this.ethnicity == "")
+	{
+		if (!valid) {
+		message += ",";
+			}
+		message += " Ethnicity"
+		valid = false
+		
+	}
+
       if (valid == false) {
         alert(message);
         return false;
