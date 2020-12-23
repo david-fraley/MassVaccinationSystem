@@ -19,7 +19,8 @@ Immunization {
   education: [string] "url",
   reaction: [string] "Observation/id"
   series: string,
-  doseNumber: int
+  doseNumber: int,
+  seriesDoses: int
 }
 {
   "Immunization": {
@@ -42,7 +43,8 @@ Immunization {
     "education": [""],
     "reaction": ["Observation/3303"],
     "series": "series",
-    "doseNumber": 1
+    "doseNumber": 1,
+    "seriesDoses": 2
   }
 }
 */
@@ -126,6 +128,7 @@ exports.toFHIR = function (imm) {
       {
         series: imm.series,
         doseNumberPositiveInt: imm.doseNumber,
+        seriesDosesPositiveInt: imm.seriesDoses,
       },
     ],
   };
