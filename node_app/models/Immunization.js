@@ -16,7 +16,8 @@ Immunization {
   doseQuantity: decimal
   doseUnit: string
   performer: [string] "{Practitioner/PractitionerRole/Organization}/id"
-  education: [string] "url"
+  education: [string] "url",
+  reaction: [string] "Observation/id"
   series: string,
   doseNumber: int
 }
@@ -39,6 +40,7 @@ Immunization {
     "doseUnit": "mg",
     "performer": ["Practitioner/f201"],
     "education": [""],
+    "reaction": ["Observation/3303"],
     "series": "series",
     "doseNumber": 1
   }
@@ -114,6 +116,9 @@ exports.toFHIR = function (imm) {
     performer: [
       // add later
     ],
+    reaction: [
+      // add later
+    ],
     education: [
       // add later
     ],
@@ -131,6 +136,15 @@ exports.toFHIR = function (imm) {
     resource.performer.push({
       actor: {
         reference: performer,
+      },
+    });
+  }
+  // add reaction
+  let reaction;
+  for (reaction of imm.reaction) {
+    resource.reaction.push({
+      detail: {
+        reference: reaction,
       },
     });
   }
