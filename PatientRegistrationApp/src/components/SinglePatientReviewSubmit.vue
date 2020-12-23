@@ -8,21 +8,22 @@
 			</v-col>
 		</v-row>
 		<v-row>
-			<v-col cols="4" sm="3">
+			<v-col style="flex-grow:0" v-bind:class="{ hidden: dataPersonalInfo ? !dataPersonalInfo.patientPhotoSrc : true }">
 				<v-img
-					style="float:left"		
-					max-height="100"
-					max-width="100" 
-					src="../assets/blankPicture.png">
+					style="float:left"
+					contain		
+					max-height="300"
+					max-width="300" 
+					:src="dataPersonalInfo.patientPhotoSrc">
 				</v-img>
 			</v-col>  
 			<v-col cols="8" sm="6">
 				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
 					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.middleName}} {{dataPersonalInfo.suffix}}</span></div>
-				<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataPersonalInfo.birthDate}}</span></div>
+				<div class="font-weight-medium">Date of Birth:  <span class="font-weight-regular">{{dataPersonalInfo.birthDate}}</span></div>
 				<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataPersonalInfo.gender}}</span></div>
-				<div class="font-weight-medium">Race(s):  <span class="font-weight-regular">{{dataPersonalInfo.raceSelections}}</span></div>
-				<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataPersonalInfo.ethnicitySelection}}</span></div>
+				<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataPersonalInfo.race}}</span></div>
+				<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataPersonalInfo.ethnicity}}</span></div>
 				<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataPersonalInfo.preferredLanguage}}</span></div>
 			</v-col>
 		</v-row>
@@ -52,10 +53,19 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.patientPhoneNumber}} 
-					({{dataContactInfo.patientPhoneNumberType}})</span></div>
-				<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.patientEmail}}</span></div>
-				<div class="font-weight-medium">Follow-up approval: <span class="font-weight-regular">{{dataContactInfo.approval}}</span></div>
+				<template v-if="dataContactInfo.patientPhoneNumber != ''">
+					<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.patientPhoneNumber}} 
+						({{dataContactInfo.patientPhoneNumberType}})</span></div>
+				</template>
+				<template v-else>
+					<div class="font-weight-medium">Phone: <span class="font-weight-regular">Not provided</span></div>
+				</template>
+				<template v-if="dataContactInfo.patientEmail != ''">
+					<div class="font-weight-medium">E-mail: <span class="font-weight-regular">{{dataContactInfo.patientEmail}}</span></div>
+				</template>
+				<template v-else>
+					<div class="font-weight-medium">E-mail: <span class="font-weight-regular">Not provided</span></div>
+				</template>
 			</v-col>
 		</v-row>
 
@@ -95,8 +105,8 @@ import EventBus from '../eventBus'
 				birthDate: '',
 				gender: '',
 				patientPhoto: '../assets/blankPicture.png',
-				raceSelections: 'N/A',
-				ethnicitySelection: 'N/A'
+				race: 'N/A',
+				ethnicity: 'N/A'
 			},
 			dataEmergencyContact:
 			{
@@ -154,4 +164,10 @@ import EventBus from '../eventBus'
 	}
 }
 </script>
+<style lang="css" scoped>
 
+	.hidden {
+		display: none;
+	}
+
+</style>
