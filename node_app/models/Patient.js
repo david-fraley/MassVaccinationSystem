@@ -24,7 +24,7 @@ Patient {
     country: string
   }
   contact: {
-    relationship: enum (C Emergency Contact, E Employer, F Federal Agency, I Insurance Company, N Next-of-Kin, S State Agency, U Unknown)
+    relationship: enum (C Emergency Contact, DOMPART Domestic Partner, INLAW In-Law, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other)
     family: string
     given: string
     phone: {
