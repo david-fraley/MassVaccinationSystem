@@ -46,7 +46,7 @@ exports.toFHIR = function (loc) {
             code: loc.type,
             display: loc.type,
           },
-        ].
+        ],
       },
     ],
     physicalType: {
