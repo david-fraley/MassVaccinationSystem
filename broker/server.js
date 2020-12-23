@@ -226,6 +226,7 @@ app.post("/discharge", (req, res) => {
   }
 });
 
+
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
