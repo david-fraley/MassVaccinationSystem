@@ -11,12 +11,25 @@
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
 						{{dataHouseholdPersonalInfo[0].givenName}} {{dataHouseholdPersonalInfo[0].middleName}} {{dataHouseholdPersonalInfo[0].suffix}}</span></div>
 						<v-card-actions>
-							<v-btn outlined small color="primary">
+							<v-btn color="secondary" class="ma-2 white--text">
 								Download
 							</v-btn>
 						</v-card-actions>
 					</v-card>
-					
+				<template v-for="index in getNumberOfHouseholdMembers()-1">
+						<v-card class="pa-2" flat min-width=33%
+						:key="index">
+							<div class="font-weight-medium primary--text">Household Member #{{index+1}}</div>
+							<div> QR code Placeholder</div>
+							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].familyName}}, 
+							{{dataHouseholdPersonalInfo[index].givenName}} {{dataHouseholdPersonalInfo[index].middleName}} {{dataHouseholdPersonalInfo[index].suffix}}</span></div>
+							<v-card-actions>
+							<v-btn color="secondary" class="ma-2 white--text">
+								Download
+							</v-btn>
+							</v-card-actions>
+						</v-card>
+					</template>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -55,7 +68,7 @@ import EventBus from '../eventBus'
 		getNumberOfHouseholdMembers()
 		{
 			return this.numberOfHouseholdMembers;
-		},
+		}
 	},
 	mounted() 
 	{
