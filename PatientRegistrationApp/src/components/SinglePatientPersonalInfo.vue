@@ -33,13 +33,13 @@
       </v-col>
       <!-- Suffix -->
       <v-col cols="12" sm="6" md="6" lg="1">
-        <v-text-field 
-          label="Suffix" 
-          id="suffix" 
-          v-model="suffix">
-        </v-text-field>
-      </v-col>
-    </v-row>
+      <v-select
+        :items="suffixOptions"
+        id="suffix"
+        label="Suffix"
+        v-model="suffix">
+        </v-select>
+      </v-col></v-row>
     <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Date of Birth -->
@@ -136,6 +136,7 @@ import EventBus from "../eventBus";
 export default {
   data() {
     return {
+      suffixOptions: ["II", "III", "IV", "Jr", "Sr"],
       genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
       raceOptions: [
         "Black or African American",
