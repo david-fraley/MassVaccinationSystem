@@ -5,7 +5,7 @@
 		<v-row>	
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
-					<v-card class="pa-2" flat min-width=33%>
+					<v-card class="pa-2" flat min-width=50%>
 						<div class="font-weight-medium primary--text">Household Member #1</div>
 						<div> QR Code Placeholder</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
@@ -17,7 +17,7 @@
 						</v-card-actions>
 					</v-card>
 				<template v-for="index in getNumberOfHouseholdMembers()-1">
-						<v-card class="pa-2" flat min-width=33%
+						<v-card class="pa-2" flat min-width=50%
 						:key="index">
 							<div class="font-weight-medium primary--text">Household Member #{{index+1}}</div>
 							<div> QR code Placeholder</div>
@@ -37,6 +37,30 @@
 			<v-col cols="12">
 			<p> </p>
 			</v-col>
+		</v-row>
+		<v-row justify="center">
+			<v-btn color="secondary" class="ma-2 white--text">
+				Download All
+			</v-btn>
+		</v-row>
+
+		<v-row justify="center">
+			<div class="font-weight-medium"><br><br>How do you want to receive these QR codes?</div>
+		</v-row>
+		<v-row justify="center">
+		<v-col cols="3" sm="3" md="3">
+			<v-radio-group class="font-weight-medium">
+				<v-radio label="E-mail"></v-radio>
+				<v-radio label="SMS Message"></v-radio>
+				<v-radio label="Both"></v-radio>
+			</v-radio-group>
+		</v-col>
+		</v-row>
+
+		<v-row justify="center">
+			<v-btn color="secondary" class="ma-2 white--text">
+				Send
+			</v-btn>
 		</v-row>
 	</v-container>
 </template>
