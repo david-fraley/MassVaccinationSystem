@@ -103,7 +103,7 @@ export default {
 		verifyFormContents()
 		{
 			var valid = true
-			var message = "Woops! You need to enter the following field:"
+			var message = "Woops! You need to enter the following field(s):"
 		
 				if (this.preferredLanguage == "") {
 					message += " Preferred Language"
@@ -111,7 +111,7 @@ export default {
 				}
 				if ((this.isSingleRegistration == false) && (this.isHouseholdRegistration == false)) {
 					if(!valid) {
-						message += " ,"
+						message += ","
 					}
 					message += " Registration Type"
 					valid = false
