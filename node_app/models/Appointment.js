@@ -25,14 +25,6 @@ Appointment {
         {
           "type":"patient",
           "actor":"Patient/example"
-        },
-        {
-          "type":"pratitioner",
-          "actor":"Practitioner/f201"
-        },
-        {
-          "type":"patient",
-          "actor":"Patient/102"
         }
       ],
       "slot":"Slot/1253"
