@@ -212,11 +212,11 @@ export default {
         message += " First Name";
         valid = false;
       }
-      if (this.date == null) {
+      if (this.date == "") {
         if (!valid) {
           message += ",";
         }
-        message += " Date of birth";
+        message += " Date of Birth";
         valid = false;
       }
       if (this.gender == "") {
@@ -236,17 +236,17 @@ export default {
         }
         valid = false;
       }
-      if (this.raceSelections == "") {
-          if (!valid) {
-          message += ",";
-          }
-          message+= " Race"
-          valid = false
-      }
-      if (this.ethnicitySelection == "") {
+      if (this.race == "") {
         if (!valid) {
-        message += ",";
-          }
+          message += ",";
+        }
+        message+= " Race"
+        valid = false
+      }
+      if (this.ethnicity == "") {
+        if (!valid) {
+            message += ",";
+        }
         message += " Ethnicity"
         valid = false
       }

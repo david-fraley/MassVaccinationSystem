@@ -92,7 +92,7 @@
           <template #label>
             <span class="red--text"><strong>* </strong></span>Gender Identity
           </template>
-        ></v-select>
+        </v-select>
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
@@ -107,7 +107,7 @@
           <template #label>
             <span class="red--text"><strong>* </strong></span>Race
           </template>
-        ></v-select>
+        </v-select>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Ethnicity -->
@@ -120,7 +120,7 @@
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
           </template>
-        ></v-select>
+        </v-select>
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
@@ -228,11 +228,11 @@ export default {
         message += " First Name";
         valid = false;
       }
-      if (this.birthDate == null) {
+      if (this.birthDate == "") {
         if (!valid) {
           message += ",";
         }
-        message += " Date of birth";
+        message += " Date of Birth";
         valid = false;
       }
       if (this.gender == "") {

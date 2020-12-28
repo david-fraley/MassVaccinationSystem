@@ -65,19 +65,17 @@
 									</div>
 								</v-btn>
 							</template>
-							<span>A household is composed of any people who occupy the same given housing unit. If you are planning to register your household, all members must currently be residing in the same address. If members of a household are residing in other housing units, it is necessary to register any given members individually. Max household registration of 20 registrants.</span>
+							<span>{{householdDefinition}}</span>
 						</v-tooltip>
 					</v-card>
 				</v-card>
 			</v-col>
 		</v-row>
-		<v-row>
-			<p><br></p>
-		</v-row>
 	</v-container>
 </template>
 <script>
 import EventBus from '../eventBus'
+import customerSettings from '../customerSettings'
 
 export default {
 	name: "GreetingPage",
@@ -86,6 +84,7 @@ export default {
 		preferredLanguage: '',
 		isSingleRegistration: false,
 		isHouseholdRegistration: false,
+		householdDefinition: customerSettings.householdDefinition
 	
 	}),
 	methods: 
