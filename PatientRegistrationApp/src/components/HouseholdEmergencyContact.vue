@@ -80,18 +80,18 @@ export default {
       var valid = true
       var message = "Woops! You need to enter the following field(s):"
       
-      if(this.householdEmergencyContactFamilyName == "") {
+      if(this.emergencyContactFamilyName == "") {
         message += " Last Name"
         valid = false
       }
-      if(this.householdEmergencyContactGivenName == "") {
+      if(this.emergencyContactGivenName == "") {
         if(!valid) {
           message +=","
 				}
         message += " First Name"
         valid = false
       }
-      if (this.householdEmergencyContactPhoneNumber == "") {
+      if (this.emergencyContactPhoneNumber == "") {
         if(!valid) {
           message +=","
 				}
