@@ -2,10 +2,10 @@
 	<v-container fluid>
 		<v-row align="center" justify="center">
 		</v-row>
-		<v-row>	
+		<v-row justify="center">	
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
-					<v-card class="pa-2" flat min-width=50%>
+					<v-card class="pa-2" flat min-width=33%>
 						<div class="font-weight-medium primary--text">Household Member #1</div>
 						<div> QR Code Placeholder</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
@@ -17,7 +17,7 @@
 						</v-card-actions>
 					</v-card>
 				<template v-for="index in getNumberOfHouseholdMembers()-1">
-						<v-card class="pa-2" flat min-width=50%
+						<v-card class="pa-2" flat min-width=33%
 						:key="index">
 							<div class="font-weight-medium primary--text">Household Member #{{index+1}}</div>
 							<div> QR code Placeholder</div>
