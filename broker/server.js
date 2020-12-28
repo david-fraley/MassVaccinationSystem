@@ -12,6 +12,11 @@ const headers = {
   "content-type": "application/fhir+json",
 };
 
+//Health check endpoint
+app.get("/healthcheck", (req, res) => {
+	res.send("Success!");
+});
+
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
   axios
