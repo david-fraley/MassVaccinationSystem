@@ -39,7 +39,6 @@ Practitioner {
 }
 */
 
-const TYPE
 exports.toFHIR = function (prt) {
   let resource = {
     resourceType: "Practitioner",
