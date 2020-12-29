@@ -1,16 +1,22 @@
 const express = require("express");
 const axios = require("axios").default;
 const Organization = require("./models/Organization");
+const Encounter = require("./models/Encounter");
 
 const app = express();
 app.use(express.json());
 app.set("json spaces", 2);
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
-const generalEndpoints = ["/Patient*", "/Organization*"];
+const generalEndpoints = ["/Patient*", "/Encounter*"];
 const headers = {
   "content-type": "application/fhir+json",
 };
+
+//Health check endpoint
+app.get("/healthcheck", (req, res) => {
+	res.send("Success!");
+});
 
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
@@ -30,6 +36,19 @@ app.post("/Organization", (req, res) => {
   // post resource
   axios
     .post(`${base}/Organization`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
+});
+
+app.post("/Encounter", (req, res) => {
+  let encounter = req.body.Encounter;
+  let resource = Encounter.toFHIR(encounter);
+
+  // post resource
+  axios
+    .post(`${base}/Encounter`, resource, headers)
     .then((response) => {
       res.json(response.data);
     })
