@@ -4,6 +4,7 @@ const Organization = require("./models/Organization");
 const Encounter = require("./models/Encounter");
 const Observation = require("./models/Observation");
 const Appointment = require("./models/Appointment");
+const Immunization = require("./models/Immunization");
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ const generalEndpoints = [
   "/Observation*",
   "/Organization*",
   "/Appointment*",
+  "/Immunization*"
 ];
 const headers = {
   "content-type": "application/fhir+json",
@@ -35,6 +37,19 @@ app.get(generalEndpoints, (req, res) => {
       res.json(response.data);
     })
     .catch((error) => handleError(res, error));
+});
+
+app.post("/Immunization", (req, res) => {
+  let imm = req.body.Immunization;
+  let resource = Immunization.toFHIR(imm);
+
+  // post resource
+  axios
+    .post(`${base}/Immunization`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
 });
 
 app.post("/Appointment", (req, res) => {
