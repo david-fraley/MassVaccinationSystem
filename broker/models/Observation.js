@@ -2,10 +2,9 @@
 Observation {
   status : enum (final, amended, corrected)
   category : enum (vital-signs, procedure, exam)
-  code : enum (?)
   subject : string "Patient/id"
   encounter : string "Encounter/id"
-  value: string
+  note: string
   effectiveStart: string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
   effectiveEnd: string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
   performer : [string] "(Practitioner/PractitionerRole/Organization)/id"
@@ -15,10 +14,9 @@ Observation {
   "Observation": {
     "status": "final",
     "category": "procedure",
-    "code": "45708-5",
     "subject": "Patient/example",
     "encounter": "Encounter/715",
-    "value": "notes",
+    "note": "notes",
     "effectiveStart": "2016-05-18T22:33:22Z",
     "effectiveEnd": "2016-05-18T22:38:22Z",
     "performer": [
@@ -29,7 +27,6 @@ Observation {
 }
 */
 const CAT_SYSTEM = "http://hl7.org/fhir/ValueSet/observation-category";
-const CODE_SYSTEM = "http://loinc.org";
 exports.toFHIR = function (observation) {
   let resource = {
     resourceType: "Observation",
@@ -45,22 +42,13 @@ exports.toFHIR = function (observation) {
         ],
       },
     ],
-    code: {
-      coding: [
-        {
-          system: CODE_SYSTEM,
-          code: observation.code,
-          display: observation.code,
-        },
-      ],
-    },
     subject: {
       reference: observation.subject,
     },
     encounter: {
       reference: observation.encounter,
     },
-    valueString: observation.value,
+    valueString: observation.note,
     effectivePeriod: {
       start: observation.effectiveStart,
       end: observation.effectiveEnd,
