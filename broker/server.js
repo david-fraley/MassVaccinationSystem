@@ -19,13 +19,17 @@ app.get("/healthcheck", (req, res) => {
 
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
-  axios
-    .get(`${base}${req.url}`)
+  axios({
+    method: req.method,
+    url: `${base}${req.url}`,
+    data: req.body,
+    headers: headers,
+  })
     .then((response) => {
-      // handle success
       res.json(response.data);
     })
-    .catch((error) => handleError(res, error));
+    .catch((e) => res.send(e));
+
 });
 
 app.post("/EpisodeOfCare", (req, res) => {
