@@ -8,8 +8,8 @@ EpisodeOfCare {
   "EpisodeOfCare":
     {
       "status" : "planned"
-      "patient" : "1457642"
-      "managingOrganization" : "1703654"
+      "patient" : "Patient/example"
+      "managingOrganization" : "Organization/hl7"
      }
 }
 */
