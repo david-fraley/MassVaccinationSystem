@@ -35,17 +35,13 @@ app.get("/healthcheck", (req, res) => {
 
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
-  axios({
-    method: req.method,
-    url: `${base}${req.url}`,
-    data: req.body,
-    headers: headers,
-  })
+  axios
+    .get(`${base}${req.url}`)
     .then((response) => {
+      // handle success
       res.json(response.data);
     })
-    .catch((e) => res.send(e));
-
+    .catch((error) => handleError(res, error));
 });
 
 // Create Immunization resource
@@ -146,7 +142,7 @@ app.post("/Encounter", (req, res) => {
     .then((response) => {
       res.json(response.data);
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.send(e.response.data));
 });
 
 app.post("/Patient", (req, res) => {
