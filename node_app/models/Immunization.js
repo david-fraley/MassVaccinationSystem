@@ -16,6 +16,7 @@ Immunization {
   doseQuantity: decimal
   doseUnit: string
   performer: [string] "{Practitioner/PractitionerRole/Organization}/id"
+  note: string
   education: [string] "url",
   reaction: [string] "Observation/id"
   series: string,
@@ -40,6 +41,7 @@ Immunization {
     "doseQuantity": 5,
     "doseUnit": "mg",
     "performer": ["Practitioner/f201"],
+    "note": "immunization notes",
     "education": [""],
     "reaction": ["Observation/3303"],
     "series": "series",
@@ -117,6 +119,11 @@ exports.toFHIR = function (imm) {
     },
     performer: [
       // add later
+    ],
+    note: [
+      {
+        text: imm.note,
+      },
     ],
     reaction: [
       // add later
