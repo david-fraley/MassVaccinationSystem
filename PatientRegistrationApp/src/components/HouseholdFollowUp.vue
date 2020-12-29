@@ -2,6 +2,11 @@
 	<v-container fluid>
 		<v-row align="center" justify="center">
 		</v-row>
+		<v-row justify="center">
+			<v-btn color="secondary" class="ma-2 white--text">
+				Download All
+			</v-btn>
+		</v-row>
 		<v-row justify="center">	
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
@@ -10,11 +15,6 @@
 						<div> QR Code Placeholder</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
 						{{dataHouseholdPersonalInfo[0].givenName}} {{dataHouseholdPersonalInfo[0].middleName}} {{dataHouseholdPersonalInfo[0].suffix}}</span></div>
-						<v-card-actions>
-							<v-btn color="secondary" class="ma-2 white--text">
-								Download
-							</v-btn>
-						</v-card-actions>
 					</v-card>
 				<template v-for="index in getNumberOfHouseholdMembers()-1">
 						<v-card class="pa-2" flat min-width=33%
@@ -23,11 +23,6 @@
 							<div> QR code Placeholder</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].familyName}}, 
 							{{dataHouseholdPersonalInfo[index].givenName}} {{dataHouseholdPersonalInfo[index].middleName}} {{dataHouseholdPersonalInfo[index].suffix}}</span></div>
-							<v-card-actions>
-							<v-btn color="secondary" class="ma-2 white--text">
-								Download
-							</v-btn>
-							</v-card-actions>
 						</v-card>
 					</template>
 				</v-card>
@@ -38,12 +33,6 @@
 			<p> </p>
 			</v-col>
 		</v-row>
-		<v-row justify="center">
-			<v-btn color="secondary" class="ma-2 white--text">
-				Download All
-			</v-btn>
-		</v-row>
-
 		<v-row justify="center">
 			<div class="font-weight-medium"><br><br>How do you want to receive these QR codes?</div>
 		</v-row>
