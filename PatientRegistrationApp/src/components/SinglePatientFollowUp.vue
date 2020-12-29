@@ -1,5 +1,5 @@
 <template>
-	<v-container fluid>
+	<div ref="content"><v-container fluid> 
     <v-row justify="center">
   <v-col class="d-flex" cols="6" sm="6">
   <v-text-field
@@ -35,14 +35,24 @@
     </v-btn>
 
     </v-row>
-	</v-container>
+    <v-row>
+      <v-btn 
+      color="accent"
+      @click="generatePdf"
+    >
+    Download as PDF 
+    </v-btn></v-row>
+	</v-container></div>
 </template>
 
 <script>
-import qrCode from 'qrcode'
+import qrCode from 'qrcode';
+import jsPDF from 'jspdf';
+
 
 export default {
   name: "SinglePatientFollowUp",
+
   data() {
     return {
       qrText: '',
@@ -54,6 +64,11 @@ beforeDestroy (){
   this.reset()
 },
   methods: {
+    generatePdf(){
+      const doc = new jsPDF();
+      doc.text("hello world", 15,15);
+      doc.save("pdf.pdf");
+    },
     createObjectUrl (err, canvas) {
       if (!err) {
         canvas.toBlob((blob) => {
