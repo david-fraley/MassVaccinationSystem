@@ -67,7 +67,7 @@ beforeDestroy (){
     generatePdf(){
       const doc = new jsPDF();
       doc.text("hello world", 15,15);
-      doc.save("pdf.pdf");
+      doc.save("qrcode.pdf");
     },
     createObjectUrl (err, canvas) {
       if (!err) {
