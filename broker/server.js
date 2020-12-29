@@ -3,13 +3,20 @@ const axios = require("axios").default;
 const Organization = require("./models/Organization");
 const Encounter = require("./models/Encounter");
 const Observation = require("./models/Observation");
+const Appointment = require("./models/Appointment");
 
 const app = express();
 app.use(express.json());
 app.set("json spaces", 2);
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
-const generalEndpoints = ["/Patient*", "/Encounter*", "/Observation*"];
+const generalEndpoints = [
+  "/Patient*",
+  "/Encounter*",
+  "/Observation*",
+  "/Organization*",
+  "/Appointment*",
+];
 const headers = {
   "content-type": "application/fhir+json",
 };
@@ -28,6 +35,19 @@ app.get(generalEndpoints, (req, res) => {
       res.json(response.data);
     })
     .catch((error) => handleError(res, error));
+});
+
+app.post("/Appointment", (req, res) => {
+  let appt = req.body.Appointment;
+  let resource = Appointment.toFHIR(appt);
+
+  // post resource
+  axios
+    .post(`${base}/Appointment`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e));
 });
 
 app.post("/Organization", (req, res) => {
