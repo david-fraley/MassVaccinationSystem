@@ -34,7 +34,7 @@ Practitioner {
         "postalCode": "14623",
         "country": "USA"
       },
-      "qualificationCode": "CER",
+      "qualificationCode": "CER"
    }
 }
 */
