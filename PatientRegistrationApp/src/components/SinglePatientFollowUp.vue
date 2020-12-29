@@ -1,7 +1,9 @@
 <template>
 	<v-container fluid>
+
+
     <v-row justify="center">
-  <v-col class="d-flex" cols="6" sm="6">
+    <v-col class="d-flex" cols="10" sm="8" md="6" lg="6">
   <v-text-field
       v-model="qrText"
       clearable
@@ -33,27 +35,71 @@
     >
     Open 
     </v-btn>
-
     </v-row>
+
+     <v-row justify="center">
+      <div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
+					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.middleName}} {{dataPersonalInfo.suffix}}</span></div>
+    </v-row>
+
+
+    <v-row justify="center">
+      <v-btn color="secondary" class="ma-2 white--text">
+								Download
+			</v-btn>
+    </v-row>
+    
+ 
+
+<v-row justify="center">
+  <div class="font-weight-medium"><br><br>How do you want to receive this QR code?</div>
+</v-row>
+<v-row justify="center">
+  <v-col cols="8" sm="4" md="3" lg="3">
+  <v-radio-group class="font-weight-medium">
+      <v-radio label="E-mail"></v-radio>
+      <v-radio label="SMS Message"></v-radio>
+      <v-radio label="Both"></v-radio>
+  </v-radio-group>
+   </v-col>
+</v-row>
+
+<v-row justify="center">
+  <v-btn color="secondary" class="ma-2 white--text">
+    Send
+  </v-btn>
+</v-row>
+
+		
+
 	</v-container>
 </template>
 
 <script>
+import EventBus from '../eventBus'
 import qrCode from 'qrcode'
 
 export default {
   name: "SinglePatientFollowUp",
   data() {
     return {
+      dataPersonalInfo:
+			{
+				familyName: '',
+				givenName: '',
+        suffix: ''
+      },
       qrText: '',
       qrSrc: null
-      
     };
   },
-beforeDestroy (){
+  beforeDestroy (){
   this.reset()
-},
+  },
   methods: {
+    updatePersonalInfoData(personalInfoPayload) {
+      this.dataPersonalInfo = personalInfoPayload
+    },
     createObjectUrl (err, canvas) {
       if (!err) {
         canvas.toBlob((blob) => {
@@ -77,6 +123,11 @@ beforeDestroy (){
       this.qrSrc = null
       this.qrText = ''
     }
+},
+  mounted() {
+		EventBus.$on('DATA_PERSONAL_INFO_PUBLISHED', (personalInfoPayload) => {
+			this.updatePersonalInfoData(personalInfoPayload)
+    })
   }
 }
 </script>
