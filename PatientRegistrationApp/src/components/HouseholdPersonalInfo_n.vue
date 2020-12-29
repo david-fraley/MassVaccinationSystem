@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row align="center" justify="start">
       <!-- Last name -->
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -7,7 +7,7 @@
           required
           :rules="[v => !!v || 'Last name field is required']"
           v-model="familyName"
-          prepend-icon="mdi-menu-right">
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Last Name
           </template>
@@ -18,7 +18,8 @@
         <v-text-field 
           required
           :rules="[v => !!v || 'First name field is required']"
-          v-model="givenName">
+          v-model="givenName"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>First Name
           </template>
@@ -28,16 +29,17 @@
       <v-col cols="12" sm="6" md="6" lg="3">
         <v-text-field 
           v-model="middleName"
-          label="Middle Name">
+          label="Middle Name"
+          prepend-icon="mdi-blank">
         </v-text-field>
       </v-col>
       <!-- Suffix -->
       <v-col cols="12" sm="6" md="6" lg="1">
-        <v-select
-        :items="suffixOptions"
-        id="suffix"
-        label="Suffix"
-        v-model="suffix">
+        <v-select 
+          label="Suffix" 
+          :items="suffixOptions"
+          v-model="suffix"
+          prepend-icon="mdi-blank">
         </v-select>
       </v-col>
     </v-row>
@@ -49,7 +51,7 @@
           required
           :rules="[v => !!v || 'Preferred language field is required']"
           v-model="preferredLanguage"
-          prepend-icon="mdi-menu-right">
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Preferred Language
           </template>
@@ -61,7 +63,8 @@
           :items="relationshipOptions"
           required
           :rules="[v => !!v || 'Relationship field is required']"
-          v-model="relationship">
+          v-model="relationship"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Relationship: this person is your
           </template>
@@ -106,7 +109,8 @@
           :items="genderIdOptions"
           required
           :rules="[v => !!v || 'Gender identity field is required']"
-          v-model="gender">
+          v-model="gender"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Gender Identity
           </template>
@@ -117,32 +121,31 @@
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Race -->
         <v-select
-          required
-          :rules="[v => !!v || 'Race is required']"
           v-model="race"
           :items="raceOptions"
-          label="Race (select all that apply)"
-          prepend-icon="mdi-menu-right">
+          prepend-icon="mdi-blank"
+          required
+          :rules="[v => !!v || 'Race is required']">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Race
           </template>
-		</v-select>
+        </v-select>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Ethnicity -->
         <v-select
-          required
-          :rules="[v => !!v || 'Ethnicity is required']"
           v-model="ethnicity"
           :items="ethnicityOptions"
-          label="Ethnicity">
+          prepend-icon="mdi-blank"
+          required
+          :rules="[v => !!v || 'Ethnicity is required']">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
           </template>
-		</v-select>
+        </v-select>
       </v-col>
     </v-row>
-    <v-row align="left" justify="start">
+    <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Current Photo -->
         <!-- the "rules" checks that the image size is less than 2 MB -->
@@ -263,11 +266,11 @@ export default {
         message += " First Name";
         valid = false;
       }
-      if (this.birthDate == null) {
+      if (this.birthDate == "") {
         if (!valid) {
           message += ",";
         }
-        message += " Date of birth";
+        message += " Date of Birth";
         valid = false;
       }
       if (this.gender == "") {
@@ -283,26 +286,21 @@ export default {
         }
         message += " Relationship";
         valid = false;
-		}
-	
-		if (this.race == "")
-		{
-			if (!valid) {
-			message += ",";
-			}
-			message+= " Race"
-			valid = false
-		}
-	if (this.ethnicity == "")
-	{
-		if (!valid) {
-		message += ",";
-			}
-		message += " Ethnicity"
-		valid = false
-		
-	}
-
+      }
+      if (this.race == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message+= " Race"
+        valid = false
+      }
+      if (this.ethnicity == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message += " Ethnicity"
+        valid = false
+      }
       if (this.patientPhoto && this.patientPhoto.size > 2097152) {
         if (!valid) {
           message += "\n";
@@ -321,8 +319,8 @@ export default {
       this.sendHouseholdPersonalInfoDataToReviewPage();
       return true;
     },
-    setHouseholdFamilyName(householdFamilyName) {
-      this.householdFamilyName = householdFamilyName;
+    setHouseholdFamilyName(familyName) {
+      this.familyName = familyName;
     },
   },
   computed: {
