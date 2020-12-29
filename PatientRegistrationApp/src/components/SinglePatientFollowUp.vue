@@ -3,7 +3,7 @@
 
 
     <v-row justify="center">
-    <v-col class="d-flex" cols="6" sm="6">
+    <v-col class="d-flex" cols="10" sm="8" md="6" lg="6">
   <v-text-field
       v-model="qrText"
       clearable
@@ -55,7 +55,7 @@
   <div class="font-weight-medium"><br><br>How do you want to receive this QR code?</div>
 </v-row>
 <v-row justify="center">
-  <v-col cols="3" sm="3" md="3">
+  <v-col cols="8" sm="4" md="3" lg="3">
   <v-radio-group class="font-weight-medium">
       <v-radio label="E-mail"></v-radio>
       <v-radio label="SMS Message"></v-radio>
