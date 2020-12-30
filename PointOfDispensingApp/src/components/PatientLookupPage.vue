@@ -130,11 +130,31 @@
         this.selectedFamilyName=item.familyName
         this.selectedGivenName=item.givenName
         this.selectedDOB=item.DOB
+        this.selectedLineAddress=item.lineAddress
+        this.selectedCity=item.city
+        this.selectedPostalCode=item.postalCode
       },
       retrievePatientRecord()
       {
         alert(this.selectedFamilyName + ', ' + this.selectedGivenName + ', ' + this.selectedDOB)
-        this.$store.dispatch('patientRecordRetrieved')
+        // To do:  call API to fetch patient record
+        // Once returned, call the function below (may need to pass in the payload):
+        this.patientRecordRetrieved()
+      },
+      patientRecordRetrieved()
+      {
+        //the following is sending dummy data until we have the API in place
+        const patientResourcePayload = {
+          patientId:'1234567890',
+          patientLastName: this.selectedFamilyName,
+          patientFirstName: this.selectedGivenName,
+          patientDateOfBirth: this.selectedDOB,
+          patientGender: 'Male',
+          patientStreetAddress: this.selectedLineAddress + ', ' + this.selectedCity + ", WI, " + this.selectedPostalCode,
+          patientPreferredLanguage: 'English'
+        }
+        //send data to Vuex
+        this.$store.dispatch('patientRecordRetrieved', patientResourcePayload)
       },
       scanQrCode()
       {
@@ -147,13 +167,13 @@
     },
     data () {
 	return {
-		patientFamilyName: '',
-		patientGivenName: '',
-    patientDate: '',
-    selectedId: -1,
+		selectedId: -1,
     selectedFamilyName: '',
     selectedGivenName: '',
     selectedDOB: '',
+    selectedLineAddress: '',
+    selectedCity: '',
+    selectedPostalCode: '',
 
 		headers: [
           {
