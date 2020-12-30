@@ -1,5 +1,6 @@
 <template>
 	<div ref="content"><v-container fluid> 
+
     <v-row justify="center">
     <v-col class="d-flex" cols="10" sm="8" md="6" lg="6">
   <v-text-field
@@ -65,10 +66,7 @@
     Send
   </v-btn>
 </v-row>
-
-		
-
-	</v-container>
+	</v-container></div>
 </template>
 
 <script>
