@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <p>Patient workflow state is: {{ workflowState }}</p>
     <v-row>
       <v-col cols="3">
         <v-img 
@@ -93,6 +94,11 @@
 <script>
   export default {
     name: 'PatientInfoComponent',
+    computed: {
+      workflowState () {
+        return this.$store.state.workflowState
+      }
+    },
     methods: 
     {
     },

@@ -15,7 +15,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent">
+        <v-btn color="accent" @click="scanQrCode()">
           Scan QR code
         </v-btn>
       </v-col>
@@ -134,6 +134,12 @@
       retrievePatientRecord()
       {
         alert(this.selectedFamilyName + ', ' + this.selectedGivenName + ', ' + this.selectedDOB)
+        this.$store.dispatch('patientRecordRetrieved')
+      },
+      scanQrCode()
+      {
+        //need logic for scanning QR code
+        this.$store.dispatch('patientRecordRetrieved')
       }
     },
     components: 

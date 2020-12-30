@@ -187,7 +187,7 @@
 	
 	<v-card>
 		<v-card-title class="headline grey lighten-2 justify-center"> 
-		Are you sure you want to submit?
+      Are you sure you want to submit?
 		</v-card-title>
 		
 		<v-card-actions>
@@ -222,6 +222,7 @@
       submitVaccinationRecord() {
         this.dialog = false;
         this.$router.push("Discharge")
+        this.$store.dispatch('vaccinationComplete')
       }
     },
     components: 

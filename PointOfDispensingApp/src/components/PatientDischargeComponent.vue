@@ -34,7 +34,7 @@
       <v-col cols="2">
       </v-col>    
       <v-col cols="6">
-        <v-btn block color="accent">
+        <v-btn block color="accent" @click="endEncounter()">
           End encounter
         </v-btn>
       </v-col>
@@ -71,6 +71,9 @@
     name: 'PatientDischargeComponent',
     methods: 
     {
+      endEncounter() {
+        this.$store.dispatch('patientDischarged')
+      }
     },
     components: 
     {
