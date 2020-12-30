@@ -15,6 +15,14 @@ export default new Vuex.Store({
             patientGender: '',
             patientStreetAddress: '',
             patientPreferredLanguage: ''
+        },
+        locationResource: {
+            locationId: '1234567890',
+            locationName: 'Western Lakes FD'
+        },
+        encounterResource: {
+            encounterStatus: '',
+            encounterTimeStamp: ''
         }
     },
 
@@ -32,9 +40,16 @@ export default new Vuex.Store({
             state.patientResource.patientGender = patientResourcePayload.patientGender
             state.patientResource.patientStreetAddress = patientResourcePayload.patientStreetAddress
             state.patientResource.patientPreferredLanguage = patientResourcePayload.patientPreferredLanguage
+
+            //reset patient-specific data
+            state.workflowState = 'INITIAL'
+            state.encounterResource.encounterStatus = ''
+            state.encounterResource.encounterTimeStamp = ''
         },
-        patientAdmitted(state) {
+        patientAdmitted(state, encounterResourcePayload) {
             state.workflowState = 'ADMITTED'
+            state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
+            state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
         },
         vaccinationComplete(state) {
             state.workflowState = 'VACCINATION_COMPLETE'
@@ -49,8 +64,8 @@ export default new Vuex.Store({
         patientRecordRetrieved(context, patientResourcePayload) {
             context.commit('patientRecordRetrieved', patientResourcePayload)
         },
-        patientAdmitted(context) {
-            context.commit('patientAdmitted')
+        patientAdmitted(context, encounterResourcePayload) {
+            context.commit('patientAdmitted', encounterResourcePayload)
         },
         vaccinationComplete(context) {
             context.commit('vaccinationComplete')
