@@ -86,6 +86,7 @@ import VueQrcode from 'vue-qrcode';
 			} else if (householdMemberNumber-1 < this.dataHouseholdPersonalInfo.length) {
 				this.$set(this.dataHouseholdPersonalInfo, householdMemberNumber-1, householdPersonalInfoPayload);
 			}
+			this.qrValue = this.dataHouseholdPersonalInfo[0].familyName + ", " + this.dataHouseholdPersonalInfo[0].givenName + " " + this.dataHouseholdPersonalInfo[0].middleName + " " + this.dataHouseholdPersonalInfo[0].suffix
 		},
 		getNumberOfHouseholdMembers()
 		{
