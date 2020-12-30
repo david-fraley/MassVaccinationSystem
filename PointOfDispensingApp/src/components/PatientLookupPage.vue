@@ -136,7 +136,6 @@
       },
       retrievePatientRecord()
       {
-        alert(this.selectedFamilyName + ', ' + this.selectedGivenName + ', ' + this.selectedDOB)
         // To do:  call API to fetch patient record
         // Once returned, call the function below (may need to pass in the payload):
         this.patientRecordRetrieved()
@@ -155,11 +154,27 @@
         }
         //send data to Vuex
         this.$store.dispatch('patientRecordRetrieved', patientResourcePayload)
+
+        //Advance to the Check In page
+        this.$router.push("CheckIn")
       },
       scanQrCode()
       {
-        //need logic for scanning QR code
-        this.$store.dispatch('patientRecordRetrieved')
+        //the following is sending dummy data until we have the API in place
+        const patientResourcePayload = {
+          patientId:'1234567890',
+          patientLastName: 'Frayley',
+          patientFirstName: 'David',
+          patientDateOfBirth: '01/01/1950',
+          patientGender: 'Male',
+          patientStreetAddress: '1234 Main Street, Waukesha, WI, 53072',
+          patientPreferredLanguage: 'English'
+        }
+        //send data to Vuex
+        this.$store.dispatch('patientRecordRetrieved', patientResourcePayload)
+
+        //Advance to the Check In page
+        this.$router.push("CheckIn")
       }
     },
     components: 
