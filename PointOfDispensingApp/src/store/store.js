@@ -54,8 +54,10 @@ export default new Vuex.Store({
         vaccinationComplete(state) {
             state.workflowState = 'VACCINATION_COMPLETE'
         },
-        patientDischarged(state) {
+        patientDischarged(state, encounterResourcePayload) {
             state.workflowState = 'DISCHARGED'
+            state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
+            state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
         },
 
     },
@@ -70,8 +72,8 @@ export default new Vuex.Store({
         vaccinationComplete(context) {
             context.commit('vaccinationComplete')
         },
-        patientDischarged(context) {
-            context.commit('patientDischarged')
+        patientDischarged(context, encounterResourcePayload) {
+            context.commit('patientDischarged', encounterResourcePayload)
         },
 
     }

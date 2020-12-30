@@ -21,12 +21,12 @@
       </v-col>
       <v-col cols="3">
         <v-text-field filled dense readonly
-          value="encounter status"
+          :value=encounterStatus
         ></v-text-field>
       </v-col>
       <v-col cols="3">
         <v-text-field filled dense readonly
-          value="2020-07-20 14:23:47"
+          :value=encounterTimeStamp
         ></v-text-field>
       </v-col>
     </v-row>
@@ -69,10 +69,25 @@
 <script>
   export default {
     name: 'PatientDischargeComponent',
+    computed:
+    {
+      encounterStatus() {
+        return this.$store.state.encounterResource.encounterStatus
+      },
+      encounterTimeStamp() {
+        return this.$store.state.encounterResource.encounterTimeStamp
+      },
+    },
     methods: 
     {
       endEncounter() {
-        this.$store.dispatch('patientDischarged')
+        //the following is sending dummy data until we have the API in place
+        const encounterResourcePayload = {
+          encounterStatus:'Finished',
+          encounterTimeStamp: new Date().toISOString(),
+        }
+        //send data to Vuex
+        this.$store.dispatch('patientDischarged', encounterResourcePayload)
       }
     },
     components: 
