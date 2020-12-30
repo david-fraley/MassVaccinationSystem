@@ -26,7 +26,6 @@ import PatientInfoComponent from './PatientInfoComponent';
 import VaccinationScreeningComponent from './VaccinationScreeningComponent';
 import VaccinationProceedComponent from './VaccinationProceedComponent';
 import VaccinationCanceledComponent from './VaccinationCanceledComponent';
-import config from '../../config.js';
 
   export default {
     name: 'VaccinationEventPage',
@@ -34,16 +33,16 @@ import config from '../../config.js';
     {
       setVaccinationProceedDecision(decision)
       {
-        decision ? (this.vaccinationProceedDecision = config.vaccinationDecisionState.VACCINATION_PROCEED_YES) :
-        (this.vaccinationProceedDecision = config.vaccinationDecisionState.VACCINATION_PROCEED_NO);
+        decision ? (this.vaccinationProceedDecision = 'Yes') :
+        (this.vaccinationProceedDecision = 'No');
       },
       wasDecisionMadeToProceed()
       {
-        return (this.vaccinationProceedDecision == config.vaccinationDecisionState.VACCINATION_PROCEED_YES)
+        return (this.vaccinationProceedDecision=='Yes')
       },
       wasDecisionMadeToCancel()
       {
-        return (this.vaccinationProceedDecision == config.vaccinationDecisionState.VACCINATION_PROCEED_NO)
+        return (this.vaccinationProceedDecision=='No')
       }
     },
     components: 
@@ -55,7 +54,7 @@ import config from '../../config.js';
     },
     data () {
       return {
-        vaccinationProceedDecision: config.vaccinationDecisionState.UNDETERMINED
+        vaccinationProceedDecision: this.$store.state.screeningResponses.vaccinationDecision
       }
     }
   }
