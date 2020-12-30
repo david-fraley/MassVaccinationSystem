@@ -1,5 +1,5 @@
 <template>
-  <v-container> 
+  <v-container fluid> 
     <v-row align="center" justify="start">
       <!-- Last name -->
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -7,7 +7,7 @@
           required
           :rules="[v => !!v || 'Last name field is required']"
           v-model="familyName"
-          prepend-icon="mdi-menu-right">
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Last Name
           </template>
@@ -18,7 +18,8 @@
         <v-text-field 
           required
           :rules="[v => !!v || 'First name field is required']"
-          v-model="givenName">
+          v-model="givenName"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>First Name
           </template>
@@ -28,16 +29,18 @@
       <v-col cols="12" sm="6" md="6" lg="3">
         <v-text-field 
           v-model="middleName"
-          label="Middle Name">
+          label="Middle Name"
+          prepend-icon="mdi-blank">
         </v-text-field>
       </v-col>
       <!-- Suffix -->
       <v-col cols="12" sm="6" md="6" lg="1">
-        <v-text-field 
+        <v-select 
           label="Suffix" 
-          id="suffix" 
-          v-model="suffix">
-        </v-text-field>
+          :items="suffixOptions" 
+          v-model="suffix"
+          prepend-icon="mdi-blank">
+        </v-select>
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
@@ -78,7 +81,8 @@
           :items="genderIdOptions"
           required
           :rules="[v => !!v || 'Gender identity field is required']"
-          v-model="gender">
+          v-model="gender"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Gender Identity
           </template>
@@ -89,29 +93,28 @@
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Race -->
         <v-select
-          required
-          :rules="[v => !!v || 'Race is required']"
           v-model="race"
           :items="raceOptions"
-          label="Race (select all that apply)"
-          prepend-icon="mdi-menu-right">
+          required
+          :rules="[v => !!v || 'Race is required']"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Race
           </template>
-		</v-select>
+        ></v-select>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Ethnicity -->
         <v-select
-          required
-          :rules="[v => !!v || 'Ethnicity is required']"
           v-model="ethnicity"
           :items="ethnicityOptions"
-          label="Ethnicity">
+          required
+          :rules="[v => !!v || 'Ethnicity is required']"
+          prepend-icon="mdi-blank">
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
           </template>
-        </v-select>	
+        ></v-select>
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
@@ -136,6 +139,7 @@ import EventBus from "../eventBus";
 export default {
   data() {
     return {
+      suffixOptions: ["II", "III", "IV", "Jr", "Sr"],
       genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
       raceOptions: [
         "Black or African American",
@@ -208,11 +212,11 @@ export default {
         message += " First Name";
         valid = false;
       }
-      if (this.date == null) {
+      if (this.date == "") {
         if (!valid) {
           message += ",";
         }
-        message += " Date of birth";
+        message += " Date of Birth";
         valid = false;
       }
       if (this.gender == "") {
@@ -232,25 +236,20 @@ export default {
         }
         valid = false;
       }
-	
-	if (this.race == "")
-		{
-			if (!valid) {
-			message += ",";
-			}
-			message+= " Race"
-			valid = false
-		}
-	if (this.ethnicity == "")
-	{
-		if (!valid) {
-		message += ",";
-			}
-		message += " Ethnicity"
-		valid = false
-		
-	}
-
+      if (this.race == "") {
+        if (!valid) {
+          message += ",";
+        }
+        message+= " Race"
+        valid = false
+      }
+      if (this.ethnicity == "") {
+        if (!valid) {
+            message += ",";
+        }
+        message += " Ethnicity"
+        valid = false
+      }
       if (valid == false) {
         alert(message);
         return false;

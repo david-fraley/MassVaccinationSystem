@@ -55,7 +55,7 @@
 			<v-col cols="12">
 				<template v-if="dataContactInfo.patientPhoneNumber != ''">
 					<div class="font-weight-medium">Phone: <span class="font-weight-regular">{{dataContactInfo.patientPhoneNumber}} 
-						({{dataContactInfo.patientPhoneNumberType}})</span></div>
+						<span v-if="dataContactInfo.patientPhoneNumberType != ''">({{dataContactInfo.patientPhoneNumberType}})</span></span></div>
 				</template>
 				<template v-else>
 					<div class="font-weight-medium">Phone: <span class="font-weight-regular">Not provided</span></div>
@@ -80,7 +80,7 @@
 				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactFamilyName}}, 
 					{{dataEmergencyContact.emergencyContactGivenName}}</span></div>
 				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactPhoneNumber}} 
-					({{dataEmergencyContact.emergencyContactPhoneNumberType}})</span></div>
+					<span v-if="dataEmergencyContact.emergencyContactPhoneNumberType != ''">({{dataEmergencyContact.emergencyContactPhoneNumberType}})</span></span></div>
 			</v-col>
 		</v-row>
 		<v-row>

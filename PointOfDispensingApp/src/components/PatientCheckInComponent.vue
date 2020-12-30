@@ -14,11 +14,6 @@
           value="POD name"
         ></v-text-field>
       </v-col>
-      <v-col cols="4">
-        <v-btn color="accent">
-          Change location...
-        </v-btn>
-      </v-col>
     </v-row>
     
     <v-row>

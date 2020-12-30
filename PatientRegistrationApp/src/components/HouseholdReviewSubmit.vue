@@ -11,12 +11,12 @@
 		<v-row>	
 			<v-col cols="12">
 				<div class="font-weight-medium">Address Type:  <span class="font-weight-regular">{{dataHouseholdHomeAddress.addressType}}</span></div>
-				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress1}}</div>
-				<template v-if="dataHouseholdHomeAddress.householdLineAddress2 != ''">
-					<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdLineAddress2}}</div>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.lineAddress1}}</div>
+				<template v-if="dataHouseholdHomeAddress.lineAddress2 != ''">
+					<div class="font-weight-regular">{{dataHouseholdHomeAddress.lineAddress2}}</div>
 				</template>
-				<div class="font-weight-regular">{{dataHouseholdHomeAddress.householdCityAddress}}, {{dataHouseholdHomeAddress.householdStateAddress}}, 
-					{{dataHouseholdHomeAddress.householdCountryAddress}}, {{dataHouseholdHomeAddress.householdPostalCode}}</div>
+				<div class="font-weight-regular">{{dataHouseholdHomeAddress.cityAddress}}, {{dataHouseholdHomeAddress.stateAddress}}, 
+					{{dataHouseholdHomeAddress.countryAddress}}, {{dataHouseholdHomeAddress.postalCode}}</div>
 			</v-col>
 		</v-row>
 
@@ -30,14 +30,14 @@
 			<v-col cols="12">
 				<template v-if="dataHouseholdContactInfo.primaryPhoneNumber != ''">
 					<div class="font-weight-medium">Primary Phone: <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
+						<span v-if="dataHouseholdContactInfo.primaryPhoneNumberType != ''">({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></span></div>
 				</template>
 				<template v-else>
 					<div class="font-weight-medium">Primary Phone: <span class="font-weight-regular">Not provided</span></div>
 				</template>
 				<template v-if="dataHouseholdContactInfo.secondaryPhoneNumber != ''">
 					<div class="font-weight-medium">Secondary Phone: <span class="font-weight-regular">{{dataHouseholdContactInfo.secondaryPhoneNumber}} 
-						({{dataHouseholdContactInfo.secondaryPhoneNumberType}})</span></div>
+						<span v-if="dataHouseholdContactInfo.secondaryPhoneNumberType != ''">({{dataHouseholdContactInfo.secondaryPhoneNumberType}})</span></span></div>
 				</template>
 				<template v-else>
 					<div class="font-weight-medium">Secondary Phone: <span class="font-weight-regular">Not provided</span></div>
@@ -72,16 +72,16 @@
 						<div class="font-weight-medium primary--text">Personal Info: Household Member #1</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
 						{{dataHouseholdPersonalInfo[0].givenName}} {{dataHouseholdPersonalInfo[0].middleName}} {{dataHouseholdPersonalInfo[0].suffix}}</span></div>
-						<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].birthDate}}</span></div>
+						<div class="font-weight-medium">Date of Birth:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].birthDate}}</span></div>
 						<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].gender}}</span></div>
 						<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].race}}</span></div>
 						<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].ethnicity}}</span></div>
 						<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].preferredLanguage}}</span></div>
 						<div class="font-weight-light">Emergency Contact</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactFamilyName}}, 
-						{{dataHouseholdEmergencyContact.householdEmergencyContactGivenName}}</span></div>
-						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumber}} 
-						({{dataHouseholdEmergencyContact.householdEmergencyContactPhoneNumberType}})</span></div>
+						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.emergencyContactFamilyName}}, 
+						{{dataHouseholdEmergencyContact.emergencyContactGivenName}}</span></div>
+						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.emergencyContactPhoneNumber}} 
+						<span v-if="dataHouseholdEmergencyContact.emergencyContactPhoneNumberType != ''">({{dataHouseholdEmergencyContact.emergencyContactPhoneNumberType}})</span></span></div>
 						<v-card-actions>
 							<v-btn outlined small color="primary" @click="editPersonalInfo(1)">
 								Edit
@@ -103,16 +103,16 @@
 							<div class="font-weight-medium primary--text">Personal Info: Household Member #{{index+1}}</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].familyName}}, 
 							{{dataHouseholdPersonalInfo[index].givenName}} {{dataHouseholdPersonalInfo[index].middleName}} {{dataHouseholdPersonalInfo[index].suffix}}</span></div>
-							<div class="font-weight-medium">DOB:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].birthDate}}</span></div>
+							<div class="font-weight-medium">Date of Birth:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].birthDate}}</span></div>
 							<div class="font-weight-medium">Gender ID:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].gender}}</span></div>
 							<div class="font-weight-medium">Race:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].race}}</span></div>
 							<div class="font-weight-medium">Ethnicity:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].ethnicity}}</span></div>
 							<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].preferredLanguage}}</span></div>
-							<div class="font-weight-light primary--text">Emergency Contact</div>
+							<div class="font-weight-light">Emergency Contact</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
 							{{dataHouseholdPersonalInfo[0].givenName}}</span></div>
 							<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
-							({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></div>
+							<span v-if="dataHouseholdContactInfo.primaryPhoneNumberType != ''">({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></span></div>
 							<v-card-actions>
 							<v-btn outlined small color="primary" @click="editPersonalInfo(index+1)">
 								Edit
@@ -140,19 +140,18 @@ import EventBus from '../eventBus'
 			dataHouseholdPersonalInfo: [],
 			dataHouseholdEmergencyContact:
 			{
-				householdEmergencyContactFamilyName: '',
-				householdEmergencyContactGivenName: '',
-				householdEmergencyContactPhoneNumber: '',
-				householdEmergencyContactPhoneNumberType: ''
+				emergencyContactFamilyName: '',
+				emergencyContactGivenName: '',
+				emergencyContactPhoneNumber: '',
+				emergencyContactPhoneNumberType: ''
 			},
 			dataHouseholdHomeAddress:
 			{
-				householdLineAddress: '',
-				householdCityAddress: '',
-				householdDistrictAddress: '',
-				householdStateAddress: '',
-				householdCountryAddress: '',
-				householdPostalCode: ''
+				lineAddress: '',
+				cityAddress: '',
+				stateAddress: '',
+				countryAddress: '',
+				postalCode: ''
 			},	
 			dataHouseholdContactInfo:
 			{
@@ -162,7 +161,6 @@ import EventBus from '../eventBus'
 				secondaryPhoneNumber: '',
 				secondaryPhoneNumberType: '',
 				secondaryEmail: '',
-				approval: ''
 			}
 		}
 	},
