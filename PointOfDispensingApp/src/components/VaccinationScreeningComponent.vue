@@ -136,6 +136,21 @@
 
   export default {
     name: 'VaccinationScreeningComponent',
+    computed:
+    {
+      patientInfoConfirmedResponse() {
+        return this.$store.state.screeningResponses.patientInfoConfirmed
+      },
+      consentFormSignedResponse() {
+        return this.$store.state.screeningResponses.consentFormSigned
+      },
+      screeningCompletedResponse() {
+        return this.$store.state.screeningResponses.screeningCompleted
+      },
+      factSheetProvidedResponse() {
+        return this.$store.state.screeningResponses.factSheetProvided
+      },
+    },
     methods: 
     {
      screeningChecklistUpdate()
@@ -148,6 +163,7 @@
        {
          this.screeningComplete = false
        }
+       this.storeVaccinationScreeningData()
      },
      isScreeningChecklistComplete()
      {
@@ -163,6 +179,20 @@
        {
          this.$emit('VaccinationProceed_No')
        }
+       this.storeVaccinationScreeningData()
+     },
+     storeVaccinationScreeningData()
+     {
+       const screeningResponsesPayload = {
+        vaccinationDecision: this.vaccinationProceed,
+        patientInfoConfirmed: this.patientInfoComfirmed,
+        consentFormSigned: this.consentFormSigned,
+        screeningCompleted: this.screeningCompleted,
+        factSheetProvided: this.factSheetProvided,
+        screeningComplete: this.screeningComplete
+      }
+      //send data to Vuex
+      this.$store.dispatch('vaccinationScreeningUpdate', screeningResponsesPayload)
      }
     },
     components: 
@@ -170,7 +200,12 @@
     },
     data () {
       return {
-        screeningComplete: false
+        vaccinationProceed: this.$store.state.screeningResponses.vaccinationDecision,
+        patientInfoComfirmed: this.$store.state.screeningResponses.patientInfoConfirmed,
+        consentFormSigned: this.$store.state.screeningResponses.consentFormSigned,
+        screeningCompleted: this.$store.state.screeningResponses.screeningCompleted,
+        factSheetProvided: this.$store.state.screeningResponses.factSheetProvided,
+        screeningComplete: this.$store.state.screeningResponses.screeningComplete,
       }
     }
   }

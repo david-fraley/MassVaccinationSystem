@@ -23,6 +23,17 @@ export default new Vuex.Store({
         encounterResource: {
             encounterStatus: '',
             encounterTimeStamp: ''
+        },
+        immunizationResource: {
+
+        },
+        screeningResponses: {
+            vaccinationDecision: '',
+            patientInfoConfirmed: '',
+            consentFormSigned: '',
+            screeningCompleted: '',
+            factSheetProvided: '',
+            screeningComplete: false
         }
     },
 
@@ -51,6 +62,14 @@ export default new Vuex.Store({
             state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
             state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
         },
+        vaccinationScreeningUpdate (state, screeningResponsesPayload) {
+            state.screeningResponses.vaccinationDecision = screeningResponsesPayload.vaccinationDecision
+            state.screeningResponses.patientInfoConfirmed = screeningResponsesPayload.patientInfoConfirmed
+            state.screeningResponses.consentFormSigned = screeningResponsesPayload.consentFormSigned
+            state.screeningResponses.screeningCompleted = screeningResponsesPayload.screeningCompleted
+            state.screeningResponses.factSheetProvided = screeningResponsesPayload.factSheetProvided
+            state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
+        },
         vaccinationComplete(state) {
             state.workflowState = 'VACCINATION_COMPLETE'
         },
@@ -68,6 +87,9 @@ export default new Vuex.Store({
         },
         patientAdmitted(context, encounterResourcePayload) {
             context.commit('patientAdmitted', encounterResourcePayload)
+        },
+        vaccinationScreeningUpdate(context, screeningResponsesPayload) {
+            context.commit('vaccinationScreeningUpdate', screeningResponsesPayload)
         },
         vaccinationComplete(context) {
             context.commit('vaccinationComplete')
