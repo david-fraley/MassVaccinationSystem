@@ -12,11 +12,7 @@
 				<v-card class="d-flex flex-wrap" flat>
 					<v-card class="pa-2" flat min-width=33%>
 						<div class="font-weight-medium primary--text">Household Member #1</div>
-						<div>
-						<vue-qrcode
-							v-bind:value="qrValue"
-							v-bind:errorCorrectionLevel="correctionLevel" />
-						</div>
+						<div> QR Code Placeholder </div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
 						{{dataHouseholdPersonalInfo[0].givenName}} {{dataHouseholdPersonalInfo[0].middleName}} {{dataHouseholdPersonalInfo[0].suffix}}</span></div>
 					</v-card>
@@ -55,6 +51,12 @@
 				Send
 			</v-btn>
 		</v-row>
+		<v-row>
+			<div>
+			<vue-qrcode
+				v-bind:value="qrValue"
+				v-bind:errorCorrectionLevel="correctionLevel" />
+			</div></v-row>
 	</v-container>
 </template>
 
@@ -65,11 +67,11 @@ export default {
 data () {
 	return {
 	dataPersonalInfo:
-	[
+	{
 		familyName: '',
 		givenName: '',
 		suffix: ''
-	],
+	},
 	qrValue : "Shahd",
 	correctionLevel: "H"		
 	}
