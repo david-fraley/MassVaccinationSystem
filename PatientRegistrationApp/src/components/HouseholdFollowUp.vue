@@ -12,7 +12,7 @@
 				<v-card class="d-flex flex-wrap" flat>
 					<v-card class="pa-2" flat min-width=33%>
 						<div class="font-weight-medium primary--text">Household Member #1</div>
-						<div> QR Code Placeholder </div>
+						<div> QR Code Placeholder</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
 						{{dataHouseholdPersonalInfo[0].givenName}} {{dataHouseholdPersonalInfo[0].middleName}} {{dataHouseholdPersonalInfo[0].suffix}}</span></div>
 					</v-card>
@@ -61,24 +61,20 @@
 </template>
 
 <script>
-import EventBus from '../eventBus';
+import EventBus from '../eventBus'
 import VueQrcode from 'vue-qrcode';
-export default {
-data () {
-	return {
-	dataPersonalInfo:
-	{
-		familyName: '',
-		givenName: '',
-		suffix: ''
-	},
-	qrValue : "Shahd",
-	correctionLevel: "H"		
-	}
+
+	export default {
+	data () {
+		return {
+			dataHouseholdPersonalInfo: [],
+			qrValue : "Shahd",
+			correctionLevel: "H"
+		}
 	},
 	props:
 	{
-	numberOfHouseholdMembers: Number
+		numberOfHouseholdMembers: Number
 	},
 	methods:
 	{
