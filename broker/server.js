@@ -104,12 +104,34 @@ app.post("/Encounter", (req, res) => {
     .catch((e) => res.send(e));
 });
 
+// Discharge
+app.get("/discharge", (req, res) => {
+  const encounter_status = "finished";
+  const appt_status = "fulfilled";
+
+  if (req.query.hasOwnProperty("appointment")) {
+    updateEncounterStatus(
+      `?appointment=${req.query.appointment}`,
+      encounter_status,
+      res
+    );
+    updateAppointmentStatus(
+      `/${req.query.appointment}`,
+      appt_status,
+      res
+    );
+    res.send("");
+  } else {
+    res.send("error");
+  }
+});
+
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
 app.get("/check-in", (req, res) => {
   const encounter_status = "arrived";
-  const appointment_status = "arrived";
+  const appt_status = "arrived";
 
   if (req.query.hasOwnProperty("patient")) {
     updateEncounterStatus(
@@ -119,7 +141,7 @@ app.get("/check-in", (req, res) => {
     );
     updateAppointmentStatus(
       `?actor=${req.query.patient}&status=booked`,
-      appointment_status,
+      appt_status,
       res
     );
     res.send("");
@@ -131,7 +153,7 @@ app.get("/check-in", (req, res) => {
     );
     updateAppointmentStatus(
       `/${req.query.appointment}`,
-      appointment_status,
+      appt_status,
       res
     );
     res.send("");
