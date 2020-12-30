@@ -17,7 +17,7 @@ const generalEndpoints = [
   "/Observation*",
   "/Organization*",
   "/Appointment*",
-  "/Immunization*"
+  "/Immunization*",
 ];
 const headers = {
   "content-type": "application/fhir+json",
@@ -41,16 +41,21 @@ app.get(generalEndpoints, (req, res) => {
 
 app.post("/Immunization", (req, res) => {
   let imm = req.body.Immunization;
+  postImmunization(imm).then((response) => {
+    res.json(response);
+  });
+});
+
+async function postImmunization(imm) {
   let resource = Immunization.toFHIR(imm);
 
   // post resource
-  axios
+  return axios
     .post(`${base}/Immunization`, resource, headers)
     .then((response) => {
-      res.json(response.data);
-    })
-    .catch((e) => res.send(e));
-});
+      return response.data;
+    });
+}
 
 app.post("/Appointment", (req, res) => {
   let appt = req.body.Appointment;
@@ -80,16 +85,21 @@ app.post("/Organization", (req, res) => {
 
 app.post("/Observation", (req, res) => {
   let observation = req.body.Observation;
+  postObservation(observation).then((response) => {
+    res.json(response);
+  });
+});
+
+async function postObservation(observation) {
   let resource = Observation.toFHIR(observation);
 
   // post resource
-  axios
+  return axios
     .post(`${base}/Observation`, resource, headers)
     .then((response) => {
-      res.json(response.data);
-    })
-    .catch((e) => res.send(e));
-});
+      return response.data;
+    });
+}
 
 app.post("/Encounter", (req, res) => {
   let encounter = req.body.Encounter;
@@ -102,6 +112,39 @@ app.post("/Encounter", (req, res) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
+});
+
+app.post("/submit-vaccination", (req, res) => {
+  let imm = req.body.Immunization;
+  let obs = req.body.Observation;
+  let response = {
+    Immunization: "",
+    Observation: "",
+  };
+
+  // post resource
+  postImmunization(imm)
+    .then((imm_res) => {
+      response.Immunization = imm_res;
+
+      obs.partOf = `Immunization/${imm_res.id}`;
+      postObservation(obs)
+        .then((obs_res) => {
+          response.Observation = obs_res;
+
+          res.status(201).json(response);
+        })
+        .catch((e) => {
+          response.Observation = e.response ? e.response.data : e.message;
+
+          res.status(400).json(response);
+        });
+    })
+    .catch((e) => {
+      response.Immunization = e.response ? e.response.data : e.message;
+
+      res.status(400).json(response);
+    });
 });
 
 // Check-in given either
