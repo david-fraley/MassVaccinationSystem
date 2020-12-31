@@ -49,7 +49,24 @@ export default new Vuex.Store({
     },
 
     getters: {
-
+        isCheckInPageDisabled: state => {
+            return (state.workflowState == 'INITIAL')
+        },
+        isPatientHistoryPageDisabled: state => {
+            return (state.workflowState == 'INITIAL')
+        },
+        isVaccinationEventPageDisabled: state => {
+            return ((state.workflowState == 'INITIAL') || (state.workflowState == 'RECORD_RETRIEVED'))
+        },
+        isAdverseReactionPageDisabled: state => {
+            return ((state.workflowState != 'VACCINATION_COMPLETE') && (state.workflowState != 'DISCHARGED'))
+        },
+        isDischargePageDisabled: state => {
+            return ((state.workflowState == 'INITIAL') || (state.workflowState == 'RECORD_RETRIEVED'))
+        },
+        isConfigurationPageDisabled: state => {
+            return ((state.workflowState != 'INITIAL') && (state.workflowState != 'DISCHARGED'))
+        },
     },
 
     mutations: {
@@ -64,7 +81,6 @@ export default new Vuex.Store({
             state.patientResource.patientPreferredLanguage = patientResourcePayload.patientPreferredLanguage
 
             //reset patient-specific data
-            state.workflowState = 'INITIAL'
             state.encounterResource.encounterStatus = ''
             state.encounterResource.encounterTimeStamp = ''
             state.immunizationResource.lotNumber = '',
