@@ -9,7 +9,6 @@
         </v-img>
         <div class="font-weight-medium">Patient ID:  <span class="font-weight-regular">{{patientId}}</span></div>
       </v-col>
-
       <v-col cols="9">
         <v-row no-gutters>
           <v-col cols="2">

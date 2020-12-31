@@ -30,7 +30,6 @@
         <div class="font-weight-medium secondary--text">If the QR code is not available, search for the patient record by name and/or DOB.</div>
       </v-col>
     </v-row>
-
     <v-row>
       <v-col cols="5">
         <v-row no-gutters>
@@ -92,21 +91,20 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-		<template>
-		<v-data-table
-      @click:row="rowClick"
-      item-key="id"
-      single-select
-			:headers="headers"
-			:items="patientLookupTable"
-			class="elevation-1"
-			:footer-props="{
-				'items-per-page-options':[5]
-			}"
-			:items-per-page="5"
-    ></v-data-table>
-		</template>
-		
+        <template>
+          <v-data-table
+            @click:row="rowClick"
+            item-key="id"
+            single-select
+            :headers="headers"
+            :items="patientLookupTable"
+            class="elevation-1"
+            :footer-props="{
+              'items-per-page-options':[5]
+            }"
+            :items-per-page="5"
+          ></v-data-table>
+        </template>
       </v-col>
     </v-row>
     <v-row>
