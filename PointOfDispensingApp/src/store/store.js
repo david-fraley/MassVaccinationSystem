@@ -25,7 +25,18 @@ export default new Vuex.Store({
             encounterTimeStamp: ''
         },
         immunizationResource: {
-
+            lotNumber: 'CR123',
+            expirationDate: '12/12/9999',
+            manufacturer: 'Pfizer',
+            doseQuantity: '',
+            doseNumber: '',
+            immunizationStatus: '',
+            immunizationTimeStamp: '',
+            healthcarePractitioner: 'White, Betty',
+            site: '',
+            route: 'Injection',
+            notes: '',
+            notAdministeredReason: ''
         },
         screeningResponses: {
             vaccinationDecision: '',
@@ -70,8 +81,23 @@ export default new Vuex.Store({
             state.screeningResponses.factSheetProvided = screeningResponsesPayload.factSheetProvided
             state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
         },
-        vaccinationComplete(state) {
+        vaccinationComplete(state, vaccinationCompletePlayload) {
             state.workflowState = 'VACCINATION_COMPLETE'
+            state.immunizationResource.lotNumber= vaccinationCompletePlayload.lotNumber,
+            state.immunizationResource.expirationDate= vaccinationCompletePlayload.expirationDate,
+            state.immunizationResource.manufacturer= vaccinationCompletePlayload.manufacturer,
+            state.immunizationResource.doseQuantity= vaccinationCompletePlayload.doseQuantity,
+            state.immunizationResource.doseNumber= vaccinationCompletePlayload.doseNumber,
+            state.immunizationResource.site= vaccinationCompletePlayload.site,
+            state.immunizationResource.route= vaccinationCompletePlayload.route,
+            state.immunizationResource.immunizationStatus= vaccinationCompletePlayload.immunizationStatus,
+            state.immunizationResource.immunizationTimeStamp= vaccinationCompletePlayload.immunizationTimeStamp,
+            state.immunizationResource.healthcarePractitioner= vaccinationCompletePlayload.healthcarePractitioner,
+            state.immunizationResource.notes= vaccinationCompletePlayload.notes
+        },
+        vaccinationCanceled(state, vaccinationCanceledPlayload) {
+            state.workflowState = 'VACCINATION_COMPLETE'
+            vaccinationCanceledPlayload
         },
         patientDischarged(state, encounterResourcePayload) {
             state.workflowState = 'DISCHARGED'
@@ -91,8 +117,11 @@ export default new Vuex.Store({
         vaccinationScreeningUpdate(context, screeningResponsesPayload) {
             context.commit('vaccinationScreeningUpdate', screeningResponsesPayload)
         },
-        vaccinationComplete(context) {
-            context.commit('vaccinationComplete')
+        vaccinationComplete(context, vaccinationCompletePlayload) {
+            context.commit('vaccinationComplete', vaccinationCompletePlayload)
+        },
+        vaccinationCanceled(context, vaccinationCanceledPlayload) {
+            context.commit('vaccinationCanceled', vaccinationCanceledPlayload)
         },
         patientDischarged(context, encounterResourcePayload) {
             context.commit('patientDischarged', encounterResourcePayload)
