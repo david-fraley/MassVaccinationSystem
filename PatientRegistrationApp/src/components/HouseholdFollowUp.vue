@@ -10,27 +10,17 @@
 		<v-row justify="center">	
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
-					<v-card class="pa-2" flat min-width=33%>
-						<div class="font-weight-medium primary--text">Household Member #1</div>
-						<v-row><div>
-						<vue-qrcode
-							v-bind:value="qrValue"
-							v-bind:errorCorrectionLevel="correctionLevel" />
-						</div></v-row>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
-						{{dataHouseholdPersonalInfo[0].givenName}} {{dataHouseholdPersonalInfo[0].middleName}} {{dataHouseholdPersonalInfo[0].suffix}}</span></div>
-					</v-card>
-				<template v-for="index in getNumberOfHouseholdMembers()-1">
+				<template v-for="index in getNumberOfHouseholdMembers()">
 						<v-card class="pa-2" flat min-width=33%
 						:key="index">
-							<div class="font-weight-medium primary--text">Household Member #{{index+1}}</div>
+							<div class="font-weight-medium primary--text">Household Member #{{index}}</div>
 							<v-row><div>
 							<vue-qrcode
-								v-bind:value="qrValue"
+								v-bind:value="toQRValue(dataHouseholdPersonalInfo[index-1])"
 								v-bind:errorCorrectionLevel="correctionLevel" />
 							</div></v-row>
-							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].familyName}}, 
-							{{dataHouseholdPersonalInfo[index].givenName}} {{dataHouseholdPersonalInfo[index].middleName}} {{dataHouseholdPersonalInfo[index].suffix}}</span></div>
+							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index-1].familyName}}, 
+							{{dataHouseholdPersonalInfo[index-1].givenName}} {{dataHouseholdPersonalInfo[index-1].middleName}} {{dataHouseholdPersonalInfo[index-1].suffix}}</span></div>
 						</v-card>
 					</template>
 				</v-card>
@@ -93,6 +83,10 @@ import VueQrcode from 'vue-qrcode';
 		getNumberOfHouseholdMembers()
 		{
 			return this.numberOfHouseholdMembers;
+		},
+		toQRValue(member) {
+			const value = member.familyName;
+			return value;
 		}
 	},
 	components:{
