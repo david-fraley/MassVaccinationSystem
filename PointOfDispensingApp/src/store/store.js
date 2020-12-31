@@ -96,8 +96,12 @@ export default new Vuex.Store({
             state.immunizationResource.notes= vaccinationCompletePlayload.notes
         },
         vaccinationCanceled(state, vaccinationCanceledPlayload) {
-            state.workflowState = 'VACCINATION_COMPLETE'
-            vaccinationCanceledPlayload
+            state.workflowState = 'VACCINATION_CANCELED'
+            state.immunizationResource.immunizationStatus= vaccinationCanceledPlayload.immunizationStatus
+            state.immunizationResource.immunizationTimeStamp= vaccinationCanceledPlayload.immunizationTimeStamp
+            state.immunizationResource.healthcarePractitioner= vaccinationCanceledPlayload.healthcarePractitioner
+            state.immunizationResource.notAdministeredReason= vaccinationCanceledPlayload.notAdministeredReason
+            state.immunizationResource.notes= vaccinationCanceledPlayload.notes
         },
         patientDischarged(state, encounterResourcePayload) {
             state.workflowState = 'DISCHARGED'

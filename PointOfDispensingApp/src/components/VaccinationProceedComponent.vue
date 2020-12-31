@@ -175,8 +175,8 @@
       <v-col cols="6">
         <v-btn block color="accent" v-bind="attrs" v-on="on">
           Submit vaccination record
-	      </v-btn>
-	    </v-col>
+        </v-btn>
+      </v-col>
 	</template>
 	
 	<v-card>
