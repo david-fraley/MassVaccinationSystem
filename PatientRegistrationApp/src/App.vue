@@ -172,7 +172,7 @@
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap">QR Code Page</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><HouseholdFollowUp/></v-card>
+									<v-card flat><HouseholdFollowUp v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
 							</template>
 						</v-stepper-items>
