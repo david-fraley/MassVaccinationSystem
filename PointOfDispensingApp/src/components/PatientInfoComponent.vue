@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <p>WorkflowState is: {{workflowState}}</p>
     <v-row>
       <v-col cols="3">
         <v-img 
@@ -108,10 +107,6 @@
       patientPreferredLanguage() {
         return this.$store.state.patientResource.patientPreferredLanguage
       },
-      workflowState()
-      {
-        return this.$store.state.workflowState
-      }
     },
     methods: 
     {
