@@ -1,41 +1,12 @@
 <template>
 	<v-container fluid>
 
-
     <v-row justify="center">
-    <v-col class="d-flex" cols="10" sm="8" md="6" lg="6">
-  <v-text-field
-      v-model="qrText"
-      clearable
-      counter
-      filled
-      label="Type some text here"
-      @input="generateQrCode"
-    ></v-text-field>
-    </v-col></v-row>
-
-    <v-row justify="center">
-<div class="justify-center" v-if="qrSrc">
-  <img class="preview" :src="qrSrc"> </div>
-    </v-row>
-
-    <v-row>
-    <v-btn
-      color="accent"
-      :disabled="!qrSrc"
-      @click="reset"
-    >
-    Reset
-    </v-btn>
-    <v-spacer></v-spacer>
-    <v-btn
-    color="primary"
-      :disabled="!qrSrc"
-      @click="openInNewWindow"
-    >
-    Open 
-    </v-btn>
-    </v-row>
+      <div>
+				<vue-qrcode
+					v-bind:value="qrValue"
+					v-bind:errorCorrectionLevel="correctionLevel" />
+			</div></v-row>
 
      <v-row justify="center">
       <div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
@@ -48,8 +19,6 @@
 								Download
 			</v-btn>
     </v-row>
-    
- 
 
 <v-row justify="center">
   <div class="font-weight-medium"><br><br>How do you want to receive this QR code?</div>
@@ -70,14 +39,12 @@
   </v-btn>
 </v-row>
 
-		
-
-	</v-container>
+</v-container>
 </template>
 
 <script>
-import EventBus from '../eventBus'
-import qrCode from 'qrcode'
+import EventBus from '../eventBus';
+import VueQrcode from 'vue-qrcode';
 
 export default {
   name: "SinglePatientFollowUp",
@@ -89,8 +56,7 @@ export default {
 				givenName: '',
         suffix: ''
       },
-      qrText: '',
-      qrSrc: null
+      correctionLevel: "H"
     };
   },
   beforeDestroy (){
@@ -98,9 +64,10 @@ export default {
   },
   methods: {
     updatePersonalInfoData(personalInfoPayload) {
-      this.dataPersonalInfo = personalInfoPayload
-    },
-    createObjectUrl (err, canvas) {
+      this.dataPersonalInfo = personalInfoPayload;
+      this.qrValue = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix
+    }
+    /*createObjectUrl (err, canvas) {
       if (!err) {
         canvas.toBlob((blob) => {
           this.qrSrc = window.URL.createObjectURL(blob)
@@ -108,22 +75,12 @@ export default {
       } else {
         console.warn('generateQrCode:ERROR', err)
       }
-    },
-    generateQrCode () {
-      if (!this.qrText) { return }
+    },*/
 
-      window.URL.revokeObjectURL(this.qrSrc)
-      qrCode.toCanvas(this.qrText, {}, this.createObjectUrl)
-    },
-    openInNewWindow () {
-      window.open(this.qrSrc)
-    },
-    reset () {
-      window.URL.revokeObjectURL(this.qrSrc)
-      this.qrSrc = null
-      this.qrText = ''
-    }
 },
+  components:{
+		VueQrcode
+	},
   mounted() {
 		EventBus.$on('DATA_PERSONAL_INFO_PUBLISHED', (personalInfoPayload) => {
 			this.updatePersonalInfoData(personalInfoPayload)
