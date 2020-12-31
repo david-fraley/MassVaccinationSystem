@@ -1,7 +1,8 @@
 <template>
 	<v-container fluid>
-		<v-row align="center" justify="center">
-		</v-row>
+		<v-row align="center" justify="start">
+      <v-col cols="12">
+      <div class="font-weight-regular">Use these QR codes to easily check-in at the site where you receive your vaccine. This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.</div></v-col></v-row>
 		<v-row justify="center">
 			<v-btn color="secondary" class="ma-2 white--text">
 				Download All

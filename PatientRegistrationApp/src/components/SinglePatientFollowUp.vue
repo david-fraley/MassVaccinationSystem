@@ -1,6 +1,9 @@
 <template>
 	<v-container fluid>
 
+    <v-row align="center" justify="start">
+      <v-col cols="12">
+      <div class="font-weight-regular">Use this QR code to easily check-in at the site where you receive your vaccine. This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.</div></v-col></v-row> 
     <v-row justify="center">
       <div>
 				<vue-qrcode
@@ -67,16 +70,6 @@ export default {
       this.dataPersonalInfo = personalInfoPayload;
       this.qrValue = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix
     }
-    /*createObjectUrl (err, canvas) {
-      if (!err) {
-        canvas.toBlob((blob) => {
-          this.qrSrc = window.URL.createObjectURL(blob)
-        })
-      } else {
-        console.warn('generateQrCode:ERROR', err)
-      }
-    },*/
-
 },
   components:{
 		VueQrcode
