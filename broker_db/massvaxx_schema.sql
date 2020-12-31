@@ -30,7 +30,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON massvaxx.users TO massvaxx_role;
 
 CREATE TABLE massvaxx.patient_ids (
 	patient_id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    assigner varchar(256) NOT NULL
+    assigner varchar(256) NOT NULL,
+	start date NOT NULL DEFAULT NOW()
 );
 
 ALTER TABLE massvaxx.patient_ids OWNER TO massvaxxadmin;
