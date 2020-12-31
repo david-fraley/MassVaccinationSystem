@@ -6,8 +6,9 @@ const dbConfigs = require('../config/database');
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize(dbConfigs.dbName, dbConfigs.username, dbConfigs.password, {
+  dialect: dbConfigs.dialect,
   host: dbConfigs.host,
-  dialect: dbConfigs.dialect
+  logging: false
 });
 
 const db = {};
@@ -18,10 +19,11 @@ db.sequelize = sequelize;
 db.patient_ids = require('../models_massvaxx/patient_ids.js')(sequelize, Sequelize);
 db.qr_codes = require('../models_massvaxx/qr_codes.js')(sequelize, Sequelize);
 
-db.patient_ids.hasMany(db.qr_codes, { as: 'qr_codes'});
-db.qr_codes.belongsTo(db.patient_ids, {
-    foreignKey: 'patient_id',
-    as: 'patient_ids'
-});
+// +TODO+ Add in 1:N relationship
+//db.patient_ids.hasMany(db.qr_codes, { as: 'qr_codes'});
+//db.qr_codes.belongsTo(db.patient_ids, {
+//    foreignKey: 'patient_id',
+//    as: 'patient_ids'
+//});
 
 module.exports = db;
