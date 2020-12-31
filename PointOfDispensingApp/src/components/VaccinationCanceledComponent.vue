@@ -47,6 +47,7 @@
           outlined
           rows="4"
           :value=notes
+          v-model="notes"
         ></v-textarea>
       </v-col>
     </v-row>
@@ -72,9 +73,6 @@
       },
       healthcarePractitioner() {
         return this.$store.state.immunizationResource.healthcarePractitioner
-      },
-      notes() {
-        return this.$store.state.immunizationResource.notes
       }
     },
     methods: 
@@ -106,6 +104,7 @@
         dialog: false,
         vaccineNotAdministeredOptions: ['Medical precaution', 'Immune', 'Out of Stock', 'Patient Objection'],
         notAdministeredReason: this.$store.state.immunizationResource.notAdministeredReason,
+        notes: this.$store.state.immunizationResource.notes,
       }
     }
   }

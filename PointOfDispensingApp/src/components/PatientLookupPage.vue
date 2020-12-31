@@ -163,7 +163,7 @@
         //the following is sending dummy data until we have the API in place
         const patientResourcePayload = {
           patientId:'1234567890',
-          patientLastName: 'Frayley',
+          patientLastName: 'Fraley',
           patientFirstName: 'David',
           patientDateOfBirth: '01/01/1950',
           patientGender: 'Male',

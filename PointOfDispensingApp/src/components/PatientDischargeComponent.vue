@@ -6,12 +6,12 @@
       </v-col>
       <v-col cols="3">
         <v-text-field filled dense readonly
-          value="vaccination status"
+          :value=immunizationStatus
         ></v-text-field>
       </v-col>
       <v-col cols="3">
         <v-text-field filled dense readonly
-          value="2020-07-20 14:23:47"
+          :value=immunizationTimeStamp
         ></v-text-field>
       </v-col>
     </v-row>
@@ -71,6 +71,12 @@
     name: 'PatientDischargeComponent',
     computed:
     {
+      immunizationStatus() {
+        return this.$store.state.immunizationResource.immunizationStatus
+      },
+      immunizationTimeStamp() {
+        return this.$store.state.immunizationResource.immunizationTimeStamp
+      },
       encounterStatus() {
         return this.$store.state.encounterResource.encounterStatus
       },

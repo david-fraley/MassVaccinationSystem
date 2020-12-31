@@ -25,9 +25,9 @@ export default new Vuex.Store({
             encounterTimeStamp: ''
         },
         immunizationResource: {
-            lotNumber: 'CR123',
-            expirationDate: '12/12/9999',
-            manufacturer: 'Pfizer',
+            lotNumber: '',
+            expirationDate: '',
+            manufacturer: '',
             doseQuantity: '',
             doseNumber: '',
             immunizationStatus: '',
@@ -67,6 +67,24 @@ export default new Vuex.Store({
             state.workflowState = 'INITIAL'
             state.encounterResource.encounterStatus = ''
             state.encounterResource.encounterTimeStamp = ''
+            state.immunizationResource.lotNumber = '',
+            state.immunizationResource.expirationDate = '',
+            state.immunizationResource.manufacturer = '',
+            state.immunizationResource.doseQuantity = '',
+            state.immunizationResource.doseNumber = '',
+            state.immunizationResource.immunizationStatus = '',
+            state.immunizationResource.immunizationTimeStamp = '',
+            state.immunizationResource.healthcarePractitioner = 'White, Betty',
+            state.immunizationResource.site = '',
+            state.immunizationResource.route = 'Injection',
+            state.immunizationResource.notes = '',
+            state.immunizationResource.notAdministeredReason = ''
+            state.screeningResponses.vaccinationDecision = '',
+            state.screeningResponses.patientInfoConfirmed = '',
+            state.screeningResponses.consentFormSigned = '',
+            state.screeningResponses.screeningCompleted = '',
+            state.screeningResponses.factSheetProvided = '',
+            state.screeningResponses.screeningComplete = false
         },
         patientAdmitted(state, encounterResourcePayload) {
             state.workflowState = 'ADMITTED'
@@ -83,16 +101,16 @@ export default new Vuex.Store({
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
             state.workflowState = 'VACCINATION_COMPLETE'
-            state.immunizationResource.lotNumber= vaccinationCompletePlayload.lotNumber,
-            state.immunizationResource.expirationDate= vaccinationCompletePlayload.expirationDate,
-            state.immunizationResource.manufacturer= vaccinationCompletePlayload.manufacturer,
-            state.immunizationResource.doseQuantity= vaccinationCompletePlayload.doseQuantity,
-            state.immunizationResource.doseNumber= vaccinationCompletePlayload.doseNumber,
-            state.immunizationResource.site= vaccinationCompletePlayload.site,
-            state.immunizationResource.route= vaccinationCompletePlayload.route,
-            state.immunizationResource.immunizationStatus= vaccinationCompletePlayload.immunizationStatus,
-            state.immunizationResource.immunizationTimeStamp= vaccinationCompletePlayload.immunizationTimeStamp,
-            state.immunizationResource.healthcarePractitioner= vaccinationCompletePlayload.healthcarePractitioner,
+            state.immunizationResource.lotNumber= vaccinationCompletePlayload.lotNumber
+            state.immunizationResource.expirationDate= vaccinationCompletePlayload.expirationDate
+            state.immunizationResource.manufacturer= vaccinationCompletePlayload.manufacturer
+            state.immunizationResource.doseQuantity= vaccinationCompletePlayload.doseQuantity
+            state.immunizationResource.doseNumber= vaccinationCompletePlayload.doseNumber
+            state.immunizationResource.site= vaccinationCompletePlayload.site
+            state.immunizationResource.route= vaccinationCompletePlayload.route
+            state.immunizationResource.immunizationStatus= vaccinationCompletePlayload.immunizationStatus
+            state.immunizationResource.immunizationTimeStamp= vaccinationCompletePlayload.immunizationTimeStamp
+            state.immunizationResource.healthcarePractitioner= vaccinationCompletePlayload.healthcarePractitioner
             state.immunizationResource.notes= vaccinationCompletePlayload.notes
         },
         vaccinationCanceled(state, vaccinationCanceledPlayload) {

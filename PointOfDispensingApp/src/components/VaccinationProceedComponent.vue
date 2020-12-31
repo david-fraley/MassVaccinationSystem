@@ -15,7 +15,6 @@
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense
-              :value=lotNumber
               required
               :rules="[v => !!v || 'Lot Number field is required']"
               v-model="lotNumber"
@@ -74,7 +73,6 @@
               v-model="doseNumber"
               required
               :rules="[v => !!v || 'Dose Number field is required']"
-              id="DoseNumber"
             ></v-select>
           </v-col>
         </v-row>
@@ -161,6 +159,7 @@
           outlined
           rows="4"
           :value=notes
+          v-model="notes"
         ></v-textarea>
       </v-col>
     </v-row>
@@ -212,15 +211,6 @@
   export default {
     name: 'VaccinationProceedComponent',
     computed: {
-      lotNumber() {
-        return this.$store.state.immunizationResource.lotNumber
-      },
-      expirationDate() {
-        return this.$store.state.immunizationResource.expirationDate
-      },
-      manufacturer() {
-        return this.$store.state.immunizationResource.manufacturer
-      },
       immunizationStatus() {
         return this.$store.state.immunizationResource.immunizationStatus
       },
@@ -230,9 +220,6 @@
       healthcarePractitioner() {
         return this.$store.state.immunizationResource.healthcarePractitioner
       },
-      notes() {
-        return this.$store.state.immunizationResource.notes
-      }
     },
     methods: 
     {
@@ -250,6 +237,7 @@
           healthcarePractitioner: this.healthcarePractitioner,
           notes: this.notes,
         }
+        
         //send data to Vuex
         this.$store.dispatch('vaccinationComplete', vaccinationCompletePlayload)
 
@@ -273,6 +261,10 @@
         doseNumber: this.$store.state.immunizationResource.doseNumber,
         site: this.$store.state.immunizationResource.site,
         route: this.$store.state.immunizationResource.route,
+        lotNumber: this.$store.state.immunizationResource.lotNumber,
+        expirationDate: this.$store.state.immunizationResource.expirationDate,
+        manufacturer: this.$store.state.immunizationResource.manufacturer,
+        notes: this.$store.state.immunizationResource.notes,
       }
     }
   }
