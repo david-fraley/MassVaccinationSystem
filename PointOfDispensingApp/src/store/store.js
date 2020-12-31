@@ -49,6 +49,9 @@ export default new Vuex.Store({
     },
 
     getters: {
+        workflowState: state => {
+            return state.workflowState
+        },
         isCheckInPageDisabled: state => {
             return (state.workflowState == 'INITIAL')
         },
