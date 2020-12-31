@@ -27,51 +27,55 @@
 				<span><p style="font-size:1.3em" class="font-weight-regular"><br /><span style="color:red">* </span>Select your registration type</p></span>
 			</v-col>
 			<!--input buttons-->
-			<v-col cols="12" sm="6" md="6" lg="6" align="end">
-				<v-btn 
-					:outlined="!isSingleRegistration" 
-					x-large 
-					color="primary"
-					height="13em"
-					width="17.5em"
-					@click="singleRegistration"
-				>
-				<div>
-					<v-icon size="7em">mdi-account</v-icon>
-					<span><br /><p style="font-size:1.1em" class="font-weight-regular"><br />Register myself</p></span>
-				</div>
-				</v-btn>
-				</v-col>
-				<v-col cols="12" sm="6" md="6" lg="6" align="start">
-				<v-tooltip bottom max-width="20%">
-					<template v-slot:activator="{on, attrs}">
+		</v-row>
+		<v-row justify="center">
+			<v-col cols="12">
+				<v-card class="d-flex justify-center flex-wrap" flat>
+					<v-card class="pa-2" flat>
 						<v-btn 
-							:outlined="!isHouseholdRegistration" 
+							:outlined="!isSingleRegistration" 
 							x-large 
 							color="primary"
-							v-bind="attrs"
-							v-on="on"
 							height="13em"
 							width="17.5em"
-							@click="householdRegistration"
-							>
-							<div>
-							<v-icon size="7em">mdi-account-group</v-icon>
-							<span><br /><p style="font-size:1.1em" class="font-weight-regular"><br />Register my household</p></span>
-							</div>
+							@click="singleRegistration"
+						>
+						<div>
+							<v-icon size="7em">mdi-account</v-icon>
+							<span><br /><p style="font-size:1.1em" class="font-weight-regular"><br />Register myself</p></span>
+						</div>
 						</v-btn>
-					</template>
-					<span>A household is composed of any people who occupy the same given housing unit. If you are planning to register your household, all members must currently be residing in the same address. If members of a household are residing in other housing units, it is necessary to register any given members individually. Max household registration of 20 registrants.</span>
-				</v-tooltip>
+					</v-card>
+					<v-card class="pa-2" flat>
+						<v-tooltip bottom max-width="20%">
+							<template v-slot:activator="{on, attrs}">
+								<v-btn 
+									:outlined="!isHouseholdRegistration" 
+									x-large 
+									color="primary"
+									v-bind="attrs"
+									v-on="on"
+									height="13em"
+									width="17.5em"
+									@click="householdRegistration"
+									>
+									<div>
+									<v-icon size="7em">mdi-account-group</v-icon>
+									<span><br /><p style="font-size:1.1em" class="font-weight-regular"><br />Register my household</p></span>
+									</div>
+								</v-btn>
+							</template>
+							<span>{{householdDefinition}}</span>
+						</v-tooltip>
+					</v-card>
+				</v-card>
 			</v-col>
-		</v-row>
-		<v-row>
-			<p><br></p>
 		</v-row>
 	</v-container>
 </template>
 <script>
 import EventBus from '../eventBus'
+import customerSettings from '../customerSettings'
 
 export default {
 	name: "GreetingPage",
@@ -80,6 +84,7 @@ export default {
 		preferredLanguage: '',
 		isSingleRegistration: false,
 		isHouseholdRegistration: false,
+		householdDefinition: customerSettings.householdDefinition
 	
 	}),
 	methods: 

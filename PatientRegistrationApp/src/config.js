@@ -1,5 +1,3 @@
-//file name is 'config.js'
-
 export default {
     registrationPages:
     {
@@ -26,10 +24,10 @@ export default {
         SINGLE_PATIENT_REGISTRATION_PATH: 1,
         HOUSEHOLD_REGISTRATION_PATH: 2
     },
-FontSizes:
+    FontSizes:
 	{
 		FONT_SMALL: '1em',
 		FONT_MEDIUM: '1.5em',
 		FONT_LARGE: '3em'
-	},	
+    },	
 }
