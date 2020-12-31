@@ -60,7 +60,6 @@ import VueQrcode from 'vue-qrcode';
 	data () {
 		return {
 			dataHouseholdPersonalInfo: [],
-			qrValue : "Shahd",
 			correctionLevel: "H"
 		}
 	},
@@ -78,14 +77,13 @@ import VueQrcode from 'vue-qrcode';
 			} else if (householdMemberNumber-1 < this.dataHouseholdPersonalInfo.length) {
 				this.$set(this.dataHouseholdPersonalInfo, householdMemberNumber-1, householdPersonalInfoPayload);
 			}
-			this.qrValue = this.dataHouseholdPersonalInfo[0].familyName + ", " + this.dataHouseholdPersonalInfo[0].givenName + " " + this.dataHouseholdPersonalInfo[0].middleName + " " + this.dataHouseholdPersonalInfo[0].suffix
 		},
 		getNumberOfHouseholdMembers()
 		{
 			return this.numberOfHouseholdMembers;
 		},
 		toQRValue(member) {
-			const value = member.familyName;
+			const value = member.familyName + ", " + member.givenName + " " + member.middleName + " " + member.suffix;
 			return value;
 		}
 	},
