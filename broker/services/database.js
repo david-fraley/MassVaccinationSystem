@@ -1,6 +1,14 @@
-// Open a connection to the configured database using Sequelize.
-// Ref: https://www.robinwieruch.de/postgres-express-setup-
-// Ref: https://bezkoder.com/sequelize-associate-one-to-many/
+/**
+ * Initializes and exports database connection (sequelize) and 
+ * model wrappers for Broker DB.
+ * 
+ * @author Todd Jensen
+ * @author www.massvaxx.com
+ */
+
+// Implementation references:
+// [1] https://www.robinwieruch.de/postgres-express-setup-
+// [2] https://bezkoder.com/sequelize-associate-one-to-many/
 //
 const dbConfigs = require('../config/database');
 const Sequelize = require('sequelize');
@@ -19,11 +27,8 @@ db.sequelize = sequelize;
 db.patient_ids = require('../models_massvaxx/patient_ids.js')(sequelize, Sequelize);
 db.qr_codes = require('../models_massvaxx/qr_codes.js')(sequelize, Sequelize);
 
-// +TODO+ Add in 1:N relationship
-//db.patient_ids.hasMany(db.qr_codes, { as: 'qr_codes'});
-//db.qr_codes.belongsTo(db.patient_ids, {
-//    foreignKey: 'patient_id',
-//    as: 'patient_ids'
-//});
+// Add in 1:N relationships
+//
+db.patient_ids.hasMany(db.qr_codes, { foreignKey: 'patient_id', as: 'qr_codes'});
 
 module.exports = db;
