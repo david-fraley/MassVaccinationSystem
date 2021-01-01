@@ -114,23 +114,18 @@ app.get("/discharge", (req, res) => {
     let encounter_url = `?appointment=${req.query.appointment}`;
     let appt_url = `/${req.query.appointment}`;
 
-    updateEncounterStatus(encounter_url, encounter_status)
-      .then((result) => {
-        response.Encounter = result.data;
+    Promise.all([
+      updateEncounterStatus(encounter_url, encounter_status),
+      updateAppointmentStatus(appt_url, appt_status),
+    ])
+      .then((results) => {
+        for (result of results) {
+          response[result.data.resourceType] = result.data;
+        }
         res.json(response);
       })
       .catch((e) => {
-        response.Encounter = e.response ? e.response.data : e.message;
-        res.status(400).json(response);
-      });
-
-    updateAppointmentStatus(appt_url, appt_status)
-      .then((result) => {
-        response.Appointment = result.data;
-        res.json(response);
-      })
-      .catch((e) => {
-        response.Appointment = e.response ? e.response.data : e.message;
+        response.error = e.response ? e.response.data : e.message;
         res.status(400).json(response);
       });
   } else {
@@ -147,7 +142,7 @@ app.get("/check-in", (req, res) => {
   const appt_status = "arrived";
   let encounter_url;
   let appt_url;
-  let response = { Encounter: "", Appointment: "" };
+  let response = {};
 
   if (req.query.hasOwnProperty("patient")) {
     encounter_url = `?subject=${req.query.patient}&status=planned`;
@@ -156,28 +151,23 @@ app.get("/check-in", (req, res) => {
     encounter_url = `?appointment=${req.query.appointment}`;
     appt_url = `/${req.query.appointment}`;
   } else {
-    response.Encounter = "patient or appointment parameter missing";
+    response.error = "patient or appointment parameter missing";
     res.status(400).json(response);
     return;
   }
 
-  updateEncounterStatus(encounter_url, encounter_status)
-    .then((result) => {
-      response.Encounter = result.data;
+  Promise.all([
+    updateEncounterStatus(encounter_url, encounter_status),
+    updateAppointmentStatus(appt_url, appt_status),
+  ])
+    .then((results) => {
+      for (result of results) {
+        response[result.data.resourceType] = result.data;
+      }
       res.json(response);
     })
     .catch((e) => {
-      response.Encounter = e.response ? e.response.data : e.message;
-      res.status(400).json(response);
-    });
-
-  updateAppointmentStatus(appt_url, appt_status)
-    .then((result) => {
-      response.Appointment = result.data;
-      res.json(response);
-    })
-    .catch((e) => {
-      response.Appointment = e.response ? e.response.data : e.message;
+      response.error = e.response ? e.response.data : e.message;
       res.status(400).json(response);
     });
 });
