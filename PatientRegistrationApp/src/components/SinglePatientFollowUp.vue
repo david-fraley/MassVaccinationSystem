@@ -50,20 +50,12 @@ import EventBus from '../eventBus';
 import VueQrcode from 'vue-qrcode';
 
 export default {
-  name: "SinglePatientFollowUp",
   data() {
     return {
-      dataPersonalInfo:
-			{
-				familyName: '',
-				givenName: '',
-        suffix: ''
-      },
-      correctionLevel: "H"
+      dataPersonalInfo: [],
+      correctionLevel: "H",
+      qrValue: ''
     };
-  },
-  beforeDestroy (){
-  this.reset()
   },
   methods: {
     updatePersonalInfoData(personalInfoPayload) {
