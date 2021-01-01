@@ -1,7 +1,8 @@
 <template>
 	<v-container fluid>
-		<v-row align="center" justify="center">
-		</v-row>
+		<v-row align="center" justify="start">
+      <v-col cols="12">
+      <div class="font-weight-regular">Use these QR codes to easily check-in at the site where you receive your vaccine. This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.</div></v-col></v-row>
 		<v-row justify="center">
 			<v-btn color="secondary" class="ma-2 white--text">
 				Download All
@@ -10,19 +11,17 @@
 		<v-row justify="center">	
 			<v-col cols="12">
 				<v-card class="d-flex flex-wrap" flat>
-					<v-card class="pa-2" flat min-width=33%>
-						<div class="font-weight-medium primary--text">Household Member #1</div>
-						<div> QR Code Placeholder</div>
-						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
-						{{dataHouseholdPersonalInfo[0].givenName}} {{dataHouseholdPersonalInfo[0].middleName}} {{dataHouseholdPersonalInfo[0].suffix}}</span></div>
-					</v-card>
-				<template v-for="index in getNumberOfHouseholdMembers()-1">
+				<template v-for="index in getNumberOfHouseholdMembers()">
 						<v-card class="pa-2" flat min-width=33%
 						:key="index">
-							<div class="font-weight-medium primary--text">Household Member #{{index+1}}</div>
-							<div> QR code Placeholder</div>
-							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].familyName}}, 
-							{{dataHouseholdPersonalInfo[index].givenName}} {{dataHouseholdPersonalInfo[index].middleName}} {{dataHouseholdPersonalInfo[index].suffix}}</span></div>
+							<div class="font-weight-medium primary--text">Household Member #{{index}}</div>
+							<v-row><div>
+							<vue-qrcode
+								v-bind:value="toQRValue(dataHouseholdPersonalInfo[index-1])"
+								v-bind:errorCorrectionLevel="correctionLevel" />
+							</div></v-row>
+							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index-1].familyName}}, 
+							{{dataHouseholdPersonalInfo[index-1].givenName}} {{dataHouseholdPersonalInfo[index-1].middleName}} {{dataHouseholdPersonalInfo[index-1].suffix}}</span></div>
 						</v-card>
 					</template>
 				</v-card>
@@ -55,12 +54,14 @@
 </template>
 
 <script>
-import EventBus from '../eventBus'
+import EventBus from '../eventBus';
+import VueQrcode from 'vue-qrcode';
 
 	export default {
 	data () {
 		return {
-			dataHouseholdPersonalInfo: []
+			dataHouseholdPersonalInfo: [],
+			correctionLevel: "H"
 		}
 	},
 	props:
@@ -81,7 +82,14 @@ import EventBus from '../eventBus'
 		getNumberOfHouseholdMembers()
 		{
 			return this.numberOfHouseholdMembers;
+		},
+		toQRValue(member) {
+			const value = member.familyName + ", " + member.givenName + " " + member.middleName + " " + member.suffix;
+			return value;
 		}
+	},
+	components:{
+		VueQrcode
 	},
 	mounted() 
 	{
