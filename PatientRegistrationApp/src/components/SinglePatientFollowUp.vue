@@ -54,7 +54,7 @@ export default {
     return {
       dataPersonalInfo: [],
       correctionLevel: "H",
-      qrValue: ''
+      qrValue: ' '
     };
   },
   methods: {
