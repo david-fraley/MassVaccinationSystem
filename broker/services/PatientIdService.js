@@ -30,6 +30,7 @@ class PatientIdService {
         }
         catch(e) {
             // +TODO+ Log error
+            console.error(e);
         }
         return { patient_id: null };
     }
@@ -53,6 +54,7 @@ class PatientIdService {
         }
         catch(e) {
             // +TODO+ Log error
+            console.error(e);
         }
         return { qr_code: null };
     }
@@ -76,6 +78,7 @@ class PatientIdService {
         }
         catch(e) {
             // +TODO+ Log error
+            console.error(e);
         }
         return { patient_id: null };
     }
@@ -103,6 +106,7 @@ class PatientIdService {
         }
         catch(e) {
             // +TODO+ Log error
+            console.error(e);
             console.error(e);
         }
         return { patient_id: null };
