@@ -1,103 +1,104 @@
 <template>
-	<v-container bg fill-height grid-list-md text-xs-center>
-		<v-row align="left" justify="left">
-			<v-col cols="4">
+	<v-container fluid>
+		<v-row align="center" justify="start">
+			<!--input label-->
+			<v-col cols="0" sm="3" md="3" lg="3">
 			</v-col>
-			<v-col cols="4">
-				<span><p style="font-size:1.5em" class="font-weight-regular"><span style="color:red">* </span>Select your preferred language</p></span>
+			<v-col cols="12" sm="9" md="9" lg="9">
+				<span><p style="font-size:1.3em" class="font-weight-regular"><span style="color:red">* </span>Which language would you like to communicate in during your vaccination?</p></span>
 			</v-col>
-			<v-col cols="4">
+			<!--input field-->
+			<v-col cols="0" sm="3" md="3" lg="4">
 			</v-col>
-		</v-row>
-			
-		<v-row align="center" justify="center">
-			<v-col cols="4">
-			</v-col>
-			<v-col cols="4">
+			<v-col cols="12" sm="6" md="6" lg="4">
 				<v-select required dense
 					:items="preferredLanguageOptions"
 					:rules="[v => !!v || 'Preferred language field is required']"
 					v-model="preferredLanguage"
 				></v-select>
 			</v-col>
-			<v-col cols="4">
-			</v-col>
-		</v-row>
-		<v-row>
 			<v-col cols="12">
 				<v-divider></v-divider>
 			</v-col>
+			<!--input label-->
+			<v-col cols="0" sm="3" md="3" lg="3">
+			</v-col>
+			<v-col cols="12" sm="9" md="9" lg="9">
+				<span><p style="font-size:1.3em" class="font-weight-regular"><br /><span style="color:red">* </span>Select your registration type</p></span>
+			</v-col>
+			<!--input buttons-->
 		</v-row>
-		<v-row align="left" justify="left">
-			<v-col cols="4">
-			</v-col>
-			<v-col cols="4">
-				<span><p style="font-size:1.5em" class="font-weight-regular"><br /><span style="color:red">* </span>Select your registration type</p></span>
-			</v-col>
-			<v-col cols="4">
-			</v-col>
-		</v-row>
-		<v-row align="center" justify="center">
-			
-			<v-btn-toggle group>
-				<v-btn 
-					class="ma-2"
-					outlined 
-					x-large 
-					color="primary"
-					height="13em"
-					width="17em"
-					@click="singleRegistration"
-				>
-				<div>
-					<v-icon size="7em">mdi-account</v-icon>
-					<span><br /><p style="font-size:1.2em" class="font-weight-regular"><br />Register myself</p></span>
-				</div>
-				</v-btn>
-				<v-tooltip bottom max-width="20%">
-					<template v-slot:activator="{on, attrs}">
+		<v-row justify="center">
+			<v-col cols="12">
+				<v-card class="d-flex justify-center flex-wrap" flat>
+					<v-card class="pa-2" flat>
 						<v-btn 
-							class="ma-2"
-							outlined 
+							:outlined="!isSingleRegistration" 
 							x-large 
 							color="primary"
-							v-bind="attrs"
-							v-on="on"
 							height="13em"
-							width="17em"
-							@click="householdRegistration"
-							>
-							<div>
-							<v-icon size="7em">mdi-account-group</v-icon>
-							<span><br /><p style="font-size:1.2em" class="font-weight-regular"><br />Register my household</p></span>
-							</div>
+							width="17.5em"
+							@click="singleRegistration"
+						>
+						<div>
+							<v-icon size="7em">mdi-account</v-icon>
+							<span><br /><p style="font-size:1.1em" class="font-weight-regular"><br />Register myself</p></span>
+						</div>
 						</v-btn>
-					</template>
-					<span>A household is composed of any people who occupy the same given housing unit. If you are planning to register your household, all members must currently be residing in the same address. If members of a household are residing in other housing units, it is necessary to register any given members individually. Max household registration of 20 registrants.</span>
-				</v-tooltip>
-			</v-btn-toggle>
-			
+					</v-card>
+					<v-card class="pa-2" flat>
+						<v-tooltip bottom max-width="20%">
+							<template v-slot:activator="{on, attrs}">
+								<v-btn 
+									:outlined="!isHouseholdRegistration" 
+									x-large 
+									color="primary"
+									v-bind="attrs"
+									v-on="on"
+									height="13em"
+									width="17.5em"
+									@click="householdRegistration"
+									>
+									<div>
+									<v-icon size="7em">mdi-account-group</v-icon>
+									<span><br /><p style="font-size:1.1em" class="font-weight-regular"><br />Register my household</p></span>
+									</div>
+								</v-btn>
+							</template>
+							<span>{{householdDefinition}}</span>
+						</v-tooltip>
+					</v-card>
+				</v-card>
+			</v-col>
 		</v-row>
 	</v-container>
 </template>
 <script>
 import EventBus from '../eventBus'
+import customerSettings from '../customerSettings'
 
 export default {
 	name: "GreetingPage",
 	data: () => ({
 		preferredLanguageOptions: ['English','Spanish'],
-		preferredLanguage: ''
+		preferredLanguage: '',
+		isSingleRegistration: false,
+		isHouseholdRegistration: false,
+		householdDefinition: customerSettings.householdDefinition
 	
 	}),
 	methods: 
 	{
 		singleRegistration()
 			{
+				this.isHouseholdRegistration = false;
+				this.isSingleRegistration = true;
 				this.$emit("singleRegistration");
 			},
 			householdRegistration()
 			{
+				this.isSingleRegistration = false;
+				this.isHouseholdRegistration = true;
 				this.$emit("householdRegistration");
 			},
 		sendGreetingPageInfoToReviewPage()

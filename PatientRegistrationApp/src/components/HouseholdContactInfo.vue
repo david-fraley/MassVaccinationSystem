@@ -1,126 +1,109 @@
 <template>
 	<v-container fluid>
-		<v-row>
-		<v-radio-group
-        required
-        :rules="[v => !!v || 'This field is required']"
-        v-model="phoneNumberAvailableRadioButtons"
-		>
-        <v-col align="right" cols="12">
-          <v-radio label="I have a phone number" value="yes" @change="PhoneNumberAvailable()"></v-radio>
-          <v-radio label="I do not have a phone number" value="no" @change="PhoneNumberNotAvailable()"></v-radio>
-		</v-col>
-		</v-radio-group>
+		<v-row align="center" justify="start">
+			<v-col cols="12">
+				<div>{{disclosureStatement}}</div>  
+				<div><br>{{consequenceStatement}}</div>
+				<div><strong>We strongly encourage you to provide your e-mail and/or phone number as contact information.</strong></div>
+				<div><br></div>
+				<v-divider></v-divider>
+				<div><br>By providing your e-mail and/or phone number as contact information, you agree to the following:</div>
+				<div><strong>{{acknowledgementStatement}}</strong></div>
+			</v-col>
+		</v-row> 
+		<v-row align="center" justify="start" no-gutters>
+			<v-checkbox
+				v-model="acknowledgementCheckBox">
+				<template #label>
+				<span class="red--text"><strong>* <br></strong></span>I have read and understood the above.
+				</template>
+			</v-checkbox>
 		</v-row>
-		
-		<v-row>
-			<v-col cols="12" sm="6" md="3">
+		<v-row align="center" justify="start" no-gutters>
+			<v-checkbox
+				v-model="permissionCheckBox"
+				:disabled="!acknowledgementCheckBox"
+				label="I agree to provide and authorize the use of my contact information as outlined above."
+				>
+			</v-checkbox>
+		</v-row>
+			<v-divider></v-divider>
+		<v-row align="center" justify="start">
+			<v-col cols="12" sm="6" md="6" lg="3">
 				<v-text-field
-					required
-					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
-					placeholder="(###)###-####"
-					v-mask="'(###)###-####'"
 					v-model="primaryPhoneNumber"
-					v-show="phoneNumberAvailable"
-					prepend-icon="mdi-menu-right">
-						<template #label>
-						<span class="red--text"><strong>* </strong></span>Primary Phone Number
-						</template>
+					:disabled="!permissionCheckBox"
+					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+					v-mask="'(###)###-####'"
+					prepend-icon="mdi-phone"
+					label="Primary Phone Number">
 				</v-text-field>
 			</v-col>
-			<v-col class="d-flex" cols="6" sm="2">
+			<v-col cols="11" sm="5" md="5" lg="2">
 				<v-select
-					required
-					:rules="[v => !!v || 'Phone type is required']"
 					v-model="primaryPhoneNumberType"
-					:items="phonetype"
+					:disabled="!permissionCheckBox"
+					:items="phoneTypeOptions"
 					label="Phone Type"
-					v-show="phoneNumberAvailable"
+					prepend-icon="mdi-blank"
 				></v-select>
 			</v-col>
-			<v-col cols="12" sm="6" md="3">
+			<v-col cols="1" sm="1" md="1" lg="1">
+			</v-col>
+			<v-col cols="12" sm="6" md="6" lg="3">
 				<v-text-field
+					v-model="secondaryPhoneNumber"
+					:disabled="!primaryPhoneNumber"
 					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
-					placeholder="(###)###-####"
 					v-mask="'(###)###-####'"
 					label="Secondary Phone Number"
-					v-model="secondaryPhoneNumber"
-					v-show="phoneNumberAvailable"
-				></v-text-field>
+					prepend-icon="mdi-phone">
+				</v-text-field>
 			</v-col>
-			<v-col class="d-flex" cols="4" sm="2">			
+			<v-col cols="11" sm="5" md="5" lg="2">
 				<v-select
 					v-model="secondaryPhoneNumberType"
-					:items="phonetype"
+					:disabled="!primaryPhoneNumber"
+					:items="phoneTypeOptions"
 					label="Phone Type"
-					v-show="phoneNumberAvailable"
+					prepend-icon="mdi-blank"
 				></v-select>
 			</v-col>
 		</v-row>
-		
 		<v-row>
-		<v-radio-group
-        required
-        :rules="[v => !!v || 'This field is required']"
-        v-model="emailAvailableRadioButtons"
-		>
-		<v-col align="right" cols="12">
-			<v-radio label="I have an E-mail address" value="yes" @change="EmailAvailable()"></v-radio>
-			<v-radio label="I do not have an E-mail address" value="no" @change="EmailNotAvailable()"></v-radio>
-        </v-col>
-	</v-radio-group>
-    </v-row>
-	
-		<v-row>
-			<v-col cols="12" sm="12" md="6">
+			<v-col cols="11" sm="5" md="5" lg="5">
 				<v-text-field
-					required
-					:rules="emailRules"
 					v-model="primaryEmail"
-					v-show="emailAvailable"
-					prepend-icon="mdi-menu-right">
-						<template #label>
-						<span class="red--text"><strong>* </strong></span>E-mail Address
-						</template>
-				></v-text-field>
-			</v-col>
-			<v-col cols="12" sm="12" md="6">
-				<v-text-field
+					:disabled="!permissionCheckBox"
 					:rules="emailRules"
-					label="Secondary E-mail Address"
-					v-model="secondaryEmail"
-					v-show="emailAvailable"
-				></v-text-field>
+					prepend-icon="mdi-email"
+					label="Primary E-mail Address">
+				</v-text-field>
 			</v-col>
-		</v-row>
-
-		<v-row><v-col cols="12" sm="6" md="6">
-			<v-radio-group
-				required
-				:rules="[v => !!v || 'This field is required']"
-				v-model="approval"
-				prepend-icon="mdi-menu-right">
-					<template #label>
-					<span class="red--text"><strong>* </strong></span>May we contact you regarding follow up vaccination information
-					</template>
-				<v-col align="right" cols="3" sm="3" md="3">
-					<v-radio label="Yes" value="yes"></v-radio>
-					<v-radio label="No" value="no"></v-radio>
-				</v-col>
-			</v-radio-group></v-col>
+			<v-col cols="1" sm="1" md="1" lg="1">
+			</v-col>
+			<v-col cols="11" sm="5" md="5" lg="5">
+				<v-text-field
+					v-model="secondaryEmail"
+					:disabled="!primaryEmail"
+					:rules="emailRules"
+					prepend-icon="mdi-email"
+					label="Secondary E-mail Address">
+				</v-text-field>
+			</v-col>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
 import EventBus from '../eventBus'
+import customerSettings from '../customerSettings'
 
   export default {
     name: 'SinglePatientContactInfo',
 	data () {
 		return { 
-			phonetype:['Home', 'Mobile', 'Work'],
-			radios: 'May we contact you for a follow up vaccination?',
+			phoneTypeOptions:['Home', 'Mobile', 'Work'],
 			emailRules: [
 				(v) =>
 				/^[\s]*$|.+@.+\..+/.test(v) ||
@@ -132,11 +115,11 @@ import EventBus from '../eventBus'
 			secondaryPhoneNumber: '',
 			secondaryPhoneNumberType: '',
 			secondaryEmail: '',
-			approval: '',
-			phoneNumberAvailable: true,
-			phoneNumberAvailableRadioButtons: 'yes',
-			emailAvailable: true,
-			emailAvailableRadioButtons: 'yes',
+			acknowledgementCheckBox: false,
+			permissionCheckBox: false,
+			disclosureStatement: customerSettings.contactInfoDisclosure,
+			consequenceStatement: customerSettings.contactInfoConsequence,
+			acknowledgementStatement: customerSettings.contactInfoAcknowledgement,
 		}
 	},
 	methods: {
@@ -149,45 +132,31 @@ import EventBus from '../eventBus'
 				secondaryPhoneNumber: this.secondaryPhoneNumber,
 				secondaryPhoneNumberType: this.secondaryPhoneNumberType,
 				secondaryEmail: this.secondaryEmail,
-				approval: this.approval
 			}
 			EventBus.$emit('DATA_HOUSEHOLD_CONTACT_INFO_PUBLISHED', householdContactInfoPayload)
 		},
 		verifyFormContents()
 		{
 			var valid = true
-			var message = "Woops! You need to enter the following field(s):"
-		
-			if(this.phoneNumberAvailable)
-			{
-				if(this.primaryPhoneNumber == "") 
+			var message 
+
+			if(this.acknowledgementCheckBox)
+			{	
+				if(this.permissionCheckBox)
 				{
-					message += " Primary Phone Number"
-					valid = false
-				}
-			}
-			if(this.emailAvailable)
-			{
-				if(this.primaryEmail == "") 
-				{
-				if(!valid)
+					if((this.primaryPhoneNumber == "") && (this.primaryEmail == ""))
 					{
-					message +=","
+						message = "Please provide an e-mail address and/or phone number."
+						valid = false
 					}
-					message += " Primary E-mail"
-					valid = false
 				}
 			}
-		
-			if(this.approval == "") 
+			else
 			{
-				if(!valid)
-				{
-					message +=","
-				}
-				message += " Follow up consent"
+				message = "Acknowledgement is required."
 				valid = false
 			}
+			
 			if (valid == false) 
 			{
 				alert (message)
@@ -197,31 +166,7 @@ import EventBus from '../eventBus'
 			this.sendHouseholdContactInfoInfoToReviewPage();
 			return true;
 		},
-    PhoneNumberAvailable()
-    {
-	this.phoneNumberAvailable = true
-	this.primaryPhoneNumber=""
-	this.secondaryPhoneNumber=""
-    },
-    PhoneNumberNotAvailable()
-    {
-	this.phoneNumberAvailable = false
-	this.primaryPhoneNumber="Not Available"
-	this.secondaryPhoneNumber="Not Available"
-    },
-		EmailAvailable()
-    {
-	this.emailAvailable = true
-	this.primaryEmail=""
-	this.secondaryEmail=""
-    },
-    EmailNotAvailable()
-    {
-	this.emailAvailable = false
-	this.primaryEmail="Not available"
-	this.secondaryEmail="Not available"
-    },
-  },
+	},
 }
 </script>
 

@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "qrcode": "^1.4.4",
     "v-mask": "^2.2.3",
     "vue": "^2.6.11",
+    "vue-qrcode": "^0.3.5",
     "vuetify": "^2.2.11"
   },
   "devDependencies": {
