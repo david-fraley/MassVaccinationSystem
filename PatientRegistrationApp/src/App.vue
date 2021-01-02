@@ -96,7 +96,7 @@
 								<!-- Single Patient: Follow up -->
 								<v-stepper-content step="7">
 									<v-toolbar flat>
-										<v-toolbar-title class="text-wrap">QR Code Page</v-toolbar-title>
+										<v-toolbar-title class="text-wrap">Download your QR code</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><SinglePatientFollowUp/></v-card>
 								</v-stepper-content>
@@ -170,7 +170,7 @@
 								<!-- Household: Follow up -->
 								<v-stepper-content :step="getNumberOfSteps()">
 									<v-toolbar flat>
-										<v-toolbar-title class="text-wrap">QR Code Page</v-toolbar-title>
+										<v-toolbar-title class="text-wrap">Download your QR code</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><HouseholdFollowUp v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
