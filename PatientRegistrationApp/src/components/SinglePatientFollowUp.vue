@@ -14,7 +14,7 @@
 </v-row>
 
 <v-row justify="center">
-  <v-btn color="secondary" class="ma-2 white--text">
+  <v-btn color="secondary" class="no-printme ma-2 white--text">
     Send
   </v-btn>
 </v-row>  
@@ -112,14 +112,21 @@ export default {
 
 <style lang="css" scoped>
 .printme {
-	display: none;
+	visibility: hidden;
+  justify-content: center;
+  align-items: center;
 }
 @media print {
 	.no-printme  {
-		display: none;
+		visibility: hidden;
 	}
 	.printme  {
-		display: block;
+		visibility: visible;
+    position: absolute;
+    top: 50px;
+    left:50px;
+    justify-content: center;
+    align-items: center;
 	}
 }
 </style>
