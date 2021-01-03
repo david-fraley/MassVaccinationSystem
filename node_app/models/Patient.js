@@ -24,7 +24,6 @@ Patient {
     country: string
   }
   contact: {
-    relationship: enum (C Emergency Contact, DOMPART Domestic Partner, INLAW In-Law, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other)
     family: string
     given: string
     phone: {
@@ -32,7 +31,8 @@ Patient {
       use: enum (home, work, temp, old, mobile)
     }
   }
-  language: enum (English, Spanish)
+  language: enum (English, Spanish),
+  relationship: enum (DOMPART Domestic Partner, INLAW In-Law, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
 }
 
 {
@@ -68,7 +68,6 @@ Patient {
         "country": "USA"
       },
       "contact": {
-        "relationship": "C",
         "family": "Smith",
         "given": "John",
         "phone": {
@@ -76,7 +75,8 @@ Patient {
           "use": "mobile"
         }
       },
-      "language": "English"
+      "language": "English",
+      "relationship": "ONESELF"
     }
   ]
 }
@@ -120,8 +120,8 @@ exports.toFHIR = function (patient) {
             coding: [
               {
                 system: "http://terminology.hl7.org/CodeSystem/v2-0131",
-                code: patient.contact.relationship,
-                display: patient.contact.relationship,
+                code: "C",
+                display: "Emergency Contact",
               },
             ],
           },
@@ -146,6 +146,9 @@ exports.toFHIR = function (patient) {
         },
         preferred: true,
       },
+    ],
+    link: [
+      // add link
     ],
   };
 
@@ -172,6 +175,14 @@ exports.toFHIR = function (patient) {
       rank: `${idx}`,
     });
   }
+  // add link
+  for (link of patient.link) {
+    resource.link.push({
+      other: {
+        reference: link,
+      },
+    });
+  }
 
   return resource;
-}
+};

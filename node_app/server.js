@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios").default;
-const PatientModel = require("./models/Patient");
+const Patient = require("./models/Patient");
+const RelatedPerson = require("./models/RelatedPerson");
 
 const app = express();
 app.use(express.json());
@@ -52,19 +53,68 @@ app.post("/Organization", (req, res) => {
 });
 
 app.post("/Patient", (req, res) => {
-  let obj = req.body;
-  for (patient of obj.Patient) {
-    let resource = PatientModel.toFHIR(patient);
-
-    // post resource
-    axios
-      .post(`${base}/Patient`, resource, headers)
-      .then((response) => {
-        res.json(response.data);
-      })
-      .catch((e) => res.send(e));
-  }
+  createPatient(req, res).catch((e) =>
+    res.status(400).json({
+      error: e.response ? e.response.data : e.message,
+    })
+  );
 });
+
+async function createPatient(req, res) {
+  let patients = req.body.Patient;
+  let patient = patients.shift();
+  let promises = [];
+  let response = { Patient: [] };
+
+  // resource for head of household
+  if (patient) {
+    let related = { resourceType: "RelatedPerson" };
+    let result = await createPatient_(patient, related);
+    response.Patient.push(result.data);
+
+    // update related
+    let related_id = result.data.link[0].other.reference.split("/")[1];
+    resource = RelatedPerson.toFHIR({
+      patient: `Patient/${result.data.id}`,
+      relationship: patient.relationship,
+    });
+    resource.id = related_id;
+    await axios.put(`${base}/RelatedPerson/${related_id}`, resource, headers);
+  }
+
+  // resources for members
+  for (patient of patients) {
+    let related = {
+      patient: `Patient/${response.Patient[0].id}`,
+      relationship: patient.relationship,
+    };
+
+    promises.push(createPatient_(patient, related));
+  }
+
+  Promise.all(promises).then((results) => {
+    for (result of results) {
+      response.Patient.push(result.data);
+    }
+    res.json(response);
+  });
+}
+
+// create patient and link to relatedperson
+async function createPatient_(patient, related) {
+  // create related person
+  let resource = RelatedPerson.toFHIR(related);
+  let related_id = (
+    await axios.post(`${base}/RelatedPerson`, resource, headers)
+  ).data.id;
+
+  // create patient pointing to related person
+  patient.link = [`RelatedPerson/${related_id}`];
+  resource = Patient.toFHIR(patient);
+  let result = await axios.post(`${base}/Patient`, resource, headers);
+
+  return result;
+}
 
 // Check-in given either
 // a) appointment id from QR code
