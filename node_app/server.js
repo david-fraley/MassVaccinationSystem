@@ -69,7 +69,7 @@ async function createPatient(req, res) {
   // resource for head of household
   if (patient) {
     let related = { resourceType: "RelatedPerson" };
-    let result = await createPatient_(patient, related);
+    let result = await createPatientWithLink(patient, related);
     response.Patient.push(result.data);
 
     // update related
@@ -89,7 +89,7 @@ async function createPatient(req, res) {
       relationship: patient.relationship,
     };
 
-    promises.push(createPatient_(patient, related));
+    promises.push(createPatientWithLink(patient, related));
   }
 
   Promise.all(promises).then((results) => {
@@ -101,7 +101,7 @@ async function createPatient(req, res) {
 }
 
 // create patient and link to relatedperson
-async function createPatient_(patient, related) {
+async function createPatientWithLink(patient, related) {
   // create related person
   let resource = RelatedPerson.toFHIR(related);
   let related_id = (
