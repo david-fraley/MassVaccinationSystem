@@ -16,6 +16,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize(dbConfigs.dbName, dbConfigs.username, dbConfigs.password, {
   dialect: dbConfigs.dialect,
   host: dbConfigs.host,
+  port: dbConfigs.port,
   logging: false
 });
 
