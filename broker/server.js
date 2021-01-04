@@ -30,12 +30,14 @@ app.get(generalEndpoints, (req, res) => {
   axios
     .get(`${base}${req.url}`)
     .then((response) => {
-      // handle success
       res.json(response.data);
     })
     .catch((error) => handleError(res, error));
 });
 
+// Create Immunization resource
+// Response:  Immunization resource (200)
+//            or JSON object with error field (400)
 app.post("/Immunization", (req, res) => {
   let imm = req.body.Immunization;
   postImmunization(imm)
@@ -52,7 +54,6 @@ app.post("/Immunization", (req, res) => {
 async function postImmunization(imm) {
   let resource = Immunization.toFHIR(imm);
 
-  // post resource
   return axios.post(`${base}/Immunization`, resource).then((response) => {
     return response;
   });
@@ -62,7 +63,6 @@ app.post("/Appointment", (req, res) => {
   let appt = req.body.Appointment;
   let resource = Appointment.toFHIR(appt);
 
-  // post resource
   axios
     .post(`${base}/Appointment`, resource)
     .then((response) => {
@@ -75,7 +75,6 @@ app.post("/Organization", (req, res) => {
   let org = req.body.Organization;
   let resource = Organization.toFHIR(org);
 
-  // post resource
   axios
     .post(`${base}/Organization`, resource)
     .then((response) => {
@@ -84,6 +83,10 @@ app.post("/Organization", (req, res) => {
     .catch((e) => res.send(e));
 });
 
+// Create Observation resource
+// and update Immunization resource to reference the new resource.
+// Response:  Observation resource (200)
+//            or JSON object with error field (400)
 app.post("/Observation", (req, res) => {
   let observation = req.body.Observation;
   postObservation(observation)
@@ -100,9 +103,9 @@ app.post("/Observation", (req, res) => {
 async function postObservation(observation) {
   let resource = Observation.toFHIR(observation);
 
-  // post resource
   return axios.post(`${base}/Observation`, resource).then((response) => {
     let ref = observation.partOf;
+    // request body for PATCH
     let update = [
       {
         op: "add",
@@ -125,7 +128,6 @@ app.post("/Encounter", (req, res) => {
   let encounter = req.body.Encounter;
   let resource = Encounter.toFHIR(encounter);
 
-  // post resource
   axios
     .post(`${base}/Encounter`, resource)
     .then((response) => {
