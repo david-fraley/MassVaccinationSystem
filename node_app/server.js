@@ -80,6 +80,9 @@ async function createPatient(req, res) {
     });
     resource.id = related_id;
     await axios.put(`${base}/RelatedPerson/${related_id}`, resource, headers);
+  } else {
+    res.status(400).json({ error: "at least one patient should be provided" });
+    return;
   }
 
   // resources for members
