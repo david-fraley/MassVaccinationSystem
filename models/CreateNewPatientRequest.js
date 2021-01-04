@@ -4,18 +4,19 @@ Patient {
 
   family : string
   given : string
-  suffix : string
-  phone : {
+  --middle : string
+  --suffix : string
+  phone : [{
     value : string
     use : enum (home, work, temp, old, mobile)
-  }
+  }]
   email : array of strings
   gender : enum (male, female, other, unknown)
   birthdate : string
   race : enum (American Indian or Alaskan Native, Asian, Native Hawaiian or Other Pacific Islander, Black or African-American, White, Other Race)
   ethnicity: enum (Hispanic, Not Hispanic)
-  permissionToFollowup: boolean
   address: {
+    use: enum (home, work, temp)
     line: string
     city: string
     state: string
@@ -58,8 +59,8 @@ Patient {
       "birthDate": "2000-01-01",
       "race": "",
       "ethnicity": "",
-      "follow-up": "",
       "address": {
+        "use": "home",
         "line": "90 Walnut St",
         "city": "New York City",
         "state": "NY",
