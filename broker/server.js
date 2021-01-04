@@ -19,11 +19,8 @@ const generalEndpoints = [
   "/Observation*",
   "/Organization*",
   "/Appointment*",
-  "/Immunization*"
+  "/Immunization*",
 ];
-const headers = {
-  "content-type": "application/fhir+json",
-};
 
 //Health check endpoint
 app.get("/healthcheck", (req, res) => {
@@ -35,32 +32,41 @@ app.get(generalEndpoints, (req, res) => {
   axios
     .get(`${base}${req.url}`)
     .then((response) => {
-      // handle success
       res.json(response.data);
     })
     .catch((error) => handleError(res, error));
 });
 
+// Create Immunization resource
+// Response:  Immunization resource (200)
+//            or JSON object with error field (400)
 app.post("/Immunization", (req, res) => {
   let imm = req.body.Immunization;
-  let resource = Immunization.toFHIR(imm);
-
-  // post resource
-  axios
-    .post(`${base}/Immunization`, resource, headers)
+  postImmunization(imm)
     .then((response) => {
       res.json(response.data);
     })
-    .catch((e) => res.send(e));
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
+
+async function postImmunization(imm) {
+  let resource = Immunization.toFHIR(imm);
+
+  return axios.post(`${base}/Immunization`, resource).then((response) => {
+    return response;
+  });
+}
 
 app.post("/Appointment", (req, res) => {
   let appt = req.body.Appointment;
   let resource = Appointment.toFHIR(appt);
 
-  // post resource
   axios
-    .post(`${base}/Appointment`, resource, headers)
+    .post(`${base}/Appointment`, resource)
     .then((response) => {
       res.json(response.data);
     })
@@ -71,35 +77,61 @@ app.post("/Organization", (req, res) => {
   let org = req.body.Organization;
   let resource = Organization.toFHIR(org);
 
-  // post resource
   axios
-    .post(`${base}/Organization`, resource, headers)
+    .post(`${base}/Organization`, resource)
     .then((response) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
 });
 
+// Create Observation resource
+// and update Immunization resource to reference the new resource.
+// Response:  Observation resource (200)
+//            or JSON object with error field (400)
 app.post("/Observation", (req, res) => {
   let observation = req.body.Observation;
-  let resource = Observation.toFHIR(observation);
-
-  // post resource
-  axios
-    .post(`${base}/Observation`, resource, headers)
+  postObservation(observation)
     .then((response) => {
       res.json(response.data);
     })
-    .catch((e) => res.send(e));
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
+
+async function postObservation(observation) {
+  let resource = Observation.toFHIR(observation);
+
+  return axios.post(`${base}/Observation`, resource).then((response) => {
+    let ref = observation.partOf;
+    // request body for PATCH
+    let update = [
+      {
+        op: "add",
+        path: "/reaction",
+        value: [{ detail: { reference: `Observation/${response.data.id}` } }],
+      },
+    ];
+    let headers = {
+      "content-type": "application/json-patch+json",
+    };
+
+    axios.patch(`${base}/${ref}`, update, { headers: headers }).catch((e) => {
+      console.log({ error: e.response ? e.response.data : e.message });
+    });
+    return response;
+  });
+}
 
 app.post("/Encounter", (req, res) => {
   let encounter = req.body.Encounter;
   let resource = Encounter.toFHIR(encounter);
 
-  // post resource
   axios
-    .post(`${base}/Encounter`, resource, headers)
+    .post(`${base}/Encounter`, resource)
     .then((response) => {
       res.json(response.data);
     })
@@ -230,7 +262,7 @@ function updateEncounterStatus(url, status, res) {
 
         // update the database with new encounter
         axios
-          .put(`${base}/Encounter/${encounter.id}`, encounter, headers)
+          .put(`${base}/Encounter/${encounter.id}`, encounter)
           .catch((error) => handleError(res, error));
       } catch (e) {
         console.log(e);
@@ -259,7 +291,7 @@ function updateAppointmentStatus(url, status, res) {
 
         // update the database with new appointment
         axios
-          .put(`${base}/Appointment/${appt.id}`, appt, headers)
+          .put(`${base}/Appointment/${appt.id}`, appt)
           .catch((error) => handleError(res, error));
       } catch (e) {
         console.log(e);
