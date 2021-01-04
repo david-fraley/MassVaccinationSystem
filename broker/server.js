@@ -19,9 +19,6 @@ const generalEndpoints = [
   "/Appointment*",
   "/Immunization*",
 ];
-const headers = {
-  "content-type": "application/fhir+json",
-};
 
 //Health check endpoint
 app.get("/healthcheck", (req, res) => {
@@ -41,20 +38,24 @@ app.get(generalEndpoints, (req, res) => {
 
 app.post("/Immunization", (req, res) => {
   let imm = req.body.Immunization;
-  postImmunization(imm).then((response) => {
-    res.json(response);
-  });
+  postImmunization(imm)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
 
 async function postImmunization(imm) {
   let resource = Immunization.toFHIR(imm);
 
   // post resource
-  return axios
-    .post(`${base}/Immunization`, resource, headers)
-    .then((response) => {
-      return response.data;
-    });
+  return axios.post(`${base}/Immunization`, resource).then((response) => {
+    return response;
+  });
 }
 
 app.post("/Appointment", (req, res) => {
@@ -63,7 +64,7 @@ app.post("/Appointment", (req, res) => {
 
   // post resource
   axios
-    .post(`${base}/Appointment`, resource, headers)
+    .post(`${base}/Appointment`, resource)
     .then((response) => {
       res.json(response.data);
     })
@@ -76,7 +77,7 @@ app.post("/Organization", (req, res) => {
 
   // post resource
   axios
-    .post(`${base}/Organization`, resource, headers)
+    .post(`${base}/Organization`, resource)
     .then((response) => {
       res.json(response.data);
     })
@@ -85,20 +86,39 @@ app.post("/Organization", (req, res) => {
 
 app.post("/Observation", (req, res) => {
   let observation = req.body.Observation;
-  postObservation(observation).then((response) => {
-    res.json(response);
-  });
+  postObservation(observation)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
 
 async function postObservation(observation) {
   let resource = Observation.toFHIR(observation);
 
   // post resource
-  return axios
-    .post(`${base}/Observation`, resource, headers)
-    .then((response) => {
-      return response.data;
+  return axios.post(`${base}/Observation`, resource).then((response) => {
+    let ref = observation.partOf;
+    let update = [
+      {
+        op: "add",
+        path: "/reaction",
+        value: [{ detail: { reference: `Observation/${response.data.id}` } }],
+      },
+    ];
+    let headers = {
+      "content-type": "application/json-patch+json",
+    };
+
+    axios.patch(`${base}/${ref}`, update, { headers: headers }).catch((e) => {
+      console.log({ error: e.response ? e.response.data : e.message });
     });
+    return response;
+  });
 }
 
 app.post("/Encounter", (req, res) => {
@@ -107,44 +127,11 @@ app.post("/Encounter", (req, res) => {
 
   // post resource
   axios
-    .post(`${base}/Encounter`, resource, headers)
+    .post(`${base}/Encounter`, resource)
     .then((response) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e));
-});
-
-app.post("/submit-vaccination", (req, res) => {
-  let imm = req.body.Immunization;
-  let obs = req.body.Observation;
-  let response = {
-    Immunization: "",
-    Observation: "",
-  };
-
-  // post resource
-  postImmunization(imm)
-    .then((imm_res) => {
-      response.Immunization = imm_res;
-
-      obs.partOf = `Immunization/${imm_res.id}`;
-      postObservation(obs)
-        .then((obs_res) => {
-          response.Observation = obs_res;
-
-          res.status(201).json(response);
-        })
-        .catch((e) => {
-          response.Observation = e.response ? e.response.data : e.message;
-
-          res.status(400).json(response);
-        });
-    })
-    .catch((e) => {
-      response.Immunization = e.response ? e.response.data : e.message;
-
-      res.status(400).json(response);
-    });
 });
 
 // Check-in given either
@@ -204,7 +191,7 @@ function updateEncounterStatus(url, status, res) {
 
         // update the database with new encounter
         axios
-          .put(`${base}/Encounter/${encounter.id}`, encounter, headers)
+          .put(`${base}/Encounter/${encounter.id}`, encounter)
           .catch((error) => handleError(res, error));
       } catch (e) {
         console.log(e);
@@ -233,7 +220,7 @@ function updateAppointmentStatus(url, status, res) {
 
         // update the database with new appointment
         axios
-          .put(`${base}/Appointment/${appt.id}`, appt, headers)
+          .put(`${base}/Appointment/${appt.id}`, appt)
           .catch((error) => handleError(res, error));
       } catch (e) {
         console.log(e);
