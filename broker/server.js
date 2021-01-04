@@ -22,6 +22,9 @@ const generalEndpoints = [
 const headers = {
   "content-type": "application/fhir+json",
 };
+const patchHeaders = {
+    "content-type": "application/json-patch+json",
+};
 
 //Health check endpoint
 app.get("/healthcheck", (req, res) => {
@@ -176,55 +179,67 @@ app.post("/check-in", (req, res) => {
 // URL is either a specific id '/id'
 // or query parameters '?param=value'
 function updateEncounterStatus(url, status) {
-  return axios.get(`${base}/Encounter${url}`).then((response) => {
-    let encounter;
-    let resourceType = response.data.resourceType;
+    return axios.get(`${base}/Encounter${url}`).then((response) => {
+        let encounter;
+        let resourceType = response.data.resourceType;
+        let patch;
 
-    if (resourceType === "Encounter") {
-      encounter = response.data;
-    } else {
-      let bundle = response.data;
+        if (resourceType === "Encounter") {
+            encounter = response.data;
+        } else {
+            let bundle = response.data;
 
-      if (!bundle.hasOwnProperty("entry")) {
-        return "Encounter does not exist";
-      }
-      encounter = bundle.entry[0].resource;
-    }
-    encounter.status = status;
+            if (!bundle.hasOwnProperty("entry")) {
+                return "Encounter does not exist";
+            }
+            encounter = bundle.entry[0].resource;
+        }
 
-    // update the database with new encounter
-    return axios
-      .put(`${base}/Encounter/${encounter.id}`, encounter, headers)
-      .then((response) => {
-        return response;
-      });
-  });
+        patch = [{
+            op: "add",
+            path: "/status",
+            value: status
+        }];
+
+        // update the database with new encounter
+        return axios
+            .patch(`${base}/Encounter/${encounter.id}`, patch, { headers: patchHeaders })
+            .then((response) => {
+                return response;
+            });
+    });
 }
 
 function updateAppointmentStatus(url, status) {
-  return axios.get(`${base}/Appointment${url}`).then((response) => {
-    let appt;
-    let resourceType = response.data.resourceType;
+    return axios.get(`${base}/Appointment${url}`).then((response) => {
+        let appt;
+        let resourceType = response.data.resourceType;
+        let patch;
 
-    if (resourceType === "Appointment") {
-      appt = response.data;
-    } else {
-      let bundle = response.data;
+        if (resourceType === "Appointment") {
+            appt = response.data;
+        } else {
+            let bundle = response.data;
 
-      if (!bundle.hasOwnProperty("entry")) {
-        return "Appointment does not exist";
-      }
-      appt = bundle.entry[0].resource;
-    }
-    appt.status = status;
+            if (!bundle.hasOwnProperty("entry")) {
+                return "Appointment does not exist";
+            }
+            appt = bundle.entry[0].resource;
+        }
 
-    // update the database with new appointment
-    return axios
-      .put(`${base}/Appointment/${appt.id}`, appt, headers)
-      .then((response) => {
-        return response;
-      });
-  });
+        patch = [{
+            op: "add",
+            path: "/status",
+            value: status
+        }];
+
+        // update the database with new appointment
+        return axios
+            .patch(`${base}/Appointment/${appt.id}`, patch, { headers: patchHeaders })
+            .then((response) => {
+                return response;
+            });
+    });
 }
 
 function handleError(res, error) {
