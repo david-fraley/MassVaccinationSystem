@@ -105,7 +105,7 @@ app.post("/Encounter", (req, res) => {
 });
 
 // Discharge
-app.get("/discharge", (req, res) => {
+app.post("/discharge", (req, res) => {
   const encounter_status = "finished";
   const appt_status = "fulfilled";
   let response = { Encounter: "", Appointment: "" };
@@ -137,7 +137,7 @@ app.get("/discharge", (req, res) => {
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
-app.get("/check-in", (req, res) => {
+app.post("/check-in", (req, res) => {
   const encounter_status = "arrived";
   const appt_status = "arrived";
   let encounter_url;
