@@ -21,6 +21,7 @@ const generalEndpoints = [
   "/Organization*",
   "/Appointment*",
   "/Immunization*",
+  "/EpisodeOfCare*",
 ];
 const headers = {
   "content-type": "application/fhir+json",
@@ -39,7 +40,6 @@ app.get(generalEndpoints, (req, res) => {
   axios
     .get(`${base}${req.url}`)
     .then((response) => {
-      // handle success
       res.json(response.data);
     })
     .catch((error) => handleError(res, error));
@@ -146,14 +146,6 @@ app.post("/Encounter", (req, res) => {
     .catch((e) => res.send(e.response.data));
 });
 
-app.post("/Patient", (req, res) => {
-  createPatient(req, res).catch((e) =>
-    res.status(400).json({
-      error: e.response ? e.response.data : e.message,
-    })
-  );
-});
-
 app.post("/EpisodeOfCare", (req, res) => {
   let eoc = req.body.EpisodeOfCare;
   let resource = EpisodeOfCare.toFHIR(eoc);
@@ -165,6 +157,14 @@ app.post("/EpisodeOfCare", (req, res) => {
       res.json(response.data);
     })
     .catch((e) => res.send(e.response.data));
+});
+
+app.post("/Patient", (req, res) => {
+  createPatient(req, res).catch((e) =>
+    res.status(400).json({
+      error: e.response ? e.response.data : e.message,
+    })
+  );
 });
 
 async function createPatient(req, res) {
