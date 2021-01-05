@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        workflowState: 'INITIAL',
+        workflowState: 'NO_PATIENT_LOADED',
         patientResource: {
             patientId: '',
             patientLastName: '',
@@ -53,22 +53,22 @@ export default new Vuex.Store({
             return state.workflowState
         },
         isCheckInPageDisabled: state => {
-            return (state.workflowState == 'INITIAL')
+            return (state.workflowState == 'NO_PATIENT_LOADED')
         },
         isPatientHistoryPageDisabled: state => {
-            return (state.workflowState == 'INITIAL')
+            return (state.workflowState == 'NO_PATIENT_LOADED')
         },
         isVaccinationEventPageDisabled: state => {
-            return ((state.workflowState == 'INITIAL') || (state.workflowState == 'RECORD_RETRIEVED'))
+            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'RECORD_RETRIEVED'))
         },
         isAdverseReactionPageDisabled: state => {
             return ((state.workflowState != 'VACCINATION_COMPLETE') && (state.workflowState != 'DISCHARGED'))
         },
         isDischargePageDisabled: state => {
-            return ((state.workflowState == 'INITIAL') || (state.workflowState == 'RECORD_RETRIEVED'))
+            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'RECORD_RETRIEVED'))
         },
         isConfigurationPageDisabled: state => {
-            return ((state.workflowState != 'INITIAL') && (state.workflowState != 'DISCHARGED'))
+            return ((state.workflowState != 'NO_PATIENT_LOADED') && (state.workflowState != 'DISCHARGED'))
         },
     },
 
