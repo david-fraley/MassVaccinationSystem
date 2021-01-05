@@ -8,11 +8,14 @@
         <v-divider></v-divider>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row> 
         <v-col cols="12">
           <div class="font-weight-medium secondary--text">Retrieve the patient's record by scanning their QR code.</div>
         </v-col>
     </v-row>
+    <v-row>
+      <div> <p class="decode-result"> Result: <b>{{result}}</b></p>
+      <QrcodeStream @decode="onDecode" @init="onInit"/></div> </v-row>
     <v-row>
       <v-col cols="12">
         <v-btn color="accent">
@@ -120,10 +123,14 @@
 </template>
 
 <script>
+import {QrcodeStream} from "vue-qrcode-reader";
   export default {
     name: 'PatientLookupPage',
     methods: 
     {
+      onDecode (result) {
+        this.result = result
+      },
       rowClick: function (item, row) {      
         row.select(true);
         this.selectedId=item.id
@@ -138,9 +145,11 @@
     },
     components: 
     {
+      QrcodeStream
     },
     data () {
 	return {
+    result: '',
 		patientFamilyName: '',
 		patientGivenName: '',
     patientDate: '',
