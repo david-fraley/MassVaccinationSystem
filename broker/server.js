@@ -153,6 +153,19 @@ app.post("/Patient", (req, res) => {
   );
 });
 
+app.post("/EpisodeOfCare", (req, res) => {
+  let eoc = req.body.EpisodeOfCare;
+  let resource = EpisodeOfCare.toFHIR(eoc);
+
+  // post resource
+  axios
+    .post(`${base}/EpisodeOfCare`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e.response.data));
+});
+
 async function createPatient(req, res) {
   let patients = req.body.Patient;
   let patient = patients.shift();
