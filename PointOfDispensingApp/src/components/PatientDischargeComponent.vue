@@ -5,12 +5,12 @@
         <div class="font-weight-medium secondary--text">Vaccination status</div>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           value="vaccination status"
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           value="2020-07-20 14:23:47"
         ></v-text-field>
       </v-col>
@@ -20,12 +20,12 @@
         <div class="font-weight-medium secondary--text">Encounter status</div>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           value="encounter status"
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           value="2020-07-20 14:23:47"
         ></v-text-field>
       </v-col>
