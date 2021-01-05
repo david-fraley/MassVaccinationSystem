@@ -21,6 +21,12 @@ const generalEndpoints = [
   "/Appointment*",
   "/Immunization*",
 ];
+const headers = {
+  "content-type": "application/fhir+json",
+};
+const patchHeaders = {
+  "content-type": "application/json-patch+json",
+};
 
 //Health check endpoint
 app.get("/healthcheck", (req, res) => {
@@ -205,102 +211,145 @@ async function createPatientWithLink(patient, related) {
   return result;
 }
 
+// Discharge
+app.post("/discharge", (req, res) => {
+  const encounter_status = "finished";
+  const appt_status = "fulfilled";
+  let response = { Encounter: "", Appointment: "" };
+
+  if (req.query.hasOwnProperty("appointment")) {
+    let encounter_url = `?appointment=${req.query.appointment}`;
+    let appt_url = `/${req.query.appointment}`;
+
+    Promise.all([
+      updateEncounterStatus(encounter_url, encounter_status),
+      updateAppointmentStatus(appt_url, appt_status),
+    ])
+      .then((results) => {
+        for (result of results) {
+          response[result.data.resourceType] = result.data;
+        }
+        res.json(response);
+      })
+      .catch((e) => {
+        response.error = e.response ? e.response.data : e.message;
+        res.status(400).json(response);
+      });
+  } else {
+    response.Encounter = "appointment parameter missing";
+    res.status(400).json(response);
+  }
+});
+
 // Check-in given either
 // a) appointment id from QR code
 // b) patient id from patient lookup
-app.get("/check-in", (req, res) => {
+app.post("/check-in", (req, res) => {
   const encounter_status = "arrived";
-  const appointment_status = "arrived";
+  const appt_status = "arrived";
+  let encounter_url;
+  let appt_url;
+  let response = {};
 
   if (req.query.hasOwnProperty("patient")) {
-    updateEncounterStatus(
-      `?subject=${req.query.patient}&status=planned`,
-      encounter_status,
-      res
-    );
-    updateAppointmentStatus(
-      `?actor=${req.query.patient}&status=booked`,
-      appointment_status,
-      res
-    );
-    res.send("");
+    encounter_url = `?subject=${req.query.patient}&status=planned`;
+    appt_url = `?actor=${req.query.patient}&status=booked`;
   } else if (req.query.hasOwnProperty("appointment")) {
-    updateEncounterStatus(
-      `?appointment=${req.query.appointment}`,
-      encounter_status,
-      res
-    );
-    updateAppointmentStatus(
-      `/${req.query.appointment}`,
-      appointment_status,
-      res
-    );
-    res.send("");
+    encounter_url = `?appointment=${req.query.appointment}`;
+    appt_url = `/${req.query.appointment}`;
   } else {
-    res.send("error");
+    response.error = "patient or appointment parameter missing";
+    res.status(400).json(response);
+    return;
   }
+
+  Promise.all([
+    updateEncounterStatus(encounter_url, encounter_status),
+    updateAppointmentStatus(appt_url, appt_status),
+  ])
+    .then((results) => {
+      for (result of results) {
+        response[result.data.resourceType] = result.data;
+      }
+      res.json(response);
+    })
+    .catch((e) => {
+      response.error = e.response ? e.response.data : e.message;
+      res.status(400).json(response);
+    });
 });
 
 // Given url of Encounter and new status, update encounter resource
 // URL is either a specific id '/id'
 // or query parameters '?param=value'
-function updateEncounterStatus(url, status, res) {
-  axios
-    .get(`${base}/Encounter${url}`)
-    .then((response) => {
-      try {
-        let encounter;
-        if (url.startsWith("/")) {
-          encounter = response.data;
-        } else {
-          let bundle = response.data;
-          // update status
-          encounter = bundle.entry[0].resource;
-        }
-        encounter.status = status;
-        // update status history
+function updateEncounterStatus(url, status) {
+  return axios.get(`${base}/Encounter${url}`).then((response) => {
+    let encounter;
+    let resourceType = response.data.resourceType;
+    let patch;
 
-        // update the database with new encounter
-        axios
-          .put(`${base}/Encounter/${encounter.id}`, encounter)
-          .catch((error) => handleError(res, error));
-      } catch (e) {
-        console.log(e);
+    if (resourceType === "Encounter") {
+      encounter = response.data;
+    } else {
+      let bundle = response.data;
+
+      if (!bundle.hasOwnProperty("entry")) {
+        console.log("Encounter does not exist");
       }
-    })
-    .catch((error) => handleError(res, error))
-    .then(function () {
-      // always executed
-    });
+      encounter = bundle.entry[0].resource;
+    }
+
+    patch = [
+      {
+        op: "add",
+        path: "/status",
+        value: status,
+      },
+    ];
+
+    // update the database with new encounter
+    return axios
+      .patch(`${base}/Encounter/${encounter.id}`, patch, {
+        headers: patchHeaders,
+      })
+      .then((response) => {
+        return response;
+      });
+  });
 }
 
-function updateAppointmentStatus(url, status, res) {
-  axios
-    .get(`${base}/Appointment${url}`)
-    .then((response) => {
-      try {
-        let appt;
-        if (url.startsWith("/")) {
-          appt = response.data;
-        } else {
-          let bundle = response.data;
-          // update status
-          appt = bundle.entry[0].resource;
-        }
-        appt.status = status;
+function updateAppointmentStatus(url, status) {
+  return axios.get(`${base}/Appointment${url}`).then((response) => {
+    let appt;
+    let resourceType = response.data.resourceType;
+    let patch;
 
-        // update the database with new appointment
-        axios
-          .put(`${base}/Appointment/${appt.id}`, appt)
-          .catch((error) => handleError(res, error));
-      } catch (e) {
-        console.log(e);
+    if (resourceType === "Appointment") {
+      appt = response.data;
+    } else {
+      let bundle = response.data;
+
+      if (!bundle.hasOwnProperty("entry")) {
+        console.log("Appointment does not exist");
       }
-    })
-    .catch((error) => handleError(res, error))
-    .then(function () {
-      // always executed
-    });
+      appt = bundle.entry[0].resource;
+    }
+
+    patch = [
+      {
+        op: "add",
+        path: "/status",
+        value: status,
+      },
+    ];
+
+    // update the database with new appointment
+    return axios
+      .patch(`${base}/Appointment/${appt.id}`, patch, { headers: patchHeaders })
+      .then((response) => {
+        return response;
+      });
+  });
 }
 
 function handleError(res, error) {
