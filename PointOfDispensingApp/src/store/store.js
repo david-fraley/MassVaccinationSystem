@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     
     state: {
-        activeWorkflowState: 'INITIAL',
+        activeWorkflowState: 'NO_PATIENT_LOADED',
         patientResource: {
             patientId: '',
             patientLastName: '',
@@ -65,7 +65,7 @@ export default new Vuex.Store({
             state.patientResource.patientPreferredLanguage = patientResourcePayload.patientPreferredLanguage
 
             //reset patient-specific data
-            state.activeWorkflowState = 'INITIAL'
+            state.activeWorkflowState = 'NO_PATIENT_LOADED'
             state.encounterResource.encounterStatus = ''
             state.encounterResource.encounterTimeStamp = ''
             state.immunizationResource.lotNumber = '',
@@ -158,7 +158,7 @@ export default new Vuex.Store({
     },
     activeWorkflowStateEnum:
     {
-        INITIAL: 0,
+        NO_PATIENT_LOADED: 0,
         RECORD_RETRIEVED: 1,
         ADMITTED: 2,
         VACCINATION_COMPLETE: 3,
