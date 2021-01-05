@@ -36,6 +36,7 @@ const generalEndpoints = [
   "/Appointment*",
   "/Immunization*",
   "/EpisodeOfCare*",
+  "/Practitioner*",
 ];
 const patchHeaders = {
   "content-type": "application/json-patch+json",
