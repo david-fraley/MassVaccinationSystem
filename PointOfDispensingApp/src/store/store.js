@@ -53,21 +53,28 @@ export default new Vuex.Store({
             return state.workflowState
         },
         isCheckInPageDisabled: state => {
-            return (state.workflowState == 'NO_PATIENT_LOADED')
+            //Check-In page is not accessible before the patient record has been loaded or after the patient has been discharged
+            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'DISCHARGED'))
         },
         isPatientHistoryPageDisabled: state => {
-            return (state.workflowState == 'NO_PATIENT_LOADED')
+            //Patient History page is not accessible before the patient record has been loaded or after the patient has been discharged
+            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'DISCHARGED'))
         },
         isVaccinationEventPageDisabled: state => {
-            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'RECORD_RETRIEVED'))
+            //Vaccination Event page is not accessible before the patient has been checked in or after the patient has been discharged
+            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'RECORD_RETRIEVED') || (state.workflowState == 'DISCHARGED'))
         },
         isAdverseReactionPageDisabled: state => {
-            return ((state.workflowState != 'VACCINATION_COMPLETE') && (state.workflowState != 'DISCHARGED'))
+            //The Adverse Reaction page is only accessible after the vaccine has been administered and before the patient has been discharged
+            return (state.workflowState != 'VACCINATION_COMPLETE')
         },
         isDischargePageDisabled: state => {
+            //The Discharge page is not accessible before the patient has been checked in
             return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'RECORD_RETRIEVED'))
         },
         isConfigurationPageDisabled: state => {
+            //The Configuration page is only accessible before a patient has been checked in or after a patient has been discharged
+            //(in other words, a user cannot go to the Configuration page while a patient record is actively in use)
             return ((state.workflowState != 'NO_PATIENT_LOADED') && (state.workflowState != 'DISCHARGED'))
         },
     },
