@@ -7,6 +7,7 @@ const Encounter = require("./models/Encounter");
 const Observation = require("./models/Observation");
 const Appointment = require("./models/Appointment");
 const Immunization = require("./models/Immunization");
+const EpisodeOfCare = require("./models/EpisodeOfCare");
 
 const app = express();
 app.use(express.json());
