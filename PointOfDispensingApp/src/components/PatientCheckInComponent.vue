@@ -5,12 +5,12 @@
         <div class="font-weight-medium secondary--text">Location</div>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           :value=locationId
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           :value=locationName
         ></v-text-field>
       </v-col>
@@ -21,12 +21,12 @@
         <div class="font-weight-medium secondary--text">Encounter status</div>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           :value=encounterStatus
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly
+        <v-text-field filled dense readonly outlined
           :value=encounterTimeStamp
         ></v-text-field>
       </v-col>
