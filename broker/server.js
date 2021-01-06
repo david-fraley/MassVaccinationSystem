@@ -1,3 +1,6 @@
+// Load configuration settings
+const configs = require("./config/server.js");
+
 const express = require("express");
 const axios = require("axios").default;
 const Patient = require("./models/Patient");
@@ -367,5 +370,4 @@ function handleError(res, error) {
   console.log(error.config);
 }
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(configs.port, () => console.log(`Listening on port ${configs.port}`));
