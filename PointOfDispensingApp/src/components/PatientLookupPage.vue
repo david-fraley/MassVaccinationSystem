@@ -180,7 +180,7 @@
     },
     data () {
 	return {
-		selectedId: -1,
+		selectedId: -1, //initializing the ID of the selected row to be something that is obviously invalid
     selectedFamilyName: '',
     selectedGivenName: '',
     selectedDOB: '',

@@ -5,8 +5,9 @@ import Vue from 'vue'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    
     state: {
-        workflowState: 'NO_PATIENT_LOADED',
+        activeWorkflowState: 'NO_PATIENT_LOADED',
         patientResource: {
             patientId: '',
             patientLastName: '',
@@ -49,39 +50,39 @@ export default new Vuex.Store({
     },
 
     getters: {
-        workflowState: state => {
-            return state.workflowState
+        activeWorkflowState: state => {
+            return state.activeWorkflowState
         },
         isCheckInPageDisabled: state => {
             //Check-In page is not accessible before the patient record has been loaded or after the patient has been discharged
-            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'DISCHARGED'))
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
         },
         isPatientHistoryPageDisabled: state => {
             //Patient History page is not accessible before the patient record has been loaded or after the patient has been discharged
-            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'DISCHARGED'))
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
         },
         isVaccinationEventPageDisabled: state => {
             //Vaccination Event page is not accessible before the patient has been checked in or after the patient has been discharged
-            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'RECORD_RETRIEVED') || (state.workflowState == 'DISCHARGED'))
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED') || (state.activeWorkflowState == 'DISCHARGED'))
         },
         isAdverseReactionPageDisabled: state => {
             //The Adverse Reaction page is only accessible after the vaccine has been administered and before the patient has been discharged
-            return (state.workflowState != 'VACCINATION_COMPLETE')
+            return (state.activeWorkflowState != 'VACCINATION_COMPLETE')
         },
         isDischargePageDisabled: state => {
             //The Discharge page is not accessible before the patient has been checked in
-            return ((state.workflowState == 'NO_PATIENT_LOADED') || (state.workflowState == 'RECORD_RETRIEVED'))
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
         },
         isConfigurationPageDisabled: state => {
             //The Configuration page is only accessible before a patient has been checked in or after a patient has been discharged
             //(in other words, a user cannot go to the Configuration page while a patient record is actively in use)
-            return ((state.workflowState != 'NO_PATIENT_LOADED') && (state.workflowState != 'DISCHARGED'))
+            return ((state.activeWorkflowState != 'NO_PATIENT_LOADED') && (state.activeWorkflowState != 'DISCHARGED'))
         },
     },
 
     mutations: {
         patientRecordRetrieved(state, patientResourcePayload) {
-            state.workflowState = 'RECORD_RETRIEVED'
+            state.activeWorkflowState = 'RECORD_RETRIEVED'
             state.patientResource.patientId = patientResourcePayload.patientId
             state.patientResource.patientLastName = patientResourcePayload.patientLastName
             state.patientResource.patientFirstName = patientResourcePayload.patientFirstName
@@ -113,7 +114,7 @@ export default new Vuex.Store({
             state.screeningResponses.screeningComplete = false
         },
         patientAdmitted(state, encounterResourcePayload) {
-            state.workflowState = 'ADMITTED'
+            state.activeWorkflowState = 'ADMITTED'
             state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
             state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
         },
@@ -126,7 +127,7 @@ export default new Vuex.Store({
             state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
-            state.workflowState = 'VACCINATION_COMPLETE'
+            state.activeWorkflowState = 'VACCINATION_COMPLETE'
             state.immunizationResource.lotNumber= vaccinationCompletePlayload.lotNumber
             state.immunizationResource.expirationDate= vaccinationCompletePlayload.expirationDate
             state.immunizationResource.manufacturer= vaccinationCompletePlayload.manufacturer
@@ -140,7 +141,7 @@ export default new Vuex.Store({
             state.immunizationResource.notes= vaccinationCompletePlayload.notes
         },
         vaccinationCanceled(state, vaccinationCanceledPlayload) {
-            state.workflowState = 'VACCINATION_CANCELED'
+            state.activeWorkflowState = 'VACCINATION_CANCELED'
             state.immunizationResource.immunizationStatus= vaccinationCanceledPlayload.immunizationStatus
             state.immunizationResource.immunizationTimeStamp= vaccinationCanceledPlayload.immunizationTimeStamp
             state.immunizationResource.healthcarePractitioner= vaccinationCanceledPlayload.healthcarePractitioner
@@ -148,10 +149,13 @@ export default new Vuex.Store({
             state.immunizationResource.notes= vaccinationCanceledPlayload.notes
         },
         patientDischarged(state, encounterResourcePayload) {
-            state.workflowState = 'DISCHARGED'
+            state.activeWorkflowState = 'DISCHARGED'
             state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
             state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
         },
+        unknownErrorCondition(state) {
+            state.activeWorkflowState = 'ERROR'
+        }
 
     },
 
@@ -174,7 +178,19 @@ export default new Vuex.Store({
         patientDischarged(context, encounterResourcePayload) {
             context.commit('patientDischarged', encounterResourcePayload)
         },
-
+        unknownErrorCondition(context) {
+            context.commit('unknownErrorCondition')
+        }
+    },
+    activeWorkflowStateEnum:
+    {
+        NO_PATIENT_LOADED: 0,
+        RECORD_RETRIEVED: 1,
+        ADMITTED: 2,
+        VACCINATION_COMPLETE: 3,
+        VACCINATION_CANCELED: 4,
+        DISCHARGED: 5,
+        ERROR: 6
     }
 
 });
