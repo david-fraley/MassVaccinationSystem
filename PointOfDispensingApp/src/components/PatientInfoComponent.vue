@@ -106,12 +106,9 @@
       },
       patientPreferredLanguage() {
         return this.$store.state.patientResource.patientPreferredLanguage
-      }
+      },
     },
     methods: 
-    {
-    },
-    components: 
     {
     },
     data () {

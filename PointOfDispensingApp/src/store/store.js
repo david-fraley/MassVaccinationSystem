@@ -50,7 +50,34 @@ export default new Vuex.Store({
     },
 
     getters: {
-
+        activeWorkflowState: state => {
+            return state.activeWorkflowState
+        },
+        isCheckInPageDisabled: state => {
+            //Check-In page is not accessible before the patient record has been loaded or after the patient has been discharged
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
+        },
+        isPatientHistoryPageDisabled: state => {
+            //Patient History page is not accessible before the patient record has been loaded or after the patient has been discharged
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
+        },
+        isVaccinationEventPageDisabled: state => {
+            //Vaccination Event page is not accessible before the patient has been checked in or after the patient has been discharged
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED') || (state.activeWorkflowState == 'DISCHARGED'))
+        },
+        isAdverseReactionPageDisabled: state => {
+            //The Adverse Reaction page is only accessible after the vaccine has been administered and before the patient has been discharged
+            return (state.activeWorkflowState != 'VACCINATION_COMPLETE')
+        },
+        isDischargePageDisabled: state => {
+            //The Discharge page is not accessible before the patient has been checked in
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
+        },
+        isConfigurationPageDisabled: state => {
+            //The Configuration page is only accessible before a patient has been checked in or after a patient has been discharged
+            //(in other words, a user cannot go to the Configuration page while a patient record is actively in use)
+            return ((state.activeWorkflowState != 'NO_PATIENT_LOADED') && (state.activeWorkflowState != 'DISCHARGED'))
+        },
     },
 
     mutations: {
@@ -65,7 +92,6 @@ export default new Vuex.Store({
             state.patientResource.patientPreferredLanguage = patientResourcePayload.patientPreferredLanguage
 
             //reset patient-specific data
-            state.activeWorkflowState = 'NO_PATIENT_LOADED'
             state.encounterResource.encounterStatus = ''
             state.encounterResource.encounterTimeStamp = ''
             state.immunizationResource.lotNumber = '',
