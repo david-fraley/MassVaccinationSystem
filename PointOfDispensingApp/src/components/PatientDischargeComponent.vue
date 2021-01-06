@@ -6,12 +6,12 @@
       </v-col>
       <v-col cols="3">
         <v-text-field filled dense readonly outlined
-          value="vaccination status"
+          :value=immunizationStatus
         ></v-text-field>
       </v-col>
       <v-col cols="3">
         <v-text-field filled dense readonly outlined
-          value="2020-07-20 14:23:47"
+          :value=immunizationTimeStamp
         ></v-text-field>
       </v-col>
     </v-row>
@@ -21,12 +21,12 @@
       </v-col>
       <v-col cols="3">
         <v-text-field filled dense readonly outlined
-          value="encounter status"
+          :value=encounterStatus
         ></v-text-field>
       </v-col>
       <v-col cols="3">
         <v-text-field filled dense readonly outlined
-          value="2020-07-20 14:23:47"
+          :value=encounterTimeStamp
         ></v-text-field>
       </v-col>
     </v-row>
@@ -34,7 +34,7 @@
       <v-col cols="2">
       </v-col>    
       <v-col cols="6">
-        <v-btn block color="accent">
+        <v-btn block color="accent" @click="endEncounter()">
           End encounter
         </v-btn>
       </v-col>
@@ -69,8 +69,32 @@
 <script>
   export default {
     name: 'PatientDischargeComponent',
+    computed:
+    {
+      immunizationStatus() {
+        return this.$store.state.immunizationResource.immunizationStatus
+      },
+      immunizationTimeStamp() {
+        return this.$store.state.immunizationResource.immunizationTimeStamp
+      },
+      encounterStatus() {
+        return this.$store.state.encounterResource.encounterStatus
+      },
+      encounterTimeStamp() {
+        return this.$store.state.encounterResource.encounterTimeStamp
+      },
+    },
     methods: 
     {
+      endEncounter() {
+        //the following is sending dummy data until we have the API in place
+        const encounterResourcePayload = {
+          encounterStatus:'Finished',
+          encounterTimeStamp: new Date().toISOString(),
+        }
+        //send data to Vuex
+        this.$store.dispatch('patientDischarged', encounterResourcePayload)
+      }
     },
     components: 
     {

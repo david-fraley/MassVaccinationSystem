@@ -15,11 +15,9 @@
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense
-              value="####"
-              id="LotNumber" 
               required
               :rules="[v => !!v || 'Lot Number field is required']"
-              v-model="LotNumber"
+              v-model="lotNumber"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -27,11 +25,10 @@
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense
-              value="MM/DD/YYYY"
-              id="ExpDate" 
+              :value=expirationDate
               required
               :rules="[v => !!v || 'Expiration Date field is required']"
-              v-model="ExpDate"
+              v-model="expirationDate"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -39,11 +36,10 @@
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense
-              value="Pfizer"
-              id="Manufacturer" 
+              :value=manufacturer
               required
               :rules="[v => !!v || 'Manufacturer field is required']"
-              v-model="Manufacturer"
+              v-model="manufacturer"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -63,7 +59,7 @@
               dense
               required
               :rules="[v => !!v || 'Dose Quantity field is required']"
-              v-model="DoseQty"
+              v-model="doseQuantity"
             ></v-select>
           </v-col>
           <v-col cols="4">
@@ -74,10 +70,9 @@
               :items="doseNumberOptions"
               outlined
               dense
-              v-model="DoseNumber"
+              v-model="doseNumber"
               required
               :rules="[v => !!v || 'Dose Number field is required']"
-              id="DoseNumber"
             ></v-select>
           </v-col>
         </v-row>
@@ -98,7 +93,6 @@
         </v-btn>
       </v-col>
     </v-row>
-	
     <v-row>
       <v-col cols="5">
         <v-row no-gutters>
@@ -107,8 +101,7 @@
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense filled readonly
-              value="completed"
-              id="vaccinationStatus"
+              :value=immunizationStatus
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -116,8 +109,7 @@
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense filled readonly
-              value="Doogie Howser"
-              id="healthPractitioner" 
+              :value=healthcarePractitioner 
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -130,7 +122,7 @@
               dense
               required
               :rules="[v => !!v || 'Site of Vaccination field is required']"
-              v-model="siteOfVaccination"
+              v-model="site"
             ></v-select>
           </v-col>
           <v-col cols="4">
@@ -138,7 +130,7 @@
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense filled readonly
-              value="Injection"
+              :value=route
             ></v-text-field>
           </v-col>
         </v-row>
@@ -153,8 +145,7 @@
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense filled readonly
-              value="04/21/2021  11:13:27"
-              id="vaccinationStatus" 
+              :value=immunizationTimeStamp
             ></v-text-field>
           </v-col>
         </v-row>
@@ -163,53 +154,52 @@
     <v-row>
       <v-col cols="12">
         <v-textarea
-          id="notes"
           placeholder="Notes"
           outlined
           rows="4"
+          :value=notes
+          v-model="notes"
         ></v-textarea>
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
-	<template> 
-		<div class="text-center">
-		<v-dialog
-			v-model="dialog"
-			width="500"
-		>
-		<template v-slot:activator="{ on, attrs }">
-      <v-col cols="6">
-        <v-btn block color="accent" v-bind="attrs" v-on="on">
-          Submit vaccination record
-	</v-btn>
-	</v-col>
-	</template>
-	
-	<v-card>
-		<v-card-title class="headline grey lighten-2 justify-center"> 
-		Are you sure you want to submit?
-		</v-card-title>
-		
-		<v-card-actions>
-		<v-btn	
-			color="primary"
-			text
-			@click="dialog = false">
-			Back
-		</v-btn>
-		<v-spacer></v-spacer>
-		<v-btn	
-			color="primary"
-			text
-			@click="submitVaccinationRecord()">
-			Submit
-		</v-btn>
-		</v-card-actions>
-		</v-card>
-		</v-dialog>
-		</div>
-		</template>
-
+      <template> 
+        <div class="text-center">
+          <v-dialog
+            v-model="dialog"
+            width="500"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-col cols="6">
+                <v-btn block color="accent" v-bind="attrs" v-on="on">
+                  Submit vaccination record
+                </v-btn>
+              </v-col>
+          </template>
+            <v-card>
+              <v-card-title class="headline grey lighten-2 justify-center"> 
+                Are you sure you want to submit?
+              </v-card-title>
+              
+              <v-card-actions>
+                <v-btn	
+                  color="primary"
+                  text
+                  @click="dialog = false">
+                  Back
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn	
+                  color="primary"
+                  text
+                  @click="submitVaccinationRecord()">
+                  Submit
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
+      </template>
     </v-row>
   </v-container>
 </template>
@@ -217,11 +207,42 @@
 <script>
   export default {
     name: 'VaccinationProceedComponent',
+    computed: {
+      immunizationStatus() {
+        return this.$store.state.immunizationResource.immunizationStatus
+      },
+      immunizationTimeStamp() {
+        return this.$store.state.immunizationResource.immunizationTimeStamp
+      },
+      healthcarePractitioner() {
+        return this.$store.state.immunizationResource.healthcarePractitioner
+      },
+    },
     methods: 
     {
       submitVaccinationRecord() {
-        this.dialog = false;
+        const vaccinationCompletePlayload = {
+          lotNumber: this.lotNumber,
+          expirationDate: this.expirationDate,
+          manufacturer: this.manufacturer,
+          doseQuantity: this.doseQuantity,
+          doseNumber: this.doseNumber,
+          site: this.site,
+          route: this.route,
+          immunizationStatus: 'Completed',
+          immunizationTimeStamp: new Date().toISOString(),
+          healthcarePractitioner: this.healthcarePractitioner,
+          notes: this.notes,
+        }
+        
+        //send data to Vuex
+        this.$store.dispatch('vaccinationComplete', vaccinationCompletePlayload)
+
+        //Advance to the Discharge page
         this.$router.push("Discharge")
+
+        //Close the dialog
+        this.dialog = false;
       }
     },
     components: 
@@ -233,6 +254,14 @@
         doseNumberOptions: ['1', '2'],
         doseQuantityOptions: ['0.1 mL', '0.2 mL', '0.5 mL', '1.0 mL'],
         vaccinationSiteOptions: ['Left arm', 'Right arm'],
+        doseQuantity: this.$store.state.immunizationResource.doseQuantity,
+        doseNumber: this.$store.state.immunizationResource.doseNumber,
+        site: this.$store.state.immunizationResource.site,
+        route: this.$store.state.immunizationResource.route,
+        lotNumber: this.$store.state.immunizationResource.lotNumber,
+        expirationDate: this.$store.state.immunizationResource.expirationDate,
+        manufacturer: this.$store.state.immunizationResource.manufacturer,
+        notes: this.$store.state.immunizationResource.notes,
       }
     }
   }
