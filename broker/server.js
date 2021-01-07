@@ -15,6 +15,12 @@ const app = express();
 app.use(express.json());
 app.set("json spaces", 2);
 
+const reg_path = __dirname + "/PatientRegistrationViews/";
+const pod_path = __dirname + "/PointOfDispensingViews/";
+
+app.use("/Registration", express.static(reg_path));
+app.use("/POD", express.static(pod_path));
+
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
 const generalEndpoints = [
   "/Patient*",
@@ -43,7 +49,11 @@ app.get(generalEndpoints, (req, res) => {
     .then((response) => {
       res.json(response.data);
     })
-    .catch((error) => handleError(res, error));
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
 
 // Create Immunization resource
@@ -79,7 +89,11 @@ app.post("/Appointment", (req, res) => {
     .then((response) => {
       res.json(response.data);
     })
-    .catch((e) => res.send(e));
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
 
 app.post("/Organization", (req, res) => {
@@ -91,7 +105,11 @@ app.post("/Organization", (req, res) => {
     .then((response) => {
       res.json(response.data);
     })
-    .catch((e) => res.send(e));
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
 
 // Create Observation resource
@@ -144,7 +162,11 @@ app.post("/Encounter", (req, res) => {
     .then((response) => {
       res.json(response.data);
     })
-    .catch((e) => res.send(e));
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
 
 app.post("/Patient", (req, res) => {
@@ -353,21 +375,6 @@ function updateAppointmentStatus(url, status) {
         return response;
       });
   });
-}
-
-function handleError(res, error) {
-  if (error.response) {
-    // The request was made and the server responded with a status code
-    let errorCode = error.response.status;
-    res.status(errorCode).send(error.response.data);
-  } else if (error.request) {
-    // The request was made but no response was received
-    console.log(error.request);
-  } else {
-    // Something happened in setting up the request that triggered an Error
-    console.log("Error", error.message);
-  }
-  console.log(error.config);
 }
 
 app.listen(configs.port, () => console.log(`Listening on port ${configs.port}`));
