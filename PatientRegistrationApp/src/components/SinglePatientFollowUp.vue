@@ -1,22 +1,5 @@
 <template>
 	<v-container fluid>
-    <v-row justify="center">
-      <div class="font-weight-medium"><br><br>How do you want to receive this QR code?</div>
-    </v-row>
-    <v-row justify="center">
-      <v-col cols="8" sm="4" md="3" lg="3">
-        <v-radio-group class="font-weight-medium">
-            <v-radio label="E-mail"></v-radio>
-            <v-radio label="SMS Message"></v-radio>
-            <v-radio label="Both"></v-radio>
-        </v-radio-group>
-      </v-col>
-    </v-row>
-<v-row justify="center">
-  <v-btn color="secondary" class="ma-2 white--text">
-    Send
-  </v-btn>
-</v-row>  
     <v-row align="center" justify="start">
       <v-col cols="12">
         <div class="font-weight-regular">Use this QR code to easily check-in at the site where you receive your vaccine. This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.</div>
@@ -40,6 +23,23 @@
 				Download As PDF
 			</v-btn>
     </v-row>
+    <v-row justify="center">
+      <div class="font-weight-medium"><br><br>How do you want to receive this QR code?</div>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="8" sm="4" md="3" lg="3">
+        <v-radio-group class="font-weight-medium">
+            <v-radio label="E-mail"></v-radio>
+            <v-radio label="SMS Message"></v-radio>
+            <v-radio label="Both"></v-radio>
+        </v-radio-group>
+      </v-col>
+    </v-row>
+<v-row justify="center">
+  <v-btn color="secondary" class="ma-2 white--text">
+    Send
+  </v-btn>
+</v-row>  
 	</v-container>
 </template>
 
@@ -62,8 +62,12 @@ export default {
       let pdfDoc = new jsPDF();
       let imageData= this.getBase64Image(qrcode);
       let string = this.qrValue
-      pdfDoc.text(string, 15,15);
-      pdfDoc.addImage(imageData, "JPG", 50, 50);
+      pdfDoc.setFontSize(10);
+      pdfDoc.text("COVID-19 Vaccination Registration",10,15);
+      pdfDoc.text("Use this QR code to easily check-in at the site where you receive your vaccine.",10,25);
+      pdfDoc.text("This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.",10, 30);
+      pdfDoc.addImage(imageData, "JPG", 70, 50);
+      pdfDoc.text(string, 70,48);
       pdfDoc.save('qrcode.pdf');
     },
     getBase64Image(img) {
