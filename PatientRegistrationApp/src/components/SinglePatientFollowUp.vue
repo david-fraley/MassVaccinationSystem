@@ -1,54 +1,52 @@
 <template>
-	<v-container fluid><div id="printMe"> 
-  <v-row justify="center">
-  <div class="no-printme font-weight-medium"><br><br>How do you want to receive this QR code?</div>
-</v-row>
+	<v-container fluid>
+    <v-row justify="center">
+      <div class="font-weight-medium"><br><br>How do you want to receive this QR code?</div>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="8" sm="4" md="3" lg="3">
+        <v-radio-group class="font-weight-medium">
+            <v-radio label="E-mail"></v-radio>
+            <v-radio label="SMS Message"></v-radio>
+            <v-radio label="Both"></v-radio>
+        </v-radio-group>
+      </v-col>
+    </v-row>
 <v-row justify="center">
-  <v-col cols="8" sm="4" md="3" lg="3">
-  <v-radio-group class="no-printme font-weight-medium">
-      <v-radio label="E-mail"></v-radio>
-      <v-radio label="SMS Message"></v-radio>
-      <v-radio label="Both"></v-radio>
-  </v-radio-group>
-   </v-col>
-</v-row>
-
-<v-row justify="center">
-  <v-btn color="secondary" class="no-printme ma-2 white--text">
+  <v-btn color="secondary" class="ma-2 white--text">
     Send
   </v-btn>
 </v-row>  
     <v-row align="center" justify="start">
       <v-col cols="12">
-      <div id="printMe" class="font-weight-regular">Use this QR code to easily check-in at the site where you receive your vaccine. This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.</div></v-col></v-row>
+        <div class="font-weight-regular">Use this QR code to easily check-in at the site where you receive your vaccine. This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.</div>
+      </v-col>
+    </v-row>
     <v-row justify="center">
       <div>
 				<vue-qrcode
-          id="printMe"
+          id="qrCodeId"
           v-bind:value="qrValue"
-					v-bind:errorCorrectionLevel="correctionLevel" />
-			</div></v-row>
-
+					v-bind:errorCorrectionLevel="correctionLevel"
+          />
+			</div>
+    </v-row>
      <v-row justify="center">
-      <div id="printMe" class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
+      <div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataPersonalInfo.familyName}}, 
 					{{dataPersonalInfo.givenName}} {{dataPersonalInfo.middleName}} {{dataPersonalInfo.suffix}}</span></div>
     </v-row>
-    </div>
-
     <v-row justify="center">
-      <v-btn color="secondary" class="ma-2 white--text" @click="printDiv('printMe')">
-								Download As PDF
+      <v-btn color="secondary" class="ma-2 white--text" @click="generatePdf">
+				Download As PDF
 			</v-btn>
     </v-row>
-
-
 	</v-container>
 </template>
 
 <script>
 import EventBus from '../eventBus';
 import VueQrcode from 'vue-qrcode';
-//import jsPDF from 'jspdf';
+import jsPDF from 'jspdf';
 
 export default {
   data() {
@@ -59,31 +57,24 @@ export default {
     };
   },
   methods: {
-    printDiv(divName){
-      var printContents = document.getElementById(divName).innerHTML;
-      var originalContents = document.body.innerHTML;
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
+    generatePdf(){
+      const qrcode = document.getElementById('qrCodeId');
+      let pdfDoc = new jsPDF();
+      let imageData= this.getBase64Image(qrcode);
+      let string = this.qrValue
+      pdfDoc.text(string, 15,15);
+      pdfDoc.addImage(imageData, "JPG", 50, 50);
+      pdfDoc.save('qrcode.pdf');
     },
-    /*print() {
-      const modal = document.getElementById("print")
-      const cloned = modal.cloneNode(true)
-      let section = document.getElementById("print")
-      if (!section) {
-        section = document.createElelment("div")
-        document.body.appendChild(section)
-      }
-      section.innerHTML = "";
-      section.appendChild(cloned);
-      window.print()
-    },*/
-   /* generatePdf(){
-      const doc = new jsPDF();
-      doc.text(this.qrValue,15,15);
-      //doc.text("hello world", 15,15);
-      doc.save("qrcode.pdf")
-    },*/
+    getBase64Image(img) {
+      var canvas = document.createElement("canvas");
+      canvas.width = 200;
+      canvas.height = 200;
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      var dataURL = canvas.toDataURL("image/png");
+      return dataURL;
+    },
     updatePersonalInfoData(personalInfoPayload) {
       this.dataPersonalInfo = personalInfoPayload;
       this.qrValue = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix
@@ -100,7 +91,6 @@ export default {
 }
 </script>
 
-
 <style lang="sass" scoped>
 .accent--border
   border: 1px solid var(--v-accent-base)
@@ -110,23 +100,3 @@ export default {
   max-width: 100%
 </style>
 
-<style lang="css" scoped>
-.printme {
-	visibility: hidden;
-  justify-content: center;
-  align-items: center;
-}
-@media print {
-	.no-printme  {
-		visibility: hidden;
-	}
-	.printme  {
-		visibility: visible;
-    position: absolute;
-    top: 50px;
-    left:50px;
-    justify-content: center;
-    align-items: center;
-	}
-}
-</style>
