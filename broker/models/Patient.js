@@ -196,6 +196,17 @@ exports.toModel = function (patient) {
         ? patient.name[0].given[0]
         : ""
       : "",
+    middle: patient.name
+      ? patient.name[0].given
+        ? patient.name[0].given[1]
+        : ""
+      : "",
+    suffix: patient.name
+      ? patient.name[0].suffix
+        ? patient.name[0].suffix[0]
+        : ""
+      : "",
+    gender: patient.gender,
     birthDate: patient.birthDate,
     address: {
       line: patient.address
@@ -208,6 +219,11 @@ exports.toModel = function (patient) {
       postalCode: patient.address ? patient.address[0].postalCode : "",
       country: patient.address ? patient.address[0].country : "",
     },
+    language: patient.communication
+      ? patient.communication[0].language
+        ? patient.communication[0].language.text
+        : ""
+      : "",
   };
 
   return model;

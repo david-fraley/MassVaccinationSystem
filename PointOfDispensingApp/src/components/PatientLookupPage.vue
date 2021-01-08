@@ -158,8 +158,6 @@ export default {
       this.patientRecordRetrieved();
     },
     retrievePatientRecord() {
-      // To do:  call API to fetch patient record
-      // Once returned, call the function below (may need to pass in the payload):
       if (Array.isArray(this.selected) && this.selected.length) {
         this.patientRecordRetrieved();
       } else {
@@ -167,23 +165,10 @@ export default {
       }
     },
     patientRecordRetrieved() {
-      // //the following is sending dummy data until we have the API in place
-      // const patientResourcePayload = {
-      //   patientId: "1234567890",
-      //   patientLastName: this.selectedFamilyName,
-      //   patientFirstName: this.selectedGivenName,
-      //   patientDateOfBirth: this.selectedDOB,
-      //   patientGender: "Male",
-      //   patientStreetAddress:
-      //     this.selectedLineAddress +
-      //     ", " +
-      //     this.selectedCity +
-      //     ", WI, " +
-      //     this.selectedPostalCode,
-      //   patientPreferredLanguage: "English",
-      // };
-      // //send data to Vuex
-      // this.$store.dispatch("patientRecordRetrieved", patientResourcePayload);
+      const patientResourcePayload = this.selected[0];
+
+      //send data to Vuex
+      this.$store.dispatch("patientRecordRetrieved", patientResourcePayload);
 
       //Advance to the Check In page
       this.$router.push("CheckIn");
@@ -228,67 +213,7 @@ export default {
         { text: "City", value: "address.city" },
         { text: "Zipcode", value: "address.postalCode" },
       ],
-      patientLookupTable: [
-        {
-          id: 1,
-          family: "Johnson",
-          given: "Jacob",
-          birthDate: "1990-10-31",
-          address: {
-            line: "6585 Lake St",
-            city: "Glendale",
-            postalCode: "53209",
-          },
-        },
-
-        {
-          id: 2,
-          family: "Johnson",
-          given: "Larry",
-          birthDate: "1972-04-15",
-          address: {
-            line: "721 Hillcrest Dr",
-            city: "Bayside",
-            postalCode: "53217",
-          },
-        },
-
-        {
-          id: 3,
-          family: "Johnson",
-          given: "Jennifer",
-          birthDate: "1972-01-23",
-          address: {
-            line: "1234 Right Lane",
-            city: "New Berlin",
-            postalCode: "53146",
-          },
-        },
-
-        {
-          id: 4,
-          family: "Johnson",
-          given: "Joan",
-          birthDate: "1960-02-01",
-          address: {
-            line: "2 Valley Rd",
-            city: "Germantown",
-            postalCode: "",
-          },
-        },
-
-        {
-          id: 5,
-          family: "Johnson",
-          given: "Isaac",
-          birthDate: "2000-12-21",
-          address: {
-            line: "3823 Pine St",
-            city: "Brown Deer",
-            postalCode: "53223",
-          },
-        },
-      ],
+      patientLookupTable: [],
     };
   },
 };
