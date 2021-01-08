@@ -5145,7 +5145,7 @@ html-webpack-plugin@^3.2.0:
     toposort "^1.0.0"
     util.promisify "1.0.0"
 
-html2canvas@^1.0.0-rc.5, html2canvas@^1.0.0-rc.7:
+html2canvas@^1.0.0-rc.5:
   version "1.0.0-rc.7"
   resolved "https://registry.yarnpkg.com/html2canvas/-/html2canvas-1.0.0-rc.7.tgz#70c159ce0e63954a91169531894d08ad5627ac98"
   integrity sha512-yvPNZGejB2KOyKleZspjK/NruXVQuowu8NnV2HYG7gW7ytzl+umffbtUI62v2dCHQLDdsK6HIDtyJZ0W3neerA==
