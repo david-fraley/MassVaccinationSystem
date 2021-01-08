@@ -4,9 +4,6 @@ import vuetify from "./plugins/vuetify";
 import VueRouter from "vue-router";
 import navRoutes from "./navRoutes.js";
 import store from "./store/store";
-import axios from "axios";
-
-Vue.prototype.axios = axios;
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);

@@ -131,20 +131,24 @@
 </template>
 
 <script>
+import brokerRequests from "../brokerRequests";
+
 export default {
   name: "PatientLookupPage",
   methods: {
     searchPatient() {
       this.patientLookupTable = [];
       this.loading = true;
-      this.axios
-        .get(
-          `http://localhost:3000/Patient?family=${this.lastName}&given=${this.firstName}&birthdate=${this.birthDate}&address-postalcode=${this.postalCode}`
-        )
-        .then((response) => {
-          this.patientLookupTable = response.data;
-          this.loading = false;
-        });
+      let data = {
+        lastName: this.lastName,
+        firstName: this.firstName,
+        birthDate: this.birthDate,
+        postalCode: this.postalCode,
+      };
+      brokerRequests.searchPatient(data).then((response) => {
+        this.patientLookupTable = response.data;
+        this.loading = false;
+      });
     },
     rowClick(item, row) {
       row.select(true);
