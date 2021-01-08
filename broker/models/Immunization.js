@@ -18,7 +18,6 @@ Immunization {
   performer: [string] "{Practitioner/PractitionerRole/Organization}/id"
   note: string
   education: [string] "url",
-  reaction: [string] "Observation/id"
   series: string,
   doseNumber: int,
   seriesDoses: int
@@ -43,7 +42,6 @@ Immunization {
     "performer": ["Practitioner/f201"],
     "note": "immunization notes",
     "education": [""],
-    "reaction": ["Observation/3303"],
     "series": "series",
     "doseNumber": 1,
     "seriesDoses": 2
@@ -125,9 +123,6 @@ exports.toFHIR = function (imm) {
         text: imm.note,
       },
     ],
-    reaction: [
-      // add later
-    ],
     education: [
       // add later
     ],
@@ -146,15 +141,6 @@ exports.toFHIR = function (imm) {
     resource.performer.push({
       actor: {
         reference: performer,
-      },
-    });
-  }
-  // add reaction
-  let reaction;
-  for (reaction of imm.reaction) {
-    resource.reaction.push({
-      detail: {
-        reference: reaction,
       },
     });
   }

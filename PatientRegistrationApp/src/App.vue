@@ -502,6 +502,19 @@ export default {
 						break;
 				}
 			}
+			else
+			{
+				switch(this.page)
+				{
+					case config.registrationPages.GREETING_PAGE:
+						this.$refs.greetingpage.verifyFormContents()
+						break;
+					default:
+						alert(this.page)
+						break;
+				}
+			}
+			
 		},
 		getNumberOfSteps() {
 			let numberOfSteps = 0;

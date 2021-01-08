@@ -15,7 +15,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent">
+        <v-btn color="accent" @click="scanQrCode()">
           Scan QR code
         </v-btn>
       </v-col>
@@ -30,7 +30,6 @@
         <div class="font-weight-medium secondary--text">If the QR code is not available, search for the patient record by name and/or DOB.</div>
       </v-col>
     </v-row>
-
     <v-row>
       <v-col cols="5">
         <v-row no-gutters>
@@ -92,21 +91,20 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-		<template>
-		<v-data-table
-      @click:row="rowClick"
-      item-key="id"
-      single-select
-			:headers="headers"
-			:items="patientLookupTable"
-			class="elevation-1"
-			:footer-props="{
-				'items-per-page-options':[5]
-			}"
-			:items-per-page="5"
-    ></v-data-table>
-		</template>
-		
+        <template>
+          <v-data-table
+            @click:row="rowClick"
+            item-key="id"
+            single-select
+            :headers="headers"
+            :items="patientLookupTable"
+            class="elevation-1"
+            :footer-props="{
+              'items-per-page-options':[5]
+            }"
+            :items-per-page="5"
+          ></v-data-table>
+        </template>
       </v-col>
     </v-row>
     <v-row>
@@ -130,10 +128,51 @@
         this.selectedFamilyName=item.familyName
         this.selectedGivenName=item.givenName
         this.selectedDOB=item.DOB
+        this.selectedLineAddress=item.lineAddress
+        this.selectedCity=item.city
+        this.selectedPostalCode=item.postalCode
       },
       retrievePatientRecord()
       {
-        alert(this.selectedFamilyName + ', ' + this.selectedGivenName + ', ' + this.selectedDOB)
+        // To do:  call API to fetch patient record
+        // Once returned, call the function below (may need to pass in the payload):
+        this.patientRecordRetrieved()
+      },
+      patientRecordRetrieved()
+      {
+        //the following is sending dummy data until we have the API in place
+        const patientResourcePayload = {
+          patientId:'1234567890',
+          patientLastName: this.selectedFamilyName,
+          patientFirstName: this.selectedGivenName,
+          patientDateOfBirth: this.selectedDOB,
+          patientGender: 'Male',
+          patientStreetAddress: this.selectedLineAddress + ', ' + this.selectedCity + ", WI, " + this.selectedPostalCode,
+          patientPreferredLanguage: 'English'
+        }
+        //send data to Vuex
+        this.$store.dispatch('patientRecordRetrieved', patientResourcePayload)
+
+        //Advance to the Check In page
+        this.$router.push("CheckIn")
+      },
+      scanQrCode()
+      {
+        //the following is sending dummy data until we have the API in place
+        const patientResourcePayload = {
+          patientId:'1234567890',
+          patientLastName: 'Fraley',
+          patientFirstName: 'David',
+          patientDateOfBirth: '01/01/1950',
+          patientGender: 'Male',
+          patientStreetAddress: '1234 Main Street, Waukesha, WI, 53072',
+          patientPreferredLanguage: 'English'
+        }
+        //send data to Vuex
+        this.$store.dispatch('patientRecordRetrieved', patientResourcePayload)
+
+        //Advance to the Check In page
+        this.$router.push("CheckIn")
       }
     },
     components: 
@@ -141,13 +180,13 @@
     },
     data () {
 	return {
-		patientFamilyName: '',
-		patientGivenName: '',
-    patientDate: '',
-    selectedId: -1,
+		selectedId: -1, //initializing the ID of the selected row to be something that is obviously invalid
     selectedFamilyName: '',
     selectedGivenName: '',
     selectedDOB: '',
+    selectedLineAddress: '',
+    selectedCity: '',
+    selectedPostalCode: '',
 
 		headers: [
           {

@@ -7,9 +7,8 @@
           max-width="200"
           src="../assets/blankPicture.png">
         </v-img>
-        <div class="font-weight-medium">Patient ID:  <span class="font-weight-regular">1234567890</span></div>
+        <div class="font-weight-medium">Patient ID:  <span class="font-weight-regular">{{patientId}}</span></div>
       </v-col>
-
       <v-col cols="9">
         <v-row no-gutters>
           <v-col cols="2">
@@ -17,7 +16,7 @@
           </v-col>
           <v-col cols="3">
             <v-text-field filled dense readonly outlined 
-              value="Smith"
+              :value=patientLastName
             ></v-text-field>
           </v-col>
           <v-col cols="1">
@@ -28,7 +27,7 @@
           </v-col>
           <v-col cols="3">
             <v-text-field filled dense readonly outlined 
-              value="John"
+              :value=patientFirstName
             ></v-text-field>
           </v-col>
           <v-col cols="1">
@@ -39,7 +38,7 @@
           </v-col>
           <v-col cols="3">
             <v-text-field filled dense readonly outlined 
-              value="01/01/1970"
+              :value=patientDateOfBirth
             ></v-text-field>
           </v-col>
           <v-col cols="1">
@@ -50,7 +49,7 @@
           </v-col>
           <v-col cols="3">
             <v-text-field filled dense readonly outlined 
-              value="Male"
+              :value=patientGender
             ></v-text-field>
           </v-col>
           <v-col cols="2">
@@ -58,7 +57,7 @@
           </v-col>
           <v-col cols="3">
             <v-text-field filled dense readonly outlined 
-              value="English"
+              :value=patientPreferredLanguage
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -69,7 +68,7 @@
           </v-col>
           <v-col cols="9">
             <v-text-field filled dense readonly outlined 
-              value="1234 Main Street, Milwaukee, WI 53233"
+              :value=patientStreetAddress
             ></v-text-field>
           </v-col>
         </v-row>
@@ -86,10 +85,30 @@
 <script>
   export default {
     name: 'PatientInfoComponent',
-    methods: 
-    {
+    computed: {
+     patientId() {
+        return this.$store.state.patientResource.patientId
+      },
+      patientLastName() {
+        return this.$store.state.patientResource.patientLastName
+      },
+      patientFirstName() {
+        return this.$store.state.patientResource.patientFirstName
+      },
+      patientDateOfBirth() {
+        return this.$store.state.patientResource.patientDateOfBirth
+      },
+      patientGender() {
+        return this.$store.state.patientResource.patientGender
+      },
+      patientStreetAddress() {
+        return this.$store.state.patientResource.patientStreetAddress
+      },
+      patientPreferredLanguage() {
+        return this.$store.state.patientResource.patientPreferredLanguage
+      },
     },
-    components: 
+    methods: 
     {
     },
     data () {
