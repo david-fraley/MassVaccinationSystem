@@ -67,7 +67,7 @@ export default {
       pdfDoc.text("Use this QR code to easily check-in at the site where you receive your vaccine.",10,25);
       pdfDoc.text("This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.",10, 30);
       pdfDoc.addImage(imageData, "JPG", 70, 50);
-      pdfDoc.text(string, 70,48);
+      pdfDoc.text(string, 75,48);
       pdfDoc.save('qrcode.pdf');
     },
     getBase64Image(img) {
