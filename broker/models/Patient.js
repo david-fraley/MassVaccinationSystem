@@ -186,3 +186,29 @@ exports.toFHIR = function (patient) {
 
   return resource;
 };
+
+exports.toModel = function (patient) {
+  let model = {
+    id: patient.id,
+    family: patient.name ? patient.name[0].family : "",
+    given: patient.name
+      ? patient.name[0].given
+        ? patient.name[0].given[0]
+        : ""
+      : "",
+    birthDate: patient.birthDate,
+    address: {
+      line: patient.address
+        ? patient.address[0].line
+          ? patient.address[0].line[0]
+          : ""
+        : "",
+      city: patient.address ? patient.address[0].city : "",
+      state: patient.address ? patient.address[0].state : "",
+      postalCode: patient.address ? patient.address[0].postalCode : "",
+      country: patient.address ? patient.address[0].country : "",
+    },
+  };
+
+  return model;
+};

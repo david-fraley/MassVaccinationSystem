@@ -25,7 +25,6 @@ if (process.env.DEVELOPMENT == 1) {
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
 const generalEndpoints = [
-  "/Patient*",
   "/Encounter*",
   "/Observation*",
   "/Organization*",
@@ -50,6 +49,25 @@ app.get(generalEndpoints, (req, res) => {
     .get(`${base}${req.url}`)
     .then((response) => {
       res.json(response.data);
+    })
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
+});
+
+app.get("/Patient*", (req, res) => {
+  axios
+    .get(`${base}${req.url}`)
+    .then((response) => {
+      let r;
+      if (response.data.resourceType === "Bundle") {
+        r = response.data.entry.map((entry) => Patient.toModel(entry.resource));
+      } else {
+        r = Patient.toModel(response.data);
+      }
+      res.json(r);
     })
     .catch((e) => {
       res.status(400).json({
