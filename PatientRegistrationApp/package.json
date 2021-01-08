@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "devbuild": "vue-cli-service build --dest ../broker/PatientRegistrationViews",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
