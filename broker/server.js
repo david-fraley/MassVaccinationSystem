@@ -15,11 +15,13 @@ const app = express();
 app.use(express.json());
 app.set("json spaces", 2);
 
-const reg_path = __dirname + "/PatientRegistrationViews/";
-const pod_path = __dirname + "/PointOfDispensingViews/";
+if (process.env.DEVELOPMENT == 1) {
+  const reg_path = __dirname + "/PatientRegistrationViews/";
+  const pod_path = __dirname + "/PointOfDispensingViews/";
 
-app.use("/Registration", express.static(reg_path));
-app.use("/POD", express.static(pod_path));
+  app.use("/Registration", express.static(reg_path));
+  app.use("/POD", express.static(pod_path));
+}
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
 const generalEndpoints = [
