@@ -102,9 +102,8 @@
       <v-col cols="12">
         <template>
           <v-data-table
-            @click:row="rowClick"
-            @dblclick:row="rowDblclick"
-            v-model="selected"
+            @click:row="clickRow"
+            @dblclick:row="dblclickRow"
             item-key="id"
             single-select
             :headers="headers"
@@ -139,6 +138,7 @@ export default {
     searchPatient() {
       this.patientLookupTable = [];
       this.loading = true;
+
       let data = {
         lastName: this.lastName,
         firstName: this.firstName,
@@ -150,45 +150,35 @@ export default {
         this.loading = false;
       });
     },
-    rowClick(item, row) {
+    clickRow(item, row) {
       row.select(true);
+      this.patient = item;
     },
-    rowDblclick(item, row) {
-      row.select(true);
+    dblclickRow() {
       this.patientRecordRetrieved();
     },
     retrievePatientRecord() {
-      if (Array.isArray(this.selected) && this.selected.length) {
+      if (this.patient) {
         this.patientRecordRetrieved();
       } else {
         alert("Select a patient");
       }
     },
     patientRecordRetrieved() {
-      const patientResourcePayload = this.selected[0];
-
       //send data to Vuex
-      this.$store.dispatch("patientRecordRetrieved", patientResourcePayload);
+      this.$store.dispatch("patientRecordRetrieved", this.patient);
 
       //Advance to the Check In page
       this.$router.push("CheckIn");
     },
     scanQrCode() {
-      //the following is sending dummy data until we have the API in place
-      const patientResourcePayload = {
-        patientId: "1234567890",
-        patientLastName: "Fraley",
-        patientFirstName: "David",
-        patientDateOfBirth: "01/01/1950",
-        patientGender: "Male",
-        patientStreetAddress: "1234 Main Street, Waukesha, WI, 53072",
-        patientPreferredLanguage: "English",
-      };
-      //send data to Vuex
-      this.$store.dispatch("patientRecordRetrieved", patientResourcePayload);
+      let qrValue = "example";
+      let data = { id: qrValue };
 
-      //Advance to the Check In page
-      this.$router.push("CheckIn");
+      brokerRequests.getPatient(data).then((response) => {
+        this.patient = response.data;
+        this.patientRecordRetrieved();
+      });
     },
   },
   components: {},
@@ -198,7 +188,7 @@ export default {
       lastName: "",
       birthDate: "",
       postalCode: "",
-      selected: [],
+      patient: "",
       loading: false,
 
       headers: [
