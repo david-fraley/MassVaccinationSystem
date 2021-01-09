@@ -13,16 +13,25 @@
           <div class="font-weight-medium secondary--text">Retrieve the patient's record by scanning their QR code.</div>
         </v-col>
     </v-row>
-    <v-row>
-      <div> <p class="decode-result"> Result: <b>{{result}}</b></p>
-      <QrcodeStream @decode="onDecode" @init="onInit"/></div> </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-btn color="accent">
-          Scan QR code
-        </v-btn>
-      </v-col>
-    </v-row>
+
+  <template>
+  <v-row><div>
+    <p class="error" v-if="noFrontCamera">
+      You don't seem to have a front camera on your device
+    </p>
+
+    <p class="error" v-if="noRearCamera">
+      You don't seem to have a rear camera on your device
+    </p></div></v-row>
+<v-row>
+    <v-col cols="6">
+    <v-btn @click="switchCamera" color="accent"> Switch Camera
+    </v-btn></v-col></v-row>
+<div><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
+    </qrcode-stream></v-col></v-row>
+    <v-row><p class="decode-result"> Result: <b>{{result}}</b></p></v-row>
+  </div>
+  </template>
     <v-row>
       <v-col cols="12">
         <v-divider></v-divider>
@@ -128,6 +137,37 @@ import {QrcodeStream} from "vue-qrcode-reader";
     name: 'PatientLookupPage',
     methods: 
     {
+    switchCamera () {
+      switch (this.camera) {
+        case 'front':
+          this.camera = 'rear'
+          break
+        case 'rear':
+          this.camera = 'front'
+          break
+      }
+    },
+
+    async onInit (promise) {
+      try {
+        await promise
+      } catch (error) {
+        const triedFrontCamera = this.camera === 'front'
+        const triedRearCamera = this.camera === 'rear'
+
+        const cameraMissingError = error.name === 'OverconstrainedError'
+
+        if (triedRearCamera && cameraMissingError) {
+          this.noRearCamera = true
+        }
+
+        if (triedFrontCamera && cameraMissingError) {
+          this.noFrontCamera = true
+        }
+
+        console.error(error)
+      }
+    },
       onDecode (result) {
         this.result = result
       },
@@ -157,6 +197,10 @@ import {QrcodeStream} from "vue-qrcode-reader";
     selectedFamilyName: '',
     selectedGivenName: '',
     selectedDOB: '',
+    camera: 'rear',
+
+    noRearCamera: false,
+    noFrontCamera: false,
 
 		headers: [
           {
@@ -231,4 +275,7 @@ import {QrcodeStream} from "vue-qrcode-reader";
     background: #1976D2 !important;
     color: #FFFFFF
   }
+  .error {
+    font-weight: medium;
+}
 </style>
