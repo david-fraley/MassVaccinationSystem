@@ -62,7 +62,7 @@ export default {
       const qrcode = document.getElementById('qrCodeId');
       let pdfDoc = new jsPDF();
       let imageData= this.getBase64Image(qrcode);
-      let string = this.qrValue
+      let string = this.qrValue;
       pdfDoc.setFontSize(10);
       pdfDoc.text("COVID-19 Vaccination Registration",10,15);
       pdfDoc.text("Use this QR code to easily check-in at the site where you receive your vaccine.",10,25);
