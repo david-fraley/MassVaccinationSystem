@@ -138,22 +138,33 @@ export default {
   name: "PatientLookupPage",
   methods: {
     searchPatient() {
+      // validate form
       this.$refs.form.validate();
       if (!this.valid) return;
 
+      // update for loading animation
       this.patientLookupTable = [];
       this.loading = true;
 
+      // make request
       let data = {
         lastName: this.lastName,
         firstName: this.firstName,
         birthDate: this.birthDate,
         postalCode: this.postalCode,
       };
-      brokerRequests.searchPatient(data).then((response) => {
-        this.patientLookupTable = response.data;
-        this.loading = false;
-      });
+      brokerRequests
+        .searchPatient(data)
+        .then((response) => {
+          this.patientLookupTable = response.data;
+        })
+        // to do
+        .catch(() => {
+          alert("No patients found");
+        })
+        .then(() => {
+          this.loading = false;
+        });
     },
     clickRow(item, row) {
       row.select(true);
@@ -176,14 +187,21 @@ export default {
       //Advance to the Check In page
       this.$router.push("CheckIn");
     },
+    // to do
     scanQrCode() {
       let qrValue = "example";
       let data = { id: qrValue };
 
-      brokerRequests.getPatient(data).then((response) => {
-        this.patient = response.data;
-        this.patientRecordRetrieved();
-      });
+      brokerRequests
+        .getPatient(data)
+        .then((response) => {
+          this.patient = response.data;
+          this.patientRecordRetrieved();
+        })
+        // to do
+        .catch(() => {
+          alert("Patient not found");
+        });
     },
   },
   components: {},

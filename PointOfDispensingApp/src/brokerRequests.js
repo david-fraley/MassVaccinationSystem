@@ -25,8 +25,10 @@ export default {
       language: "English",
     };
 
-    return axios.get(`http://localhost:3000/healthcheck`).then(() => {
-      const response = { data: patient };
+    return axios.get(`http://localhost:3000/healthcheck`).then((response) => {
+      console.log(response.data);
+
+      response = { data: patient };
       return response;
     });
   },
