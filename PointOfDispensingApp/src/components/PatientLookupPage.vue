@@ -153,18 +153,14 @@ export default {
         birthDate: this.birthDate,
         postalCode: this.postalCode,
       };
-      brokerRequests
-        .searchPatient(data)
-        .then((response) => {
+      brokerRequests.searchPatient(data).then((response) => {
+        if (response.data) {
           this.patientLookupTable = response.data;
-        })
-        // to do
-        .catch(() => {
+        } else if (response.error) {
           alert("No patients found");
-        })
-        .then(() => {
-          this.loading = false;
-        });
+        }
+        this.loading = false;
+      });
     },
     clickRow(item, row) {
       row.select(true);
@@ -192,16 +188,14 @@ export default {
       let qrValue = "example";
       let data = { id: qrValue };
 
-      brokerRequests
-        .getPatient(data)
-        .then((response) => {
+      brokerRequests.getPatient(data).then((response) => {
+        if (response.data) {
           this.patient = response.data;
           this.patientRecordRetrieved();
-        })
-        // to do
-        .catch(() => {
+        } else if (response.error) {
           alert("Patient not found");
-        });
+        }
+      });
     },
   },
   components: {},

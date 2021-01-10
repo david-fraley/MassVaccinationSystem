@@ -21,6 +21,11 @@ if (process.env.DEVELOPMENT == 1) {
 
   app.use("/Registration", express.static(reg_path));
   app.use("/POD", express.static(pod_path));
+
+  app.get("/broker/*", (req, res) => {
+    req.url = req.url.replace(/^(\/broker)/, "");
+    app.handle(req, res);
+  });
 }
 
 const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
@@ -397,4 +402,6 @@ function updateAppointmentStatus(url, status) {
   });
 }
 
-app.listen(configs.port, () => console.log(`Listening on port ${configs.port}`));
+app.listen(configs.port, () =>
+  console.log(`Listening on port ${configs.port}`)
+);
