@@ -28,10 +28,10 @@
     </v-row>
     <v-row justify="center">
       <v-col cols="8" sm="4" md="3" lg="3">
-        <v-radio-group class="font-weight-medium">
-            <v-radio v-model="sendByEmail" label="E-mail"></v-radio>
-            <v-radio v-model="sendBySms" label="SMS Message"></v-radio>
-            <v-radio v-model="sendByBoth" label="Both"></v-radio>
+        <v-radio-group v-model="sendQr" class="font-weight-medium">
+            <v-radio value="Email" label="E-mail"></v-radio>
+            <v-radio value="SmsMessage" label="SMS Message"></v-radio>
+            <v-radio value="Both" label="Both"></v-radio>
         </v-radio-group>
       </v-col>
     </v-row>
@@ -53,7 +53,8 @@ export default {
     return {
       dataPersonalInfo: [],
       correctionLevel: "H",
-      qrValue: ' '
+      qrValue: ' ',
+      sendQr: ' '
     };
   },
   methods: {
