@@ -36,68 +36,70 @@
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="5">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">Last Name</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              outlined
-              dense
-              v-model="lastName"
-              required
-              :rules="[(v) => !!v || 'Last Name is required']"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">Date of Birth</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              outlined
-              dense
-              v-model="birthDate"
-              placeholder="YYYY-MM-DD"
-              required
-              :rules="[(v) => !!v || 'Date of Birth is required']"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-      </v-col>
-      <!--blank column for spacing-->
-      <v-col cols="1"> </v-col>
-      <v-col cols="5">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">First Name</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              outlined
-              dense
-              v-model="firstName"
-              required
-              :rules="[(v) => !!v || 'First Name is required']"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">Zip Code</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field outlined dense v-model="postalCode"></v-text-field>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-    <v-row no-gutters>
-      <v-col cols="12">
-        <v-btn color="accent" @click="searchPatient">
-          Search
-        </v-btn>
-      </v-col>
-    </v-row>
+    <v-form ref="form" v-model="valid">
+      <v-row>
+        <v-col cols="5">
+          <v-row no-gutters>
+            <v-col cols="4">
+              <div class="secondary--text">Last Name</div>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                outlined
+                dense
+                v-model="lastName"
+                required
+                :rules="[(v) => !!v || 'Last Name is required']"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4">
+              <div class="secondary--text">Date of Birth</div>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                outlined
+                dense
+                v-model="birthDate"
+                placeholder="YYYY-MM-DD"
+                required
+                :rules="[(v) => !!v || 'Date of Birth is required']"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
+        <!--blank column for spacing-->
+        <v-col cols="1"> </v-col>
+        <v-col cols="5">
+          <v-row no-gutters>
+            <v-col cols="4">
+              <div class="secondary--text">First Name</div>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                outlined
+                dense
+                v-model="firstName"
+                required
+                :rules="[(v) => !!v || 'First Name is required']"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4">
+              <div class="secondary--text">Zip Code</div>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field outlined dense v-model="postalCode"></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col cols="12">
+          <v-btn color="accent" @click="searchPatient">
+            Search
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
     <v-row>
       <v-col cols="12">
         <template>
@@ -136,6 +138,9 @@ export default {
   name: "PatientLookupPage",
   methods: {
     searchPatient() {
+      this.$refs.form.validate();
+      if (!this.valid) return;
+
       this.patientLookupTable = [];
       this.loading = true;
 
@@ -190,6 +195,7 @@ export default {
       postalCode: "",
       patient: "",
       loading: false,
+      valid: false,
 
       headers: [
         {
