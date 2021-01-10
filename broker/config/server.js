@@ -8,5 +8,5 @@ dotenv.config();
 //
 module.exports = {
     port: process.env.PORT || 3000,
-    base: process.env.FHIR_URL_BASE || "http://hapi:8080/hapi-fhir-jpaserver/fhir"
+    fhirUrlBase: process.env.FHIR_URL_BASE || "http://hapi:8080/hapi-fhir-jpaserver/fhir"
 }

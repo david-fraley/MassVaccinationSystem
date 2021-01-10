@@ -23,7 +23,6 @@ if (process.env.DEVELOPMENT == 1) {
   app.use("/POD", express.static(pod_path));
 }
 
-const base = "http://hapi:8080/hapi-fhir-jpaserver/fhir";
 const generalEndpoints = [
   "/Patient*",
   "/Encounter*",
@@ -47,7 +46,7 @@ app.get("/healthcheck", (req, res) => {
 // Pass GET requests to HAPI FHIR server
 app.get(generalEndpoints, (req, res) => {
   axios
-    .get(`${base}${req.url}`)
+    .get(`${configs.fhirUrlBase}${req.url}`)
     .then((response) => {
       res.json(response.data);
     })
@@ -77,7 +76,7 @@ app.post("/Immunization", (req, res) => {
 async function postImmunization(imm) {
   let resource = Immunization.toFHIR(imm);
 
-  return axios.post(`${base}/Immunization`, resource).then((response) => {
+  return axios.post(`${configs.fhirUrlBase}/Immunization`, resource).then((response) => {
     return response;
   });
 }
@@ -87,7 +86,7 @@ app.post("/Appointment", (req, res) => {
   let resource = Appointment.toFHIR(appt);
 
   axios
-    .post(`${base}/Appointment`, resource)
+    .post(`${configs.fhirUrlBase}/Appointment`, resource)
     .then((response) => {
       res.json(response.data);
     })
@@ -103,7 +102,7 @@ app.post("/Organization", (req, res) => {
   let resource = Organization.toFHIR(org);
 
   axios
-    .post(`${base}/Organization`, resource)
+    .post(`${configs.fhirUrlBase}/Organization`, resource)
     .then((response) => {
       res.json(response.data);
     })
@@ -134,7 +133,7 @@ app.post("/Observation", (req, res) => {
 async function postObservation(observation) {
   let resource = Observation.toFHIR(observation);
 
-  return axios.post(`${base}/Observation`, resource).then((response) => {
+  return axios.post(`${configs.fhirUrlBase}/Observation`, resource).then((response) => {
     let ref = observation.partOf;
     // request body for PATCH
     let update = [
@@ -148,7 +147,7 @@ async function postObservation(observation) {
       "content-type": "application/json-patch+json",
     };
 
-    axios.patch(`${base}/${ref}`, update, { headers: headers }).catch((e) => {
+    axios.patch(`${configs.fhirUrlBase}/${ref}`, update, { headers: headers }).catch((e) => {
       console.log({ error: e.response ? e.response.data : e.message });
     });
     return response;
@@ -160,7 +159,7 @@ app.post("/Encounter", (req, res) => {
   let resource = Encounter.toFHIR(encounter);
 
   axios
-    .post(`${base}/Encounter`, resource)
+    .post(`${configs.fhirUrlBase}/Encounter`, resource)
     .then((response) => {
       res.json(response.data);
     })
@@ -198,7 +197,7 @@ async function createPatient(req, res) {
       relationship: patient.relationship,
     });
     resource.id = related_id;
-    await axios.put(`${base}/RelatedPerson/${related_id}`, resource, headers);
+    await axios.put(`${configs.fhirUrlBase}/RelatedPerson/${related_id}`, resource, headers);
   } else {
     res.status(400).json({ error: "at least one patient should be provided" });
     return;
@@ -227,13 +226,13 @@ async function createPatientWithLink(patient, related) {
   // create related person
   let resource = RelatedPerson.toFHIR(related);
   let related_id = (
-    await axios.post(`${base}/RelatedPerson`, resource, headers)
+    await axios.post(`${configs.fhirUrlBase}/RelatedPerson`, resource, headers)
   ).data.id;
 
   // create patient pointing to related person
   patient.link = [`RelatedPerson/${related_id}`];
   resource = Patient.toFHIR(patient);
-  let result = await axios.post(`${base}/Patient`, resource, headers);
+  let result = await axios.post(`${configs.fhirUrlBase}/Patient`, resource, headers);
 
   return result;
 }
@@ -310,7 +309,7 @@ app.post("/check-in", (req, res) => {
 // URL is either a specific id '/id'
 // or query parameters '?param=value'
 function updateEncounterStatus(url, status) {
-  return axios.get(`${base}/Encounter${url}`).then((response) => {
+  return axios.get(`${configs.fhirUrlBase}/Encounter${url}`).then((response) => {
     let encounter;
     let resourceType = response.data.resourceType;
     let patch;
@@ -336,7 +335,7 @@ function updateEncounterStatus(url, status) {
 
     // update the database with new encounter
     return axios
-      .patch(`${base}/Encounter/${encounter.id}`, patch, {
+      .patch(`${configs.fhirUrlBase}/Encounter/${encounter.id}`, patch, {
         headers: patchHeaders,
       })
       .then((response) => {
@@ -346,7 +345,7 @@ function updateEncounterStatus(url, status) {
 }
 
 function updateAppointmentStatus(url, status) {
-  return axios.get(`${base}/Appointment${url}`).then((response) => {
+  return axios.get(`${configs.fhirUrlBase}/Appointment${url}`).then((response) => {
     let appt;
     let resourceType = response.data.resourceType;
     let patch;
@@ -372,7 +371,7 @@ function updateAppointmentStatus(url, status) {
 
     // update the database with new appointment
     return axios
-      .patch(`${base}/Appointment/${appt.id}`, patch, { headers: patchHeaders })
+      .patch(`${configs.fhirUrlBase}/Appointment/${appt.id}`, patch, { headers: patchHeaders })
       .then((response) => {
         return response;
       });
