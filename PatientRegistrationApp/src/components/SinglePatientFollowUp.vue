@@ -63,13 +63,14 @@ export default {
       let pdfDoc = new jsPDF();
       let imageData= this.getBase64Image(qrcode);
       let string = this.qrValue
+      let string_2 = this.qrcodePdf
       pdfDoc.setFontSize(10);
       pdfDoc.text("COVID-19 Vaccination Registration",10,15);
       pdfDoc.text("Use this QR code to easily check-in at the site where you receive your vaccine.",10,25);
       pdfDoc.text("This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.",10, 30);
       pdfDoc.addImage(imageData, "JPG", 70, 50);
       pdfDoc.text(string, 75,48);
-      pdfDoc.save('qrcode.pdf');
+      pdfDoc.save(string_2 + '_QR.pdf');
     },
     getBase64Image(img) {
       var canvas = document.createElement("canvas");
@@ -82,7 +83,8 @@ export default {
     },
     updatePersonalInfoData(personalInfoPayload) {
       this.dataPersonalInfo = personalInfoPayload;
-      this.qrValue = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix
+      this.qrValue = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix;
+      this.qrcodePdf = this.dataPersonalInfo.familyName + this.dataPersonalInfo.givenName
     }
 },
   components:{
