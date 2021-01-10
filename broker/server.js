@@ -35,6 +35,7 @@ const generalEndpoints = [
   "/Organization*",
   "/Appointment*",
   "/Immunization*",
+  "/EpisodeOfCare*",
 ];
 const patchHeaders = {
   "content-type": "application/json-patch+json",
@@ -177,6 +178,19 @@ app.post("/Encounter", (req, res) => {
         error: e.response ? e.response.data : e.message,
       });
     });
+});
+
+app.post("/EpisodeOfCare", (req, res) => {
+  let eoc = req.body.EpisodeOfCare;
+  let resource = EpisodeOfCare.toFHIR(eoc);
+
+  // post resource
+  axios
+    .post(`${base}/EpisodeOfCare`, resource, headers)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => res.send(e.response.data));
 });
 
 // Discharge
