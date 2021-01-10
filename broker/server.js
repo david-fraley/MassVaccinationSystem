@@ -130,6 +130,38 @@ app.post("/Observation", (req, res) => {
     });
 });
 
+// Tell Mirth to send an HL7 message
+app.post("/SendHL7Message", (req, res) => {
+    let immId = req.query.immunization;
+    if (process.env.DEVELOPMENT == 1) {
+        console.log("Immunization ID: " + immId);
+    }
+
+    return axios.get(`${configs.fhirUrlBase}/Immunization?_id=${immId}&_include=Immunization:patient`).then((response) => {
+        let mirthBundle = response.data;
+
+        if (process.env.DEVELOPMENT == 1) {
+            console.log(response);
+        }
+
+        axios.post(`${configs.mirthUrl}`, mirthBundle).then((immResponse) => {
+            if (process.env.DEVELOPMENT == 1) {
+                console.log(immResponse);
+            }
+
+            res.json(immResponse.data);
+        }).catch((e) => {
+            res.status(400).json({
+                error: e.response ? e.response.data : e.message,
+            });
+        });
+    }).catch((e) => {
+        res.status(400).json({
+            error: e.response ? e.response.data : e.message,
+        });
+    });
+});
+
 async function postObservation(observation) {
   let resource = Observation.toFHIR(observation);
 
