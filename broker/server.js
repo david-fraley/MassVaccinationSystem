@@ -184,13 +184,16 @@ app.post("/EpisodeOfCare", (req, res) => {
   let eoc = req.body.EpisodeOfCare;
   let resource = EpisodeOfCare.toFHIR(eoc);
 
-  // post resource
   axios
-    .post(`${base}/EpisodeOfCare`, resource, headers)
+    .post(`${base}/EpisodeOfCare`, resource)
     .then((response) => {
       res.json(response.data);
     })
-    .catch((e) => res.send(e.response.data));
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 });
 
 // Discharge

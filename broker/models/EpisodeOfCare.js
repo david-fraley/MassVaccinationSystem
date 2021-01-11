@@ -7,8 +7,8 @@ EpisodeOfCare {
 {
   "EpisodeOfCare":
     {
-      "status" : "planned"
-      "patient" : "Patient/example"
+      "status" : "planned",
+      "patient" : "Patient/example",
       "managingOrganization" : "Organization/hl7"
      }
 }
