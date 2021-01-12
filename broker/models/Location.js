@@ -17,7 +17,7 @@ Location {
 {
   "Location":
     { 
-      "wirClientID": "1234",
+      "wirClientID": "WIRID",
       "status" : "active",
       "name": "LocationName",
       "mode": "instance",
