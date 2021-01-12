@@ -3,8 +3,7 @@ const configs = require("./config/server.js");
 
 const express = require("express");
 const axios = require("axios").default;
-const Patient = require("./models/Patient");
-const RelatedPerson = require("./models/RelatedPerson");
+const Patient = require("./endpoints/Patient");
 const Organization = require("./models/Organization");
 const Encounter = require("./models/Encounter");
 const Observation = require("./models/Observation");
@@ -22,19 +21,20 @@ if (process.env.DEVELOPMENT == 1) {
 
   app.use("/Registration", express.static(reg_path));
   app.use("/POD", express.static(pod_path));
+
+  app.get("/broker/*", (req, res) => {
+    req.url = req.url.replace(/^(\/broker)/, "");
+    app.handle(req, res);
+  });
 }
 
 const generalEndpoints = [
-  "/Patient*",
   "/Encounter*",
   "/Observation*",
   "/Organization*",
   "/Appointment*",
   "/Immunization*",
 ];
-const headers = {
-  "content-type": "application/fhir+json",
-};
 const patchHeaders = {
   "content-type": "application/json-patch+json",
 };
@@ -57,6 +57,9 @@ app.get(generalEndpoints, (req, res) => {
       });
     });
 });
+
+app.post("/Patient", Patient.create);
+app.get("/Patient*", Patient.read);
 
 // Create Immunization resource
 // Response:  Immunization resource (200)
@@ -137,25 +140,26 @@ app.post("/SendHL7Message", SendHL7Message);
 async function postObservation(observation) {
   let resource = Observation.toFHIR(observation);
 
-  return axios.post(`${configs.fhirUrlBase}/Observation`, resource).then((response) => {
-    let ref = observation.partOf;
-    // request body for PATCH
-    let update = [
-      {
-        op: "add",
-        path: "/reaction",
-        value: [{ detail: { reference: `Observation/${response.data.id}` } }],
-      },
-    ];
-    let headers = {
-      "content-type": "application/json-patch+json",
-    };
+  return axios
+    .post(`${configs.fhirUrlBase}/Observation`, resource)
+    .then((response) => {
+      let ref = observation.partOf;
+      // request body for PATCH
+      let update = [
+        {
+          op: "add",
+          path: "/reaction",
+          value: [{ detail: { reference: `Observation/${response.data.id}` } }],
+        },
+      ];
 
-    axios.patch(`${configs.fhirUrlBase}/${ref}`, update, { headers: headers }).catch((e) => {
-      console.log({ error: e.response ? e.response.data : e.message });
+      axios
+        .patch(`${configs.fhirUrlBase}/${ref}`, update, { headers: patchHeaders })
+        .catch((e) => {
+          console.log({ error: e.response ? e.response.data : e.message });
+        });
+      return response;
     });
-    return response;
-  });
 }
 
 app.post("/Encounter", (req, res) => {
@@ -382,4 +386,6 @@ function updateAppointmentStatus(url, status) {
   });
 }
 
-app.listen(configs.port, () => console.log(`Listening on port ${configs.port}`));
+app.listen(configs.port, () =>
+  console.log(`Listening on port ${configs.port}`)
+);

@@ -8,15 +8,7 @@ export default new Vuex.Store({
     
     state: {
         activeWorkflowState: 'NO_PATIENT_LOADED',
-        patientResource: {
-            patientId: '',
-            patientLastName: '',
-            patientFirstName: '',
-            patientDateOfBirth: '',
-            patientGender: '',
-            patientStreetAddress: '',
-            patientPreferredLanguage: ''
-        },
+        patientResource: {},
         locationResource: {
             locationId: '1234567890',
             locationName: 'Western Lakes FD'
@@ -83,13 +75,7 @@ export default new Vuex.Store({
     mutations: {
         patientRecordRetrieved(state, patientResourcePayload) {
             state.activeWorkflowState = 'RECORD_RETRIEVED'
-            state.patientResource.patientId = patientResourcePayload.patientId
-            state.patientResource.patientLastName = patientResourcePayload.patientLastName
-            state.patientResource.patientFirstName = patientResourcePayload.patientFirstName
-            state.patientResource.patientDateOfBirth = patientResourcePayload.patientDateOfBirth
-            state.patientResource.patientGender = patientResourcePayload.patientGender
-            state.patientResource.patientStreetAddress = patientResourcePayload.patientStreetAddress
-            state.patientResource.patientPreferredLanguage = patientResourcePayload.patientPreferredLanguage
+            state.patientResource = patientResourcePayload;
 
             //reset patient-specific data
             state.encounterResource.encounterStatus = ''
