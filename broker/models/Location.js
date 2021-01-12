@@ -46,7 +46,7 @@ exports.toFHIR = function (loc) {
           coding: [
             {
               code: "WIR",
-              display: "WIR CLient ID",
+              display: "WIR Client ID",
             },
           ],
         },
