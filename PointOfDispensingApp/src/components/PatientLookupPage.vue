@@ -23,14 +23,14 @@
     <p class="error" v-if="noRearCamera">
       You don't seem to have a rear camera on your device
     </p></div></v-row>
-<v-row>
+  <v-row>
     <v-col cols="6">
-    <v-btn @click="destroy()" color="accent"> Scan QR Code
+    <v-btn @click="toggleCamera()" color="accent"> Scan QR Code
     </v-btn></v-col>
     <v-col cols="6">
     <v-btn @click="switchCamera" color="accent"> Switch Camera
     </v-btn></v-col></v-row>
-<div><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
+  <div v-if="isCameraOn"><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
     </qrcode-stream></v-col></v-row>
     <v-row><p class="decode-result"> Result: <b>{{result}}</b></p></v-row>
   </div>
@@ -140,6 +140,9 @@ import {QrcodeStream} from "vue-qrcode-reader";
     name: 'PatientLookupPage',
     methods: 
     {
+    toggleCamera () {
+      this.isCameraOn = !this.isCameraOn;
+    },
     switchCamera () {
       switch (this.camera) {
         case 'front':
@@ -200,8 +203,9 @@ import {QrcodeStream} from "vue-qrcode-reader";
     selectedFamilyName: '',
     selectedGivenName: '',
     selectedDOB: '',
-    camera: 'rear',
 
+    camera: 'rear',
+    isCameraOn: false,
     noRearCamera: false,
     noFrontCamera: false,
 
