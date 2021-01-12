@@ -185,7 +185,7 @@ app.post("/EpisodeOfCare", (req, res) => {
   let resource = EpisodeOfCare.toFHIR(eoc);
 
   axios
-    .post(`${base}/EpisodeOfCare`, resource)
+    .post(`${configs.fhirUrlBase}/EpisodeOfCare`, resource)
     .then((response) => {
       res.json(response.data);
     })
