@@ -9,6 +9,7 @@ const Encounter = require("./models/Encounter");
 const Observation = require("./models/Observation");
 const Appointment = require("./models/Appointment");
 const Immunization = require("./models/Immunization");
+const EpisodeOfCare = require("./models/EpisodeOfCare");
 const SendHL7Message = require("./endpoints/SendHL7Message");
 
 const app = express();
@@ -34,6 +35,7 @@ const generalEndpoints = [
   "/Organization*",
   "/Appointment*",
   "/Immunization*",
+  "/EpisodeOfCare*",
 ];
 const patchHeaders = {
   "content-type": "application/json-patch+json",
@@ -168,6 +170,22 @@ app.post("/Encounter", (req, res) => {
 
   axios
     .post(`${configs.fhirUrlBase}/Encounter`, resource)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
+});
+
+app.post("/EpisodeOfCare", (req, res) => {
+  let eoc = req.body.EpisodeOfCare;
+  let resource = EpisodeOfCare.toFHIR(eoc);
+
+  axios
+    .post(`${configs.fhirUrlBase}/EpisodeOfCare`, resource)
     .then((response) => {
       res.json(response.data);
     })
