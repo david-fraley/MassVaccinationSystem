@@ -11,7 +11,7 @@ const fhirHeaders = {
 
 exports.read = (req, res) => {
   axios
-    .get(`${configs.base}${req.url}`)
+    .get(`${configs.fhirUrlBase}${req.url}`)
     .then((response) => {
       let r;
       if (response.data.resourceType === "Bundle") {
@@ -55,7 +55,7 @@ async function createPatient(req, res) {
       relationship: patient.relationship,
     });
     resource.id = related_id;
-    await axios.put(`${configs.base}/RelatedPerson/${related_id}`, resource, {
+    await axios.put(`${configs.fhirUrlBase}/RelatedPerson/${related_id}`, resource, {
       headers: fhirHeaders,
     });
   } else {
@@ -86,7 +86,7 @@ async function createPatientWithLink(patient, related) {
   // create related person
   let resource = RelatedPerson.toFHIR(related);
   let related_id = (
-    await axios.post(`${configs.base}/RelatedPerson`, resource, {
+    await axios.post(`${configs.fhirUrlBase}/RelatedPerson`, resource, {
       headers: fhirHeaders,
     })
   ).data.id;
@@ -94,7 +94,7 @@ async function createPatientWithLink(patient, related) {
   // create patient pointing to related person
   patient.link = [`RelatedPerson/${related_id}`];
   resource = Patient.toFHIR(patient);
-  let result = await axios.post(`${configs.base}/Patient`, resource, {
+  let result = await axios.post(`${configs.fhirUrlBase}/Patient`, resource, {
     headers: fhirHeaders,
   });
 
