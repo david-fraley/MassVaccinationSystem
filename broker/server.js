@@ -9,6 +9,7 @@ const Encounter = require("./models/Encounter");
 const Observation = require("./models/Observation");
 const Appointment = require("./models/Appointment");
 const Immunization = require("./models/Immunization");
+const EpisodeOfCare = require("./models/EpisodeOfCare");
 const SendHL7Message = require("./endpoints/SendHL7Message");
 
 const app = express();
