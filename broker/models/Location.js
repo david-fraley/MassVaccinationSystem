@@ -1,5 +1,6 @@
 /*
 Location {
+  identifier: WIR client ID
   status : enum (acitve, suspended, inactive)
   name : string
   mode : enum (instance, kind)
@@ -15,7 +16,8 @@ Location {
 }
 {
   "Location":
-    {
+    { 
+      "wirClientID": "1234",
       "status" : "active",
       "name": "LocationName",
       "mode": "instance",
@@ -37,6 +39,19 @@ exports.toFHIR = function (loc) {
   let resource = {
     resourceType: "Location",
     name: loc.name,
+    identifier: [
+      {
+        value: loc.wirClientID,
+        type: {
+          coding: [
+            {
+              code: "WIR",
+              display: "WIR CLient ID",
+            },
+          ],
+        },
+      },
+    ],
     status: loc.status,
     mode: loc.mode,
     type: [
@@ -49,6 +64,15 @@ exports.toFHIR = function (loc) {
         ],
       },
     ],
+
+    address: {
+      line: [loc.address.line],
+      city: loc.address.city,
+      state: loc.address.state,
+      postalCode: loc.address.postalCode,
+      country: loc.address.country,
+    },
+
     physicalType: {
       coding: [
         {
