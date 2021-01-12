@@ -25,6 +25,9 @@
     </p></div></v-row>
 <v-row>
     <v-col cols="6">
+    <v-btn @click="destroy()" color="accent"> Scan QR Code
+    </v-btn></v-col>
+    <v-col cols="6">
     <v-btn @click="switchCamera" color="accent"> Switch Camera
     </v-btn></v-col></v-row>
 <div><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
