@@ -5,11 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "devbuild": "vue-cli-service build --dest ../broker/PatientRegistrationViews",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "jspdf": "^2.2.0",
     "qrcode": "^1.4.4",
     "v-mask": "^2.2.3",
     "vue": "^2.6.11",
