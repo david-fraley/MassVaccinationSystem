@@ -25,7 +25,7 @@
     </p></div></v-row>
   <v-row>
     <v-col cols="6">
-    <v-btn @click="toggleCamera(); scanQrCode;" color="accent"> Scan QR Code
+    <v-btn @click="toggleCamera(); scanQrCode();" color="accent"> Scan QR Code
     </v-btn></v-col>
     <v-col cols="6">
     <v-btn @click="switchCamera" color="accent"> Switch Camera
