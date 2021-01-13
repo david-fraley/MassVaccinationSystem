@@ -4,6 +4,9 @@ import vuetify from './plugins/vuetify'
 import VueRouter from 'vue-router'
 import navRoutes from './navRoutes.js'
 import store from './store/store'
+import VueMask from 'v-mask';
+
+Vue.use(VueMask);
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)

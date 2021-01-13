@@ -60,7 +60,8 @@
                   outlined dense 
                   v-model="dateFormatted"
                   :rules="birthdateRules"
-                  placeholder="MM-DD-YYYY"
+                  placeholder="MM/DD/YYYY"
+                  v-mask="'##/##/####'"
                   prepend-icon="mdi-calendar"
                   @click:prepend="on.click"
                   @blur="date = parseDate(dateFormatted)"
@@ -144,11 +145,6 @@
         this.dateFormatted = this.formatDate(this.date)
       },
     },
-    computed: {
-      computedDateFormatted () {
-        return this.formatDate(this.date)
-      },
-    },
     methods: 
     {
       rowClick: function (item, row) {      
@@ -156,7 +152,7 @@
         this.selectedId=item.id
         this.selectedFamilyName=item.familyName
         this.selectedGivenName=item.givenName
-        this.selectedDOB=item.date
+        this.selectedDOB=item.date // change back to DOB?
         this.selectedLineAddress=item.lineAddress
         this.selectedCity=item.city
         this.selectedPostalCode=item.postalCode
@@ -231,7 +227,7 @@
     selectedCity: '',
     selectedPostalCode: '',
     birthdateRules: [
-        (v) => v.length == 10 || "DOB must be in format MM-DD-YYYY"
+        (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
       ],
 
 		headers: [
