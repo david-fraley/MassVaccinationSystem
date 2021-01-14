@@ -86,9 +86,6 @@ export default {
       };
       //send data to Vuex
       this.$store.dispatch("patientAdmitted", encounterResourcePayload);
-
-      //Advance to the PatientHistory page
-      this.$router.push("PatientHistory");
     },
     checkIn() {
       // make request
