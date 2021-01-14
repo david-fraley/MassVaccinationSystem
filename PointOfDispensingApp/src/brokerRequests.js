@@ -12,6 +12,20 @@ function toResponse(error) {
   }
 }
 
+// Returns promise to make a call to healthcheck
+function healthcheckPromise() {
+  return axios
+    .get(`/broker/healthcheck`)
+    .then((response) => {
+      console.log(response.data);
+
+      return { data: response.data };
+    })
+    .catch((e) => {
+      return toResponse(e);
+    });
+}
+
 // define functions for API requests here
 export default {
   // Search patient for patient retrieval
@@ -70,15 +84,6 @@ export default {
 
   // Check-in patient
   checkIn: () => {
-    return axios
-      .get(`/broker/healthcheck`)
-      .then((response) => {
-        console.log(response.data);
-
-        return { data: response.data };
-      })
-      .catch((e) => {
-        return toResponse(e);
-      });
+    return healthcheckPromise();
   },
 };
