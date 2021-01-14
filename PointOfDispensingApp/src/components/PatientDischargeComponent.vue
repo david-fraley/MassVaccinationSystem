@@ -84,6 +84,8 @@
 </template>
 
 <script>
+import brokerRequests from "../brokerRequests";
+
 export default {
   name: "PatientDischargeComponent",
   computed: {
@@ -101,7 +103,7 @@ export default {
     },
   },
   methods: {
-    endEncounter() {
+    onSuccess() {
       //the following is sending dummy data until we have the API in place
       const encounterResourcePayload = {
         encounterStatus: "Finished",
@@ -110,6 +112,15 @@ export default {
       //send data to Vuex
       this.$store.dispatch("patientDischarged", encounterResourcePayload);
     },
+    endEncounter() {
+      brokerRequests.discharge().then((response) => {
+        if (response.data) {
+          this.onSuccess();
+        } else if (response.error) {
+          alert("Discharge not successful");
+        }
+      });
+    }
   },
   components: {},
   data() {
