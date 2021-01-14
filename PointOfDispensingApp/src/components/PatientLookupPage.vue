@@ -13,23 +13,23 @@
           <div class="font-weight-medium secondary--text">Retrieve the patient's record by scanning their QR code.</div>
         </v-col>
     </v-row>
-
+    
   <template>
   <v-row><div>
-    <p class="error" v-if="noFrontCamera">
+    <p class="error" v-if="isCameraOn && noFrontCamera">
       You don't seem to have a front camera on your device
     </p>
 
-    <p class="error" v-if="noRearCamera">
+    <p class="error" v-if="isCameraOn && noRearCamera">
       You don't seem to have a rear camera on your device
     </p></div></v-row>
   <v-row>
     <v-col cols="6">
-    <v-btn @click="toggleCamera(); scanQrCode();" color="accent"> Scan QR Code
+    <v-btn @click="scanQrCode()" color="accent"> Scan QR Code
     </v-btn></v-col>
     <v-col cols="6">
-    <v-btn @click="switchCamera" color="accent"> Switch Camera
-    </v-btn></v-col></v-row>
+    <div v-if="isCameraOn && !noFrontCamera && !noRearCamera"><v-btn @click="switchCamera" color="accent"> Switch Camera
+    </v-btn></div></v-col></v-row>
   <div v-if="isCameraOn"><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
     </qrcode-stream></v-col></v-row>
     <v-row><p class="decode-result"> Result: <b>{{result}}</b></p></v-row>
@@ -147,7 +147,6 @@
 <script>
 import brokerRequests from "../brokerRequests";
 import {QrcodeStream} from "vue-qrcode-reader";
-
 export default {
   name: "PatientLookupPage",
   methods: {
@@ -164,39 +163,44 @@ export default {
           break
       }
     },
-
     async onInit (promise) {
       try {
         await promise
       } catch (error) {
         const triedFrontCamera = this.camera === 'front'
         const triedRearCamera = this.camera === 'rear'
-
         const cameraMissingError = error.name === 'OverconstrainedError'
-
         if (triedRearCamera && cameraMissingError) {
           this.noRearCamera = true
+          this.camera = 'front'
         }
-
         if (triedFrontCamera && cameraMissingError) {
           this.noFrontCamera = true
+          this.camera = 'rear'
         }
-
         console.error(error)
       }
     },
       onDecode (result) {
         this.result = result
+        let qrValue = "example";
+        let data = { id: qrValue };
+        brokerRequests.getPatient(data).then((response) => {
+          if (response.data) {
+            this.patient = response.data;
+            this.patientRecordRetrieved();
+          } else if (response.error) {
+            alert("Patient not found");
+          }
+        });
       },
     searchPatient() {
       // validate form
       this.$refs.form.validate();
       if (!this.valid) return;
-
       // update for loading animation
       this.patientLookupTable = [];
       this.loading = true;
-
       // make request
       let data = {
         lastName: this.lastName,
@@ -230,23 +234,12 @@ export default {
     patientRecordRetrieved() {
       //send data to Vuex
       this.$store.dispatch("patientRecordRetrieved", this.patient);
-
       //Advance to the Check In page
       this.$router.push("CheckIn");
     },
     // to do
     scanQrCode() {
-      let qrValue = "example";
-      let data = { id: qrValue };
-
-      brokerRequests.getPatient(data).then((response) => {
-        if (response.data) {
-          this.patient = response.data;
-          this.patientRecordRetrieved();
-        } else if (response.error) {
-          alert("Patient not found");
-        }
-      });
+      this.toggleCamera()
     },
   },
   components: {
@@ -266,7 +259,6 @@ export default {
       noRearCamera: false,
       noFrontCamera: false,
       result: '',
-
       headers: [
         {
           text: "Last Name",
