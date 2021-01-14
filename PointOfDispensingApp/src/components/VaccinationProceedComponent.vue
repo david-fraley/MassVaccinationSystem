@@ -229,6 +229,8 @@
 </template>
 
 <script>
+import brokerRequests from "../brokerRequests";
+
 export default {
   name: "VaccinationProceedComponent",
   computed: {
@@ -243,7 +245,7 @@ export default {
     },
   },
   methods: {
-    submitVaccinationRecord() {
+    onSuccess() {
       const vaccinationCompletePlayload = {
         lotNumber: this.lotNumber,
         expirationDate: this.expirationDate,
@@ -266,6 +268,15 @@ export default {
 
       //Close the dialog
       this.dialog = false;
+    },
+    submitVaccinationRecord() {
+      brokerRequests.submitVaccination().then((response) => {
+        if (response.data) {
+          this.onSuccess();
+        } else if (response.error) {
+          alert("Vaccination record not submitted");
+        }
+      });
     },
   },
   components: {},

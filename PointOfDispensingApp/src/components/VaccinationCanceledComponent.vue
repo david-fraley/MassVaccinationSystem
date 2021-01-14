@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import brokerRequests from "../brokerRequests";
+
 export default {
   name: "VaccinationCanceledComponent",
   computed: {
@@ -88,7 +90,7 @@ export default {
     },
   },
   methods: {
-    submitVaccinationRecord() {
+    onSuccess() {
       const vaccinationCanceledPlayload = {
         immunizationStatus: "Not-done",
         immunizationTimeStamp: new Date().toISOString(),
@@ -106,6 +108,15 @@ export default {
       //Close the dialog
       this.dialog = false;
     },
+    submitVaccinationRecord() {
+      brokerRequests.submitVaccination().then((response) => {
+        if (response.data) {
+          this.onSuccess();
+        } else if (response.error) {
+          alert("Vaccination record not submitted");
+        }
+      });
+    }
   },
   components: {},
   data() {
