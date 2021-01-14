@@ -1,5 +1,31 @@
 import axios from "axios";
 
+// Return an object with error property containing data
+// from Axios error object
+function toResponse(error) {
+  if (error.response) {
+    return { error: error.response.data };
+  } else if (error.request) {
+    return { error: error.request.data };
+  } else {
+    return { error: error.message ? error.message : error };
+  }
+}
+
+// Returns promise to make a call to healthcheck
+function healthcheckPromise() {
+  return axios
+    .get(`/broker/healthcheck`)
+    .then((response) => {
+      console.log(response.data);
+
+      return { data: response.data };
+    })
+    .catch((e) => {
+      return toResponse(e);
+    });
+}
+
 // define functions for API requests here
 export default {
   // Search patient for patient retrieval
@@ -18,17 +44,11 @@ export default {
         return { data: response.data };
       })
       .catch((e) => {
-        if (e.response) {
-          return { error: e.response.data };
-        } else if (e.request) {
-          return { error: e.request.data };
-        } else {
-          return { error: e.message ? e.message : e };
-        }
+        return toResponse(e);
       });
   },
 
-  // Get patient from QR code for patient retrival
+  // Get patient from QR code for patient retrieval
   // param data:
   // {
   //   id: String
@@ -58,13 +78,12 @@ export default {
         return { data: response.data };
       })
       .catch((e) => {
-        if (e.response) {
-          return { error: e.response.data };
-        } else if (e.request) {
-          return { error: e.request.data };
-        } else {
-          return { error: e.message ? e.message : e };
-        }
+        return toResponse(e);
       });
+  },
+
+  // Check-in patient
+  checkIn: () => {
+    return healthcheckPromise();
   },
 };
