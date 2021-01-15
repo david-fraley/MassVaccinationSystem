@@ -50,6 +50,17 @@
         ></v-select>
       </v-col>
     </v-row>
+    <v-row align="center" justify="start">
+			<!-- Relationship Type -->
+			<v-col cols="12" sm="6" md="6" lg="4">
+				<v-select
+					v-model="emergencyContactRelationship"
+					:items="relationshipOptions"
+					label="Relationship"
+					prepend-icon="mdi-blank">
+				</v-select>
+			</v-col>
+		</v-row>
 	</v-container>
 </template>
 
@@ -60,10 +71,12 @@ export default {
   data() {
     return {
       phoneTypeOptions: ["Home", "Mobile", "Work"],
+      relationshipOptions: ["Spouse", "Parent", "Guardian", "Care Giver", "Sibling", "Grandparent", "Child", "Foster Child", "Stepchild", "Other"],
       emergencyContactFamilyName: '',
       emergencyContactGivenName: '',
       emergencyContactPhoneNumber: '',
-      emergencyContactPhoneNumberType: ''
+      emergencyContactPhoneNumberType: '',
+      emergencyContactRelationship: ''
     };
   },
   methods: {
@@ -72,7 +85,8 @@ export default {
         emergencyContactFamilyName: this.emergencyContactFamilyName,
         emergencyContactGivenName: this.emergencyContactGivenName,
         emergencyContactPhoneNumber: this.emergencyContactPhoneNumber,
-        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType
+        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType,
+        emergencyContactRelationship: this.emergencyContactRelationship
       }
       EventBus.$emit('DATA_HOUSEHOLD_EMERGENCY_CONTACT_INFO_PUBLISHED', householdEmergencyContactPayload)
     },

@@ -78,7 +78,9 @@
 		<v-row>	
 			<v-col cols="12">
 				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactFamilyName}}, 
-					{{dataEmergencyContact.emergencyContactGivenName}}</span></div>
+					{{dataEmergencyContact.emergencyContactGivenName}}
+					<span v-if="dataEmergencyContact.emergencyContactRelationship != ''">(Relationship: {{dataEmergencyContact.emergencyContactRelationship}})</span>
+					</span></div>
 				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactPhoneNumber}} 
 					<span v-if="dataEmergencyContact.emergencyContactPhoneNumberType != ''">({{dataEmergencyContact.emergencyContactPhoneNumberType}})</span></span></div>
 			</v-col>
