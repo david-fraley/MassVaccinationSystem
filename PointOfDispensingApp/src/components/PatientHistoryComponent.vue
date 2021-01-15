@@ -55,7 +55,7 @@
 			{ text: 'Trade Name', value: 'tradeName' },
 			{ text: 'Dose Qty.', value: 'doseQty' },
 			{ text: 'Time Administered', value: 'timeAdministered' },
-			{ text: 'Days Since First Dose', value: 'n/a' },
+			{ text: 'LOT', value: 'LOT' },
 			{ text: 'Practitioner', value: 'practitionerName' },
 			{ text: 'Adverse Effects', value: 'adverseEffects' },
 			],
