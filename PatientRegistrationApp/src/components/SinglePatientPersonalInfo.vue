@@ -57,8 +57,8 @@
             <v-text-field
               v-model="dateFormatted"
               :rules="birthdateRules"
-              placeholder="MM-DD-YYYY"
-              v-mask="'##-##-####'"
+              placeholder="MM/DD/YYYY"
+              v-mask="'##/##/####'"
               prepend-icon="mdi-calendar"
               @click:prepend="on.click"
               @blur="date = parseDate(dateFormatted)"
@@ -159,8 +159,8 @@ export default {
       givenName: "",
       middleName: "",
       suffix: "",
-      date: new Date().toISOString().substr(0, 10),
-      dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
+      date: "",
+      dateFormatted: "",
       gender: "",
       patientPhoto: [],
       race: "",
@@ -292,9 +292,6 @@ export default {
         ].join("-");
 
       return date;
-    },
-    computedDateFormatted () {
-      return this.formatDate(this.date)
     },
   },
   mounted() {
