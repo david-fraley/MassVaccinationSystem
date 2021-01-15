@@ -107,7 +107,7 @@
         return this.$store.getters.isCheckInPageDisabled
       },
       isPatientHistoryPageDisabled() {
-        return this.$store.getters.isPatientHistoryPageDisabled
+        return false//this.$store.getters.isPatientHistoryPageDisabled
       },
       isVaccinationEventPageDisabled() {
         return this.$store.getters.isVaccinationEventPageDisabled
