@@ -8,16 +8,16 @@ import VueMask from 'v-mask';
 
 Vue.use(VueMask);
 
-Vue.config.productionTip = false
-Vue.use(VueRouter)
+Vue.config.productionTip = false;
+Vue.use(VueRouter);
 
 const router = new VueRouter({
-  routes: navRoutes
+  routes: navRoutes,
 });
 
 new Vue({
   vuetify,
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");
