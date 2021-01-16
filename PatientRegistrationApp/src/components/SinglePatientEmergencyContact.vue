@@ -56,7 +56,7 @@
 				<v-select
 					v-model="emergencyContactRelationship"
 					:items="relationshipOptions"
-					label="Relationship"
+					label="Relationship: this person is your"
 					prepend-icon="mdi-blank">
 				</v-select>
 			</v-col>
