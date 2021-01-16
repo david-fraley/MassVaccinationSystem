@@ -63,7 +63,7 @@
 					<v-card class="pa-2" flat min-width=33%>
 						<v-img 
 							contain		
-							max-height="300"
+							height="300"
 							max-width="300" 
 							:src="dataHouseholdPersonalInfo[0] ? dataHouseholdPersonalInfo[0].patientPhotoSrc : undefined"
 							v-bind:class="{ hidden: 
@@ -94,7 +94,7 @@
 						:key="index">
 							<v-img
 								contain		
-								max-height="300"
+								height="300"
 								max-width="300" 
 								:src="dataHouseholdPersonalInfo[index] ? dataHouseholdPersonalInfo[index].patientPhotoSrc : undefined"
 								v-bind:class="{ hidden: 
