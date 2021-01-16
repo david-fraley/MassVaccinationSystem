@@ -59,7 +59,7 @@
 
 		<v-row>	
 			<v-col cols="12">
-				<v-card class="d-flex flex-wrap" flat>
+				<v-card class="d-flex align-end flex-wrap" flat>
 					<v-card class="pa-2" flat min-width=33%>
 						<v-img 
 							contain		
