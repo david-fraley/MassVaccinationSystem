@@ -87,29 +87,14 @@
       <p> </p> <!--blank row for spacing-->
     </v-row>
     <v-row>
-      <v-col cols="12">
-        <v-btn color="accent">
-          Vaccine administered
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-row>
       <v-col cols="5">
         <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">Vaccination Status</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field outlined dense filled readonly
-              :value=immunizationStatus
-            ></v-text-field>
-          </v-col>
           <v-col cols="4">
             <div class="secondary--text">Healthcare Practitioner</div>
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense filled readonly
-              :value=healthcarePractitioner 
+              :value=healthcarePractitioner
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -125,14 +110,6 @@
               v-model="site"
             ></v-select>
           </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">Route</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field outlined dense filled readonly
-              :value=route
-            ></v-text-field>
-          </v-col>
         </v-row>
       </v-col>
       <!--blank column for spacing-->
@@ -141,11 +118,11 @@
       <v-col cols="5">
         <v-row no-gutters>
           <v-col cols="4">
-            <div class="secondary--text">Date/Time</div>
+            <div class="secondary--text">Route</div>
           </v-col>
           <v-col cols="8">
             <v-text-field outlined dense filled readonly
-              :value=immunizationTimeStamp
+              :value=route
             ></v-text-field>
           </v-col>
         </v-row>
