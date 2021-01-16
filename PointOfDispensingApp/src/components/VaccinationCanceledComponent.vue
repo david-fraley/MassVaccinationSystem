@@ -53,7 +53,7 @@
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="6">
-        <v-btn block color="accent" @click="submitVaccinationRecord()">
+        <v-btn block color="accent" @click="submitVaccinationRecord(); endEncounter();">
           Submit vaccination record
         </v-btn>
       </v-col>
@@ -94,6 +94,14 @@
 
         //Close the dialog
         this.dialog = false;
+      },
+      endEncounter() {
+        const encounterResourcePayload = {
+          encounterStatus:'Finished',
+          encounterTimeStamp: new Date().toISOString(),
+        }
+        //send data to Vuex
+        this.$store.dispatch('patientDischarged', encounterResourcePayload)
       }
     },
     components: 

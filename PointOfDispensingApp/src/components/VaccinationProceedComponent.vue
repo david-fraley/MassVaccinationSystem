@@ -192,7 +192,7 @@
                 <v-btn	
                   color="primary"
                   text
-                  @click="submitVaccinationRecord()">
+                  @click="submitVaccinationRecord(); endEncounter();">
                   Submit
                 </v-btn>
               </v-card-actions>
@@ -243,6 +243,14 @@
 
         //Close the dialog
         this.dialog = false;
+      },
+      endEncounter() {
+        const encounterResourcePayload = {
+          encounterStatus:'Finished',
+          encounterTimeStamp: new Date().toISOString(),
+        }
+        //send data to Vuex
+        this.$store.dispatch('patientDischarged', encounterResourcePayload)
       }
     },
     components: 

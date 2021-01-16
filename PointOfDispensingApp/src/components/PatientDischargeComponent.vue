@@ -30,7 +30,7 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row>
+    <!--v-row>
       <v-col cols="2">
       </v-col>    
       <v-col cols="6">
@@ -38,7 +38,7 @@
           End encounter
         </v-btn>
       </v-col>
-    </v-row>
+    </v-row-->
     <v-row>
       <v-col cols="12">
         <v-divider></v-divider>
@@ -86,15 +86,7 @@
     },
     methods: 
     {
-      endEncounter() {
-        //the following is sending dummy data until we have the API in place
-        const encounterResourcePayload = {
-          encounterStatus:'Finished',
-          encounterTimeStamp: new Date().toISOString(),
-        }
-        //send data to Vuex
-        this.$store.dispatch('patientDischarged', encounterResourcePayload)
-      }
+      
     },
     components: 
     {
