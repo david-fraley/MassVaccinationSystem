@@ -89,8 +89,8 @@
   export default {
     name: 'VaccinationCanceledComponent',
     computed: {
-      immunizationStatus() {
-        return this.$store.state.immunizationResource.immunizationStatus
+      healthcarePractitioner() {
+        return this.$store.state.immunizationResource.healthcarePractitioner
       }
     },
     methods: 
