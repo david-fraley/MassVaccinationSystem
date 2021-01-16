@@ -55,13 +55,12 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              v-model="dateFormatted"
+              v-model="date"
               :rules="birthdateRules"
-              placeholder="MM/DD/YYYY"
-              v-mask="'##/##/####'"
+              placeholder="YYYY-MM-DD"
+              v-mask="'####-##-##'"
               prepend-icon="mdi-calendar"
               @click:prepend="on.click"
-              @blur="date = parseDate(dateFormatted)"
             >
             <template #label>
               <span class="red--text"><strong>* </strong></span>Date of Birth
@@ -160,7 +159,6 @@ export default {
       middleName: "",
       suffix: "",
       date: "",
-      dateFormatted: "",
       gender: "",
       patientPhoto: [],
       race: "",
@@ -169,7 +167,7 @@ export default {
       minDateStr: "1900-01-01",
       birthdateRules: [
         (v) => !!v || "DOB is required",
-        (v) => v.length == 10 || "DOB must be in specified format, MM-DD-YYYY",
+        (v) => v.length == 10 || "DOB must be in specified format",
         (v) => this.validBirthdate(v) || "Invalid DOB",
       ],
     };
@@ -178,25 +176,9 @@ export default {
     validBirthdate(birthdate) {
       var minDate = Date.parse(this.minDateStr);
       var maxDate = Date.parse(this.maxDateStr);
-      var formattedDate = () => {
-        const [year, month, day] = birthdate.split('-');
-        return `${year}-${month}-${day}`
-      }
-      var date = Date.parse(formattedDate());
+      var date = Date.parse(birthdate);
 
       return !Number.isNaN(date) && minDate <= date && date <= maxDate;
-    },
-    formatDate (date) {
-      if (!date) return null
-
-      const [year, month, day] = date.split('-')
-      return `${month}/${day}/${year}`
-    },
-    parseDate (date) {
-      if (!date) return null
-
-      const [month, day, year] = date.split('/')
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     },
     sendPersonalInfoDataToReviewPage() {
       const personalInfoPayload = {
@@ -275,11 +257,6 @@ export default {
 
       this.sendPersonalInfoDataToReviewPage();
       return true;
-    },
-  },
-  watch: {
-    date () {
-      this.dateFormatted = this.formatDate(this.date)
     },
   },
   computed: {
