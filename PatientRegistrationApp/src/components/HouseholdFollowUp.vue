@@ -17,7 +17,8 @@
 							<div class="font-weight-medium primary--text">Household Member #{{index}}</div>
 							<v-row><div>
 							<vue-qrcode
-								v-bind:value="toQRValue(dataHouseholdPersonalInfo[index-1])"
+								:id=index-1
+								v-bind:value="qrValue[index-1]"
 								v-bind:errorCorrectionLevel="correctionLevel" />
 							</div></v-row>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index-1].familyName}}, 
@@ -44,7 +45,6 @@
 			</v-radio-group>
 		</v-col>
 		</v-row>
-
 		<v-row justify="center">
 			<v-btn color="secondary" class="ma-2 white--text">
 				Send
@@ -52,17 +52,16 @@
 		</v-row>
 	</v-container>
 </template>
-
 <script>
 import EventBus from '../eventBus';
 import VueQrcode from 'vue-qrcode';
 import jsPDF from 'jspdf';
-
 	export default {
 	data () {
 		return {
 			dataHouseholdPersonalInfo: [],
-			correctionLevel: "H"
+			correctionLevel: "H",
+			qrValue:[]
 		}
 	},
 	props:
@@ -71,21 +70,48 @@ import jsPDF from 'jspdf';
 	},
 	methods:
 	{
-		generatePdf() {
+		generatePdf(){
 			let pdfDoc = new jsPDF();
 			pdfDoc.setFontSize(10);
-			pdfDoc.text("COVID-19 Vaccination Registration",10,15);
-			pdfDoc.text("Use this QR code to easily check-in at the site where you receive your vaccine.",10,25);
-			pdfDoc.text("This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.",10, 30);
+			for(let i=0; i<this.getNumberOfHouseholdMembers(); i++)
+			{
+				const qrcode = document.getElementById(i);
+				let imageData= this.getBase64Image(qrcode);
+				let string = this.qrValue[i];
+				
+				pdfDoc.text("COVID-19 Vaccination Registration",10,15);
+				pdfDoc.text("Use this QR code to easily check-in at the site where you receive your vaccine.",10,25);
+				pdfDoc.text("This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.",10, 30);
+				
+				pdfDoc.addImage(imageData, "JPG", 70, 50);
+				pdfDoc.text(string, 75,48);
+				if(i<this.getNumberOfHouseholdMembers()-1)
+				{
+				pdfDoc.addImage(imageData++, "JPG", 70, 70);
+					//pdfDoc.addPage();
+				}
+			}
 			pdfDoc.save('COVID-19_Registration_QR_Code.pdf');
+		},
+		getBase64Image(img) {
+			var canvas = document.createElement("canvas");
+			canvas.width = 200;
+			canvas.height = 200;
+			var ctx = canvas.getContext("2d");
+			ctx.drawImage(img, 0, 0);
+			var dataURL = canvas.toDataURL("image/png");
+			return dataURL;
 		},
 		updateHouseholdPersonalInfoData(householdPersonalInfoPayload, householdMemberNumber) {
 			// if member is next in line, add to array of members
 			if (householdMemberNumber-1 == this.dataHouseholdPersonalInfo.length) {
 				this.dataHouseholdPersonalInfo.push(householdPersonalInfoPayload);
+				this.qrValue.push(this.toQRValue(householdPersonalInfoPayload));
 			// else if member already exists in array, update the member
-			} else if (householdMemberNumber-1 < this.dataHouseholdPersonalInfo.length) {
+			} 
+			else if (householdMemberNumber-1 < this.dataHouseholdPersonalInfo.length) {
 				this.$set(this.dataHouseholdPersonalInfo, householdMemberNumber-1, householdPersonalInfoPayload);
+				this.$set(this.qrValue, householdMemberNumber-1, this.toQrValue(householdPersonalInfoPayload));
 			}
 		},
 		getNumberOfHouseholdMembers()
@@ -108,10 +134,10 @@ import jsPDF from 'jspdf';
 	},
 }
 </script>
-<style lang="css" scoped>
-
-	.hidden {
-		display: none;
-	}
-
+<style lang="sass" scoped>
+.accent--border
+  border: 1px solid var(--v-accent-base)
+.image-preview
+  display: block
+  max-width: 100%
 </style>
