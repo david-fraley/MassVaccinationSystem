@@ -22,31 +22,6 @@ Immunization {
   doseNumber: int,
   seriesDoses: int
 }
-{
-  "Immunization": {
-    "vaccine": "FLUVAX",
-    "manufacturer": "Organization/f001",
-    "lotNumber": "AAJN11K",
-    "expiration": "2015-02-15",
-    "patient": "Patient/example",
-    "encounter": "Encounter/715",
-    "status": "completed",
-    "statusReason": "OSTOCK",
-    "occurrence": "2013-01-10",
-    "primarySource": true,
-    "location": "Location/id",
-    "site": "LA",
-    "route": "IVINJ",
-    "doseQuantity": 5,
-    "doseUnit": "mg",
-    "performer": ["Practitioner/f201"],
-    "note": "immunization notes",
-    "education": [""],
-    "series": "series",
-    "doseNumber": 1,
-    "seriesDoses": 2
-  }
-}
 */
 const VACC_SYSTEM = "";
 const STAT_REASON_SYSTEM = "https://www.hl7.org/fhir/v3/ActReason/cs.html";
