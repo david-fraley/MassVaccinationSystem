@@ -185,12 +185,6 @@
   export default {
     name: 'VaccinationProceedComponent',
     computed: {
-      immunizationStatus() {
-        return this.$store.state.immunizationResource.immunizationStatus
-      },
-      immunizationTimeStamp() {
-        return this.$store.state.immunizationResource.immunizationTimeStamp
-      },
       healthcarePractitioner() {
         return this.$store.state.immunizationResource.healthcarePractitioner
       },
