@@ -1,0 +1,2 @@
+DEVELOPMENT=1
+FHIR_URL_BASE=http://fhir-dstu2-nprogram.azurewebsites.net/

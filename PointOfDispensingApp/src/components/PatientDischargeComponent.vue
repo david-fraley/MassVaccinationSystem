@@ -85,8 +85,6 @@
 </template>
 
 <script>
-import brokerRequests from "../brokerRequests";
-
 export default {
   name: "PatientDischargeComponent",
   computed: {
