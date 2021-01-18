@@ -86,4 +86,9 @@ export default {
   checkIn: () => {
     return healthcheckPromise();
   },
+
+  // Discharge
+  discharge: () => {
+    return healthcheckPromise();
+  },
 };
