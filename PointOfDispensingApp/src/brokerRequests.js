@@ -90,5 +90,10 @@ export default {
   // Submit vaccination
   submitVaccination: () => {
     return healthcheckPromise();
-  }
+  },
+
+  // Discharge
+  discharge: () => {
+    return healthcheckPromise();
+  },
 };

@@ -120,7 +120,7 @@ import EventBus from '../eventBus'
 				'TX', 'UT', 'VT', 'VI', 'VA',
 				'WA', 'WV', 'WI', 'WY',
 				],
-			addressTypeOptions: ["Home", "Business", "Temporary"],
+			addressTypeOptions: ["Home", "Temporary"],
 			countryOptions: ['USA'],
 			addressType: '',
 			lineAddress1: '',

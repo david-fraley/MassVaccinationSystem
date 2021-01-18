@@ -9,6 +9,9 @@ const Encounter = require("./models/Encounter");
 const Observation = require("./models/Observation");
 const Appointment = require("./models/Appointment");
 const Immunization = require("./models/Immunization");
+const EpisodeOfCare = require("./models/EpisodeOfCare");
+const Practitioner = require("./models/Practitioner");
+const Location = require("./models/Location");
 const SendHL7Message = require("./endpoints/SendHL7Message");
 
 const app = express();
@@ -34,6 +37,9 @@ const generalEndpoints = [
   "/Organization*",
   "/Appointment*",
   "/Immunization*",
+  "/EpisodeOfCare*",
+  "/Practitioner*",
+  "/Location*",
 ];
 const patchHeaders = {
   "content-type": "application/json-patch+json",
@@ -178,6 +184,54 @@ app.post("/Encounter", (req, res) => {
     });
 });
 
+app.post("/EpisodeOfCare", (req, res) => {
+  let eoc = req.body.EpisodeOfCare;
+  let resource = EpisodeOfCare.toFHIR(eoc);
+
+  axios
+    .post(`${configs.fhirUrlBase}/EpisodeOfCare`, resource)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
+});
+
+app.post("/Practitioner", (req, res) => {
+  let prt = req.body.Practitioner;
+  let resource = Practitioner.toFHIR(prt);
+
+  axios
+    .post(`${configs.fhirUrlBase}/Practitioner`, resource)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
+});
+
+app.post("/Location", (req,res) =>{
+  let loc = req.body.Location;
+  let resource = Location.toFHIR(loc);
+  
+  axios
+    .post(`${configs.fhirUrlBase}/Location`, resource)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
+});
+
 // Discharge
 app.post("/discharge", (req, res) => {
   const encounter_status = "finished";
@@ -207,6 +261,7 @@ app.post("/discharge", (req, res) => {
     res.status(400).json(response);
   }
 });
+
 
 // Check-in given either
 // a) appointment id from QR code
