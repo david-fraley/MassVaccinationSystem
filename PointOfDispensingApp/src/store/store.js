@@ -59,7 +59,7 @@ export default new Vuex.Store({
         },
         isAdverseReactionPageDisabled: state => {
             //The Adverse Reaction page is only accessible after the vaccine has been administered and before the patient has been discharged
-            return (state.activeWorkflowState != 'VACCINATION_COMPLETE')
+            return (state.activeWorkflowState != 'DISCHARGED')
         },
         isDischargePageDisabled: state => {
             //The Discharge page is not accessible before the patient has been checked in
