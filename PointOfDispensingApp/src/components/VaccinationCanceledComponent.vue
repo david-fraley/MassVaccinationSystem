@@ -39,7 +39,7 @@
           placeholder="Notes"
           outlined
           rows="4"
-          :value=notes
+          :value="notes"
           v-model="notes"
         ></v-textarea>
       </v-col>
@@ -86,6 +86,8 @@
 </template>
 
 <script>
+  import brokerRequests from "../brokerRequests";
+  
   export default {
     name: 'VaccinationCanceledComponent',
     computed: {
@@ -93,37 +95,49 @@
         return this.$store.state.immunizationResource.healthcarePractitioner
       }
     },
-    methods: 
-    {
-      submitVaccinationRecord() {
+    methods: {
+      onSuccess() {
         const vaccinationCanceledPlayload = {
-          immunizationStatus: 'Not-done',
+          immunizationStatus: "Not-done",
           immunizationTimeStamp: new Date().toISOString(),
           healthcarePractitioner: this.healthcarePractitioner,
           notAdministeredReason: this.notAdministeredReason,
           notes: this.notes,
-        }
-        
+        };
+
         //send data to Vuex
-        this.$store.dispatch('vaccinationCanceled', vaccinationCanceledPlayload)
+        this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
 
         //Advance to the Discharge page
-        this.$router.push("Discharge")
+        this.$router.push("Discharge");
 
         //Close the dialog
         this.dialog = false;
+      },
+      submitVaccinationRecord() {
+        brokerRequests.submitVaccination().then((response) => {
+          if (response.data) {
+            this.onSuccess();
+          } else if (response.error) {
+            alert("Vaccination record not submitted");
+          }
+        });
       }
     },
-    components: 
-    {
-    },
-    data () {
-      return {
-        dialog: false,
-        vaccineNotAdministeredOptions: ['Medical precaution', 'Immune', 'Out of Stock', 'Patient Objection'],
-        notAdministeredReason: this.$store.state.immunizationResource.notAdministeredReason,
-        notes: this.$store.state.immunizationResource.notes,
-      }
-    }
-  }
+    components: {},
+  data() {
+    return {
+      dialog: false,
+      vaccineNotAdministeredOptions: [
+        "Medical precaution",
+        "Immune",
+        "Out of Stock",
+        "Patient Objection",
+      ],
+      notAdministeredReason: this.$store.state.immunizationResource
+        .notAdministeredReason,
+      notes: this.$store.state.immunizationResource.notes,
+    };
+  },
+};
 </script>
