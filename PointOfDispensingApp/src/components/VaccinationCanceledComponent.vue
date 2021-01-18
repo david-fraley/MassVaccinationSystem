@@ -102,6 +102,9 @@ export default {
         //send data to Vuex
         this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
 
+        //Advance to the Discharge page
+        this.$router.push("Discharge");
+
         //Close the dialog
         this.dialog = false;
     },
@@ -131,6 +134,7 @@ export default {
         alert("Discharge not successful");
       }
     });
+  },
   },
   components: {},
   data() {
