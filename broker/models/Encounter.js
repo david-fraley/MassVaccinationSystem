@@ -34,9 +34,11 @@ exports.toFHIR = function (encounter) {
     subject: {
       reference: encounter.subject,
     },
-    appointment: {
-      reference: encounter.appointment,
-    },
+    appointment: [
+      {
+        reference: encounter.appointment,
+      },
+    ],
     period: {
       start: encounter.start,
       end: encounter.end,
@@ -54,4 +56,4 @@ exports.toFHIR = function (encounter) {
   };
 
   return resource;
-}
+};

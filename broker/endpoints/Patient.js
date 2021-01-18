@@ -1,17 +1,13 @@
 // Load configuration settings
 const configs = require("../config/server.js");
 
-const axios = require("axios").default;
+const axios = configs.axios;
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
 
-const fhirHeaders = {
-  "content-type": "application/fhir+json",
-};
-
 exports.read = (req, res) => {
   axios
-    .get(`${configs.fhirUrlBase}${req.url}`)
+    .get(`${req.url}`)
     .then((response) => {
       let r;
       if (response.data.resourceType === "Bundle") {
@@ -55,9 +51,7 @@ async function createPatient(req, res) {
       relationship: patient.relationship,
     });
     resource.id = related_id;
-    await axios.put(`${configs.fhirUrlBase}/RelatedPerson/${related_id}`, resource, {
-      headers: fhirHeaders,
-    });
+    await axios.put(`/RelatedPerson/${related_id}`, resource);
   } else {
     res.status(400).json({ error: "at least one patient should be provided" });
     return;
@@ -85,18 +79,12 @@ async function createPatient(req, res) {
 async function createPatientWithLink(patient, related) {
   // create related person
   let resource = RelatedPerson.toFHIR(related);
-  let related_id = (
-    await axios.post(`${configs.fhirUrlBase}/RelatedPerson`, resource, {
-      headers: fhirHeaders,
-    })
-  ).data.id;
+  let related_id = (await axios.post(`/RelatedPerson`, resource)).data.id;
 
   // create patient pointing to related person
   patient.link = [`RelatedPerson/${related_id}`];
   resource = Patient.toFHIR(patient);
-  let result = await axios.post(`${configs.fhirUrlBase}/Patient`, resource, {
-    headers: fhirHeaders,
-  });
+  let result = await axios.post(`/Patient`, resource);
 
   return result;
 }
