@@ -1,25 +1,16 @@
 <channel version="3.10.0">
   <id>fc8a6f25-9b94-48ee-b7a9-34337a0a45f7</id>
-  <nextMetaDataId>6</nextMetaDataId>
+  <nextMetaDataId>2</nextMetaDataId>
   <name>JSON to HL7v2</name>
   <description>This channel converts a JSON request to an HL7 VXU^V04.</description>
-  MVS-502-PID-and-Other-Segments
   <revision>42</revision>
   <sourceConnector version="3.10.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
-    <properties class="com.mirth.connect.connectors.http.HttpReceiverProperties" version="3.10.0">
-      <pluginProperties>
-        <com.mirth.connect.plugins.httpauth.NoneHttpAuthProperties version="3.10.0">
-  <authType>NONE</authType>
-        </com.mirth.connect.plugins.httpauth.NoneHttpAuthProperties>
-      </pluginProperties>
-      <listenerConnectorProperties version="3.10.0">
-        <host>0.0.0.0</host>
-        <port>8444</port>
-      </listenerConnectorProperties>
+    <properties class="com.mirth.connect.connectors.vm.VmReceiverProperties" version="3.10.0">
+      <pluginProperties/>
       <sourceConnectorProperties version="3.10.0">
-        <responseVariable>d5</responseVariable>
+        <responseVariable>None</responseVariable>
         <respondAfterProcessing>true</respondAfterProcessing>
         <processBatch>false</processBatch>
         <firstResponse>false</firstResponse>
@@ -32,21 +23,6 @@
         </resourceIds>
         <queueBufferSize>1000</queueBufferSize>
       </sourceConnectorProperties>
-      <xmlBody>false</xmlBody>
-      <parseMultipart>true</parseMultipart>
-      <includeMetadata>false</includeMetadata>
-      <binaryMimeTypes>application/.*(?&lt;!json|xml)$|image/.*|video/.*|audio/.*</binaryMimeTypes>
-      <binaryMimeTypesRegex>true</binaryMimeTypesRegex>
-      <responseContentType>text/plain</responseContentType>
-      <responseDataTypeBinary>false</responseDataTypeBinary>
-      <responseStatusCode></responseStatusCode>
-      <responseHeaders class="linked-hash-map"/>
-      <responseHeadersVariable></responseHeadersVariable>
-      <useResponseHeadersVariable>false</useResponseHeadersVariable>
-      <charset>UTF-8</charset>
-      <contextPath></contextPath>
-      <timeout>30000</timeout>
-      <staticResources/>
     </properties>
     <transformer version="3.10.0">
       <elements>
@@ -89,16 +65,6 @@ var patient = msg[&apos;entry&apos;].filter(function (entry) {
 
 //PID-3 patient id
 var ids = [];
-
-if (patient[&apos;id&apos;]) {
-	var fhirId = [];
-	fhirId[0] = patient[&apos;id&apos;].toString();
-	fhirId[3] = &quot;MassVaxx FHIR Server&quot;;
-	fhirId[4] = &quot;FHIR Patient ID&quot;;
-
-	ids.push(fhirId.join(&apos;^&apos;));
-}
-
 for (var i = 0; i &lt; getArrayOrXmlLength(patient[&apos;identifier&apos;]); i++) {
 	var id = [];
 	try{
@@ -178,7 +144,6 @@ tmp[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.7&apos;] = number;
           <name>PD1 Segment (RE)</name>
           <sequenceNumber>2</sequenceNumber>
           <enabled>true</enabled>
-MVS-502-PID-and-Other-Segments
           <script>// WIR message may have 1 PD1 Segment
 
 //PD1-11 - Publicity Code
@@ -433,9 +398,6 @@ tmp[&apos;OBX&apos;][&apos;OBX.1&apos;] = 1;</script>
           <sequenceNumber>8</sequenceNumber>
           <enabled>true</enabled>
           <script>/*
-=======
-          <script>/*
-
 // Create url object
 var url = new java.net.URL(&apos;http://hapi.fhir.org/baseR4/Patient/1228028?_format=json&apos;);
 
@@ -815,7 +777,7 @@ fHx8fHx8fHx8fHx8fHx8fHwgCk9SQwpSWEEKUlhSCk9CWA==</outboundTemplate>
     <filter version="3.10.0">
       <elements/>
     </filter>
-    <transportName>HTTP Listener</transportName>
+    <transportName>Channel Reader</transportName>
     <mode>SOURCE</mode>
     <enabled>true</enabled>
     <waitForPrevious>true</waitForPrevious>
@@ -823,7 +785,7 @@ fHx8fHx8fHx8fHx8fHx8fHwgCk9SQwpSWEEKUlhSCk9CWA==</outboundTemplate>
   <destinationConnectors>
     <connector version="3.10.0">
       <metaDataId>1</metaDataId>
-      <name>WriteToFile</name>
+      <name>TestHL7response</name>
       <properties class="com.mirth.connect.connectors.file.FileDispatcherProperties" version="3.10.0">
         <pluginProperties/>
         <destinationConnectorProperties version="3.10.0">
@@ -952,8 +914,6 @@ fHx8fHx8fHx8fHx8fHx8fHwgCk9SQwpSWEEKUlhSCk9CWA==</outboundTemplate>
       </transformer>
       <responseTransformer version="3.10.0">
         <elements/>
-        <inboundTemplate encoding="base64"></inboundTemplate>
-        <outboundTemplate encoding="base64"></outboundTemplate>
         <inboundDataType>HL7V2</inboundDataType>
         <outboundDataType>HL7V2</outboundDataType>
         <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.10.0">
@@ -1043,108 +1003,6 @@ fHx8fHx8fHx8fHx8fHx8fHwgCk9SQwpSWEEKUlhSCk9CWA==</outboundTemplate>
       <enabled>true</enabled>
       <waitForPrevious>true</waitForPrevious>
     </connector>
-    <connector version="3.10.0">
-      <metaDataId>5</metaDataId>
-      <name>HttpResponse</name>
-      <properties class="com.mirth.connect.connectors.js.JavaScriptDispatcherProperties" version="3.10.0">
-        <pluginProperties/>
-        <destinationConnectorProperties version="3.10.0">
-          <queueEnabled>false</queueEnabled>
-          <sendFirst>false</sendFirst>
-          <retryIntervalMillis>10000</retryIntervalMillis>
-          <regenerateTemplate>false</regenerateTemplate>
-          <retryCount>0</retryCount>
-          <rotate>false</rotate>
-          <includeFilterTransformer>false</includeFilterTransformer>
-          <threadCount>1</threadCount>
-          <threadAssignmentVariable></threadAssignmentVariable>
-          <validateResponse>false</validateResponse>
-          <resourceIds class="linked-hash-map">
-            <entry>
-              <string>Default Resource</string>
-              <string>[Default Resource]</string>
-            </entry>
-          </resourceIds>
-          <queueBufferSize>1000</queueBufferSize>
-          <reattachAttachments>true</reattachAttachments>
-        </destinationConnectorProperties>
-        <script>return connectorMessage.getRawData();</script>
-      </properties>
-      <transformer version="3.10.0">
-        <elements/>
-        <inboundDataType>HL7V2</inboundDataType>
-        <outboundDataType>JSON</outboundDataType>
-        <inboundProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DataTypeProperties" version="3.10.0">
-          <serializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2SerializationProperties" version="3.10.0">
-            <handleRepetitions>true</handleRepetitions>
-            <handleSubcomponents>true</handleSubcomponents>
-            <useStrictParser>false</useStrictParser>
-            <useStrictValidation>false</useStrictValidation>
-            <stripNamespaces>true</stripNamespaces>
-            <segmentDelimiter>\r</segmentDelimiter>
-            <convertLineBreaks>true</convertLineBreaks>
-          </serializationProperties>
-          <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.10.0">
-            <useStrictParser>false</useStrictParser>
-            <useStrictValidation>false</useStrictValidation>
-            <segmentDelimiter>\r</segmentDelimiter>
-          </deserializationProperties>
-          <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.10.0">
-            <splitType>MSH_Segment</splitType>
-            <batchScript></batchScript>
-          </batchProperties>
-          <responseGenerationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseGenerationProperties" version="3.10.0">
-            <segmentDelimiter>\r</segmentDelimiter>
-            <successfulACKCode>AA</successfulACKCode>
-            <successfulACKMessage></successfulACKMessage>
-            <errorACKCode>AE</errorACKCode>
-            <errorACKMessage>An Error Occurred Processing Message.</errorACKMessage>
-            <rejectedACKCode>AR</rejectedACKCode>
-            <rejectedACKMessage>Message Rejected.</rejectedACKMessage>
-            <msh15ACKAccept>false</msh15ACKAccept>
-            <dateFormat>yyyyMMddHHmmss.SSS</dateFormat>
-          </responseGenerationProperties>
-          <responseValidationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2ResponseValidationProperties" version="3.10.0">
-            <successfulACKCode>AA,CA</successfulACKCode>
-            <errorACKCode>AE,CE</errorACKCode>
-            <rejectedACKCode>AR,CR</rejectedACKCode>
-            <validateMessageControlId>true</validateMessageControlId>
-            <originalMessageControlId>Destination_Encoded</originalMessageControlId>
-            <originalIdMapVariable></originalIdMapVariable>
-          </responseValidationProperties>
-        </inboundProperties>
-        <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.10.0">
-          <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.10.0">
-            <splitType>JavaScript</splitType>
-            <batchScript></batchScript>
-          </batchProperties>
-        </outboundProperties>
-      </transformer>
-      <responseTransformer version="3.10.0">
-        <elements/>
-        <inboundDataType>JSON</inboundDataType>
-        <outboundDataType>JSON</outboundDataType>
-        <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.10.0">
-          <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.10.0">
-            <splitType>JavaScript</splitType>
-            <batchScript></batchScript>
-          </batchProperties>
-        </inboundProperties>
-        <outboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.10.0">
-          <batchProperties class="com.mirth.connect.plugins.datatypes.json.JSONBatchProperties" version="3.10.0">
-            <splitType>JavaScript</splitType>
-            <batchScript></batchScript>
-          </batchProperties>
-        </outboundProperties>
-      </responseTransformer>
-      <filter version="3.10.0">
-        <elements/>
-      </filter>
-      <transportName>JavaScript Writer</transportName>
-      <mode>DESTINATION</mode>
-      <enabled>true</enabled>
-      <waitForPrevious>true</waitForPrevious>
-    </connector>
   </destinationConnectors>
   <preprocessingScript>// Modify the message variable below to pre process data
 return message;</preprocessingScript>
@@ -1191,9 +1049,8 @@ return;</undeployScript>
   </properties>
   <exportData>
     <metadata>
-      <enabled>false</enabled>
+      <enabled>true</enabled>
       <lastModified>
-        MVS-502-PID-and-Other-Segments
         <time>1611019488693</time>
         <timezone>America/New_York</timezone>
       </lastModified>
@@ -1201,6 +1058,5 @@ return;</undeployScript>
         <archiveEnabled>true</archiveEnabled>
       </pruningSettings>
     </metadata>
-    <channelTags/>
   </exportData>
 </channel>
