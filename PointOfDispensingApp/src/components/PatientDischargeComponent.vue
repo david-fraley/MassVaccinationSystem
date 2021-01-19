@@ -46,14 +46,15 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="2"> </v-col>
+    <!--v-row>
+      <v-col cols="2">
+      </v-col>    
       <v-col cols="6">
         <v-btn block color="accent" @click="endEncounter()">
           End encounter
         </v-btn>
       </v-col>
-    </v-row>
+    </v-row-->
     <v-row>
       <v-col cols="12">
         <v-divider></v-divider>
@@ -84,8 +85,6 @@
 </template>
 
 <script>
-import brokerRequests from "../brokerRequests";
-
 export default {
   name: "PatientDischargeComponent",
   computed: {
@@ -102,26 +101,7 @@ export default {
       return this.$store.state.encounterResource.encounterTimeStamp;
     },
   },
-  methods: {
-    onSuccess() {
-      //the following is sending dummy data until we have the API in place
-      const encounterResourcePayload = {
-        encounterStatus: "Finished",
-        encounterTimeStamp: new Date().toISOString(),
-      };
-      //send data to Vuex
-      this.$store.dispatch("patientDischarged", encounterResourcePayload);
-    },
-    endEncounter() {
-      brokerRequests.discharge().then((response) => {
-        if (response.data) {
-          this.onSuccess();
-        } else if (response.error) {
-          alert("Discharge not successful");
-        }
-      });
-    }
-  },
+  methods: {},
   components: {},
   data() {
     return {};

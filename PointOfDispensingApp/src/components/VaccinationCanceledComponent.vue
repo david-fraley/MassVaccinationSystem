@@ -65,7 +65,7 @@
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="6">
-        <v-btn block color="accent" @click="submitVaccinationRecord()">
+        <v-btn block color="accent" @click="submitVaccinationRecord(); endEncounter();">
           Submit vaccination record
         </v-btn>
       </v-col>
@@ -90,33 +90,51 @@ export default {
     },
   },
   methods: {
-    onSuccess() {
+    onSuccessSubmitVaccinationRecord() {
       const vaccinationCanceledPlayload = {
         immunizationStatus: "Not-done",
         immunizationTimeStamp: new Date().toISOString(),
         healthcarePractitioner: this.healthcarePractitioner,
         notAdministeredReason: this.notAdministeredReason,
         notes: this.notes,
+        };
+
+        //send data to Vuex
+        this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
+
+        //Advance to the Discharge page
+        this.$router.push("Discharge");
+
+        //Close the dialog
+        this.dialog = false;
+    },
+    onSuccessEndEncounter() {
+      //the following is sending dummy data until we have the API in place
+      const encounterResourcePayload = {
+        encounterStatus: "Finished",
+        encounterTimeStamp: new Date().toISOString(),
       };
-
       //send data to Vuex
-      this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
-
-      //Advance to the Discharge page
-      this.$router.push("Discharge");
-
-      //Close the dialog
-      this.dialog = false;
+      this.$store.dispatch("patientDischarged", encounterResourcePayload);
     },
     submitVaccinationRecord() {
       brokerRequests.submitVaccination().then((response) => {
         if (response.data) {
-          this.onSuccess();
+          this.onSuccessSubmitVaccinationRecord();
         } else if (response.error) {
           alert("Vaccination record not submitted");
         }
       });
-    }
+    },
+    endEncounter() {
+      brokerRequests.discharge().then((response) => {
+      if (response.data) {
+        this.onSuccessEndEncounter();
+      } else if (response.error) {
+        alert("Discharge not successful");
+      }
+    });
+  },
   },
   components: {},
   data() {
