@@ -9,13 +9,15 @@
       </v-col>
     </v-row>
     <v-row>
-        <v-col cols="12">
-          <div class="font-weight-medium secondary--text">Retrieve the patient's record by scanning their QR code.</div>
-        </v-col>
+      <v-col cols="12">
+        <div class="font-weight-medium secondary--text">
+          Retrieve the patient's record by scanning their QR code.
+        </div>
+      </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent">
+        <v-btn color="accent" @click="scanQrCode">
           Scan QR code
         </v-btn>
       </v-col>
@@ -27,91 +29,101 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <div class="font-weight-medium secondary--text">If the QR code is not available, search for the patient record by name and/or DOB.</div>
+        <div class="font-weight-medium secondary--text">
+          If the QR code is not available, search for the patient record by name
+          and/or DOB.
+        </div>
       </v-col>
     </v-row>
 
+    <v-form ref="form" v-model="valid">
+      <v-row>
+        <v-col cols="5">
+          <v-row no-gutters>
+            <v-col cols="4">
+              <div class="secondary--text">Last Name</div>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                outlined
+                dense
+                v-model="lastName"
+                required
+                :rules="[(v) => !!v || 'Last Name is required']"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4">
+              <div class="secondary--text">Date of Birth</div>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                outlined
+                dense
+                v-model="birthDate"
+                placeholder="YYYY-MM-DD"
+                required
+                :rules="[(v) => !!v || 'Date of Birth is required']"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
+        <!--blank column for spacing-->
+        <v-col cols="1"> </v-col>
+        <v-col cols="5">
+          <v-row no-gutters>
+            <v-col cols="4">
+              <div class="secondary--text">First Name</div>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                outlined
+                dense
+                v-model="firstName"
+                required
+                :rules="[(v) => !!v || 'First Name is required']"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4">
+              <div class="secondary--text">Zip Code</div>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field outlined dense v-model="postalCode"></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col cols="12">
+          <v-btn color="accent" @click="searchPatient">
+            Search
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
     <v-row>
-      <v-col cols="5">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">Last Name</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field outlined dense 
-              v-model="LastName"
-              required
-              :rules="[v => !!v || 'Last Name is required']"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">Date of Birth</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field outlined dense 
-              v-model="DOB"
-              placeholder="MM/DD/YYYY"
-              required
-              :rules="[v => !!v || 'Date of Birth is required']"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-      </v-col>
-      <!--blank column for spacing-->
-      <v-col cols="1">
-      </v-col>
-      <v-col cols="5">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">First Name</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field outlined dense 
-              v-model="FirstName"
-              required
-              :rules="[v => !!v || 'First Name is required']"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">Zip Code</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field outlined dense 
-              v-model="PostalCode"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row> 	
-    <v-row no-gutters>
       <v-col cols="12">
-        <v-btn color="accent">
-          Search
-        </v-btn>
+        <template>
+          <v-data-table
+            @click:row="clickRow"
+            @dblclick:row="dblclickRow"
+            item-key="id"
+            single-select
+            :headers="headers"
+            disable-sort
+            :items="patientLookupTable"
+            class="elevation-1"
+            :loading="loading"
+            :footer-props="{
+              'items-per-page-options': [5],
+            }"
+            :items-per-page="5"
+          ></v-data-table>
+        </template>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-		<template>
-		<v-data-table
-      @click:row="rowClick"
-      item-key="id"
-      single-select
-			:headers="headers"
-			:items="patientLookupTable"
-			class="elevation-1"
-			:footer-props="{
-				'items-per-page-options':[5]
-			}"
-			:items-per-page="5"
-    ></v-data-table>
-		</template>
-		
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-btn color="accent" @click="retrievePatientRecord()">
+        <v-btn color="accent" @click="retrievePatientRecord">
           Retrieve patient record
         </v-btn>
       </v-col>
@@ -120,106 +132,103 @@
 </template>
 
 <script>
-  export default {
-    name: 'PatientLookupPage',
-    methods: 
-    {
-      rowClick: function (item, row) {      
-        row.select(true);
-        this.selectedId=item.id
-        this.selectedFamilyName=item.familyName
-        this.selectedGivenName=item.givenName
-        this.selectedDOB=item.DOB
-      },
-      retrievePatientRecord()
-      {
-        alert(this.selectedFamilyName + ', ' + this.selectedGivenName + ', ' + this.selectedDOB)
+import brokerRequests from "../brokerRequests";
+
+export default {
+  name: "PatientLookupPage",
+  methods: {
+    searchPatient() {
+      // validate form
+      this.$refs.form.validate();
+      if (!this.valid) return;
+
+      // update for loading animation
+      this.patientLookupTable = [];
+      this.loading = true;
+
+      // make request
+      let data = {
+        lastName: this.lastName,
+        firstName: this.firstName,
+        birthDate: this.birthDate,
+        postalCode: this.postalCode,
+      };
+      brokerRequests.searchPatient(data).then((response) => {
+        if (response.data) {
+          this.patientLookupTable = response.data;
+        } else if (response.error) {
+          alert("No patients found");
+        }
+        this.loading = false;
+      });
+    },
+    clickRow(item, row) {
+      row.select(true);
+      this.patient = item;
+    },
+    dblclickRow() {
+      this.patientRecordRetrieved();
+    },
+    retrievePatientRecord() {
+      if (this.patient) {
+        this.patientRecordRetrieved();
+      } else {
+        alert("Select a patient");
       }
     },
-    components: 
-    {
-    },
-    data () {
-	return {
-		patientFamilyName: '',
-		patientGivenName: '',
-    patientDate: '',
-    selectedId: -1,
-    selectedFamilyName: '',
-    selectedGivenName: '',
-    selectedDOB: '',
+    patientRecordRetrieved() {
+      //send data to Vuex
+      this.$store.dispatch("patientRecordRetrieved", this.patient);
 
-		headers: [
-          {
-            text: 'Last Name',
-            align: 'start',
-            sortable: false,
-            value: 'familyName',
-          },
-          { text: 'First Name', value: 'givenName' },
-          { text: 'DOB', value: 'DOB' },
-          { text: 'Address', value: 'lineAddress' },
-          { text: 'City', value: 'city' },
-			{ text: 'Zipcode', value: 'postalCode' },
-			],
-		patientLookupTable: [
-			{
-        id: 1,
-        familyName: 'Johnson',
-				givenName: 'Jacob',
-				DOB: '10/31/1990',
-				lineAddress: '6585 Lake St',
-				city: 'Glendale',
-				postalCode: '53209',
-			},
-			
-			{
-        id: 2,
-        familyName: 'Johnson',
-				givenName: 'Larry',
-				DOB: '04/15/1972',
-				lineAddress: '721 Hillcrest Dr',
-				city: 'Bayside',
-				postalCode: '53217',
-			},
-			
-			{
-        id: 3,
-				familyName: 'Johnson',
-				givenName: 'Jennifer',
-				DOB: '01/23/1972',
-				lineAddress: '1234 Right Lane',
-				city: 'New Berlin',
-				postalCode: '53146',
-			},
-			
-			{
-        id: 4,
-				familyName: 'Johnson',
-				givenName: 'Joan',
-				DOB: '02/01/1960',
-				lineAddress: '2 Valley Rd',
-				city: 'Germantown',
-				postalCode: '',
-			},
-			
-			{
-        id: 5,
-				familyName: 'Johnson',
-				givenName: 'Isaac',
-				DOB: '12/21/2000',
-				lineAddress: '3823 Pine St',
-				city: 'Brown Deer',
-				postalCode: '53223',
-			},
-		],
-    }
-	},
-	}
+      //Advance to the Check In page
+      this.$router.push("CheckIn");
+    },
+    // to do
+    scanQrCode() {
+      let qrValue = "example";
+      let data = { id: qrValue };
+
+      brokerRequests.getPatient(data).then((response) => {
+        if (response.data) {
+          this.patient = response.data;
+          this.patientRecordRetrieved();
+        } else if (response.error) {
+          alert("Patient not found");
+        }
+      });
+    },
+  },
+  components: {},
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      birthDate: "",
+      postalCode: "",
+      patient: "",
+      loading: false,
+      valid: false,
+
+      headers: [
+        {
+          text: "Last Name",
+          align: "start",
+          value: "family",
+        },
+        { text: "First Name", value: "given" },
+        { text: "DOB", value: "birthDate" },
+        { text: "Address", value: "address.line" },
+        { text: "City", value: "address.city" },
+        { text: "Zipcode", value: "address.postalCode" },
+      ],
+      patientLookupTable: [],
+    };
+  },
+};
 </script>
 <style>
-  tr.v-data-table__selected {
-    background: #1976D2 !important;
-    color: #FFFFFF
-  }
+tr.v-data-table__selected {
+  background: #1976d2 !important;
+  color: #ffffff;
+}
 </style>

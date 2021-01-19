@@ -1,31 +1,71 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12">
-        Reason vaccine was not administered goes here
-      </v-col>
-    </v-row>
-    <v-row>
       <v-col cols="4">
-        Vaccination status (e.g. not done) goes here
+        Reason vaccine was not administered
       </v-col>
       <v-col cols="4">
-        Vaccination time stamp goes here
+        <v-select
+          :items="vaccineNotAdministeredOptions"
+          outlined
+          dense
+          required
+          :rules="[(v) => !!v || 'Reason field is required']"
+          v-model="notAdministeredReason"
+        ></v-select>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="2">
+        Vaccination status
+      </v-col>
+      <v-col cols="4">
+        <v-text-field
+          outlined
+          dense
+          filled
+          readonly
+          :value="immunizationStatus"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="4">
+        <v-text-field
+          outlined
+          dense
+          filled
+          readonly
+          :value="immunizationTimeStamp"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="2">
+        Healthcare practitioner
+      </v-col>
+      <v-col cols="4">
+        <v-text-field
+          outlined
+          dense
+          filled
+          readonly
+          :value="healthcarePractitioner"
+        ></v-text-field>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-        Healthcare practitioner goes here
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        Notes box goes here
+        <v-textarea
+          placeholder="Notes"
+          outlined
+          rows="4"
+          :value="notes"
+          v-model="notes"
+        ></v-textarea>
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="6">
-        <v-btn block color="accent">
+        <v-btn block color="accent" @click="submitVaccinationRecord()">
           Submit vaccination record
         </v-btn>
       </v-col>
@@ -34,17 +74,64 @@
 </template>
 
 <script>
-  export default {
-    name: 'VaccinationCanceledComponent',
-    methods: 
-    {
+import brokerRequests from "../brokerRequests";
+
+export default {
+  name: "VaccinationCanceledComponent",
+  computed: {
+    immunizationStatus() {
+      return this.$store.state.immunizationResource.immunizationStatus;
     },
-    components: 
-    {
+    immunizationTimeStamp() {
+      return this.$store.state.immunizationResource.immunizationTimeStamp;
     },
-    data () {
-      return {
-      }
+    healthcarePractitioner() {
+      return this.$store.state.immunizationResource.healthcarePractitioner;
+    },
+  },
+  methods: {
+    onSuccess() {
+      const vaccinationCanceledPlayload = {
+        immunizationStatus: "Not-done",
+        immunizationTimeStamp: new Date().toISOString(),
+        healthcarePractitioner: this.healthcarePractitioner,
+        notAdministeredReason: this.notAdministeredReason,
+        notes: this.notes,
+      };
+
+      //send data to Vuex
+      this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
+
+      //Advance to the Discharge page
+      this.$router.push("Discharge");
+
+      //Close the dialog
+      this.dialog = false;
+    },
+    submitVaccinationRecord() {
+      brokerRequests.submitVaccination().then((response) => {
+        if (response.data) {
+          this.onSuccess();
+        } else if (response.error) {
+          alert("Vaccination record not submitted");
+        }
+      });
     }
-  }
+  },
+  components: {},
+  data() {
+    return {
+      dialog: false,
+      vaccineNotAdministeredOptions: [
+        "Medical precaution",
+        "Immune",
+        "Out of Stock",
+        "Patient Objection",
+      ],
+      notAdministeredReason: this.$store.state.immunizationResource
+        .notAdministeredReason,
+      notes: this.$store.state.immunizationResource.notes,
+    };
+  },
+};
 </script>

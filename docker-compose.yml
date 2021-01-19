@@ -2,7 +2,7 @@ version: '3'
 
 services:
     server:
-        build: './node_app'
+        build: './broker'
         ports:
             - "3000:3000"
     hapi:
