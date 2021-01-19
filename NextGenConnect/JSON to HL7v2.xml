@@ -3,7 +3,7 @@
   <nextMetaDataId>6</nextMetaDataId>
   <name>JSON to HL7v2</name>
   <description>This channel converts a JSON request to an HL7 VXU^V04.</description>
-  <revision>12</revision>
+  <revision>13</revision>
   <sourceConnector version="3.10.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -147,15 +147,7 @@ else{
 
 //PID-11 address
 
-var lines = [];
-for (var i = 0; i &lt; getArrayOrXmlLength(patient[&apos;address&apos;][0][&apos;line&apos;]); i++) {
-	var line = [];
-	line[i] = patient[&apos;address&apos;][0][&apos;line&apos;][i];
-	lines.push(line.join(&apos;, &apos;));
-}
-
-
-tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;] = lines.join(&apos;&apos;);
+tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;] = patient[&apos;address&apos;][0][&apos;line&apos;].join(&quot;, &quot;);
 tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;] = patient[&apos;address&apos;][0][&apos;city&apos;];
 tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;] = patient[&apos;address&apos;][0][&apos;state&apos;];
 tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;] = patient[&apos;address&apos;][0][&apos;postalCode&apos;];
@@ -897,7 +889,7 @@ return;</undeployScript>
     <metadata>
       <enabled>true</enabled>
       <lastModified>
-        <time>1611099693961</time>
+        <time>1611100159506</time>
         <timezone>America/New_York</timezone>
       </lastModified>
       <pruningSettings>
