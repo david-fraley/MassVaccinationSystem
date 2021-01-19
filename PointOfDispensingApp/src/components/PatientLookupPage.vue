@@ -173,7 +173,7 @@ export default {
       let data = {
         lastName: this.lastName,
         firstName: this.firstName,
-        birthDate: this.birthDate,
+        birthDate: this.date,
         postalCode: this.postalCode,
       };
       brokerRequests.searchPatient(data).then((response) => {
@@ -238,7 +238,6 @@ export default {
     return {
       firstName: "",
       lastName: "",
-      birthDate: "",
       postalCode: "",
       patient: "",
       loading: false,
