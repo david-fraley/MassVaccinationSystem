@@ -88,7 +88,9 @@ import jsPDF from 'jspdf';
 				pdfDoc.text(string, 75,48);
 				if(i<this.getNumberOfHouseholdMembers()-1)
 				{
-					pdfDoc.addPage();
+					let string = this.qrValue;
+					pdfDoc.addImage(imageData, "JPG", 70, 210);
+					pdfDoc.text(string, 75,200);
 				}
 			}
 			pdfDoc.save('COVID-19_Registration_QR_Code.pdf');
