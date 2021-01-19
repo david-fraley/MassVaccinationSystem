@@ -74,23 +74,31 @@ import jsPDF from 'jspdf';
 		generatePdf(){
 			let pdfDoc = new jsPDF();
 			pdfDoc.setFontSize(10);
-			for(let i=0; i<this.getNumberOfHouseholdMembers(); i++)
+			for(let i=0; i<this.getNumberOfHouseholdMembers(); i+=2)
 			{
-				const qrcode = document.getElementById(i);
-				let imageData= this.getBase64Image(qrcode);
-				let string = this.qrValue[i];
-				
 				pdfDoc.text("COVID-19 Vaccination Registration",10,15);
 				pdfDoc.text("Use this QR code to easily check-in at the site where you receive your vaccine.",10,25);
 				pdfDoc.text("This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.",10, 30);
 				
+				//add the first QR code and label
+				const qrcode1 = document.getElementById(i);
+				let imageData= this.getBase64Image(qrcode1);
+				let string = this.qrValue[i];
 				pdfDoc.addImage(imageData, "JPG", 70, 50);
 				pdfDoc.text(string, 75,48);
-				if(i<this.getNumberOfHouseholdMembers()-1)
+				
+				//add the second QR code and label, if necessary
+				if(i+1<this.getNumberOfHouseholdMembers())
 				{
-					let string = this.qrValue;
-					pdfDoc.addImage(imageData, "JPG", 70, 210);
-					pdfDoc.text(string, 75,200);
+					const qrcode2 = document.getElementById(i+1);
+					imageData= this.getBase64Image(qrcode2);
+					string = this.qrValue[i+1];
+					pdfDoc.addImage(imageData, "JPG", 70, 150);
+					pdfDoc.text(string, 75,148);
+					if(i+2<this.getNumberOfHouseholdMembers())
+					{
+						pdfDoc.addPage();
+					}
 				}
 			}
 			pdfDoc.save('COVID-19_Registration_QR_Code.pdf');
