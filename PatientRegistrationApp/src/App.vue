@@ -1,3 +1,4 @@
+import SinglePatientReviewSubmit from "./components/SinglePatientReviewSubmit.vue";
 <template>
   <v-app id="Patient-registration">  
     <v-main>
@@ -226,7 +227,7 @@
 										<v-btn
 											color="primary"
 											text
-											@click="submit()">
+											@click="SinglePatientReviewSubmit.submit()">
 											Yes
 										</v-btn>
 									</v-card-actions>

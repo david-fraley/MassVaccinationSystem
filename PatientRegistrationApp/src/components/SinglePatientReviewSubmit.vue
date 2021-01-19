@@ -148,11 +148,11 @@ import brokerRequests from "../brokerRequests";
 		},
 		updateContactInfoData(contactInfoPayload) {
 			this.dataContactInfo = contactInfoPayload
-		}
+		},
 		onSuccess() {
 			const PatientSubmitPayload = {
 				registrationStatus: "Finished",
-				registrationTimeStamp: new Date(),toISOString(),
+				registrationTimeStamp: new Date().toISOString(),
 			};
 			this.$store.dispath("patientRegistered", PatientSubmitPayload);
 		},
