@@ -175,6 +175,23 @@ export default {
       ],
     };
   },
+  watch: {
+    date () {
+      this.dateFormatted = this.formatDate(this.date)
+    },
+  },
+  computed: {
+    maxDateStr: function() {
+      let d = new Date();
+      let date = [
+        d.getFullYear(),
+        ("0" + (d.getMonth() + 1)).slice(-2),
+        ("0" + d.getDate()).slice(-2),
+        ].join("-");
+
+      return date;
+    },
+  },
   methods: {
     validBirthdate(birthdate) {
       var minDate = Date.parse(this.minDateStr);
@@ -284,23 +301,6 @@ export default {
 
       this.sendPersonalInfoDataToReviewPage();
       return true;
-    },
-  },
-  watch: {
-    date () {
-      this.dateFormatted = this.formatDate(this.date)
-    },
-  },
-  computed: {
-    maxDateStr: function() {
-      let d = new Date();
-      let date = [
-        d.getFullYear(),
-        ("0" + (d.getMonth() + 1)).slice(-2),
-        ("0" + d.getDate()).slice(-2),
-        ].join("-");
-
-      return date;
     },
   },
   mounted() {
