@@ -86,4 +86,14 @@ export default {
   checkIn: () => {
     return healthcheckPromise();
   },
+
+  // Submit vaccination
+  submitVaccination: () => {
+    return healthcheckPromise();
+  },
+
+  // Discharge
+  discharge: () => {
+    return healthcheckPromise();
+  },
 };
