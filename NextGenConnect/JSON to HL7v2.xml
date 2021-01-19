@@ -3,7 +3,7 @@
   <nextMetaDataId>2</nextMetaDataId>
   <name>JSON to HL7v2</name>
   <description>This channel converts a JSON request to an HL7 VXU^V04.</description>
-  <revision>39</revision>
+  <revision>42</revision>
   <sourceConnector version="3.10.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -112,7 +112,16 @@ else{
 
 
 //PID-11 address
-tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;] = patient[&apos;address&apos;][0][&apos;line&apos;][0];
+
+var lines = [];
+for (var i = 0; i &lt; getArrayOrXmlLength(patient[&apos;address&apos;][0][&apos;line&apos;]); i++) {
+	var line = [];
+	line[i] = patient[&apos;address&apos;][0][&apos;line&apos;][i];
+	lines.push(line.join(&apos;, &apos;));
+}
+
+
+tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.1&apos;] = lines.join(&apos;&apos;);
 tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.3&apos;] = patient[&apos;address&apos;][0][&apos;city&apos;];
 tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.4&apos;] = patient[&apos;address&apos;][0][&apos;state&apos;];
 tmp[&apos;PID&apos;][&apos;PID.11&apos;][&apos;PID.11.5&apos;] = patient[&apos;address&apos;][0][&apos;postalCode&apos;];
@@ -697,23 +706,23 @@ ICAgICAgICAgICAgICAidmFsdWVEZWNpbWFsIjogNDIuMDgxNDU3MjE3NDk4NjYKICAgICAgICAg
 ICAgICAgICAgICB9LCB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ1cmwiOiAibG9uZ2l0dWRl
 IiwKICAgICAgICAgICAgICAgICAgICAgICAgInZhbHVlRGVjaW1hbCI6IC04Ny42OTg5NDAwNDQx
 NzM3NQogICAgICAgICAgICAgICAgICAgIH0gXQogICAgICAgICAgICAgICAgfSBdLAogICAgICAg
-ICAgICAgICAgImxpbmUiOiBbICI2NTggTHVlaWx3aXR6IFNwdXIgQXB0IDU1IiBdLAogICAgICAg
-ICAgICAgICAgImNpdHkiOiAiQ2hpY2FnbyIsCiAgICAgICAgICAgICAgICAic3RhdGUiOiAiSUwi
-LAogICAgICAgICAgICAgICAgInBvc3RhbENvZGUiOiAiNjAwMDciLAogICAgICAgICAgICAgICAg
-ImNvdW50cnkiOiAiVVMiCiAgICAgICAgICAgIH0gXSwKICAgICAgICAgICAgIm1hcml0YWxTdGF0
-dXMiOiB7CiAgICAgICAgICAgICAgICAiY29kaW5nIjogWyB7CiAgICAgICAgICAgICAgICAgICAg
-InN5c3RlbSI6ICJodHRwOi8vdGVybWlub2xvZ3kuaGw3Lm9yZy9Db2RlU3lzdGVtL3YzLU1hcml0
-YWxTdGF0dXMiLAogICAgICAgICAgICAgICAgICAgICJjb2RlIjogIlMiLAogICAgICAgICAgICAg
-ICAgICAgICJkaXNwbGF5IjogIlMiCiAgICAgICAgICAgICAgICB9IF0sCiAgICAgICAgICAgICAg
-ICAidGV4dCI6ICJTIgogICAgICAgICAgICB9LAogICAgICAgICAgICAibXVsdGlwbGVCaXJ0aEJv
-b2xlYW4iOiBmYWxzZSwKICAgICAgICAgICAgImNvbW11bmljYXRpb24iOiBbIHsKICAgICAgICAg
-ICAgICAgICJsYW5ndWFnZSI6IHsKICAgICAgICAgICAgICAgICAgICAiY29kaW5nIjogWyB7CiAg
-ICAgICAgICAgICAgICAgICAgICAgICJzeXN0ZW0iOiAidXJuOmlldGY6YmNwOjQ3IiwKICAgICAg
-ICAgICAgICAgICAgICAgICAgImNvZGUiOiAiZW4tVVMiLAogICAgICAgICAgICAgICAgICAgICAg
-ICAiZGlzcGxheSI6ICJFbmdsaXNoIgogICAgICAgICAgICAgICAgICAgIH0gXSwKICAgICAgICAg
-ICAgICAgICAgICAidGV4dCI6ICJFbmdsaXNoIgogICAgICAgICAgICAgICAgfQogICAgICAgICAg
-ICB9IF0KICAgICAgICB9LAogICAgICAgICJzZWFyY2giOiB7CiAgICAgICAgICAgICJtb2RlIjog
-ImluY2x1ZGUiCiAgICAgICAgfQogICAgfSBdCgp9</inboundTemplate>
+ICAgICAgICAgImxpbmUiOiBbICI2NTggTHVlaWx3aXR6IFNwdXIiLCJBcHQgNTUiIF0sCiAgICAg
+ICAgICAgICAgICAiY2l0eSI6ICJDaGljYWdvIiwKICAgICAgICAgICAgICAgICJzdGF0ZSI6ICJJ
+TCIsCiAgICAgICAgICAgICAgICAicG9zdGFsQ29kZSI6ICI2MDAwNyIsCiAgICAgICAgICAgICAg
+ICAiY291bnRyeSI6ICJVUyIKICAgICAgICAgICAgfSBdLAogICAgICAgICAgICAibWFyaXRhbFN0
+YXR1cyI6IHsKICAgICAgICAgICAgICAgICJjb2RpbmciOiBbIHsKICAgICAgICAgICAgICAgICAg
+ICAic3lzdGVtIjogImh0dHA6Ly90ZXJtaW5vbG9neS5obDcub3JnL0NvZGVTeXN0ZW0vdjMtTWFy
+aXRhbFN0YXR1cyIsCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiUyIsCiAgICAgICAgICAg
+ICAgICAgICAgImRpc3BsYXkiOiAiUyIKICAgICAgICAgICAgICAgIH0gXSwKICAgICAgICAgICAg
+ICAgICJ0ZXh0IjogIlMiCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJtdWx0aXBsZUJpcnRo
+Qm9vbGVhbiI6IGZhbHNlLAogICAgICAgICAgICAiY29tbXVuaWNhdGlvbiI6IFsgewogICAgICAg
+ICAgICAgICAgImxhbmd1YWdlIjogewogICAgICAgICAgICAgICAgICAgICJjb2RpbmciOiBbIHsK
+ICAgICAgICAgICAgICAgICAgICAgICAgInN5c3RlbSI6ICJ1cm46aWV0ZjpiY3A6NDciLAogICAg
+ICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJlbi1VUyIsCiAgICAgICAgICAgICAgICAgICAg
+ICAgICJkaXNwbGF5IjogIkVuZ2xpc2giCiAgICAgICAgICAgICAgICAgICAgfSBdLAogICAgICAg
+ICAgICAgICAgICAgICJ0ZXh0IjogIkVuZ2xpc2giCiAgICAgICAgICAgICAgICB9CiAgICAgICAg
+ICAgIH0gXQogICAgICAgIH0sCiAgICAgICAgInNlYXJjaCI6IHsKICAgICAgICAgICAgIm1vZGUi
+OiAiaW5jbHVkZSIKICAgICAgICB9CiAgICB9IF0KCn0=</inboundTemplate>
       <outboundTemplate encoding="base64">TVNIfF5+XCZ8TWFzc1ZheHh8MXx8fDIwMDUwMTEwMDQ1NTA0fHxWWFVeVjA0XlZYVV9WMDR8NTk5
 MTAyfFR8Mi41LjF8fHxFUnxBTHx8fHx8WjIyXkNEQ1BISU5WUyAKUElEfDF8fHx8fHx8fHwxfHx8
 fHx8fHx8fHx8fHx8fHx8fHwgCk9SQwpSWEEKUlhSCk9CWA==</outboundTemplate>
@@ -1042,7 +1051,7 @@ return;</undeployScript>
     <metadata>
       <enabled>true</enabled>
       <lastModified>
-        <time>1610668367493</time>
+        <time>1611019488693</time>
         <timezone>America/New_York</timezone>
       </lastModified>
       <pruningSettings>
