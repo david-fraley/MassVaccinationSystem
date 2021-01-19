@@ -73,7 +73,7 @@
                 <v-btn	
                   color="primary"
                   text
-                  @click="submitVaccinationRecord()">
+                  @click="submitVaccinationRecord(); endEncounter();">
                   Submit
                 </v-btn>
               </v-card-actions>
@@ -95,14 +95,14 @@
         return this.$store.state.immunizationResource.healthcarePractitioner
       }
     },
-    methods: {
-      onSuccess() {
-        const vaccinationCanceledPlayload = {
-          immunizationStatus: "Not-done",
-          immunizationTimeStamp: new Date().toISOString(),
-          healthcarePractitioner: this.healthcarePractitioner,
-          notAdministeredReason: this.notAdministeredReason,
-          notes: this.notes,
+  methods: {
+    onSuccessSubmitVaccinationRecord() {
+      const vaccinationCanceledPlayload = {
+        immunizationStatus: "Not-done",
+        immunizationTimeStamp: new Date().toISOString(),
+        healthcarePractitioner: this.healthcarePractitioner,
+        notAdministeredReason: this.notAdministeredReason,
+        notes: this.notes,
         };
 
         //send data to Vuex
@@ -113,18 +113,36 @@
 
         //Close the dialog
         this.dialog = false;
-      },
-      submitVaccinationRecord() {
-        brokerRequests.submitVaccination().then((response) => {
-          if (response.data) {
-            this.onSuccess();
-          } else if (response.error) {
-            alert("Vaccination record not submitted");
-          }
-        });
-      }
     },
-    components: {},
+    onSuccessEndEncounter() {
+      //the following is sending dummy data until we have the API in place
+      const encounterResourcePayload = {
+        encounterStatus: "Finished",
+        encounterTimeStamp: new Date().toISOString(),
+      };
+      //send data to Vuex
+      this.$store.dispatch("patientDischarged", encounterResourcePayload);
+    },
+    submitVaccinationRecord() {
+      brokerRequests.submitVaccination().then((response) => {
+        if (response.data) {
+          this.onSuccessSubmitVaccinationRecord();
+        } else if (response.error) {
+          alert("Vaccination record not submitted");
+        }
+      });
+    },
+    endEncounter() {
+      brokerRequests.discharge().then((response) => {
+      if (response.data) {
+        this.onSuccessEndEncounter();
+      } else if (response.error) {
+        alert("Discharge not successful");
+      }
+    });
+  },
+  },
+  components: {},
   data() {
     return {
       dialog: false,
