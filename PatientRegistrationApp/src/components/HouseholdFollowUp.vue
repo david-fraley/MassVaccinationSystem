@@ -38,10 +38,10 @@
 		</v-row>
 		<v-row justify="center">
 		<v-col cols="3" sm="3" md="3">
-			<v-radio-group class="font-weight-medium">
-				<v-radio label="E-mail"></v-radio>
-				<v-radio label="SMS Message"></v-radio>
-				<v-radio label="Both"></v-radio>
+			<v-radio-group v-model="sendQr" class="font-weight-medium">
+				<v-radio value="Email" label="E-mail"></v-radio>
+				<v-radio value="SmsMessage" label="SMS Message"></v-radio>
+				<v-radio value="Both" label="Both"></v-radio>
 			</v-radio-group>
 		</v-col>
 		</v-row>
@@ -61,7 +61,8 @@ import jsPDF from 'jspdf';
 		return {
 			dataHouseholdPersonalInfo: [],
 			correctionLevel: "H",
-			qrValue:[]
+			qrValue:[],
+			sendQr: ' '
 		}
 	},
 	props:
@@ -87,8 +88,7 @@ import jsPDF from 'jspdf';
 				pdfDoc.text(string, 75,48);
 				if(i<this.getNumberOfHouseholdMembers()-1)
 				{
-				pdfDoc.addImage(imageData++, "JPG", 70, 70);
-					//pdfDoc.addPage();
+					pdfDoc.addPage();
 				}
 			}
 			pdfDoc.save('COVID-19_Registration_QR_Code.pdf');
