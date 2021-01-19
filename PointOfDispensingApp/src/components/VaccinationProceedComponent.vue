@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent">
+        <v-btn color="accent" :disabled="isVaccinationEventPageReadOnly">
           Scan vaccine barcode
         </v-btn>
       </v-col>
@@ -22,6 +22,8 @@
               required
               :rules="[(v) => !!v || 'Lot Number field is required']"
               v-model="lotNumber"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -37,6 +39,8 @@
               required
               :rules="[(v) => !!v || 'Expiration Date field is required']"
               v-model="expirationDate"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -52,6 +56,8 @@
               required
               :rules="[(v) => !!v || 'Manufacturer field is required']"
               v-model="manufacturer"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -73,6 +79,8 @@
               required
               :rules="[(v) => !!v || 'Dose Quantity field is required']"
               v-model="doseQuantity"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
           <v-col cols="4">
@@ -88,6 +96,8 @@
               v-model="doseNumber"
               required
               :rules="[(v) => !!v || 'Dose Number field is required']"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
         </v-row>
@@ -126,6 +136,8 @@
               required
               :rules="[(v) => !!v || 'Site of Vaccination field is required']"
               v-model="site"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
         </v-row>
@@ -153,6 +165,8 @@
           rows="4"
           :value="notes"
           v-model="notes"
+          :readonly="isVaccinationEventPageReadOnly"
+          :filled="isVaccinationEventPageReadOnly"
         ></v-textarea>
       </v-col>
     </v-row>
@@ -162,7 +176,7 @@
           <v-dialog v-model="dialog" width="500">
             <template v-slot:activator="{ on, attrs }">
               <v-col cols="6">
-                <v-btn block color="accent" v-bind="attrs" v-on="on">
+                <v-btn block color="accent" v-bind="attrs" v-on="on" :disabled="isVaccinationEventPageReadOnly">
                   Submit vaccination record
                 </v-btn>
               </v-col>
@@ -200,6 +214,9 @@
     computed: {
       healthcarePractitioner() {
         return this.$store.state.immunizationResource.healthcarePractitioner
+      },
+      isVaccinationEventPageReadOnly() {
+        return this.$store.getters.isVaccinationEventPageReadOnly
       },
     },
   methods: {

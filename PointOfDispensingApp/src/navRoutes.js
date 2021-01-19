@@ -43,7 +43,7 @@ export default [
     component: DischargePage,
   },
   {
-    path: '/LocationResource',
+    path: '/Configuration',
     component: CreateLocationResourcePage,
   }
 ];

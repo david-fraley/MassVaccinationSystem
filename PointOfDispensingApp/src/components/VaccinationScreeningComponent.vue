@@ -14,7 +14,7 @@
           </v-col>
           <v-col cols="6">
             <v-row no-gutters>
-              <v-radio-group v-model="patientInfoComfirmed" row @change="screeningChecklistUpdate()">
+              <v-radio-group v-model="patientInfoComfirmed" row @change="screeningChecklistUpdate()" :disabled="isVaccinationEventPageReadOnly">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -39,7 +39,7 @@
           </v-col>
           <v-col cols="6">
             <v-row no-gutters>
-              <v-radio-group v-model="consentFormSigned" row @change="screeningChecklistUpdate()">
+              <v-radio-group v-model="consentFormSigned" row @change="screeningChecklistUpdate()" :disabled="isVaccinationEventPageReadOnly">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -64,7 +64,7 @@
           </v-col>
           <v-col cols="6">
             <v-row no-gutters>
-              <v-radio-group v-model="screeningCompleted" row @change="screeningChecklistUpdate()">
+              <v-radio-group v-model="screeningCompleted" row @change="screeningChecklistUpdate()" :disabled="isVaccinationEventPageReadOnly">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -89,7 +89,7 @@
           </v-col>
           <v-col cols="6">
             <v-row no-gutters>
-              <v-radio-group v-model="factSheetProvided" row @change="screeningChecklistUpdate()">
+              <v-radio-group v-model="factSheetProvided" row @change="screeningChecklistUpdate()" :disabled="isVaccinationEventPageReadOnly">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -110,7 +110,7 @@
                 Proceed with vaccination?
             </v-card-title>
             <v-row align="center" justify="center">
-              <v-radio-group v-model="vaccinationProceed" row @change="vaccinationProceedDecision()">
+              <v-radio-group v-model="vaccinationProceed" row @change="vaccinationProceedDecision()" :disabled="isVaccinationEventPageReadOnly">
                     <v-radio
                       label="Yes"
                       value="Yes"
@@ -149,6 +149,9 @@
       },
       factSheetProvidedResponse() {
         return this.$store.state.screeningResponses.factSheetProvided
+      },
+      isVaccinationEventPageReadOnly() {
+        return this.$store.getters.isVaccinationEventPageReadOnly
       },
     },
     methods: 
