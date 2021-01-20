@@ -94,8 +94,6 @@
 <script>
 import EventBus from '../eventBus'
 
-import brokerRequests from "../brokerRequests";
-
 	export default {
 	data () {
 		return {
@@ -148,24 +146,7 @@ import brokerRequests from "../brokerRequests";
 		},
 		updateContactInfoData(contactInfoPayload) {
 			this.dataContactInfo = contactInfoPayload
-		},
-		onSuccess() {
-			const PatientSubmitPayload = {
-				registrationStatus: "Finished",
-				registrationTimeStamp: new Date().toISOString(),
-			};
-			this.$store.dispath("patientRegistered", PatientSubmitPayload);
-		},
-		submitPatientInfo() {
-			brokerRequests.submitRegistration().then((response) => {
-				if (response.data) {
-					this.onSuccess();
-				}	else if (response.error) {
-					alert("Registration not successful");
-				}
-			});
-
-		}
+		},	
 	},
 	mounted() {
 		EventBus.$on('DATA_PERSONAL_INFO_PUBLISHED', (personalInfoPayload) => {

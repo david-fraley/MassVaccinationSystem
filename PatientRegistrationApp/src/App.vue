@@ -1,4 +1,3 @@
-import SinglePatientReviewSubmit from "./components/SinglePatientReviewSubmit.vue";
 <template>
   <v-app id="Patient-registration">  
     <v-main>
@@ -224,10 +223,10 @@ import SinglePatientReviewSubmit from "./components/SinglePatientReviewSubmit.vu
 											No
 										</v-btn>
 										<v-spacer></v-spacer>
-										<v-btn
+										<v-btn 
 											color="primary"
 											text
-											@click="SinglePatientReviewSubmit.submit()">
+											@click="submit()">
 											Yes
 										</v-btn>
 									</v-card-actions>
@@ -323,12 +322,29 @@ import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import HouseholdFollowUp from './components/HouseholdFollowUp';
 import config from './config.js';
+import brokerRequests from "./brokerRequests";
 import EventBus from './eventBus'
 export default {
 	name: 'App',
 	methods: 
 	{
+		onSuccess() {
+			const PatientSubmitPayload = {
+				registrationStatus: "Finished",
+				registrationTimeStamp: new Date().toISOString(),
+			};
+		},
+		submitPatientInfo() {
+			brokerRequests.submitRegistration().then((response) => {
+				if (response.data) {
+					this.onSuccess();
+				}	else if (response.error) {
+					alert("Registration not successful");
+				}
+			});
+		},
 		submit() {
+			this.submitPatientInfo(),
 			this.goToNextPage()
 		},
 		goToPage(pageNum) {
