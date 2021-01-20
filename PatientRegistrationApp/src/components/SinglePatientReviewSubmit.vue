@@ -146,7 +146,7 @@ import EventBus from '../eventBus'
 		},
 		updateContactInfoData(contactInfoPayload) {
 			this.dataContactInfo = contactInfoPayload
-		},	
+		},
 	},
 	mounted() {
 		EventBus.$on('DATA_PERSONAL_INFO_PUBLISHED', (personalInfoPayload) => {

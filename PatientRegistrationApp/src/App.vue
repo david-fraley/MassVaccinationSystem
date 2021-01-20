@@ -333,6 +333,7 @@ export default {
 				registrationStatus: "Finished",
 				registrationTimeStamp: new Date().toISOString(),
 			};
+			this.$store.dispath("patientRegistered", PatientSubmitPayload);
 		},
 		submitPatientInfo() {
 			brokerRequests.submitRegistration().then((response) => {
