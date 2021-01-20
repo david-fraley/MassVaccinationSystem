@@ -25,11 +25,14 @@
     </p></div></v-row>
   <v-row>
     <v-col cols="6">
-    <v-btn @click="scanQrCode()" color="accent"> Scan QR Code
-    </v-btn></v-col>
+    <v-btn @click="scanQrCode()" color="accent"> Scan QR Code </v-btn>
+    </v-col>
     <v-col cols="6">
-    <div v-if="isCameraOn && !noFrontCamera && !noRearCamera"><v-btn @click="switchCamera" color="accent"> Switch Camera
-    </v-btn></div></v-col></v-row>
+    <div v-if="isCameraOn && !noFrontCamera && !noRearCamera">
+      <v-btn @click="switchCamera" color="accent"> Switch Camera </v-btn>
+    </div>
+    </v-col>
+  </v-row>
   <div v-if="isCameraOn"><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
     </qrcode-stream></v-col></v-row>
     <v-row><p class="decode-result"> Result: <b>{{result}}</b></p></v-row>
@@ -237,7 +240,6 @@ export default {
       //Advance to the Check In page
       this.$router.push("CheckIn");
     },
-    // to do
     scanQrCode() {
       this.toggleCamera()
     },
