@@ -66,7 +66,7 @@
           v-model="relationship"
           prepend-icon="mdi-blank">
           <template #label>
-            <span class="red--text"><strong>* </strong></span>Relationship: this person is your
+            <span class="red--text"><strong>* </strong></span>Relationship: you are this person's 
           </template>
         </v-select>
       </v-col>
@@ -185,14 +185,16 @@ export default {
       ],
       languageOptions: ["English", "Spanish"],
       relationshipOptions: [
+        "Spouse",
+        "Parent",
+        "Guardian",
+        "Care Giver",
+        "Sibling",
+        "Grandparent",
         "Child",
         "Foster Child",
-        "Spouse",
-        "Domestic Partner",
-        "Parent",
-        "In-Law",
-        "Grandparent",
-        "Other Family Member",
+        "Stepchild",
+        "Other",
       ],
       familyName: "",
       givenName: "",
