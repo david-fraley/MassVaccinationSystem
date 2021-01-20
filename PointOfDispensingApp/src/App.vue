@@ -48,6 +48,15 @@
               <v-list-item-title class="font-weight-medium">Patient History</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <!-- Consent and Screening -->
+          <v-list-item :disabled="isConsentScreeningPageDisabled" router :to="'/ConsentScreening'">
+            <v-list-item-action>
+              <v-icon large>mdi-account-check</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium">Consent and Screening</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <!-- Vaccination Event -->
           <v-list-item :disabled="isVaccinationEventPageDisabled" router :to="'/VaccinationEvent'">
             <v-list-item-action>
@@ -108,6 +117,9 @@
       },
       isPatientHistoryPageDisabled() {
         return this.$store.getters.isPatientHistoryPageDisabled
+      },
+      isConsentScreeningPageDisabled() {
+        return false
       },
       isVaccinationEventPageDisabled() {
         return this.$store.getters.isVaccinationEventPageDisabled

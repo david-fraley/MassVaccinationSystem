@@ -2,6 +2,7 @@ import UserLoginPage from './components/UserLoginPage';
 import PatientLookupPage from './components/PatientLookupPage.vue';
 import PatientCheckInPage from './components/PatientCheckInPage.vue';
 import PatientHistoryPage from './components/PatientHistoryPage.vue';
+import ConsentScreeningPage from './components/ConsentScreeningPage.vue';
 import VaccinationEventPage from './components/VaccinationEventPage.vue';
 import AdverseEventsPage from './components/AdverseEventsPage.vue';
 import DischargePage from './components/DischargePage.vue';
@@ -28,6 +29,10 @@ export default [
   {
     path: '/PatientHistory',
     component: PatientHistoryPage,
+  },
+  {
+    path: '/ConsentScreening',
+    component: ConsentScreeningPage,
   },
   {
     path: '/VaccinationEvent',

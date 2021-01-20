@@ -33,10 +33,17 @@ export default new Vuex.Store({
         },
         screeningResponses: {
             vaccinationDecision: '',
-            patientInfoConfirmed: '',
-            consentFormSigned: '',
-            screeningCompleted: '',
-            factSheetProvided: '',
+            screeningQ1: '',
+            screeningQ2: '',
+            screeningQ3: '',
+            screeningQ4: '',
+            screeningQ5: '',
+            screeningQ6: '',
+            screeningQ7: '',
+            screeningQ8: '',
+            screeningQ9: '',
+            screeningQ10: '',
+            screeningQ11: '',
             screeningComplete: false
         }
     },
@@ -110,10 +117,17 @@ export default new Vuex.Store({
         },
         vaccinationScreeningUpdate (state, screeningResponsesPayload) {
             state.screeningResponses.vaccinationDecision = screeningResponsesPayload.vaccinationDecision
-            state.screeningResponses.patientInfoConfirmed = screeningResponsesPayload.patientInfoConfirmed
-            state.screeningResponses.consentFormSigned = screeningResponsesPayload.consentFormSigned
-            state.screeningResponses.screeningCompleted = screeningResponsesPayload.screeningCompleted
-            state.screeningResponses.factSheetProvided = screeningResponsesPayload.factSheetProvided
+            state.screeningResponses.screeningQ1 = screeningResponsesPayload.screeningQ1
+            state.screeningResponses.screeningQ2 = screeningResponsesPayload.screeningQ2
+            state.screeningResponses.screeningQ3 = screeningResponsesPayload.screeningQ3
+            state.screeningResponses.screeningQ4 = screeningResponsesPayload.screeningQ4
+            state.screeningResponses.screeningQ5 = screeningResponsesPayload.screeningQ5
+            state.screeningResponses.screeningQ6 = screeningResponsesPayload.screeningQ6
+            state.screeningResponses.screeningQ7 = screeningResponsesPayload.screeningQ7
+            state.screeningResponses.screeningQ8 = screeningResponsesPayload.screeningQ8
+            state.screeningResponses.screeningQ9 = screeningResponsesPayload.screeningQ9
+            state.screeningResponses.screeningQ10 = screeningResponsesPayload.screeningQ10
+            state.screeningResponses.screeningQ11 = screeningResponsesPayload.screeningQ11
             state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
