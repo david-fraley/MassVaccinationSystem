@@ -88,7 +88,13 @@ export default {
     updateScreeningResponseData(screeningResponsesPayload) {
       this.dataScreeningResponses = screeningResponsesPayload;
       
-      //to do: build the qrValue string here since the screening responses will be received after the personal info data?
+      //to do: add the screening responses to the qrValue string 
+      /*this.qrValue += "|" + this.dataScreeningResponses.screeningQ1 + "|" + this.dataScreeningResponses.screeningQ2 + "|"
+       + this.dataScreeningResponses.screeningQ2b + "|" + this.dataScreeningResponses.screeningQ3a + "|"
+        + this.dataScreeningResponses.screeningQ3b + "|" + this.dataScreeningResponses.screeningQ3c + "|"
+         + this.dataScreeningResponses.screeningQ4 + "|" + this.dataScreeningResponses.screeningQ5 + "|"
+          + this.dataScreeningResponses.screeningQ6 + "|" + this.dataScreeningResponses.screeningQ7 + "|"
+           + this.dataScreeningResponses.screeningQ8 + "|"*/
     }
 },
   components:{
