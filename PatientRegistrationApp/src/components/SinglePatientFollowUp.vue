@@ -54,7 +54,8 @@ export default {
       dataPersonalInfo: [],
       correctionLevel: "H",
       qrValue: ' ',
-      sendQr: ' '
+      sendQr: ' ',
+      dataScreeningResponses: []
     };
   },
   methods: {
@@ -82,7 +83,18 @@ export default {
     },
     updatePersonalInfoData(personalInfoPayload) {
       this.dataPersonalInfo = personalInfoPayload;
-      this.qrValue = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix
+      //this.qrValue = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix
+    },
+    updateScreeningResponseData(screeningResponsesPayload) {
+      this.dataScreeningResponses = screeningResponsesPayload;
+      
+      //to do: add the screening responses to the qrValue string 
+     /* this.qrValue += "|" + this.dataScreeningResponses.screeningQ1 + "|" + this.dataScreeningResponses.screeningQ2 + "|"
+       + this.dataScreeningResponses.screeningQ2b + "|" + this.dataScreeningResponses.screeningQ3a + "|"
+        + this.dataScreeningResponses.screeningQ3b + "|" + this.dataScreeningResponses.screeningQ3c + "|"
+         + this.dataScreeningResponses.screeningQ4 + "|" + this.dataScreeningResponses.screeningQ5 + "|"
+          + this.dataScreeningResponses.screeningQ6 + "|" + this.dataScreeningResponses.screeningQ7 + "|"
+           + this.dataScreeningResponses.screeningQ8 + "|"*/
     }
 },
   components:{
@@ -91,6 +103,9 @@ export default {
   mounted() {
 		EventBus.$on('DATA_PERSONAL_INFO_PUBLISHED', (personalInfoPayload) => {
 			this.updatePersonalInfoData(personalInfoPayload)
+    }),
+    EventBus.$on('DATA_SCREENING_RESPONSES_PUBLISHED', (screeningResponsesPayload) => {
+			this.updateScreeningResponseData(screeningResponsesPayload)
     })
   }
 }
@@ -104,4 +119,3 @@ export default {
   display: block
   max-width: 100%
 </style>
-
