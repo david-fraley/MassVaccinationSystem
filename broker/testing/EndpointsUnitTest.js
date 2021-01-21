@@ -31,7 +31,7 @@ const endpoints = [
   "Practitioner",
 ];
 
-function report(obj) {
+function config(obj) {
   let status = "";
   try {
     status = obj.status ? obj.status : status;
@@ -39,6 +39,13 @@ function report(obj) {
   } catch (e) {}
 
   let message = `${obj.config.method} ${obj.config.url} ${status}\n`;
+
+  console.log(message);
+}
+
+// Print the error
+function info(e) {
+  let message = e.response ? e.response.data : e.message;
 
   console.log(message);
 }
@@ -66,17 +73,40 @@ async function main() {
 
     broker
       .get(url)
-      .then((response) => report(response))
-      .catch((error) => report(error));
+      .then((response) => config(response))
+      .catch((error) => info(error));
     broker
       .post(url, data)
       .then((response) => {
-        report(response);
+        config(response);
         console.log(JSON.stringify(response.data));
         console.log("\n");
       })
-      .catch((error) => report(error));
+      .catch((error) => info(error));
   }
+
+  // Test Check-in
+  let setupAppointment = fhirServer.put(
+    "/Appointment/example",
+    JSON.parse(ExamplePayloads.CheckInAppointment)
+  );
+  let setupEncounter = fhirServer.put(
+    "/Encounter/example",
+    JSON.parse(ExamplePayloads.CheckInEncounter)
+  );
+  await Promise.all([setupAppointment, setupEncounter]).catch((error) => {
+    console.log("Check-in setup failed");
+    info(error);
+  });
+
+  broker
+    .post("/check-in", {}, { params: { appointment: "example" } })
+    .then((response) => {
+      config(response);
+      console.log(JSON.stringify(response.data));
+      console.log("\n");
+    })
+    .catch((error) => info(error));
 }
 
 main().then(console.log()).catch(console.error);

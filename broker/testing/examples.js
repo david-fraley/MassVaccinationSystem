@@ -1,4 +1,5 @@
-const Appointment = `{
+module.exports = {
+  Appointment: `{
   "Appointment": {
     "status":"booked",
     "participant":[
@@ -13,9 +14,9 @@ const Appointment = `{
     ],
     "slot":"Slot/example"
   }
-}`;
+}`,
 
-const Encounter = `{
+  Encounter: `{
   "Encounter": {
     "status" : "planned",
     "class" : "FLD",
@@ -26,17 +27,17 @@ const Encounter = `{
     "location" : "Location/example",
     "serviceProvider" : "Organization/example"
   }
-}`;
+}`,
 
-const EpisodeOfCare = `{
+  EpisodeOfCare: `{
   "EpisodeOfCare": {
     "status" : "planned",
     "patient" : "Patient/example",
     "managingOrganization" : "Organization/example"
   }
-}`;
+}`,
 
-const Immunization = `{
+  Immunization: `{
   "Immunization": {
     "vaccine": "FLUVAX",
     "manufacturer": "Organization/example",
@@ -60,9 +61,9 @@ const Immunization = `{
     "doseNumber": 1,
     "seriesDoses": 2
   }
-}`;
+}`,
 
-const Location = `{
+  Location: `{
   "Location": { 
     "wirClientID": "WIRID",
     "status" : "active",
@@ -78,9 +79,9 @@ const Location = `{
     },
     "physicalType": "Site"
   }
-}`;
+}`,
 
-const Observation = `{
+  Observation: `{
   "Observation": {
     "status": "final",
     "category": "procedure",
@@ -94,17 +95,17 @@ const Observation = `{
     ],
     "partOf": "Immunization/example"
   }
-}`;
+}`,
 
-const Organization = `{
+  Organization: `{
   "Organization": {
     "active" : true,
     "type" : "cg",
     "name" : "ManagingOrganizationName"
   }
-}`;
+}`,
 
-const Patient = `{
+  Patient: `{
   "Patient": [
     {
       "family": "Smith",
@@ -148,9 +149,9 @@ const Patient = `{
       "relationship": "ONESELF"
     }
   ]
-}`;
+}`,
 
-const Practitioner = `{
+  Practitioner: `{
   "Practitioner": {
     "family" : "George",
     "given" : "James",
@@ -168,16 +169,28 @@ const Practitioner = `{
     },
     "qualificationCode": "CER"
   }
-}`;
+}`,
 
-module.exports = {
-  Appointment: Appointment,
-  Encounter: Encounter,
-  EpisodeOfCare: EpisodeOfCare,
-  Immunization: Immunization,
-  Location: Location,
-  Observation: Observation,
-  Organization: Organization,
-  Patient: Patient,
-  Practitioner: Practitioner,
+  CheckInEncounter: `{
+  "resourceType": "Encounter",
+  "id": "example",
+  "status": "planned",
+  "appointment": [ {
+    "reference": "Appointment/example"
+  } ],
+  "subject": {
+    "reference": "Patient/example"
+  }
+}`,
+
+  CheckInAppointment: `{
+  "resourceType": "Appointment",
+  "id": "example",
+  "status": "booked",
+  "participant": [ {
+    "actor": {
+      "reference": "Patient/example"
+    }
+  } ]
+}`,
 };
