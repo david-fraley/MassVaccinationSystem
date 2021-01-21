@@ -255,7 +255,7 @@
 </template>
 
 <script>
-//import EventBus from '../eventBus'
+import EventBus from '../eventBus'
 
 export default {
   name: "ScreeningQuestions",
@@ -282,16 +282,22 @@ export default {
 			this.screeningQ2b = ''
 		}
 	},
-/*
-    sendEmergencyContactInfoToReviewPage() {
-      const emergencyContactPayload = {
-        emergencyContactFamilyName: this.emergencyContactFamilyName,
-        emergencyContactGivenName: this.emergencyContactGivenName,
-        emergencyContactPhoneNumber: this.emergencyContactPhoneNumber,
-        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType
+    sendScreeningResponsesToFollowUpPage() {
+      const screeningResponsesPayload = {
+        screeningQ1: this.screeningQ1,
+        screeningQ2: this.screeningQ2,
+        screeningQ2b: this.screeningQ2b,
+		screeningQ3a: this.screeningQ3a,
+		screeningQ3b: this.screeningQ3b,
+		screeningQ3c: this.screeningQ3c,
+		screeningQ4: this.screeningQ4,
+		screeningQ5: this.screeningQ5,
+		screeningQ6: this.screeningQ6,
+		screeningQ7: this.screeningQ7,
+		screeningQ8: this.screeningQ8,
       }
-      EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
-    },*/
+      EventBus.$emit('DATA_SCREENING_RESPONSES_PUBLISHED', screeningResponsesPayload)
+    },
     verifyFormContents() {
 		var message = "Please complete all screening questions."
 		
@@ -304,7 +310,7 @@ export default {
 			alert(message)
 			return false
 		}
-		//this.sendEmergencyContactInfoToReviewPage();
+		this.sendScreeningResponsesToFollowUpPage();
 		return true;
     }
 },
