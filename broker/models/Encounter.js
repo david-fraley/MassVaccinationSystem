@@ -4,8 +4,6 @@ Encounter {
   class : enum (FLD)
   subject : string "Patient/id"
   appointment : string "Appointment/id"
-  start : string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
-  end : string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
   location : string "Location/id"
 }
 */
@@ -27,10 +25,7 @@ exports.toFHIR = function (encounter) {
         reference: encounter.appointment,
       },
     ],
-    period: {
-      start: encounter.start,
-      end: encounter.end,
-    },
+    period: {},
     location: [
       {
         location: {

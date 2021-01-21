@@ -30,34 +30,48 @@ exports.create = (req, res) => {
     });
 };
 
-exports.updateStatus = (url, status) => {
-  return axios.get(`/Appointment${url}`).then((response) => {
-    let appt;
-    let resourceType = response.data.resourceType;
-    let patch;
+exports.checkIn = async (req) => {
+  const status = "arrived";
+  let id, patch;
 
-    if (resourceType === "Appointment") {
-      appt = response.data;
-    } else {
+  // get id of resource to update
+  if (req.query.hasOwnProperty("patient")) {
+    let config = {
+      params: {
+        actor: req.query.patient,
+        status: "booked",
+      },
+    };
+    id = await axios.get("/Appointment", config).then((response) => {
       let bundle = response.data;
+      let resource;
 
       if (!bundle.hasOwnProperty("entry")) {
         console.log("Appointment does not exist");
       }
-      appt = bundle.entry[0].resource;
-    }
-
-    patch = [
-      {
-        op: "add",
-        path: "/status",
-        value: status,
-      },
-    ];
-
-    // update the database with new appointment
-    return axios.patch(`/Appointment/${appt.id}`, patch).then((response) => {
-      return response;
+      resource = bundle.entry[0].resource;
+      return resource.id;
     });
-  });
+  } else if (req.query.hasOwnProperty("appointment")) {
+    id = req.query.appointment;
+  } else {
+    return {};
+  }
+
+  // patch status and start time
+  patch = [
+    {
+      op: "add",
+      path: "/status",
+      value: status,
+    },
+    {
+      op: "add",
+      path: "/start",
+      value: new Date().toISOString(),
+    },
+  ];
+
+  // update the database with new appointment
+  return axios.patch(`/Appointment/${id}`, patch);
 };

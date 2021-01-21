@@ -33,34 +33,59 @@ exports.create = (req, res) => {
 // Given url of Encounter and new status, update encounter resource
 // URL is either a specific id '/id'
 // or query parameters '?param=value'
-exports.updateStatus = (url, status) => {
-  return axios.get(`/Encounter${url}`).then((response) => {
-    let encounter;
-    let resourceType = response.data.resourceType;
-    let patch;
+exports.checkIn = async (req) => {
+  const status = "arrived";
+  let id, patch;
+  let config;
 
-    if (resourceType === "Encounter") {
-      encounter = response.data;
-    } else {
-      let bundle = response.data;
-
-      if (!bundle.hasOwnProperty("entry")) {
-        console.log("Encounter does not exist");
-      }
-      encounter = bundle.entry[0].resource;
-    }
-
-    patch = [
-      {
-        op: "add",
-        path: "/status",
-        value: status,
+  if (req.query.hasOwnProperty("patient")) {
+    config = {
+      params: {
+        subject: req.query.patient,
+        status: "planned",
       },
-    ];
+    };
+  } else if (req.query.hasOwnProperty("appointment")) {
+    config = {
+      params: {
+        appointment: req.query.appointment,
+      },
+    };
+  } else {
+    return {};
+  }
 
-    // update the database with new encounter
-    return axios.patch(`/Encounter/${encounter.id}`, patch).then((response) => {
-      return response;
-    });
+  // get id of resource to update
+  id = await axios.get("/Encounter", config).then((response) => {
+    let bundle = response.data;
+    let resource;
+
+    if (!bundle.hasOwnProperty("entry")) {
+      console.log("Encounter does not exist");
+    }
+    resource = bundle.entry[0].resource;
+    return resource.id;
   });
+
+  // patch status and start time
+  patch = [
+    {
+      op: "add",
+      path: "/status",
+      value: status,
+    },
+    {
+      op: "add",
+      path: "/period",
+      value: {},
+    },
+    {
+      op: "add",
+      path: "/period/start",
+      value: new Date().toISOString(),
+    },
+  ];
+
+  // update the database with new encounter
+  return axios.patch(`/Encounter/${id}`, patch);
 };
