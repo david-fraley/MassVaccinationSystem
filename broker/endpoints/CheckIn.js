@@ -1,6 +1,3 @@
-// Load configuration settings
-const configs = require("../config/server.js");
-
 const Appointment = require("./Appointment");
 const Encounter = require("./Encounter");
 

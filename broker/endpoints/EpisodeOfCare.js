@@ -1,7 +1,4 @@
-// Load configuration settings
-const configs = require("../config/server.js");
-
-const axios = configs.axios;
+const axios = require("../services/axiosInstance.js");
 const EpisodeOfCare = require("../models/EpisodeOfCare");
 
 exports.read = (req, res) => {
