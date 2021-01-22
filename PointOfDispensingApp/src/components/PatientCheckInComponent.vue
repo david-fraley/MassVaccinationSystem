@@ -64,6 +64,9 @@ import brokerRequests from "../brokerRequests";
 export default {
   name: "PatientCheckInComponent",
   computed: {
+    patientId() {
+      return this.$store.state.patientResource.id;
+    },
     locationId() {
       return this.$store.state.locationResource.locationId;
     },
@@ -71,29 +74,24 @@ export default {
       return this.$store.state.locationResource.locationName;
     },
     encounterStatus() {
-      return this.$store.state.encounterResource.encounterStatus;
+      return this.$store.state.encounterResource.status;
     },
     encounterTimeStamp() {
-      return this.$store.state.encounterResource.encounterTimeStamp;
+      return this.$store.state.encounterResource.start;
     },
   },
   methods: {
-    checkInComplete() {
-      //the following is sending dummy data until we have the API in place
-      const encounterResourcePayload = {
-        encounterStatus: "Arrived",
-        encounterTimeStamp: new Date().toISOString(),
-      };
+    onSuccess(encounter) {
       //send data to Vuex
-      this.$store.dispatch("patientAdmitted", encounterResourcePayload);
+      this.$store.dispatch("patientAdmitted", encounter);
     },
     checkIn() {
       // make request
-      brokerRequests.checkIn().then((response) => {
+      brokerRequests.checkIn(this.patientId).then((response) => {
         if (response.data) {
-          this.checkInComplete();
+          this.onSuccess(response.data);
         } else if (response.error) {
-          alert("Patient not checked-in");
+          alert(`Patient not checked-in\n${response.error}`);
         }
       });
     },
