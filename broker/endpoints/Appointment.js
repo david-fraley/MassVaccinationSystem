@@ -73,5 +73,7 @@ exports.checkIn = async (req) => {
   ];
 
   // update the database with new appointment
-  return axios.patch(`/Appointment/${id}`, patch);
+  return axios.patch(`/Appointment/${id}`, patch).then((response) => {
+    return Appointment.toModel(response.data);
+  });
 };

@@ -87,5 +87,7 @@ exports.checkIn = async (req) => {
   ];
 
   // update the database with new encounter
-  return axios.patch(`/Encounter/${id}`, patch);
+  return axios.patch(`/Encounter/${id}`, patch).then((response) => {
+    return Encounter.toModel(response.data);
+  });
 };

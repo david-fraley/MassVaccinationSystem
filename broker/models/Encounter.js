@@ -40,3 +40,19 @@ exports.toFHIR = function (encounter) {
 
   return resource;
 };
+
+exports.toModel = (encounter) => {
+  let model = {
+    resourceType: encounter.resourceType,
+    id: encounter.id,
+    status: encounter.status,
+    class: encounter.class.code,
+    subject: encounter.subject.reference,
+    appointment: encounter.appointment[0].reference,
+    location: encounter.location[0].location.reference,
+    start: encounter.period.start,
+    end: encounter.period.end,
+  };
+
+  return model;
+};

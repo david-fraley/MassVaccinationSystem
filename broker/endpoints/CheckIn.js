@@ -19,7 +19,7 @@ module.exports = (req, res) => {
   ])
     .then((results) => {
       for (result of results) {
-        response[result.data.resourceType] = result.data;
+        response[result.resourceType] = result;
       }
       res.json(response);
     })

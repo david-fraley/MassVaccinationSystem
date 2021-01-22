@@ -140,6 +140,7 @@ exports.toFHIR = function (patient) {
 
 exports.toModel = function (patient) {
   let model = {
+    resourceType: patient.resourceType,
     id: patient.id,
     family: patient.name ? patient.name[0].family : "",
     given: patient.name
