@@ -47,6 +47,7 @@ function config(obj) {
 function info(e) {
   let message = e.response ? e.response.data : e.message;
 
+  config(e);
   console.log(message);
 }
 
