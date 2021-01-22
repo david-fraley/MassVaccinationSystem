@@ -10,9 +10,26 @@
 //
 
 const axios = require("axios").default;
-axios.defaults.baseURL = "http://localhost:3000";
-
 const ExamplePayloads = require("./examples");
+
+const broker = axios.create({
+  baseURL: "http://localhost:3000",
+});
+const fhirServer = axios.create({
+  baseURL: "http://localhost:8080/hapi-fhir-jpaserver/fhir",
+});
+
+const endpoints = [
+  "Appointment",
+  "Encounter",
+  "EpisodeOfCare",
+  "Immunization",
+  "Location",
+  "Observation",
+  "Organization",
+  "Patient",
+  "Practitioner",
+];
 
 function report(obj) {
   let status = "";
@@ -26,32 +43,32 @@ function report(obj) {
   console.log(message);
 }
 
+async function setup() {
+  let endpoint;
+  let id = "example";
+  for (endpoint of endpoints) {
+    let data = { resourceType: endpoint, id: id };
+
+    fhirServer.put(`/${endpoint}/${id}`, data);
+  }
+}
+
 /**
  * Main test method.
  */
 async function main() {
-  let endpoints = [
-    "Appointment",
-    "Encounter",
-    "EpisodeOfCare",
-    "Immunization",
-    "Location",
-    "Observation",
-    "Organization",
-    "Patient",
-    "Practitioner",
-  ];
+  await setup();
 
   let endpoint;
   for (endpoint of endpoints) {
     let url = `/${endpoint}`;
     let data = JSON.parse(ExamplePayloads[endpoint]);
 
-    axios
+    broker
       .get(url)
       .then((response) => report(response))
       .catch((error) => report(error));
-    axios
+    broker
       .post(url, data)
       .then((response) => {
         report(response);
