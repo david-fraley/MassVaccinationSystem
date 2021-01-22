@@ -49,7 +49,7 @@ async function setup() {
   for (endpoint of endpoints) {
     let data = { resourceType: endpoint, id: id };
 
-    fhirServer.put(`/${endpoint}/${id}`, data);
+    fhirServer.put(`/${endpoint}/${id}`, data).then();
   }
 }
 
