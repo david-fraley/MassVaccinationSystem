@@ -90,7 +90,7 @@
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap">Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><SinglePatientReviewSubmit/></v-card>
+									<v-card flat><SinglePatientReviewSubmit ref="singlepatientreviewsubmit"/></v-card>
 								</v-stepper-content>
 
 								<!-- Single Patient: Follow up -->
@@ -164,7 +164,7 @@
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap">Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
+									<v-card flat><HouseholdReviewSubmit ref="householdreviewsubmit" v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
 
 								<!-- Household: Follow up -->
@@ -226,7 +226,7 @@
 										<v-btn 
 											color="primary"
 											text
-											@click="submit()">
+											@click="submitSinglePatientRegistration()">
 											Yes
 										</v-btn>
 									</v-card-actions>
@@ -272,7 +272,7 @@
 										<v-btn
 											color="primary"
 											text
-											@click="submit()">
+											@click="submitHouseholdRegistration()">
 											Yes
 										</v-btn>
 									</v-card-actions>
@@ -322,30 +322,17 @@ import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import HouseholdFollowUp from './components/HouseholdFollowUp';
 import config from './config.js';
-import brokerRequests from "./brokerRequests";
 import EventBus from './eventBus'
 export default {
 	name: 'App',
 	methods: 
 	{
-		onSuccess() {
-			const PatientSubmitPayload = {
-				registrationStatus: "Finished",
-				registrationTimeStamp: new Date().toISOString(),
-			};
-			this.$store.dispath("patientRegistered", PatientSubmitPayload);
+		submitSinglePatientRegistration() {
+			this.$refs.singlepatientreviewsubmit.submitPatientInfo()
+			this.goToNextPage()
 		},
-		submitPatientInfo() {
-			brokerRequests.submitRegistration().then((response) => {
-				if (response.data) {
-					this.onSuccess();
-				}	else if (response.error) {
-					alert("Registration not successful");
-				}
-			});
-		},
-		submit() {
-			this.submitPatientInfo(),
+		submitHouseholdRegistration() {
+			this.$refs.householdreviewsubmit.submitPatientInfo()
 			this.goToNextPage()
 		},
 		goToPage(pageNum) {
