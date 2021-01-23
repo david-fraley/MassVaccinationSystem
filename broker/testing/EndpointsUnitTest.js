@@ -26,13 +26,21 @@ const endpoints = [
 ];
 
 async function setup() {
-  let endpoint;
   let id = "example";
+  let promises = [];
+
+  let endpoint;
   for (endpoint of endpoints) {
     let data = { resourceType: endpoint, id: id };
 
-    globals.fhirServer.put(`/${endpoint}/${id}`, data).then();
+    let promise = globals.fhirServer.put(`/${endpoint}/${id}`, data);
+    promises.push(promise);
   }
+  
+  await Promise.all(promises).catch((error) => {
+    console.log("Setup failed");
+    globals.info(error);
+  });
 }
 
 /**

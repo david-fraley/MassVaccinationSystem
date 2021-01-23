@@ -9,18 +9,18 @@ async function setup() {
     "/Encounter/example",
     JSON.parse(globals.examples.CheckInEncounter)
   );
-  await Promise.all([setupAppointment, setupEncounter]).then().catch((error) => {
+  await Promise.all([setupAppointment, setupEncounter]).catch((error) => {
     console.log("Check-in setup failed");
     globals.info(error);
   });
 }
 
 async function cleanup() {
-  setup().then();
+  await setup();
 }
 
 async function test() {
-  globals.broker
+  await globals.broker
     .post("/check-in", {}, { params: { patient: "example" } })
     .then((response) => {
       globals.config(response);

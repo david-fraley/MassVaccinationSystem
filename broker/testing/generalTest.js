@@ -19,23 +19,33 @@ async function setup() {
 }
 
 async function cleanup() {
+  let promises = [];
+
   let url;
   for (url of urls) {
-    globals.fhirServer.delete(`${url}`).then();
+    let promise = globals.fhirServer.delete(`${url}`);
+    promises.push(promise);
   }
+
+  await Promise.all(promises).catch((error) => {
+    console.log("generalTest cleanup failed");
+    globals.info(error);
+  });
 }
 
 async function test() {
+  let promises = [];
+
   let endpoint;
   for (endpoint of endpoints) {
     let url = `/${endpoint}`;
     let data = JSON.parse(globals.examples[endpoint]);
 
-    globals.broker
+    let read = globals.broker
       .get(url)
       .then((response) => globals.config(response))
       .catch((error) => globals.info(error));
-    globals.broker
+    let create = globals.broker
       .post(url, data)
       .then((response) => {
         if (response.data.id) urls.push(`${url}/${response.data.id}`);
@@ -45,7 +55,10 @@ async function test() {
         console.log("\n");
       })
       .catch((error) => globals.info(error));
+    promises.push(read, create);
   }
+
+  await Promise.all(promises);
 }
 
 module.exports = async () => {
