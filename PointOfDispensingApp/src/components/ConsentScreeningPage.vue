@@ -10,14 +10,14 @@
     </v-row>
     <v-row>
       <PatientInfoComponent />
-      <VaccinationScreeningComponent2 />
+      <VaccinationScreeningComponent />
     </v-row>
   </v-container>
 </template>
 
 <script>
 import PatientInfoComponent from './PatientInfoComponent';
-import VaccinationScreeningComponent2 from './VaccinationScreeningComponent2';
+import VaccinationScreeningComponent from './VaccinationScreeningComponent';
 
   export default {
     name: 'ConsentScreeningPage',
@@ -27,7 +27,7 @@ import VaccinationScreeningComponent2 from './VaccinationScreeningComponent2';
     components: 
     {
       PatientInfoComponent,
-      VaccinationScreeningComponent2
+      VaccinationScreeningComponent
     },
     data () {
       return {
