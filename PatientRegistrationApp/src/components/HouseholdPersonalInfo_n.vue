@@ -66,7 +66,7 @@
           v-model="relationship"
           prepend-icon="mdi-blank">
           <template #label>
-            <span class="red--text"><strong>* </strong></span>Relationship: this person is your
+            <span class="red--text"><strong>* </strong></span>Relationship: you are this person's 
           </template>
         </v-select>
       </v-col>
@@ -83,21 +83,22 @@
         >
           <template v-slot:activator="{ on }">
             <v-text-field
-              v-model="birthDate"
+              v-model="dateFormatted"
               :rules="birthdateRules"
-              placeholder="YYYY-MM-DD"
-              v-mask="'####-##-##'"
+              placeholder="MM/DD/YYYY"
+              v-mask="'##/##/####'"
               prepend-icon="mdi-calendar"
               @click:prepend="on.click"
-              >
-              <template #label>
-                <span class="red--text"><strong>* </strong></span>Date of Birth
-              </template>
+              @blur="date = parseDate(dateFormatted)"
+            >
+            <template #label>
+              <span class="red--text"><strong>* </strong></span>Date of Birth
+            </template>
             </v-text-field>
           </template>
           <v-date-picker
             reactive
-            v-model="birthDate"
+            v-model="date"
             :min="minDateStr"
             :max="maxDateStr"
           ></v-date-picker>
@@ -185,20 +186,23 @@ export default {
       ],
       languageOptions: ["English", "Spanish"],
       relationshipOptions: [
+        "Spouse",
+        "Parent",
+        "Guardian",
+        "Care Giver",
+        "Sibling",
+        "Grandparent",
         "Child",
         "Foster Child",
-        "Spouse",
-        "Domestic Partner",
-        "Parent",
-        "In-Law",
-        "Grandparent",
-        "Other Family Member",
+        "Stepchild",
+        "Other",
       ],
       familyName: "",
       givenName: "",
       middleName: "",
       suffix: "",
-      birthDate: "",
+      date: "",
+      dateFormatted: "",
       gender: "",
       patientPhoto: [],
       race: "",
@@ -208,7 +212,8 @@ export default {
       minDateStr: "1900-01-01",
       birthdateRules: [
         (v) => !!v || "DOB is required",
-        (v) => v.length == 10 || "DOB must be in specified format",
+        // check if v exists before seeing if the length is 10
+        (v) => !!v && v.length === 10 || "DOB must be in specified format, MM/DD/YYYY",
         (v) => this.validBirthdate(v) || "Invalid DOB",
       ],
     };
@@ -216,13 +221,54 @@ export default {
   props: {
     householdMemberNumber: Number,
   },
+  watch: {
+    date () {
+      this.dateFormatted = this.formatDate(this.date)
+    },
+  },
+  computed: {
+    maxDateStr: function() {
+      let d = new Date();
+      let date = [
+        d.getFullYear(),
+        ("0" + (d.getMonth() + 1)).slice(-2),
+        ("0" + d.getDate()).slice(-2),
+        ].join("-");
+
+      return date;
+    },
+  },
   methods: {
     validBirthdate(birthdate) {
       var minDate = Date.parse(this.minDateStr);
       var maxDate = Date.parse(this.maxDateStr);
-      var date = Date.parse(birthdate);
+      var formattedDate = () => {
+        // Ensure birthdate is fully entered and can be converted into 3 variables
+        if(birthdate) {
+          if(birthdate.split('/').length === 3) {
+            const [month, day, year] = birthdate.split('/');
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+          }
+        }
+        return false;
+      }
+      var date = Date.parse(formattedDate());
 
       return !Number.isNaN(date) && minDate <= date && date <= maxDate;
+    },
+    formatDate (date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split('-');
+      return `${month}/${day}/${year}`;
+    },
+    parseDate (date) {
+      if (!date) return null;
+      // Ensure birthdate is fully entered and can be converted into 3 variables before parsing
+      if (date.split('/').length !== 3) return null;
+
+      const [month, day, year] = date.split('/');
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     },
     sendHouseholdPersonalInfoDataToReviewPage() {
       const householdPersonalInfoPayload = {
@@ -231,7 +277,7 @@ export default {
         givenName: this.givenName,
         middleName: this.middleName,
         suffix: this.suffix,
-        birthDate: this.birthDate,
+        birthDate: this.date,
         gender: this.gender,
         patientPhoto: this.patientPhoto,
         patientPhotoSrc: (this.patientPhoto && this.patientPhoto.size) ? URL.createObjectURL( this.patientPhoto ) : undefined,
@@ -266,7 +312,7 @@ export default {
         message += " First Name";
         valid = false;
       }
-      if (this.birthDate == "") {
+      if (this.date == "") {
         if (!valid) {
           message += ",";
         }
@@ -322,19 +368,7 @@ export default {
     setHouseholdFamilyName(familyName) {
       this.familyName = familyName;
     },
-  },
-  computed: {
-    maxDateStr: function() {
-      let d = new Date();
-      let date = [
-        d.getFullYear(),
-        ("0" + (d.getMonth() + 1)).slice(-2),
-        ("0" + d.getDate()).slice(-2),
-      ].join("-");
-
-      return date;
-    },
-  },
+  }
 };
 </script>
 

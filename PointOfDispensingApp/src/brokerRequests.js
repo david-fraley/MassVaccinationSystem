@@ -80,4 +80,14 @@ export default {
         return toResponse(e);
       });
   },
+
+  // Submit vaccination
+  submitVaccination: () => {
+    return healthcheckPromise();
+  },
+
+  // Discharge
+  discharge: () => {
+    return healthcheckPromise();
+  },
 };

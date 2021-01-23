@@ -5,13 +5,21 @@
         <div class="font-weight-medium secondary--text">Vaccination status</div>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly outlined
-          :value=immunizationStatus
+        <v-text-field
+          filled
+          dense
+          readonly
+          outlined
+          :value="immunizationStatus"
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly outlined
-          :value=immunizationTimeStamp
+        <v-text-field
+          filled
+          dense
+          readonly
+          outlined
+          :value="immunizationTimeStamp"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -20,17 +28,25 @@
         <div class="font-weight-medium secondary--text">Encounter status</div>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly outlined
-          :value=encounterStatus
+        <v-text-field
+          filled
+          dense
+          readonly
+          outlined
+          :value="encounterStatus"
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field filled dense readonly outlined
-          :value=encounterTimeStamp
+        <v-text-field
+          filled
+          dense
+          readonly
+          outlined
+          :value="encounterTimeStamp"
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row>
+    <!--v-row>
       <v-col cols="2">
       </v-col>    
       <v-col cols="6">
@@ -38,7 +54,7 @@
           End encounter
         </v-btn>
       </v-col>
-    </v-row>
+    </v-row-->
     <v-row>
       <v-col cols="12">
         <v-divider></v-divider>
@@ -46,7 +62,9 @@
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="12">
-        <div class="font-weight-medium secondary--text">Would you like to print or e-mail the patient summary?</div>
+        <div class="font-weight-medium secondary--text">
+          Would you like to print or e-mail the patient summary?
+        </div>
       </v-col>
     </v-row>
     <v-row>
@@ -67,41 +85,26 @@
 </template>
 
 <script>
-  export default {
-    name: 'PatientDischargeComponent',
-    computed:
-    {
-      immunizationStatus() {
-        return this.$store.state.immunizationResource.immunizationStatus
-      },
-      immunizationTimeStamp() {
-        return this.$store.state.immunizationResource.immunizationTimeStamp
-      },
-      encounterStatus() {
-        return this.$store.state.encounterResource.encounterStatus
-      },
-      encounterTimeStamp() {
-        return this.$store.state.encounterResource.encounterTimeStamp
-      },
+export default {
+  name: "PatientDischargeComponent",
+  computed: {
+    immunizationStatus() {
+      return this.$store.state.immunizationResource.immunizationStatus;
     },
-    methods: 
-    {
-      endEncounter() {
-        //the following is sending dummy data until we have the API in place
-        const encounterResourcePayload = {
-          encounterStatus:'Finished',
-          encounterTimeStamp: new Date().toISOString(),
-        }
-        //send data to Vuex
-        this.$store.dispatch('patientDischarged', encounterResourcePayload)
-      }
+    immunizationTimeStamp() {
+      return this.$store.state.immunizationResource.immunizationTimeStamp;
     },
-    components: 
-    {
+    encounterStatus() {
+      return this.$store.state.encounterResource.encounterStatus;
     },
-    data () {
-      return {
-      }
-    }
-  }
+    encounterTimeStamp() {
+      return this.$store.state.encounterResource.encounterTimeStamp;
+    },
+  },
+  methods: {},
+  components: {},
+  data() {
+    return {};
+  },
+};
 </script>
