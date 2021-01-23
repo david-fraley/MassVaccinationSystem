@@ -10,21 +10,6 @@ Observation {
   performer : [string] "(Practitioner/PractitionerRole/Organization)/id"
   partOf : string "Immunization/id"
 }
-{
-  "Observation": {
-    "status": "final",
-    "category": "procedure",
-    "subject": "Patient/example",
-    "encounter": "Encounter/715",
-    "note": "notes",
-    "effectiveStart": "2016-05-18T22:33:22Z",
-    "effectiveEnd": "2016-05-18T22:38:22Z",
-    "performer": [
-      "Patient/example"
-    ],
-    "partOf": "Immunization/1455"
-  }
-}
 */
 const CAT_SYSTEM = "http://hl7.org/fhir/ValueSet/observation-category";
 exports.toFHIR = function (observation) {
