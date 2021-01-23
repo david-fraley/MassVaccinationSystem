@@ -48,6 +48,15 @@
               <v-list-item-title class="font-weight-medium">Patient History</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <!-- Consent and Screening -->
+          <v-list-item :disabled="isConsentScreeningPageDisabled" router :to="'/ConsentScreening'">
+            <v-list-item-action>
+              <v-icon large>mdi-account-check</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium">Consent and Screening</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <!-- Vaccination Event -->
           <v-list-item :disabled="isVaccinationEventPageDisabled" router :to="'/VaccinationEvent'">
             <v-list-item-action>
@@ -57,15 +66,6 @@
               <v-list-item-title class="font-weight-medium">Vaccination Event</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <!-- Adverse Reaction -->
-          <v-list-item :disabled="isAdverseReactionPageDisabled" router :to="'/AdverseReaction'">
-            <v-list-item-action>
-              <v-icon large>mdi-alert</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title class="font-weight-medium">Adverse Reaction</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
           <!-- Discharge -->
           <v-list-item :disabled="isDischargePageDisabled" router :to="'/Discharge'">
             <v-list-item-action>
@@ -73,6 +73,15 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="font-weight-medium">Discharge</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- Adverse Reaction -->
+          <v-list-item :disabled="isAdverseReactionPageDisabled" router :to="'/AdverseReaction'">
+            <v-list-item-action>
+              <v-icon large>mdi-alert</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium">Adverse Reaction</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <!-- Configuration -->
@@ -108,6 +117,9 @@
       },
       isPatientHistoryPageDisabled() {
         return this.$store.getters.isPatientHistoryPageDisabled
+      },
+      isConsentScreeningPageDisabled() {
+        return false
       },
       isVaccinationEventPageDisabled() {
         return this.$store.getters.isVaccinationEventPageDisabled
