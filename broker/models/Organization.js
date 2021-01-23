@@ -4,14 +4,6 @@ Organization {
   type : enum (prov, bus, govt, edu, reli, cg, other)
   name : string
 }
-{
-  "Organization":
-    {
-      "active" : true,
-      "type" : "cg",
-      "name" : "ManagingOrganizationName"
-    }
-}
 */
 const TYPE_SYSTEM = "http://hl7.org/fhir/ValueSet/organization-type";
 exports.toFHIR = function (org) {

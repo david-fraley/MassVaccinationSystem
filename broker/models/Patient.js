@@ -1,7 +1,5 @@
 /*
-
 Patient {
-
   family : string
   given : string
   --middle : string
@@ -34,53 +32,6 @@ Patient {
   language: enum (English, Spanish),
   relationship: enum (DOMPART Domestic Partner, INLAW In-Law, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
 }
-
-{
-  "Patient": [
-    {
-      "family": "Smith",
-      "given": "John",
-      "suffix": "Jr.",
-      "phone": [
-        {
-          "value": "(000)000-000",
-          "use": "mobile"
-        },
-        {
-          "value": "(100)000-000",
-          "use": "mobile"
-        }
-      ],
-      "email": [
-        "email@site.com",
-        "email2@site.com"
-      ],
-      "gender": "male",
-      "birthDate": "2000-01-01",
-      "race": "",
-      "ethnicity": "",
-      "address": {
-        "use": "home",
-        "line": "90 Walnut St",
-        "city": "New York City",
-        "state": "NY",
-        "postalCode": "14623",
-        "country": "USA"
-      },
-      "contact": {
-        "family": "Smith",
-        "given": "John",
-        "phone": {
-          "value": "(110)000-000",
-          "use": "mobile"
-        }
-      },
-      "language": "English",
-      "relationship": "ONESELF"
-    }
-  ]
-}
-
 */
 exports.toFHIR = function (patient) {
   let resource = {
