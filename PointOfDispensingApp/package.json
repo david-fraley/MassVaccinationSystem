@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "v-mask": "^2.2.3",
     "vue": "^2.6.11",
+    "vue-qrcode-reader": "^2.3.16",
     "vue-router": "^3.4.9",
     "vuetify": "^2.2.11",
     "vuex": "^3.6.0"
