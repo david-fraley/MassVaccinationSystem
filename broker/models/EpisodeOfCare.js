@@ -4,14 +4,6 @@ EpisodeOfCare {
   patient : string
   managingOrganization : string
 }
-{
-  "EpisodeOfCare":
-    {
-      "status" : "planned",
-      "patient" : "Patient/example",
-      "managingOrganization" : "Organization/hl7"
-     }
-}
 */
 
 exports.toFHIR = function (eoc) {
