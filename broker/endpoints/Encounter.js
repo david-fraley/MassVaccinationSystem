@@ -89,3 +89,48 @@ exports.checkIn = async (req) => {
     return Encounter.toModel(response.data);
   });
 };
+
+exports.discharge = async (req) => {
+  const status = "finished";
+  let id, patch;
+  let config;
+
+  if (req.query.hasOwnProperty("appointment")) {
+    config = {
+      params: {
+        appointment: req.query.appointment,
+      },
+    };
+  } else return {};
+
+  // get id of resource to update
+  id = await axios.get("/Encounter", config).then((response) => {
+    let bundle = response.data;
+    let resource;
+
+    if (!bundle.hasOwnProperty("entry")) {
+      console.log("Encounter does not exist");
+    }
+    resource = bundle.entry[0].resource;
+    return resource.id;
+  });
+
+  // patch status and start time
+  patch = [
+    {
+      op: "add",
+      path: "/status",
+      value: status,
+    },
+    {
+      op: "add",
+      path: "/period/end",
+      value: new Date().toISOString(),
+    },
+  ];
+
+  // update the database with new encounter
+  return axios.patch(`/Encounter/${id}`, patch).then((response) => {
+    return Encounter.toModel(response.data);
+  });
+};

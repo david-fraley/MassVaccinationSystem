@@ -1,4 +1,5 @@
 const globals = require("./globals");
+const dischargeTest = require("./dischargeTest");
 
 /**
  * Setup for check-in test.
@@ -38,10 +39,11 @@ async function test() {
       console.log("\n");
     })
     .catch((error) => globals.info(error));
+  await dischargeTest();
 }
 
 module.exports = async () => {
   await setup();
   await test();
-  await cleanup();
+  //await cleanup();
 };

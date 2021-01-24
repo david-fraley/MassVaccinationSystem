@@ -3,21 +3,16 @@ const Encounter = require("./Encounter");
 
 // Discharge given appt id
 module.exports = (req, res) => {
-  const encounter_status = "finished";
-  const appt_status = "fulfilled";
   let response = {};
 
   if (req.query.hasOwnProperty("appointment")) {
-    let encounter_url = `?appointment=${req.query.appointment}`;
-    let appt_url = `/${req.query.appointment}`;
-
     Promise.all([
-      Encounter.updateStatus(encounter_url, encounter_status),
-      Appointment.updateStatus(appt_url, appt_status),
+      Encounter.discharge(req),
+      Appointment.discharge(req),
     ])
       .then((results) => {
         for (result of results) {
-          response[result.data.resourceType] = result.data;
+          response[result.resourceType] = result;
         }
         res.json(response);
       })
