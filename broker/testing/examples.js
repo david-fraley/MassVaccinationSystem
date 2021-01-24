@@ -175,18 +175,26 @@ module.exports = {
   "resourceType": "Encounter",
   "id": "example",
   "status": "planned",
+  "class": {
+    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+    "code": "FLD",
+    "display": "FLD"
+  },
   "appointment": [ {
     "reference": "Appointment/example"
   } ],
   "subject": {
     "reference": "Patient/example"
-  }
+  },
+  "location": [{ "location": { "reference": "Location/example" } }],
+  "serviceProvider": { "reference": "Organization/example" }
 }`,
 
   CheckInAppointment: `{
   "resourceType": "Appointment",
   "id": "example",
   "status": "booked",
+  "slot": [{ "reference": "Slot/example" }],
   "participant": [ {
     "actor": {
       "reference": "Patient/example"
