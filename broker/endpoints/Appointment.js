@@ -30,6 +30,7 @@ exports.create = (req, res) => {
     });
 };
 
+// Update status and time.
 exports.checkIn = async (req) => {
   const status = "arrived";
   let id, patch;

@@ -30,9 +30,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Given url of Encounter and new status, update encounter resource
-// URL is either a specific id '/id'
-// or query parameters '?param=value'
+// Update status and time.
 exports.checkIn = async (req) => {
   const status = "arrived";
   let id, patch;
