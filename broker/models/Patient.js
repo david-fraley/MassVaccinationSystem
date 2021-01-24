@@ -99,7 +99,11 @@ exports.toFHIR = function (patient) {
       },
     ],
     link: [
-      // add link
+      {
+      other: {
+        reference: patient.link[0],
+      },
+    }
     ],
   };
 
@@ -124,14 +128,6 @@ exports.toFHIR = function (patient) {
       system: "email",
       value: patient.email[idx],
       rank: `${idx}`,
-    });
-  }
-  // add link
-  for (link of patient.link) {
-    resource.link.push({
-      other: {
-        reference: link,
-      },
     });
   }
 
@@ -176,6 +172,7 @@ exports.toModel = function (patient) {
         ? patient.communication[0].language.text
         : ""
       : "",
+    link: patient.link ? patient.link[0].other.reference : null,
   };
 
   return model;

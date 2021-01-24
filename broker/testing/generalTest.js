@@ -49,6 +49,15 @@ async function test() {
       .post(url, data)
       .then((response) => {
         if (response.data.id) urls.push(`${url}/${response.data.id}`);
+        else if (response.data.Patient) {
+          let patient;
+          let patients = response.data.Patient;
+          for (patient of patients) {
+            urls.push(`${url}/${patient.id}`);
+            // Can't delete both for some reason
+            // urls.push(`/${patient.link}`);
+          }
+        }
 
         globals.config(response);
         console.log(JSON.stringify(response.data));
