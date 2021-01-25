@@ -25,8 +25,6 @@ module.exports = {
     "status" : "finished",
     "class" : "FLD",
     "subject" : "Patient/example",
-    "start" : "2020-09-17T05:10:19+00:00",
-    "end" : "2020-09-18T05:15:19+00:00",
     "location" : "Location/example",
     "serviceProvider" : "Organization/example"
   }
