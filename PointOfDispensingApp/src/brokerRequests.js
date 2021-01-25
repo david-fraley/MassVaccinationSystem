@@ -105,11 +105,19 @@ export default {
 
   // Submit vaccination
   submitVaccination: () => {
-    return healthcheckPromise();
+    return {};//healthcheckPromise();
   },
 
   // Discharge
-  discharge: () => {
-    return healthcheckPromise();
+  // apptID: appointment ID
+  discharge: (apptID) => {
+    return axios
+      .post(`/broker/discharge`, {}, { params: { appointment: apptID } })
+      .then((response) => {
+        return { data: response.data.Encounter };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
   },
 };

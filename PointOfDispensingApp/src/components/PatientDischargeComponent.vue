@@ -85,9 +85,14 @@
 </template>
 
 <script>
+import brokerRequests from "../brokerRequests";
+
 export default {
   name: "PatientDischargeComponent",
   computed: {
+    patientId() {
+      return this.$store.state.patientResource.id;
+    },
     immunizationStatus() {
       return this.$store.state.immunizationResource.immunizationStatus;
     },
@@ -95,14 +100,30 @@ export default {
       return this.$store.state.immunizationResource.immunizationTimeStamp;
     },
     encounterStatus() {
-      return this.$store.state.encounterResource.encounterStatus;
+      return this.$store.state.encounterResource.status;
     },
     encounterTimeStamp() {
-      return this.$store.state.encounterResource.encounterTimeStamp;
+      return this.$store.state.encounterResource.end;
     },
   },
-  methods: {},
-  components: {},
+  methods: {
+    onSuccess(encounter) {
+      this.$store.dispatch("patientDischarged", encounter);
+    },
+    discharge() {
+      brokerRequests.discharge(this.patientId).then((response) => {
+        if (response.data) {
+          this.onSuccess(response.data);
+        } else if (response.error) {
+          console.log(response.error);
+          alert(`Patient not discharged`);
+        }
+      });
+    },
+  },
+  mounted() {
+    this.discharge();
+  },
   data() {
     return {};
   },

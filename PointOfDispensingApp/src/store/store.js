@@ -131,8 +131,7 @@ export default new Vuex.Store({
         },
         patientDischarged(state, encounterResourcePayload) {
             state.activeWorkflowState = 'DISCHARGED'
-            state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
-            state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
+            state.encounterResource = encounterResourcePayload
         },
         unknownErrorCondition(state) {
             state.activeWorkflowState = 'ERROR'
