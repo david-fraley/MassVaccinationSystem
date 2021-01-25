@@ -214,31 +214,4 @@ module.exports = {
     }
   } ]
 }`,
-
-  DischargeEncounter: `{
-  "resourceType": "Encounter",
-  "id": "example",
-  "status": "arrived",
-  "appointment": [ {
-    "reference": "Appointment/example"
-  } ],
-  "subject": {
-    "reference": "Patient/example"
-  },
-  "period": {
-    "start": "2021-01-24T06:01:06.003Z"
-  }
-}`,
-
-  DischargeAppointment: `{
-  "resourceType": "Appointment",
-  "id": "example",
-  "status": "arrived",
-  "participant": [ {
-    "actor": {
-      "reference": "Patient/example"
-    }
-  } ],
-  "start": "2021-01-24T06:01:06.003Z"
-}`,
 };

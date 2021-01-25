@@ -1,5 +1,4 @@
 const globals = require("./globals");
-const dischargeTest = require("./dischargeTest");
 
 /**
  * Setup for check-in test.
@@ -28,9 +27,23 @@ async function cleanup() {
 }
 
 /**
+ * Send request to discharge endpoint.
+ */
+async function discharge() {
+  await globals.broker
+    .post("/discharge", {}, { params: { appointment: "example" } })
+    .then((response) => {
+      globals.config(response);
+      console.log(JSON.stringify(response.data));
+      console.log("\n");
+    })
+    .catch((error) => globals.info(error));
+}
+
+/**
  * Send request to check-in endpoint.
  */
-async function test() {
+async function checkIn() {
   await globals.broker
     .post("/check-in", {}, { params: { patient: "example" } })
     .then((response) => {
@@ -39,11 +52,18 @@ async function test() {
       console.log("\n");
     })
     .catch((error) => globals.info(error));
-  await dischargeTest();
+}
+
+/**
+ * Check-in and then discharge.
+ */
+async function test() {
+  await checkIn();
+  await discharge();
 }
 
 module.exports = async () => {
   await setup();
   await test();
-  //await cleanup();
+  await cleanup();
 };

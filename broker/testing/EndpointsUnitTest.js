@@ -11,7 +11,7 @@
 
 const globals = require("./globals");
 const generalTest = require("./generalTest");
-const checkInTest = require("./checkInTest");
+const checkInDischargeTest = require("./checkInDischargeTest");
 
 /**
  * Setup for all tests.
@@ -56,7 +56,7 @@ async function main() {
 
   // Run tests
   generalTest().then();
-  checkInTest().then();
+  checkInDischargeTest().then();
 }
 
 main().then(console.log()).catch(console.error);
