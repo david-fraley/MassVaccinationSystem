@@ -65,7 +65,14 @@
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="6">
-        <v-btn block color="accent" @click="submitVaccinationRecord(); endEncounter();">
+        <v-btn
+          block
+          color="accent"
+          @click="
+            submitVaccinationRecord();
+            endEncounter();
+          "
+        >
           Submit vaccination record
         </v-btn>
       </v-col>
@@ -97,16 +104,16 @@ export default {
         healthcarePractitioner: this.healthcarePractitioner,
         notAdministeredReason: this.notAdministeredReason,
         notes: this.notes,
-        };
+      };
 
-        //send data to Vuex
-        this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
+      //send data to Vuex
+      this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
 
-        //Advance to the Discharge page
-        this.$router.push("Discharge");
+      //Advance to the Discharge page
+      this.$router.push("Discharge");
 
-        //Close the dialog
-        this.dialog = false;
+      //Close the dialog
+      this.dialog = false;
     },
     onSuccessEndEncounter() {
       //the following is sending dummy data until we have the API in place
@@ -128,13 +135,13 @@ export default {
     },
     endEncounter() {
       brokerRequests.discharge().then((response) => {
-      if (response.data) {
-        this.onSuccessEndEncounter();
-      } else if (response.error) {
-        alert("Discharge not successful");
-      }
-    });
-  },
+        if (response.data) {
+          this.onSuccessEndEncounter();
+        } else if (response.error) {
+          alert("Discharge not successful");
+        }
+      });
+    },
   },
   components: {},
   data() {

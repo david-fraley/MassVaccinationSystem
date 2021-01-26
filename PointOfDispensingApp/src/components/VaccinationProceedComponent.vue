@@ -109,8 +109,12 @@
             <div class="secondary--text">Healthcare Practitioner</div>
           </v-col>
           <v-col cols="8">
-            <v-text-field outlined dense filled readonly
-              :value=healthcarePractitioner
+            <v-text-field
+              outlined
+              dense
+              filled
+              readonly
+              :value="healthcarePractitioner"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -138,8 +142,12 @@
             <div class="secondary--text">Route</div>
           </v-col>
           <v-col cols="8">
-            <v-text-field outlined dense filled readonly
-              :value=route
+            <v-text-field
+              outlined
+              dense
+              filled
+              readonly
+              :value="route"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -177,10 +185,14 @@
                   Back
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn	
+                <v-btn
                   color="primary"
                   text
-                  @click="submitVaccinationRecord(); endEncounter();">
+                  @click="
+                    submitVaccinationRecord();
+                    endEncounter();
+                  "
+                >
                   Submit
                 </v-btn>
               </v-card-actions>
@@ -193,15 +205,15 @@
 </template>
 
 <script>
-  import brokerRequests from "../brokerRequests";
-  
-  export default {
-    name: 'VaccinationProceedComponent',
-    computed: {
-      healthcarePractitioner() {
-        return this.$store.state.immunizationResource.healthcarePractitioner
-      },
+import brokerRequests from "../brokerRequests";
+
+export default {
+  name: "VaccinationProceedComponent",
+  computed: {
+    healthcarePractitioner() {
+      return this.$store.state.immunizationResource.healthcarePractitioner;
     },
+  },
   methods: {
     onSuccessSubmitVaccinationRecord() {
       const vaccinationCompletePlayload = {
@@ -218,14 +230,14 @@
         notes: this.notes,
       };
 
-        //send data to Vuex
-        this.$store.dispatch("vaccinationComplete", vaccinationCompletePlayload);
+      //send data to Vuex
+      this.$store.dispatch("vaccinationComplete", vaccinationCompletePlayload);
 
-        //Advance to the Discharge page
-        this.$router.push("Discharge");
+      //Advance to the Discharge page
+      this.$router.push("Discharge");
 
-        //Close the dialog
-        this.dialog = false;
+      //Close the dialog
+      this.dialog = false;
     },
     onSuccessEndEncounter() {
       //the following is sending dummy data until we have the API in place
