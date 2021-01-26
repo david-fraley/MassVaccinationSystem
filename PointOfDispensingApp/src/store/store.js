@@ -112,10 +112,17 @@ export default new Vuex.Store({
             state.immunizationResource.notes = '',
             state.immunizationResource.notAdministeredReason = ''
             state.screeningResponses.vaccinationDecision = '',
-            state.screeningResponses.patientInfoConfirmed = '',
-            state.screeningResponses.consentFormSigned = '',
-            state.screeningResponses.screeningCompleted = '',
-            state.screeningResponses.factSheetProvided = '',
+            state.screeningResponses.screeningQ1 = '',
+            state.screeningResponses.screeningQ2 = '',
+            state.screeningResponses.screeningQ2b = '',
+            state.screeningResponses.screeningQ3a = '',
+            state.screeningResponses.screeningQ3b = '',
+            state.screeningResponses.screeningQ3c = '',
+            state.screeningResponses.screeningQ4 = '',
+            state.screeningResponses.screeningQ5 = '',
+            state.screeningResponses.screeningQ6 = '',
+            state.screeningResponses.screeningQ7 = '',
+            state.screeningResponses.screeningQ8 = '',
             state.screeningResponses.screeningComplete = false
         },
         patientAdmitted(state, encounterResourcePayload) {
