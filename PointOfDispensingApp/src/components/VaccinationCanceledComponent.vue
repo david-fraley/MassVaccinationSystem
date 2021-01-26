@@ -88,6 +88,9 @@ export default {
     healthcarePractitioner() {
       return this.$store.state.immunizationResource.healthcarePractitioner;
     },
+    isVaccinationEventPageReadOnly() {
+        return this.$store.getters.isVaccinationEventPageReadOnly
+      },
   },
   methods: {
     onSuccessSubmitVaccinationRecord() {
