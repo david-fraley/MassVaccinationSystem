@@ -22,8 +22,8 @@
               required
               :rules="[(v) => !!v || 'Lot Number field is required']"
               v-model="lotNumber"
-              :readonly="isVaccinationEventPageReadOnly"
               :filled="isVaccinationEventPageReadOnly"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -39,8 +39,8 @@
               required
               :rules="[(v) => !!v || 'Expiration Date field is required']"
               v-model="expirationDate"
-              :readonly="isVaccinationEventPageReadOnly"
               :filled="isVaccinationEventPageReadOnly"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -56,8 +56,8 @@
               required
               :rules="[(v) => !!v || 'Manufacturer field is required']"
               v-model="manufacturer"
-              :readonly="isVaccinationEventPageReadOnly"
               :filled="isVaccinationEventPageReadOnly"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -119,8 +119,13 @@
             <div class="secondary--text">Healthcare Practitioner</div>
           </v-col>
           <v-col cols="8">
-            <v-text-field outlined dense filled readonly
+            <v-text-field 
+              outlined 
+              dense 
+              filled 
+              readonly
               :value=healthcarePractitioner
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -150,8 +155,13 @@
             <div class="secondary--text">Route</div>
           </v-col>
           <v-col cols="8">
-            <v-text-field outlined dense filled readonly
+            <v-text-field 
+              outlined 
+              dense 
+              filled 
+              readonly
               :value=route
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -165,8 +175,8 @@
           rows="4"
           :value="notes"
           v-model="notes"
-          :readonly="isVaccinationEventPageReadOnly"
           :filled="isVaccinationEventPageReadOnly"
+          :disabled="isVaccinationEventPageReadOnly"
         ></v-textarea>
       </v-col>
     </v-row>

@@ -28,6 +28,7 @@
           filled
           readonly
           :value="immunizationStatus"
+          :disabled="isVaccinationEventPageReadOnly"
         ></v-text-field>
       </v-col>
       <v-col cols="4">
@@ -37,6 +38,7 @@
           filled
           readonly
           :value="immunizationTimeStamp"
+          :disabled="isVaccinationEventPageReadOnly"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -51,6 +53,7 @@
           filled
           readonly
           :value="healthcarePractitioner"
+          :disabled="isVaccinationEventPageReadOnly"
         ></v-text-field>
       </v-col>
     </v-row>
