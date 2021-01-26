@@ -29,9 +29,13 @@ async function cleanup() {
 /**
  * Send request to discharge endpoint.
  */
-async function discharge() {
+async function discharge(appointment, encounter) {
   await globals.broker
-    .post("/discharge", {}, { params: { appointment: "example" } })
+    .post(
+      "/discharge",
+      {},
+      { params: { appointment: appointment, encounter: encounter } }
+    )
     .then((response) => {
       globals.config(response);
       console.log(JSON.stringify(response.data));
@@ -44,12 +48,16 @@ async function discharge() {
  * Send request to check-in endpoint.
  */
 async function checkIn() {
-  await globals.broker
+  return await globals.broker
     .post("/check-in", {}, { params: { patient: "example" } })
     .then((response) => {
       globals.config(response);
       console.log(JSON.stringify(response.data));
       console.log("\n");
+
+      let appointment = response.data.Appointment.id;
+      let encounter = response.data.Encounter.id;
+      return { appointment: appointment, encounter: encounter };
     })
     .catch((error) => globals.info(error));
 }
@@ -58,8 +66,9 @@ async function checkIn() {
  * Check-in and then discharge.
  */
 async function test() {
-  await checkIn();
-  await discharge();
+  let response = await checkIn();
+
+  await discharge(response.appointment, response.encounter);
 }
 
 module.exports = async () => {
