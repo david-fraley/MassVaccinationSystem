@@ -64,6 +64,10 @@ export default new Vuex.Store({
             //Vaccination Event page is not accessible before the patient has been checked 
             return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
         },
+        isVaccinationEventPageReadOnly: state => {
+            //Vaccination Event page is "read only after the patient has been discharged
+            return (state.activeWorkflowState == 'DISCHARGED')
+        },
         isAdverseReactionPageDisabled: state => {
             //The Adverse Reaction page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
             return (state.activeWorkflowState != 'DISCHARGED')
