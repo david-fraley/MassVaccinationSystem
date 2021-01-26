@@ -33,7 +33,7 @@
           dense
           readonly
           outlined
-          :value="encounter.status"
+          :value="encounterStatus"
         ></v-text-field>
       </v-col>
       <v-col cols="3">
@@ -42,7 +42,7 @@
           dense
           readonly
           outlined
-          :value="encounter.end"
+          :value="encounterEndTime"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -85,8 +85,6 @@
 </template>
 
 <script>
-import brokerRequests from "../brokerRequests";
-
 export default {
   name: "PatientDischargeComponent",
   computed: {
@@ -96,35 +94,14 @@ export default {
     immunizationTimeStamp() {
       return this.$store.state.immunizationResource.immunizationTimeStamp;
     },
-    encounter() {
-      return this.$store.state.encounterResource;
+    encounterStatus() {
+      return this.$store.state.encounterResource.status;
     },
-    appointment() {
-      return this.$store.state.appointmentResource;
-    },
-  },
-  methods: {
-    onSuccess(payload) {
-      this.$store.dispatch("patientDischarged", payload);
-    },
-    discharge() {
-      let data = {
-        apptID: this.appointment.id,
-        encounterID: this.encounter.id,
-      };
-      brokerRequests.discharge(data).then((response) => {
-        if (response.data) {
-          this.onSuccess(response.data);
-        } else if (response.error) {
-          console.log(response.error);
-          alert(`Patient not discharged`);
-        }
-      });
+    encounterEndTime() {
+      return this.$store.state.encounterResource.end;
     },
   },
-  mounted() {
-    this.discharge();
-  },
+  methods: {},
   data() {
     return {};
   },

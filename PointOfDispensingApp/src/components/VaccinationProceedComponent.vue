@@ -213,6 +213,12 @@ export default {
     healthcarePractitioner() {
       return this.$store.state.immunizationResource.healthcarePractitioner;
     },
+    encounterID() {
+      return this.$store.state.encounterResource.id;
+    },
+    appointmentID() {
+      return this.$store.state.appointmentResource.id;
+    },
   },
   methods: {
     onSuccessSubmitVaccinationRecord() {
@@ -239,14 +245,8 @@ export default {
       //Close the dialog
       this.dialog = false;
     },
-    onSuccessEndEncounter() {
-      //the following is sending dummy data until we have the API in place
-      const encounterResourcePayload = {
-        encounterStatus: "Finished",
-        encounterTimeStamp: new Date().toISOString(),
-      };
-      //send data to Vuex
-      this.$store.dispatch("patientDischarged", encounterResourcePayload);
+    onDischarge(payload) {
+      this.$store.dispatch("patientDischarged", payload);
     },
     submitVaccinationRecord() {
       brokerRequests.submitVaccination().then((response) => {
@@ -258,11 +258,16 @@ export default {
       });
     },
     endEncounter() {
-      brokerRequests.discharge().then((response) => {
+      let data = {
+        apptID: this.appointmentID,
+        encounterID: this.encounterID,
+      };
+      brokerRequests.discharge(data).then((response) => {
         if (response.data) {
-          this.onSuccessEndEncounter();
+          this.onDischarge(response.data);
         } else if (response.error) {
-          alert("Discharge not successful");
+          console.log(response.error);
+          alert(`Patient not discharged`);
         }
       });
     },
