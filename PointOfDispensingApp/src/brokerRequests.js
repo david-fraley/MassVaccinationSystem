@@ -114,12 +114,25 @@ export default {
   },
 
   // Discharge
-  // apptID: appointment ID
-  discharge: (apptID) => {
+  // param data:
+  // {
+  //   apptID: appointment ID,
+  //   encounterID: encounter ID
+  // }
+  discharge: (data) => {
     return axios
-      .post(`/broker/discharge`, {}, { params: { appointment: apptID } })
+      .post(
+        `/broker/discharge`,
+        {},
+        { params: { appointment: data.apptID, encounter: data.encounterID } }
+      )
       .then((response) => {
-        return { data: response.data.Encounter };
+        return {
+          data: {
+            Encounter: response.data.Encounter,
+            Appointment: response.data.Appointment,
+          },
+        };
       })
       .catch((e) => {
         return toResponse(e);

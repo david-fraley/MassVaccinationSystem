@@ -92,31 +92,12 @@ exports.checkIn = async (req) => {
 
 exports.discharge = async (req) => {
   const status = "finished";
-  let id, patch;
-  let config;
+  let id = req.query.encounter;
 
-  if (req.query.hasOwnProperty("appointment")) {
-    config = {
-      params: {
-        appointment: req.query.appointment,
-      },
-    };
-  } else return {};
+  if (!id) return;
 
-  // get id of resource to update
-  id = await axios.get("/Encounter", config).then((response) => {
-    let bundle = response.data;
-    let resource;
-
-    if (!bundle.hasOwnProperty("entry")) {
-      console.log("Encounter does not exist");
-    }
-    resource = bundle.entry[0].resource;
-    return resource.id;
-  });
-
-  // patch status and start time
-  patch = [
+  // patch status and end time
+  let patch = [
     {
       op: "add",
       path: "/status",

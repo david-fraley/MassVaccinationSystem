@@ -87,11 +87,6 @@ exports.discharge = async (req) => {
       path: "/status",
       value: status,
     },
-    {
-      op: "add",
-      path: "/end",
-      value: new Date().toISOString(),
-    },
   ];
 
   // update the database with new appointment

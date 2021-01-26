@@ -5,7 +5,7 @@ const Encounter = require("./Encounter");
 module.exports = (req, res) => {
   let response = {};
 
-  if (req.query.hasOwnProperty("appointment")) {
+  if (req.query.appointment && req.query.encounter) {
     Promise.all([
       Encounter.discharge(req),
       Appointment.discharge(req),
@@ -21,7 +21,7 @@ module.exports = (req, res) => {
         res.status(400).json(response);
       });
   } else {
-    response.Encounter = "appointment parameter missing";
+    response.error = "appointment and encounter ID not specified";
     res.status(400).json(response);
   }
 };

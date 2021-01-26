@@ -33,7 +33,7 @@
           dense
           readonly
           outlined
-          :value="encounterStatus"
+          :value="encounter.status"
         ></v-text-field>
       </v-col>
       <v-col cols="3">
@@ -42,11 +42,11 @@
           dense
           readonly
           outlined
-          :value="encounterTimeStamp"
+          :value="encounter.end"
         ></v-text-field>
       </v-col>
     </v-row>
-    <!--v-row>
+    <!-- <v-row>
       <v-col cols="2">
       </v-col>    
       <v-col cols="6">
@@ -54,7 +54,7 @@
           End encounter
         </v-btn>
       </v-col>
-    </v-row-->
+    </v-row> -->
     <v-row>
       <v-col cols="12">
         <v-divider></v-divider>
@@ -90,28 +90,29 @@ import brokerRequests from "../brokerRequests";
 export default {
   name: "PatientDischargeComponent",
   computed: {
-    patientId() {
-      return this.$store.state.patientResource.id;
-    },
     immunizationStatus() {
       return this.$store.state.immunizationResource.immunizationStatus;
     },
     immunizationTimeStamp() {
       return this.$store.state.immunizationResource.immunizationTimeStamp;
     },
-    encounterStatus() {
-      return this.$store.state.encounterResource.status;
+    encounter() {
+      return this.$store.state.encounterResource;
     },
-    encounterTimeStamp() {
-      return this.$store.state.encounterResource.end;
+    appointment() {
+      return this.$store.state.appointmentResource;
     },
   },
   methods: {
-    onSuccess(encounter) {
-      this.$store.dispatch("patientDischarged", encounter);
+    onSuccess(payload) {
+      this.$store.dispatch("patientDischarged", payload);
     },
     discharge() {
-      brokerRequests.discharge(this.patientId).then((response) => {
+      let data = {
+        apptID: this.appointment.id,
+        encounterID: this.encounter.id,
+      };
+      brokerRequests.discharge(data).then((response) => {
         if (response.data) {
           this.onSuccess(response.data);
         } else if (response.error) {

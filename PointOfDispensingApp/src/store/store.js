@@ -132,9 +132,10 @@ export default new Vuex.Store({
             state.immunizationResource.notAdministeredReason= vaccinationCanceledPlayload.notAdministeredReason
             state.immunizationResource.notes= vaccinationCanceledPlayload.notes
         },
-        patientDischarged(state, encounter) {
+        patientDischarged(state, payload) {
             state.activeWorkflowState = 'DISCHARGED'
-            state.encounterResource = encounter
+            state.encounterResource = payload.Encounter;
+            state.appointmentResource = payload.Appointment;
         },
         unknownErrorCondition(state) {
             state.activeWorkflowState = 'ERROR'
@@ -158,8 +159,8 @@ export default new Vuex.Store({
         vaccinationCanceled(context, vaccinationCanceledPlayload) {
             context.commit('vaccinationCanceled', vaccinationCanceledPlayload)
         },
-        patientDischarged(context, encounter) {
-            context.commit('patientDischarged', encounter)
+        patientDischarged(context, payload) {
+            context.commit('patientDischarged', payload)
         },
         unknownErrorCondition(context) {
             context.commit('unknownErrorCondition')
