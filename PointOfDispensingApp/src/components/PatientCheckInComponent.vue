@@ -81,9 +81,9 @@ export default {
     },
   },
   methods: {
-    onSuccess(encounter) {
+    onSuccess(payload) {
       //send data to Vuex
-      this.$store.dispatch("patientAdmitted", encounter);
+      this.$store.dispatch("patientAdmitted", payload);
     },
     checkIn() {
       // make request

@@ -14,6 +14,7 @@ export default new Vuex.Store({
             locationName: 'Western Lakes FD'
         },
         encounterResource: {},
+        appointmentResource: {},
         immunizationResource: {
             lotNumber: '',
             expirationDate: '',
@@ -75,7 +76,8 @@ export default new Vuex.Store({
             state.patientResource = patientResourcePayload;
 
             //reset patient-specific data
-            state.encounterResource = {}
+            state.encounterResource = {};
+            state.appointmentResource = {};
             state.immunizationResource.lotNumber = '',
             state.immunizationResource.expirationDate = '',
             state.immunizationResource.manufacturer = '',
@@ -95,9 +97,10 @@ export default new Vuex.Store({
             state.screeningResponses.factSheetProvided = '',
             state.screeningResponses.screeningComplete = false
         },
-        patientAdmitted(state, encounterResourcePayload) {
+        patientAdmitted(state, payload) {
             state.activeWorkflowState = 'ADMITTED'
-            state.encounterResource = encounterResourcePayload
+            state.encounterResource = payload.Encounter
+            state.appointmentResource = payload.Appointment
         },
         vaccinationScreeningUpdate (state, screeningResponsesPayload) {
             state.screeningResponses.vaccinationDecision = screeningResponsesPayload.vaccinationDecision
@@ -129,9 +132,9 @@ export default new Vuex.Store({
             state.immunizationResource.notAdministeredReason= vaccinationCanceledPlayload.notAdministeredReason
             state.immunizationResource.notes= vaccinationCanceledPlayload.notes
         },
-        patientDischarged(state, encounterResourcePayload) {
+        patientDischarged(state, encounter) {
             state.activeWorkflowState = 'DISCHARGED'
-            state.encounterResource = encounterResourcePayload
+            state.encounterResource = encounter
         },
         unknownErrorCondition(state) {
             state.activeWorkflowState = 'ERROR'
@@ -143,8 +146,8 @@ export default new Vuex.Store({
         patientRecordRetrieved(context, patientResourcePayload) {
             context.commit('patientRecordRetrieved', patientResourcePayload)
         },
-        patientAdmitted(context, encounterResourcePayload) {
-            context.commit('patientAdmitted', encounterResourcePayload)
+        patientAdmitted(context, payload) {
+            context.commit('patientAdmitted', payload)
         },
         vaccinationScreeningUpdate(context, screeningResponsesPayload) {
             context.commit('vaccinationScreeningUpdate', screeningResponsesPayload)
@@ -155,8 +158,8 @@ export default new Vuex.Store({
         vaccinationCanceled(context, vaccinationCanceledPlayload) {
             context.commit('vaccinationCanceled', vaccinationCanceledPlayload)
         },
-        patientDischarged(context, encounterResourcePayload) {
-            context.commit('patientDischarged', encounterResourcePayload)
+        patientDischarged(context, encounter) {
+            context.commit('patientDischarged', encounter)
         },
         unknownErrorCondition(context) {
             context.commit('unknownErrorCondition')

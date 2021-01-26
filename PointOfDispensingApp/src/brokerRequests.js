@@ -96,7 +96,12 @@ export default {
     return axios
       .post(`/broker/check-in`, {}, { params: { patient: patID } })
       .then((response) => {
-        return { data: response.data.Encounter };
+        return {
+          data: {
+            Encounter: response.data.Encounter,
+            Appointment: response.data.Appointment,
+          },
+        };
       })
       .catch((e) => {
         return toResponse(e);
@@ -105,7 +110,7 @@ export default {
 
   // Submit vaccination
   submitVaccination: () => {
-    return {};//healthcheckPromise();
+    return {}; //healthcheckPromise();
   },
 
   // Discharge
