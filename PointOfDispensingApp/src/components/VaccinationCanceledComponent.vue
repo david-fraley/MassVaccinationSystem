@@ -12,6 +12,8 @@
           required
           :rules="[(v) => !!v || 'Reason field is required']"
           v-model="notAdministeredReason"
+          :readonly="isVaccinationEventPageReadOnly"
+          :filled="isVaccinationEventPageReadOnly"
         ></v-select>
       </v-col>
     </v-row>
@@ -60,12 +62,14 @@
           rows="4"
           :value="notes"
           v-model="notes"
+          :readonly="isVaccinationEventPageReadOnly"
+          :filled="isVaccinationEventPageReadOnly"
         ></v-textarea>
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="6">
-        <v-btn block color="accent" @click="submitVaccinationRecord(); endEncounter();">
+        <v-btn block color="accent" @click="submitVaccinationRecord(); endEncounter();" :disabled="isVaccinationEventPageReadOnly">
           Submit vaccination record
         </v-btn>
       </v-col>
