@@ -76,6 +76,10 @@ export default new Vuex.Store({
             //Consent and Screening page is not accessible before the patient record has been loaded 
             return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
         },
+        isConsentScreeningPageReadOnly: state => {
+            //Consent and Screening page is "read only after the patient has been discharged
+            return (state.activeWorkflowState == 'DISCHARGED')
+        },
         isDischargePageDisabled: state => {
             //The Discharge page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
             return (state.activeWorkflowState != 'DISCHARGED')

@@ -13,7 +13,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ1" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ1" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -36,7 +41,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ2" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ2" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -57,7 +67,13 @@
       </v-col>
       <v-col cols="7">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ2b" row @change="screeningChecklistUpdate()" :disabled="(this.screeningQ2 != 'Yes')">
+          <v-radio-group 
+            v-model="screeningQ2b" 
+            row 
+            @change="screeningChecklistUpdate()" 
+            :disabled="(this.screeningQ2 != 'Yes')"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Pfizer" value="Pfizer"></v-radio>
             <v-radio label="Moderna" value="Moderna"></v-radio>
             <v-radio label="Other" value="Other"></v-radio>
@@ -100,7 +116,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ3a" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ3a" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -121,7 +142,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ3b" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ3b" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -142,7 +168,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ3c" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ3c" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -169,7 +200,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ4" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ4" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -193,7 +229,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ5" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ5" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -216,7 +257,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ6" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ6" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -239,7 +285,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ7" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ7" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -262,7 +313,12 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group v-model="screeningQ8" row @change="screeningChecklistUpdate()">
+          <v-radio-group 
+            v-model="screeningQ8" 
+            row 
+            @change="screeningChecklistUpdate()"
+            :readonly="isConsentScreeningPageReadOnly"
+            :filled="isConsentScreeningPageReadOnly">
             <v-radio label="Yes" value="Yes"></v-radio>
             <v-radio label="No" value="No"></v-radio>
           </v-radio-group>
@@ -278,7 +334,12 @@
               Proceed with vaccination?
           </v-card-title>
           <v-row align="center" justify="center">
-            <v-radio-group v-model="vaccinationProceed" row @change="vaccinationProceedDecision()">
+            <v-radio-group 
+              v-model="vaccinationProceed" 
+              row 
+              @change="vaccinationProceedDecision()"
+              :readonly="isConsentScreeningPageReadOnly"
+              :filled="isConsentScreeningPageReadOnly">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -298,7 +359,11 @@
 
   export default {
     name: 'VaccinationScreeningComponent',
-    computed: {},
+    computed: {
+      isConsentScreeningPageReadOnly() {
+        return this.$store.getters.isConsentScreeningPageReadOnly
+      },
+    },
     methods: 
     {
      screeningChecklistUpdate()
