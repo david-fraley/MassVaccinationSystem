@@ -119,7 +119,7 @@
         return this.$store.getters.isPatientHistoryPageDisabled
       },
       isConsentScreeningPageDisabled() {
-        return false
+        return this.$store.getters.isConsentScreeningPageDisabled
       },
       isVaccinationEventPageDisabled() {
         return this.$store.getters.isVaccinationEventPageDisabled
