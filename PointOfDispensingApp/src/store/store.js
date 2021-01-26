@@ -72,6 +72,10 @@ export default new Vuex.Store({
             //The Adverse Reaction page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
             return (state.activeWorkflowState != 'DISCHARGED')
         },
+        isConsentScreeningPageDisabled: state => {
+            //Consent and Screening page is not accessible before the patient record has been loaded 
+            return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
+        },
         isDischargePageDisabled: state => {
             //The Discharge page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
             return (state.activeWorkflowState != 'DISCHARGED')
