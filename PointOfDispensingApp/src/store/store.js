@@ -93,37 +93,43 @@ export default new Vuex.Store({
 
     mutations: {
         patientRecordRetrieved(state, patientResourcePayload) {
-            state.activeWorkflowState = 'RECORD_RETRIEVED'
-            state.patientResource = patientResourcePayload;
+            
+            //TO DO:  retrieve encounter resource, immunization resource, and appointment resource 'status' fields to determine the workflow state
+            if((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
+            {
+                state.activeWorkflowState = 'RECORD_RETRIEVED'
+                state.patientResource = patientResourcePayload;
 
-            //reset patient-specific data
-            state.encounterResource.encounterStatus = ''
-            state.encounterResource.encounterTimeStamp = ''
-            state.immunizationResource.lotNumber = '',
-            state.immunizationResource.expirationDate = '',
-            state.immunizationResource.manufacturer = '',
-            state.immunizationResource.doseQuantity = '',
-            state.immunizationResource.doseNumber = '',
-            state.immunizationResource.immunizationStatus = '',
-            state.immunizationResource.immunizationTimeStamp = '',
-            state.immunizationResource.healthcarePractitioner = 'White, Betty',
-            state.immunizationResource.site = '',
-            state.immunizationResource.route = 'Injection',
-            state.immunizationResource.notes = '',
-            state.immunizationResource.notAdministeredReason = ''
-            state.screeningResponses.vaccinationDecision = '',
-            state.screeningResponses.screeningQ1 = '',
-            state.screeningResponses.screeningQ2 = '',
-            state.screeningResponses.screeningQ2b = '',
-            state.screeningResponses.screeningQ3a = '',
-            state.screeningResponses.screeningQ3b = '',
-            state.screeningResponses.screeningQ3c = '',
-            state.screeningResponses.screeningQ4 = '',
-            state.screeningResponses.screeningQ5 = '',
-            state.screeningResponses.screeningQ6 = '',
-            state.screeningResponses.screeningQ7 = '',
-            state.screeningResponses.screeningQ8 = '',
-            state.screeningResponses.screeningComplete = false
+                //reset patient-specific data
+                state.encounterResource.encounterStatus = ''
+                state.encounterResource.encounterTimeStamp = ''
+                state.immunizationResource.lotNumber = '',
+                state.immunizationResource.expirationDate = '',
+                state.immunizationResource.manufacturer = '',
+                state.immunizationResource.doseQuantity = '',
+                state.immunizationResource.doseNumber = '',
+                state.immunizationResource.immunizationStatus = '',
+                state.immunizationResource.immunizationTimeStamp = '',
+                state.immunizationResource.healthcarePractitioner = 'White, Betty',
+                state.immunizationResource.site = '',
+                state.immunizationResource.route = 'Injection',
+                state.immunizationResource.notes = '',
+                state.immunizationResource.notAdministeredReason = ''
+                state.screeningResponses.vaccinationDecision = '',
+                state.screeningResponses.screeningQ1 = '',
+                state.screeningResponses.screeningQ2 = '',
+                state.screeningResponses.screeningQ2b = '',
+                state.screeningResponses.screeningQ3a = '',
+                state.screeningResponses.screeningQ3b = '',
+                state.screeningResponses.screeningQ3c = '',
+                state.screeningResponses.screeningQ4 = '',
+                state.screeningResponses.screeningQ5 = '',
+                state.screeningResponses.screeningQ6 = '',
+                state.screeningResponses.screeningQ7 = '',
+                state.screeningResponses.screeningQ8 = '',
+                state.screeningResponses.screeningComplete = false
+
+            }
         },
         patientAdmitted(state, encounterResourcePayload) {
             state.activeWorkflowState = 'ADMITTED'

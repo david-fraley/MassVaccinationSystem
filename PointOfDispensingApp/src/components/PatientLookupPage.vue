@@ -209,7 +209,13 @@ export default {
     },
       onDecode (result) {
         this.result = result
-        let qrValue = "example";
+
+        //Interim solution:  extract screening responses from QR code (part 1 of 2)
+        var res = this.result.split("|");
+        //end of interim solution (part 1 of 2)
+
+        //the following line of code may need to be updated after removing/changing the interim solution"
+        let qrValue = res[0];
         let data = { id: qrValue };
         brokerRequests.getPatient(data).then((response) => {
           if (response.data) {
@@ -262,6 +268,30 @@ export default {
       this.$store.dispatch("patientRecordRetrieved", this.patient);
       //Advance to the Check In page
       this.$router.push("CheckIn");
+
+      //Interim solution:  extract screening responses from QR code (part 2 of 2)
+      var res = this.result.split("|");
+      if(res.length > 1)
+      {
+        const screeningResponsesPayload = {
+        vaccinationDecision: '',
+        screeningQ1: res[1],
+        screeningQ2: res[2],
+        screeningQ2b: res[3],
+        screeningQ3a: res[4],
+        screeningQ3b: res[5],
+        screeningQ3c: res[6],
+        screeningQ4: res[7],
+        screeningQ5: res[8],
+        screeningQ6: res[9],
+        screeningQ7: res[10],
+        screeningQ8: res[11],
+        screeningComplete: 'true'
+        }
+        //send data to Vuex
+        this.$store.dispatch('vaccinationScreeningUpdate', screeningResponsesPayload)
+      }
+      //end of interim solution (part 2 of 2)
     },
     formatDate (date) {
       if (!date) return null
