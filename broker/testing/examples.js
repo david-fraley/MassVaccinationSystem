@@ -48,7 +48,6 @@ module.exports = {
     "encounter": "Encounter/example",
     "status": "completed",
     "statusReason": "OSTOCK",
-    "occurrence": "2013-01-10",
     "primarySource": true,
     "location": "Location/example",
     "site": "LA",

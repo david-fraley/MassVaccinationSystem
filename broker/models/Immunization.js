@@ -8,7 +8,6 @@ Immunization {
   encounter: string "Encounter/id"
   status: enum (completed, entered-in-error, not-done)
   statusReason: enum (IMMUNE, MEDPREC, OSTOCK, PATOBJ) i.e. immunity, medical precaution, product out of stock, patient objection
-  occurrence: string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
   primarySource: boolean
   location: string "Location/id"
   site: enum (LA, RA) i.e. left arm, right arm
@@ -61,7 +60,7 @@ exports.toFHIR = function (imm) {
         },
       ],
     },
-    occurrenceDateTime: imm.occurrence,
+    occurrenceDateTime: new Date().toISOString(),
     primarySource: imm.primarySource,
     location: {
       reference: imm.location,
