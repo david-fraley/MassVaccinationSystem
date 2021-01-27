@@ -1,3 +1,7 @@
+/**
+ * Example request data for endpoint testing
+ */
+
 module.exports = {
   Appointment: `{
   "Appointment": {

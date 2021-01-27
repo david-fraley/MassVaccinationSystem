@@ -1,3 +1,8 @@
+/**
+ * Shared functions/axios instances for use
+ * between endpoint tests.
+ */
+
 const axios = require("axios").default;
 const examples = require("./examples");
 

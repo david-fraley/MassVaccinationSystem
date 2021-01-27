@@ -1,5 +1,6 @@
 const globals = require("./globals");
 
+// Endpoints to test
 const endpoints = [
   "Appointment",
   "Encounter",
@@ -12,12 +13,12 @@ const endpoints = [
   "Practitioner",
 ];
 
+// List of created resources - for cleanup
 let urls = [];
 
-async function setup() {
-  //
-}
-
+/**
+ * Delete resources created from this test
+*/
 async function cleanup() {
   let promises = [];
 
@@ -33,6 +34,9 @@ async function cleanup() {
   });
 }
 
+/**
+ * Send GET and POST requests to multiple endpoints
+ */
 async function test() {
   let promises = [];
 
@@ -71,7 +75,6 @@ async function test() {
 }
 
 module.exports = async () => {
-  await setup();
   await test();
   await cleanup();
 };

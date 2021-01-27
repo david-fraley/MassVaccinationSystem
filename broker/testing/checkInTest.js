@@ -1,5 +1,9 @@
 const globals = require("./globals");
 
+/**
+ * Setup for check-in test.
+ * Creates Appointment and Encounter resources to update.
+ */
 async function setup() {
   let setupAppointment = globals.fhirServer.put(
     "/Appointment/example",
@@ -15,10 +19,16 @@ async function setup() {
   });
 }
 
+/**
+ * Reset Appointment and Encounter resources for testing by POD.
+ */
 async function cleanup() {
   await setup();
 }
 
+/**
+ * Send request to check-in endpoint.
+ */
 async function test() {
   await globals.broker
     .post("/check-in", {}, { params: { patient: "example" } })

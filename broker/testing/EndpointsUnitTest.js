@@ -13,27 +13,31 @@ const globals = require("./globals");
 const generalTest = require("./generalTest");
 const checkInTest = require("./checkInTest");
 
-const endpoints = [
-  "Appointment",
-  "Encounter",
-  "EpisodeOfCare",
-  "Immunization",
-  "Location",
-  "Observation",
-  "Organization",
-  "Patient",
-  "Practitioner",
-];
-
+/**
+ * Setup for all tests.
+ * Creates referenced resources.
+ */
 async function setup() {
+  const resources = [
+    "Appointment",
+    "Encounter",
+    "EpisodeOfCare",
+    "Immunization",
+    "Location",
+    "Observation",
+    "Organization",
+    "Patient",
+    "Practitioner",
+  ];
+
   let id = "example";
   let promises = [];
 
-  let endpoint;
-  for (endpoint of endpoints) {
-    let data = { resourceType: endpoint, id: id };
+  let resource;
+  for (resource of resources) {
+    let data = { resourceType: resource, id: id };
 
-    let promise = globals.fhirServer.put(`/${endpoint}/${id}`, data);
+    let promise = globals.fhirServer.put(`/${resource}/${id}`, data);
     promises.push(promise);
   }
   
@@ -49,6 +53,7 @@ async function setup() {
 async function main() {
   await setup();
 
+  // Run tests
   generalTest().then();
   checkInTest().then();
 }
