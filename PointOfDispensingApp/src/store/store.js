@@ -43,6 +43,13 @@ export default new Vuex.Store({
             screeningQ7: '',
             screeningQ8: '',
             screeningComplete: false
+        },
+        config: {
+            vaccine: "COVID",
+            route: "Injection",
+            education: "education",
+            series: "series",
+            seriesDoses: 2,
         }
     },
 
