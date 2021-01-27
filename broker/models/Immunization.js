@@ -13,8 +13,7 @@ Immunization {
   location: string "Location/id"
   site: enum (LA, RA) i.e. left arm, right arm
   route: enum (IDINJ, IM, NASINHLC, IVINJ, PO, SQ, TRNSDERM) i.e. , inj intramuscular, inhalation nasal, inj intravenous, swallow, inj subcutaneous, transdermal
-  doseQuantity: decimal
-  doseUnit: string
+  doseQuantity: string
   performer: [string] "{Practitioner/PractitionerRole/Organization}/id"
   note: string
   education: [string] "url",
@@ -86,9 +85,9 @@ exports.toFHIR = function (imm) {
       ],
     },
     doseQuantity: {
-      value: imm.doseQuantity,
+      value: imm.doseQuantity.split(" ")[0],
       system: DOSE_QUANTITY_SYSTEM,
-      code: imm.doseUnit,
+      code: imm.doseQuantity.split(" ")[1],
     },
     performer: [
       // add later
