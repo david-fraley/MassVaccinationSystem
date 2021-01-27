@@ -65,7 +65,6 @@ exports.toModel = (appointment) => {
         actor: x.actor.reference,
       };
     }),
-    start: appointment.start,
     end: appointment.end,
   };
 
