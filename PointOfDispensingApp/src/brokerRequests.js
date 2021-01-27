@@ -83,8 +83,16 @@ export default {
   },
 
   // Check-in patient
-  checkIn: () => {
-    return healthcheckPromise();
+  // patID: patient ID
+  checkIn: (patID) => {
+    return axios
+      .post(`/broker/check-in`, {}, { params: { patient: patID } })
+      .then((response) => {
+        return { data: response.data.Encounter };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
   },
 
   // Submit vaccination

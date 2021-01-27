@@ -13,10 +13,7 @@ export default new Vuex.Store({
             locationId: '1234567890',
             locationName: 'Western Lakes FD'
         },
-        encounterResource: {
-            encounterStatus: '',
-            encounterTimeStamp: ''
-        },
+        encounterResource: {},
         immunizationResource: {
             lotNumber: '',
             expirationDate: '',
@@ -78,8 +75,7 @@ export default new Vuex.Store({
             state.patientResource = patientResourcePayload;
 
             //reset patient-specific data
-            state.encounterResource.encounterStatus = ''
-            state.encounterResource.encounterTimeStamp = ''
+            state.encounterResource = {}
             state.immunizationResource.lotNumber = '',
             state.immunizationResource.expirationDate = '',
             state.immunizationResource.manufacturer = '',
@@ -101,8 +97,7 @@ export default new Vuex.Store({
         },
         patientAdmitted(state, encounterResourcePayload) {
             state.activeWorkflowState = 'ADMITTED'
-            state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
-            state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
+            state.encounterResource = encounterResourcePayload
         },
         vaccinationScreeningUpdate (state, screeningResponsesPayload) {
             state.screeningResponses.vaccinationDecision = screeningResponsesPayload.vaccinationDecision

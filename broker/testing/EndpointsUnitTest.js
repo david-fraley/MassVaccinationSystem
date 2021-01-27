@@ -9,48 +9,42 @@
 //    node EndpointsUnitTest.js
 //
 
-const axios = require("axios").default;
-const ExamplePayloads = require("./examples");
+const globals = require("./globals");
+const generalTest = require("./generalTest");
+const checkInTest = require("./checkInTest");
 
-const broker = axios.create({
-  baseURL: "http://localhost:3000",
-});
-const fhirServer = axios.create({
-  baseURL: "http://localhost:8080/hapi-fhir-jpaserver/fhir",
-});
-
-const endpoints = [
-  "Appointment",
-  "Encounter",
-  "EpisodeOfCare",
-  "Immunization",
-  "Location",
-  "Observation",
-  "Organization",
-  "Patient",
-  "Practitioner",
-];
-
-function report(obj) {
-  let status = "";
-  try {
-    status = obj.status ? obj.status : status;
-    status = obj.response ? obj.response.status : status;
-  } catch (e) {}
-
-  let message = `${obj.config.method} ${obj.config.url} ${status}\n`;
-
-  console.log(message);
-}
-
+/**
+ * Setup for all tests.
+ * Creates referenced resources.
+ */
 async function setup() {
-  let endpoint;
-  let id = "example";
-  for (endpoint of endpoints) {
-    let data = { resourceType: endpoint, id: id };
+  const resources = [
+    "Appointment",
+    "Encounter",
+    "EpisodeOfCare",
+    "Immunization",
+    "Location",
+    "Observation",
+    "Organization",
+    "Patient",
+    "Practitioner",
+  ];
 
-    fhirServer.put(`/${endpoint}/${id}`, data).then();
+  let id = "example";
+  let promises = [];
+
+  let resource;
+  for (resource of resources) {
+    let data = { resourceType: resource, id: id };
+
+    let promise = globals.fhirServer.put(`/${resource}/${id}`, data);
+    promises.push(promise);
   }
+  
+  await Promise.all(promises).catch((error) => {
+    console.log("Setup failed");
+    globals.info(error);
+  });
 }
 
 /**
@@ -59,24 +53,9 @@ async function setup() {
 async function main() {
   await setup();
 
-  let endpoint;
-  for (endpoint of endpoints) {
-    let url = `/${endpoint}`;
-    let data = JSON.parse(ExamplePayloads[endpoint]);
-
-    broker
-      .get(url)
-      .then((response) => report(response))
-      .catch((error) => report(error));
-    broker
-      .post(url, data)
-      .then((response) => {
-        report(response);
-        console.log(JSON.stringify(response.data));
-        console.log("\n");
-      })
-      .catch((error) => report(error));
-  }
+  // Run tests
+  generalTest().then();
+  checkInTest().then();
 }
 
 main().then(console.log()).catch(console.error);
