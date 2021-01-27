@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent">
+        <v-btn color="accent" @click="scanBarcode">
           Scan vaccine barcode
         </v-btn>
       </v-col>
@@ -221,6 +221,15 @@ export default {
     },
   },
   methods: {
+    scanBarcode() {
+      // Placeholder
+      this.lotNumber = "LOT1234";
+      this.expirationDate = "2020-01-01";
+      this.manufacturer = "Pfizer Inc.";
+      this.doseQuantity = "0.1 mL";
+      // Placeholder for patient history
+      this.doseNumber = "1";
+    },
     onSuccessSubmitVaccinationRecord() {
       const vaccinationCompletePlayload = {
         lotNumber: this.lotNumber,
@@ -279,13 +288,13 @@ export default {
       doseNumberOptions: ["1", "2"],
       doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
       vaccinationSiteOptions: ["Left arm", "Right arm"],
-      doseQuantity: this.$store.state.immunizationResource.doseQuantity,
-      doseNumber: this.$store.state.immunizationResource.doseNumber,
+      doseQuantity: "",
+      doseNumber: "",
       site: this.$store.state.immunizationResource.site,
       route: this.$store.state.immunizationResource.route,
-      lotNumber: this.$store.state.immunizationResource.lotNumber,
-      expirationDate: this.$store.state.immunizationResource.expirationDate,
-      manufacturer: this.$store.state.immunizationResource.manufacturer,
+      lotNumber: "",
+      expirationDate: "",
+      manufacturer: "",
       notes: this.$store.state.immunizationResource.notes,
     };
   },
