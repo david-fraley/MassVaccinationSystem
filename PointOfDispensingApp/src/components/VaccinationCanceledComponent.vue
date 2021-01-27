@@ -65,8 +65,8 @@
           rows="4"
           :value="notes"
           v-model="notes"
-          :readonly="isVaccinationEventPageReadOnly"
           :filled="isVaccinationEventPageReadOnly"
+          :disabled="isVaccinationEventPageReadOnly"
         ></v-textarea>
       </v-col>
     </v-row>
