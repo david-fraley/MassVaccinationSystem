@@ -96,7 +96,12 @@ export default {
     return axios
       .post(`/broker/check-in`, {}, { params: { patient: patID } })
       .then((response) => {
-        return { data: response.data.Encounter };
+        return {
+          data: {
+            Encounter: response.data.Encounter,
+            Appointment: response.data.Appointment,
+          },
+        };
       })
       .catch((e) => {
         return toResponse(e);
@@ -109,7 +114,28 @@ export default {
   },
 
   // Discharge
-  discharge: () => {
-    return healthcheckPromise();
+  // param data:
+  // {
+  //   apptID: appointment ID,
+  //   encounterID: encounter ID
+  // }
+  discharge: (data) => {
+    return axios
+      .post(
+        `/broker/discharge`,
+        {},
+        { params: { appointment: data.apptID, encounter: data.encounterID } }
+      )
+      .then((response) => {
+        return {
+          data: {
+            Encounter: response.data.Encounter,
+            Appointment: response.data.Appointment,
+          },
+        };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
   },
 };
