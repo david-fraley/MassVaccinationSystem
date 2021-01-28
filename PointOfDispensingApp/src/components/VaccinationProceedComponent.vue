@@ -280,7 +280,7 @@ export default {
         doseNumber: this.doseNumber,
         seriesDoses: this.config.seriesDoses,
       };
-      brokerRequests.submitVaccination().then((response) => {
+      brokerRequests.submitVaccination(data).then((response) => {
         if (response.data) {
           this.onVaccination(data);
         } else if (response.error) {

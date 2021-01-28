@@ -50,7 +50,7 @@ export default new Vuex.Store({
         },
         config: {
             vaccine: "COVID",
-            route: "Injection",
+            route: "Intramuscular injection",
             education: "education",
             series: "series",
             seriesDoses: 2,

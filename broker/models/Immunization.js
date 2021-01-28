@@ -27,6 +27,22 @@ const SITE_SYSTEM = "https://www.hl7.org/fhir/v3/ActSite/cs.html";
 const ROUTE_SYSTEM =
   "https://www.hl7.org/fhir/v3/RouteOfAdministration/cs.html";
 const DOSE_QUANTITY_SYSTEM = "http://unitsofmeasure.org";
+
+const siteEnums = {
+  "Left arm": "LA",
+  "Right arm": "RA"
+}
+
+const routeEnums = {
+  "Intradermal injection" : "IDINJ",
+  "Intramuscular injection" : "IM",
+  "Nasal inhalation" : "NASINHLC",
+  "Intravenous injection" : "IVINJ",
+  "Oral swallow" : "PO",
+  "Subcutaneous injection" : "SQ",
+  "Transdermal" : "TRNSDERM",
+};
+
 exports.toFHIR = function (imm) {
   let resource = {
     resourceType: "Immunization",
@@ -69,7 +85,7 @@ exports.toFHIR = function (imm) {
       coding: [
         {
           system: SITE_SYSTEM,
-          code: imm.site,
+          code: siteEnums[imm.site],
           display: imm.site,
         },
       ],
@@ -78,7 +94,7 @@ exports.toFHIR = function (imm) {
       coding: [
         {
           system: ROUTE_SYSTEM,
-          code: imm.route,
+          code: routeEnums[imm.route],
           display: imm.route,
         },
       ],
