@@ -114,7 +114,7 @@
               dense
               filled
               readonly
-              :value="healthcarePractitioner"
+              :value="practitionerName"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -147,7 +147,7 @@
               dense
               filled
               readonly
-              :value="route"
+              :value="config.route"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -210,8 +210,24 @@ import brokerRequests from "../brokerRequests";
 export default {
   name: "VaccinationProceedComponent",
   computed: {
-    healthcarePractitioner() {
-      return this.$store.state.immunizationResource.healthcarePractitioner;
+    practitioner() {
+      return `Practitioner/${this.$store.state.practitionerResource.id}`;
+    },
+    practitionerName() {
+      let practitioner = this.$store.state.practitionerResource;
+      return `${practitioner.family}, ${practitioner.given}`;
+    },
+    patient() {
+      return `Patient/${this.$store.state.patientResource.id}`;
+    },
+    encounter() {
+      return `Encounter/${this.$store.state.encounterResource.id}`;
+    },
+    location() {
+      return `Location/${this.$store.state.locationResource.id}`;
+    },
+    config() {
+      return this.$store.state.config;
     },
     encounterID() {
       return this.$store.state.encounterResource.id;
@@ -225,28 +241,14 @@ export default {
       // Placeholder
       this.lotNumber = "LOT1234";
       this.expirationDate = "2020-01-01";
-      this.manufacturer = "Pfizer Inc.";
+      this.manufacturer = "Organization/example"; // todo
       this.doseQuantity = "0.1 mL";
       // Placeholder for patient history
-      this.doseNumber = "1";
+      this.doseNumber = 1;
     },
-    onSuccessSubmitVaccinationRecord() {
-      const vaccinationCompletePlayload = {
-        lotNumber: this.lotNumber,
-        expirationDate: this.expirationDate,
-        manufacturer: this.manufacturer,
-        doseQuantity: this.doseQuantity,
-        doseNumber: this.doseNumber,
-        site: this.site,
-        route: this.route,
-        immunizationStatus: "Completed",
-        immunizationTimeStamp: new Date().toISOString(),
-        healthcarePractitioner: this.healthcarePractitioner,
-        notes: this.notes,
-      };
-
+    onVaccination(immunization) {
       //send data to Vuex
-      this.$store.dispatch("vaccinationComplete", vaccinationCompletePlayload);
+      this.$store.dispatch("vaccinationComplete", immunization);
 
       //Advance to the Discharge page
       this.$router.push("Discharge");
@@ -258,10 +260,31 @@ export default {
       this.$store.dispatch("patientDischarged", payload);
     },
     submitVaccinationRecord() {
+      let data = {
+        vaccine: this.config.vaccine,
+        manufacturer: this.manufacturer,
+        lotNumber: this.lotNumber,
+        expiration: this.expirationDate,
+        patient: this.patient,
+        encounter: this.encounter,
+        status: this.status,
+        occurrence: new Date().toISOString(),
+        location: this.location,
+        site: this.site,
+        route: this.config.route,
+        doseQuantity: this.doseQuantity,
+        performer: [this.practitioner],
+        note: this.notes,
+        education: [this.config.education],
+        series: this.config.series,
+        doseNumber: this.doseNumber,
+        seriesDoses: this.config.seriesDoses,
+      };
       brokerRequests.submitVaccination().then((response) => {
         if (response.data) {
-          this.onSuccessSubmitVaccinationRecord();
+          this.onVaccination(data);
         } else if (response.error) {
+          console.log(response.error);
           alert("Vaccination record not submitted");
         }
       });
@@ -285,17 +308,16 @@ export default {
   data() {
     return {
       dialog: false,
-      doseNumberOptions: ["1", "2"],
+      doseNumberOptions: [1, 2],
       doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
       vaccinationSiteOptions: ["Left arm", "Right arm"],
+      status: "completed",
       doseQuantity: "",
-      doseNumber: "",
-      site: this.$store.state.immunizationResource.site,
-      route: this.$store.state.immunizationResource.route,
+      site: "",
       lotNumber: "",
       expirationDate: "",
       manufacturer: "",
-      notes: this.$store.state.immunizationResource.notes,
+      notes: "",
     };
   },
 };

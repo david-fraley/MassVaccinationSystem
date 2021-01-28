@@ -10,8 +10,8 @@ export default new Vuex.Store({
         activeWorkflowState: 'NO_PATIENT_LOADED',
         patientResource: {},
         locationResource: {
-            locationId: '1234567890',
-            locationName: 'Western Lakes FD'
+            id: 'example',
+            name: 'Western Lakes FD'
         },
         encounterResource: {},
         appointmentResource: {},
@@ -23,11 +23,15 @@ export default new Vuex.Store({
             doseNumber: '',
             immunizationStatus: '',
             immunizationTimeStamp: '',
-            healthcarePractitioner: 'White, Betty',
             site: '',
             route: 'Injection',
             notes: '',
             notAdministeredReason: ''
+        },
+        practitionerResource: {
+            id: "example",
+            family: "White",
+            given: "Betty"
         },
         screeningResponses: {
             vaccinationDecision: '',
@@ -94,20 +98,8 @@ export default new Vuex.Store({
             state.patientResource = patientResourcePayload;
 
             //reset patient-specific data
-            state.encounterResource = {};
-            state.appointmentResource = {};
-            state.immunizationResource.lotNumber = '',
-            state.immunizationResource.expirationDate = '',
-            state.immunizationResource.manufacturer = '',
-            state.immunizationResource.doseQuantity = '',
-            state.immunizationResource.doseNumber = '',
-            state.immunizationResource.immunizationStatus = '',
-            state.immunizationResource.immunizationTimeStamp = '',
-            state.immunizationResource.healthcarePractitioner = 'White, Betty',
-            state.immunizationResource.site = '',
-            state.immunizationResource.route = 'Injection',
-            state.immunizationResource.notes = '',
-            state.immunizationResource.notAdministeredReason = ''
+            state.encounterResource = {}
+            state.immunizationResource = {}
             state.screeningResponses.vaccinationDecision = '',
             state.screeningResponses.patientInfoConfirmed = '',
             state.screeningResponses.consentFormSigned = '',
@@ -137,25 +129,11 @@ export default new Vuex.Store({
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
             state.activeWorkflowState = 'VACCINATION_COMPLETE'
-            state.immunizationResource.lotNumber= vaccinationCompletePlayload.lotNumber
-            state.immunizationResource.expirationDate= vaccinationCompletePlayload.expirationDate
-            state.immunizationResource.manufacturer= vaccinationCompletePlayload.manufacturer
-            state.immunizationResource.doseQuantity= vaccinationCompletePlayload.doseQuantity
-            state.immunizationResource.doseNumber= vaccinationCompletePlayload.doseNumber
-            state.immunizationResource.site= vaccinationCompletePlayload.site
-            state.immunizationResource.route= vaccinationCompletePlayload.route
-            state.immunizationResource.immunizationStatus= vaccinationCompletePlayload.immunizationStatus
-            state.immunizationResource.immunizationTimeStamp= vaccinationCompletePlayload.immunizationTimeStamp
-            state.immunizationResource.healthcarePractitioner= vaccinationCompletePlayload.healthcarePractitioner
-            state.immunizationResource.notes= vaccinationCompletePlayload.notes
+            state.immunizationResource = vaccinationCompletePlayload
         },
         vaccinationCanceled(state, vaccinationCanceledPlayload) {
             state.activeWorkflowState = 'VACCINATION_CANCELED'
-            state.immunizationResource.immunizationStatus= vaccinationCanceledPlayload.immunizationStatus
-            state.immunizationResource.immunizationTimeStamp= vaccinationCanceledPlayload.immunizationTimeStamp
-            state.immunizationResource.healthcarePractitioner= vaccinationCanceledPlayload.healthcarePractitioner
-            state.immunizationResource.notAdministeredReason= vaccinationCanceledPlayload.notAdministeredReason
-            state.immunizationResource.notes= vaccinationCanceledPlayload.notes
+            state.immunizationResource = vaccinationCanceledPlayload
         },
         patientDischarged(state, payload) {
             state.activeWorkflowState = 'DISCHARGED'
