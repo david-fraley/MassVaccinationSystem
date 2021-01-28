@@ -38,7 +38,8 @@ app.get("/healthcheck", (req, res) => {
 });
 
 app.post("/Patient", Patient.create);
-app.get("/Patient*", Patient.read);
+app.get("/Patient/:qrCode", Patient.read);
+app.post("/SearchPatients", Patient.search);
 
 app.post("/Immunization", Immunization.create);
 app.get("/Immunization*", Immunization.read);

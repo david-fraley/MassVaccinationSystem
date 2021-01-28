@@ -207,19 +207,22 @@ export default {
         console.error(error)
       }
     },
-      onDecode (result) {
-        this.result = result
-        let qrValue = "example";
-        let data = { id: qrValue };
-        brokerRequests.getPatient(data).then((response) => {
-          if (response.data) {
-            this.patient = response.data;
-            this.patientRecordRetrieved();
-          } else if (response.error) {
-            alert("Patient not found");
-          }
-        });
-      },
+    onDecode (result) {
+      
+      // Why do we need to cache the result off on the component?  Commenting out for now
+      // What format does the result take?
+      // this.result = result
+
+      // result should be null if we didn't get a qrCode
+      brokerRequests.getPatientFromQrCode(result).then((response) => {
+        if (response.patient) {
+          this.patient = response.patient;
+          this.patientRecordRetrieved();
+        } else if (response.error) {
+          alert("Patient not found");
+        }
+      });
+    },
     searchPatient() {
       // validate form
       this.$refs.form.validate();
@@ -235,8 +238,8 @@ export default {
         postalCode: this.postalCode,
       };
       brokerRequests.searchPatient(data).then((response) => {
-        if (response.data) {
-          this.patientLookupTable = response.data;
+        if (response.patients) {
+          this.patientLookupTable = response.patients;
         } else if (response.error) {
           alert("No patients found");
         }

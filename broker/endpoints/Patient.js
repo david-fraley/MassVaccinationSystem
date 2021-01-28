@@ -1,25 +1,71 @@
 const axios = require("../services/axiosInstance.js");
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
+const PatientIdService = require("../services/PatientIdService");
 
 exports.read = (req, res) => {
-  axios
-    .get(`${req.url}`)
-    .then((response) => {
-      let r;
-      if (response.data.resourceType === "Bundle") {
-        r = response.data.entry.map((entry) => Patient.toModel(entry.resource));
-      } else {
-        r = Patient.toModel(response.data);
-      }
-      res.json(r);
+  
+  if(!req.params.qrCode) {
+    return res.status(400).json({
+      error: "No QR Code provided for patient lookup"
     })
-    .catch((e) => {
-      res.status(400).json({
-        error: e.response ? e.response.data : e.message,
-      });
+  }
+
+  PatientIdService.getPatientId(req.params.qrCode)
+  .then((patientIdRecord) => {
+    const patientId = patientIdRecord.patient_id;
+    if(!patientId) {
+      throw {
+        status: 404,
+        message: "No patient found with that QR Code"
+      }
+    }
+    return axios.get(`${process.env.FHIR_URL_BASE}/Patient/${patientId}`);
+  })
+  .then((patientPayload) => {
+    const patientRecord = Patient.toModel(patientPayload.data);
+    return res.json(patientRecord);
+  })
+  .catch((err) => {
+    res.status(err.status || 400).json({
+      error: err.response ? err.response.data : err.message,
     });
+  });
 };
+
+exports.search = (req, res) => {
+
+  const patientSearchPayload = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    birthDate: req.body.birthDate,
+    postalCode: req.body.postalCode
+  };
+  
+  // We should validate that all required info was sent from the client
+  // https://express-validator.github.io/docs/ ??
+
+  // Use POST request so no PHI is included in URL query parameters
+  axios
+    .post(`${process.env.FHIR_URL_BASE}/SearchPatients`, patientSearchPayload)
+    .then((response) => {
+      let patientArray = response.data.entry.map((entry) => {
+        Patient.toModel(entry.resource);
+      });
+      if(!patientArray || patientArray.length === 0) {
+        throw {
+          status: 404,
+          message: "We couldn't find any patients with that information"
+        }
+      }
+      return res.json({patients: patientArray});
+    })
+    .catch((err) => {
+      res.status(err.status || 400).json({
+        error: err.response ? err.response.data: err.message,
+      });
+    })
+}
 
 exports.create = (req, res) => {
   createPatient(req, res).catch((e) =>
