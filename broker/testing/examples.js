@@ -108,6 +108,16 @@ module.exports = {
   }
 }`,
 
+  ExamplePatient: `{
+  "resourceType": "Patient",
+  "id": "example",
+  "name": [ {
+    "family": "Patient",
+    "given": [ "Example" ]
+  } ],
+  "birthDate": "2000-01-01"
+}`,
+
   Patient: `{
   "Patient": [
     {
