@@ -11,7 +11,7 @@ exports.read = (req, res) => {
     })
   }
 
-  PatientIdService.getPatientId(req.params.qrCode)
+  PatientIdService.getPatientIdForQrCode(req.params.qrCode)
   .then((patientIdRecord) => {
     const patientId = patientIdRecord.patient_id;
     if(!patientId) {
