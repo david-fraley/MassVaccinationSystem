@@ -37,9 +37,17 @@ export default {
   //   postalcode: String
   // }
   searchPatient: (data) => {
-    let query = `?family=${data.lastName}&given=${data.firstName}&birthdate=${data.birthDate}&address-postalcode=${data.postalCode}`;
+    let config = {
+      params: {
+        family: data.lastName,
+        given: data.firstName,
+        birthdate: data.birthDate,
+      },
+    };
+    if (data.postalCode) config.params["address-postalcode"] = data.postalCode;
+
     return axios
-      .get(`/broker/Patient${query}`)
+      .get(`/broker/Patient`, config)
       .then((response) => {
         return { data: response.data };
       })
