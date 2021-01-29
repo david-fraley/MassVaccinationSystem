@@ -11,8 +11,9 @@ to install an OpenSSL binary):
 
         openssl req -newkey rsa:2048 -nodes -keyout sandbox.key -x509 -days 365 -out sandbox.crt
 
-3. Navigate to MassVaccinationSystem directory with the docker-compose.yml file and run:
+3. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
 
+        cd <MassVaccinationSystem>/sandbox
         docker-compose -p massvaxx up
 
     Or, if you want the services to run in the background, use:

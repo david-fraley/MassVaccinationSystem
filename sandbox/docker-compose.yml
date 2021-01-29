@@ -7,9 +7,9 @@ services:
     nginx: 
         image: nginx:stable-alpine
         volumes:
-            - ./sandbox/nginx.conf:/etc/nginx/nginx.conf
-            - ./data/certbot/conf:/etc/letsencrypt
-            - ./data/certbot/www:/var/www/certbot
+            - ./nginx.conf:/etc/nginx/nginx.conf
+            - ./sandbox.crt:/etc/nginx/sandbox.crt
+            - ./sandbox.key:/etc/nginx/sandbox.key
         ports:
             - "80:80"
             - "443:443"
@@ -21,11 +21,6 @@ services:
     #
     registration:
         build: ../PatientRegistrationApp
-        #ports:
-            # Should not be exposed to host
-            #- "80"
-        volumes:
-            - ./PatientRegistrationApp/dist:/usr/share/nginx/html
         networks:
             - back_tier
 
@@ -33,11 +28,6 @@ services:
     #
     pod:
         build: ../PointOfDispensingApp
-        #ports:
-            # Should not be exposed to host
-            #- "80"
-        volumes:
-            - ./PointOfDispensingApp/dist:/usr/share/nginx/html
         networks:
             - back_tier
 
