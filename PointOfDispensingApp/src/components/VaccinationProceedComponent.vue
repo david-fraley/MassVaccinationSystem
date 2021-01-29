@@ -268,21 +268,20 @@ export default {
         patient: this.patient,
         encounter: this.encounter,
         status: this.status,
-        occurrence: new Date().toISOString(),
         location: this.location,
         site: this.site,
         route: this.config.route,
         doseQuantity: this.doseQuantity,
-        performer: [this.practitioner],
+        performer: this.practitioner,
         note: this.notes,
-        education: [this.config.education],
+        education: this.config.education,
         series: this.config.series,
         doseNumber: this.doseNumber,
         seriesDoses: this.config.seriesDoses,
       };
       brokerRequests.submitVaccination(data).then((response) => {
         if (response.data) {
-          this.onVaccination(data);
+          this.onVaccination(response.data);
         } else if (response.error) {
           console.log(response.error);
           alert("Vaccination record not submitted");

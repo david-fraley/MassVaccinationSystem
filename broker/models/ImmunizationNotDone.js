@@ -7,7 +7,7 @@ Immunization {
   reason: enum (IMMUNE, MEDPREC, OSTOCK, PATOBJ) i.e. immunity, medical precaution, product out of stock, patient objection
   primarySource: boolean
   location: string "Location/id"
-  performer: [string] "{Practitioner/PractitionerRole/Organization}/id"
+  performer: string "{Practitioner/PractitionerRole/Organization}/id"
   note: string
 }
 */
@@ -55,7 +55,11 @@ exports.toFHIR = (imm) => {
       reference: imm.location,
     },
     performer: [
-      // add later
+      {
+        actor: {
+          reference: imm.performer,
+        },
+      },
     ],
     note: [
       {
@@ -64,15 +68,26 @@ exports.toFHIR = (imm) => {
     ],
   };
 
-  // add performer
-  let performer;
-  for (performer of imm.performer) {
-    resource.performer.push({
-      actor: {
-        reference: performer,
-      },
-    });
+  return resource;
+};
+
+exports.toModel = (immunization) => {
+  let model;
+  try {
+    model = {
+      vaccine: immunization.vaccineCode.coding[0].display,
+      patient: immunization.patient.reference,
+      encounter: immunization.encounter.reference,
+      status: immunization.status,
+      reason: immunization.statusReason.coding[0].display,
+      occurrence: immunization.occurrenceDateTime,
+      location: immunization.location.reference,
+      performer: [immunization.performer[0].actor.reference],
+      note: immunization.note[0].text,
+    };
+  } catch (e) {
+    model = immunization;
   }
 
-  return resource;
+  return model;
 };

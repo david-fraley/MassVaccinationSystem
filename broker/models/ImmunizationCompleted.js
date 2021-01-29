@@ -12,7 +12,7 @@ Immunization {
   site: enum (LA, RA) i.e. left arm, right arm
   route: enum (IDINJ, IM, NASINHLC, IVINJ, PO, SQ, TRNSDERM) i.e. , inj intramuscular, inhalation nasal, inj intravenous, swallow, inj subcutaneous, transdermal
   doseQuantity: string
-  performer: [string] "{Practitioner/PractitionerRole/Organization}/id"
+  performer: string "{Practitioner/PractitionerRole/Organization}/id"
   note: string
   education: [string] "url",
   series: string,
@@ -94,7 +94,11 @@ exports.toFHIR = function (imm) {
       code: imm.doseQuantity.split(" ")[1],
     },
     performer: [
-      // add later
+      {
+        actor: {
+          reference: imm.performer,
+        },
+      },
     ],
     note: [
       {
@@ -113,15 +117,6 @@ exports.toFHIR = function (imm) {
     ],
   };
 
-  // add performer
-  let performer;
-  for (performer of imm.performer) {
-    resource.performer.push({
-      actor: {
-        reference: performer,
-      },
-    });
-  }
   // add education
   let education;
   for (education of imm.education) {
@@ -131,4 +126,36 @@ exports.toFHIR = function (imm) {
   }
 
   return resource;
+};
+
+exports.toModel = (immunization) => {
+  let model;
+  try {
+    model = {
+      vaccine: immunization.vaccineCode.coding[0].code,
+      manufacturer: immunization.manufacturer.reference,
+      lotNumber: immunization.lotNumber,
+      expiration: immunization.expirationDate,
+      patient: immunization.patient.reference,
+      encounter: immunization.encounter.reference,
+      status: immunization.status,
+      occurrence: immunization.occurrenceDateTime,
+      location: immunization.location.reference,
+      site: immunization.site.coding[0].display,
+      route: immunization.route.coding[0].display,
+      doseQuantity:
+        immunization.doseQuantity.value + " " + immunization.doseQuantity.code,
+      performer: [immunization.performer[0].actor.reference],
+      note: immunization.note ? immunization.note[0].text : immunization.note,
+      education: [immunization.education[0].reference],
+      series: immunization.protocolApplied[0].series,
+      doseNumber: immunization.protocolApplied[0].doseNumberPositiveInt,
+      seriesDoses: immunization.protocolApplied[0].seriesDosesPositiveInt,
+    };
+  } catch (e) {
+    console.log(e);
+    model = immunization;
+  }
+
+  return model;
 };

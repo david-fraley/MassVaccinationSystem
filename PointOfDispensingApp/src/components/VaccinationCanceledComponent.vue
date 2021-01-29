@@ -140,14 +140,13 @@ export default {
         encounter: this.encounter,
         status: this.status,
         reason: this.reason,
-        occurrence: new Date().toISOString(),
         location: this.location,
-        performer: [this.practitioner],
+        performer: this.practitioner,
         note: this.notes,
       };
       brokerRequests.submitVaccination(data).then((response) => {
         if (response.data) {
-          this.onVaccination(data);
+          this.onVaccination(response.data);
         } else if (response.error) {
           console.log(response.error);
           alert("Vaccination record not submitted");
