@@ -14,24 +14,6 @@ Location {
   }
   physicalType : enum (Site, Area, Building)
 }
-{
-  "Location":
-    { 
-      "wirClientID": "WIRID",
-      "status" : "active",
-      "name": "LocationName",
-      "mode": "instance",
-      "type": "COMM",
-      "address": {
-        "line": "90 Walnut St",
-        "city": "New York City",
-        "state": "NY",
-        "postalCode": "14623",
-        "country": "USA"
-      },
-      "physicalType": "Site"
-    }
-}
 */
 
 const TYPE_SYSTEM = "http://hl7.org/fhir/ValueSet/location-physical-type";

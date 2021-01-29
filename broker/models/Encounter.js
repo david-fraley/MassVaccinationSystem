@@ -4,21 +4,7 @@ Encounter {
   class : enum (FLD)
   subject : string "Patient/id"
   appointment : string "Appointment/id"
-  start : string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
-  end : string "YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDThh:mm:ss+zz:zz"
   location : string "Location/id"
-}
-{
-  "Encounter": {
-    "status" : "planned",
-    "class" : "FLD",
-    "subject" : "Patient/1",
-    "appointment" : "Appointment/153",
-    "start" : "2020-09-17T05:10:19+00:00",
-    "end" : "2020-09-18T05:15:19+00:00",
-    "location" : "Location/304",
-    "serviceProvider" : "Organization/252"
-  }
 }
 */
 const CLASS_SYSTEM = "http://terminology.hl7.org/CodeSystem/v3-ActCode";
@@ -34,13 +20,12 @@ exports.toFHIR = function (encounter) {
     subject: {
       reference: encounter.subject,
     },
-    appointment: {
-      reference: encounter.appointment,
-    },
-    period: {
-      start: encounter.start,
-      end: encounter.end,
-    },
+    appointment: [
+      {
+        reference: encounter.appointment,
+      },
+    ],
+    period: {},
     location: [
       {
         location: {
@@ -54,4 +39,20 @@ exports.toFHIR = function (encounter) {
   };
 
   return resource;
-}
+};
+
+exports.toModel = (encounter) => {
+  let model = {
+    resourceType: encounter.resourceType,
+    id: encounter.id,
+    status: encounter.status,
+    class: encounter.class.code,
+    subject: encounter.subject.reference,
+    appointment: encounter.appointment[0].reference,
+    location: encounter.location[0].location.reference,
+    start: encounter.period.start,
+    end: encounter.period.end,
+  };
+
+  return model;
+};

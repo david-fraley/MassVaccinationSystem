@@ -17,27 +17,6 @@ Appointment {
   ]
   slot : string "Slot/id" // note that this is not needed until scheduling is implemented
 }
-{
-  "Appointment":
-    {
-      "status":"booked",
-      "participant":[
-        {
-          "type":"patient",
-          "actor":"Patient/example"
-        },
-        {
-          "type":"pratitioner",
-          "actor":"Practitioner/f201"
-        },
-        {
-          "type":"patient",
-          "actor":"Patient/102"
-        }
-      ],
-      "slot":"Slot/1253"
-    }
-}
 */
 exports.toFHIR = function (appt) {
   let resource = {
@@ -72,6 +51,21 @@ exports.toFHIR = function (appt) {
       },
     });
   }
-  
+
   return resource;
+};
+
+exports.toModel = (appointment) => {
+  let model = {
+    resourceType: appointment.resourceType,
+    id: appointment.id,
+    status: appointment.status,
+    participant: appointment.participant.map((x) => {
+      return {
+        actor: x.actor.reference,
+      };
+    }),
+  };
+
+  return model;
 };
