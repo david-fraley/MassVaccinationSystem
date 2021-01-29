@@ -90,7 +90,7 @@
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap">Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><SinglePatientReviewSubmit ref="singlepatientreviewsubmit"/></v-card>
+									<v-card flat><SinglePatientReviewSubmit ref="singlePatientReviewSubmit"/></v-card>
 								</v-stepper-content>
 
 								<!-- Single Patient: Follow up -->
@@ -164,7 +164,7 @@
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap">Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><HouseholdReviewSubmit ref="householdreviewsubmit" v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
+									<v-card flat><HouseholdReviewSubmit ref="householdReviewSubmit" v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
 
 								<!-- Household: Follow up -->
@@ -328,11 +328,11 @@ export default {
 	methods: 
 	{
 		submitSinglePatientRegistration() {
-			this.$refs.singlepatientreviewsubmit.submitPatientInfo()
+			this.$refs.singlePatientReviewSubmit.submitPatientInfo()
 			this.goToNextPage()
 		},
 		submitHouseholdRegistration() {
-			this.$refs.householdreviewsubmit.submitPatientInfo()
+			this.$refs.householdReviewSubmit.submitPatientInfo()
 			this.goToNextPage()
 		},
 		goToPage(pageNum) {
