@@ -283,6 +283,7 @@ export default {
         patientPhotoSrc: (this.patientPhoto && this.patientPhoto.size) ? URL.createObjectURL( this.patientPhoto ) : undefined,
         race: this.race,
         ethnicity: this.ethnicity,
+        relationship: this.relationship
       };
       EventBus.$emit(
         "DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED",
