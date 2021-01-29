@@ -16,9 +16,9 @@ const STAT_REASON_SYSTEM = "https://www.hl7.org/fhir/v3/ActReason/cs.html";
 
 const reasonEnums = {
   Immunity: "IMMUNE",
-  "Medical precaution": "MEDPREC",
-  "Product out of stock": "OSTOCK",
-  "Patient objection": "PATOBJ",
+  "Medical Precaution": "MEDPREC",
+  "Out of Stock": "OSTOCK",
+  "Patient Objection": "PATOBJ",
 };
 
 exports.toFHIR = (imm) => {

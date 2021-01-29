@@ -145,7 +145,7 @@ export default {
         performer: [this.practitioner],
         note: this.notes,
       };
-      brokerRequests.submitVaccination().then((response) => {
+      brokerRequests.submitVaccination(data).then((response) => {
         if (response.data) {
           this.onVaccination(data);
         } else if (response.error) {
@@ -174,8 +174,8 @@ export default {
     return {
       dialog: false,
       vaccineNotAdministeredOptions: [
-        "Medical precaution",
-        "Immune",
+        "Medical Precaution",
+        "Immunity",
         "Out of Stock",
         "Patient Objection",
       ],
