@@ -6,7 +6,7 @@ For more information about this project, visit [MassVaxx](https://www.massvaxx.c
 
 ## Using Docker Compose 
 
-See [README.md](./README.md) in sandbox directory.
+See [README.md](sandbox/README.md) in sandbox directory.
 
 ## Using only Node.js (Docker not required)
 ### Prerequisites:
