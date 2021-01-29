@@ -51,6 +51,21 @@ exports.toFHIR = function (appt) {
       },
     });
   }
-  
+
   return resource;
+};
+
+exports.toModel = (appointment) => {
+  let model = {
+    resourceType: appointment.resourceType,
+    id: appointment.id,
+    status: appointment.status,
+    participant: appointment.participant.map((x) => {
+      return {
+        actor: x.actor.reference,
+      };
+    }),
+  };
+
+  return model;
 };
