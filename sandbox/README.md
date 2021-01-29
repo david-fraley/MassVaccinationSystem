@@ -74,7 +74,7 @@ To expose the other services, uncomment the ports as neccessary and re-run 'dock
 ## Certificate for https
 The certificate created above for https is self-signed, so you will need to use a browser that allows that and accept the warnings. Alternatively, you can use [Let's Encrypt](https://letsencrypt.org/) to get a real certificate. This will require you to have a FQDN (e.g., demo.massvaxx.com) with an A or AAAA record pointing to your IP address. Refer to the niginx.conf and .env files for mapping existing certificate files for use by the proxy container.
 
-If you are using a Linux distro as your Docker host and would like the use Let's Encruypt, the following changes should allow you to create and use your own cert (prepend commands with sudo if not running as root):
+If you are using a Linux distro as your Docker host and would like the use Let's Encrypt, the following changes should allow you to create and use your own cert (prepend commands with sudo if not running as root):
 
 1. Install certbot. For Ubuntu 20.04 TLS this can be done by:
 
@@ -92,7 +92,7 @@ If you are using a Linux distro as your Docker host and would like the use Let's
         PROXY_VOLUME_MAP2=./sandbox.crt:/etc/nginx/sandbox.crt
         PROXY_VOLUME_MAP3=./sandbox.crt:/etc/nginx/sandbox.key
 
-    with (replace \<FQDN\> with):
+    with (replace \<FQDN\> with your FQDN):
 
         PROXY_VOLUME_MAP1=./nginx-letsencrypt.conf:/etc/nginx/nginx.conf
         PROXY_VOLUME_MAP2=/etc/letsencrypt/<FQDN>:/etc/letsencrypt/fqdn
