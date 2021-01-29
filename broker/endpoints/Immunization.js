@@ -1,5 +1,6 @@
 const axios = require("../services/axiosInstance.js");
-const Immunization = require("../models/Immunization");
+const ImmunizationCompleted = require("../models/ImmunizationCompleted");
+const ImmunizationNotDone = require("../models/ImmunizationNotDone");
 
 exports.read = (req, res) => {
   axios
@@ -31,7 +32,9 @@ exports.create = (req, res) => {
 };
 
 async function postImmunization(imm) {
-  let resource = Immunization.toFHIR(imm);
+  let resource;
+  if (imm.status === "completed") resource = ImmunizationCompleted.toFHIR(imm);
+  else if (imm.status === "not-done") resource = ImmunizationNotDone.toFHIR(imm);
 
   return axios.post(`/Immunization`, resource).then((response) => {
     return response;

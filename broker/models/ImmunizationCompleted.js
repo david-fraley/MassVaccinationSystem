@@ -7,7 +7,6 @@ Immunization {
   patient: string "Patient/id"
   encounter: string "Encounter/id"
   status: enum (completed, entered-in-error, not-done)
-  statusReason: enum (IMMUNE, MEDPREC, OSTOCK, PATOBJ) i.e. immunity, medical precaution, product out of stock, patient objection
   primarySource: boolean
   location: string "Location/id"
   site: enum (LA, RA) i.e. left arm, right arm
@@ -22,7 +21,6 @@ Immunization {
 }
 */
 const VACC_SYSTEM = "";
-const STAT_REASON_SYSTEM = "https://www.hl7.org/fhir/v3/ActReason/cs.html";
 const SITE_SYSTEM = "https://www.hl7.org/fhir/v3/ActSite/cs.html";
 const ROUTE_SYSTEM =
   "https://www.hl7.org/fhir/v3/RouteOfAdministration/cs.html";
@@ -30,17 +28,17 @@ const DOSE_QUANTITY_SYSTEM = "http://unitsofmeasure.org";
 
 const siteEnums = {
   "Left arm": "LA",
-  "Right arm": "RA"
-}
+  "Right arm": "RA",
+};
 
 const routeEnums = {
-  "Intradermal injection" : "IDINJ",
-  "Intramuscular injection" : "IM",
-  "Nasal inhalation" : "NASINHLC",
-  "Intravenous injection" : "IVINJ",
-  "Oral swallow" : "PO",
-  "Subcutaneous injection" : "SQ",
-  "Transdermal" : "TRNSDERM",
+  "Intradermal injection": "IDINJ",
+  "Intramuscular injection": "IM",
+  "Nasal inhalation": "NASINHLC",
+  "Intravenous injection": "IVINJ",
+  "Oral swallow": "PO",
+  "Subcutaneous injection": "SQ",
+  Transdermal: "TRNSDERM",
 };
 
 exports.toFHIR = function (imm) {
@@ -67,15 +65,6 @@ exports.toFHIR = function (imm) {
       reference: imm.encounter,
     },
     status: imm.status,
-    statusReason: {
-      coding: [
-        {
-          system: STAT_REASON_SYSTEM,
-          code: imm.statusReason,
-          display: imm.statusReason,
-        },
-      ],
-    },
     occurrenceDateTime: new Date().toISOString(),
     primarySource: imm.primarySource,
     location: {
