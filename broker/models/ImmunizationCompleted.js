@@ -3,7 +3,7 @@ Immunization {
   vaccine: string
   manufacturer: string "Organization/id"
   lotNumber: string
-  expiration: string "YYYY, YYYY-MM, or YYYY-MM-DD"
+  expirationDate: string "YYYY, YYYY-MM, or YYYY-MM-DD"
   patient: string "Patient/id"
   encounter: string "Encounter/id"
   status: enum (completed, entered-in-error, not-done)
@@ -57,7 +57,7 @@ exports.toFHIR = function (imm) {
       reference: imm.manufacturer,
     },
     lotNumber: imm.lotNumber,
-    expirationDate: imm.expiration,
+    expirationDate: imm.expirationDate,
     patient: {
       reference: imm.patient,
     },
@@ -135,7 +135,7 @@ exports.toModel = (immunization) => {
       vaccine: immunization.vaccineCode.coding[0].code,
       manufacturer: immunization.manufacturer.reference,
       lotNumber: immunization.lotNumber,
-      expiration: immunization.expirationDate,
+      expirationDate: immunization.expirationDate,
       patient: immunization.patient.reference,
       encounter: immunization.encounter.reference,
       status: immunization.status,
@@ -153,7 +153,6 @@ exports.toModel = (immunization) => {
       seriesDoses: immunization.protocolApplied[0].seriesDosesPositiveInt,
     };
   } catch (e) {
-    console.log(e);
     model = immunization;
   }
 

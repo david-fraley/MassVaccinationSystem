@@ -83,7 +83,7 @@ exports.toModel = (immunization) => {
       occurrence: immunization.occurrenceDateTime,
       location: immunization.location.reference,
       performer: [immunization.performer[0].actor.reference],
-      note: immunization.note[0].text,
+      note: immunization.note ? immunization.note[0].text : immunization.note,
     };
   } catch (e) {
     model = immunization;

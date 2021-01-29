@@ -15,19 +15,7 @@ export default new Vuex.Store({
         },
         encounterResource: {},
         appointmentResource: {},
-        immunizationResource: {
-            lotNumber: '',
-            expirationDate: '',
-            manufacturer: '',
-            doseQuantity: '',
-            doseNumber: '',
-            immunizationStatus: '',
-            immunizationTimeStamp: '',
-            site: '',
-            route: 'Injection',
-            notes: '',
-            notAdministeredReason: ''
-        },
+        immunizationResource: {},
         practitionerResource: {
             id: "example",
             family: "White",

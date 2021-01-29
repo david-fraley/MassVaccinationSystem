@@ -39,7 +39,7 @@
           placeholder="Notes"
           outlined
           rows="4"
-          v-model="notes"
+          v-model="note"
         ></v-textarea>
       </v-col>
     </v-row>
@@ -142,7 +142,7 @@ export default {
         reason: this.reason,
         location: this.location,
         performer: this.practitioner,
-        note: this.notes,
+        note: this.note,
       };
       brokerRequests.submitVaccination(data).then((response) => {
         if (response.data) {
@@ -180,7 +180,7 @@ export default {
       ],
       status: "not-done",
       reason: "",
-      notes: "",
+      note: "",
     };
   },
 };

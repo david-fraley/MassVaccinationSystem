@@ -33,7 +33,6 @@
             <v-text-field
               outlined
               dense
-              :value="expirationDate"
               required
               :rules="[(v) => !!v || 'Expiration Date field is required']"
               v-model="expirationDate"
@@ -48,7 +47,6 @@
             <v-text-field
               outlined
               dense
-              :value="manufacturer"
               required
               :rules="[(v) => !!v || 'Manufacturer field is required']"
               v-model="manufacturer"
@@ -159,8 +157,7 @@
           placeholder="Notes"
           outlined
           rows="4"
-          :value="notes"
-          v-model="notes"
+          v-model="note"
         ></v-textarea>
       </v-col>
     </v-row>
@@ -243,8 +240,6 @@ export default {
       this.expirationDate = "2020-01-01";
       this.manufacturer = "Organization/example"; // todo
       this.doseQuantity = "0.1 mL";
-      // Placeholder for patient history
-      this.doseNumber = 1;
     },
     onVaccination(immunization) {
       //send data to Vuex
@@ -264,7 +259,7 @@ export default {
         vaccine: this.config.vaccine,
         manufacturer: this.manufacturer,
         lotNumber: this.lotNumber,
-        expiration: this.expirationDate,
+        expirationDate: this.expirationDate,
         patient: this.patient,
         encounter: this.encounter,
         status: this.status,
@@ -273,7 +268,7 @@ export default {
         route: this.config.route,
         doseQuantity: this.doseQuantity,
         performer: this.practitioner,
-        note: this.notes,
+        note: this.note,
         education: this.config.education,
         series: this.config.series,
         doseNumber: this.doseNumber,
@@ -316,7 +311,9 @@ export default {
       lotNumber: "",
       expirationDate: "",
       manufacturer: "",
-      notes: "",
+      note: "",
+      // Placeholder for patient history
+      doseNumber: 1,
     };
   },
 };
