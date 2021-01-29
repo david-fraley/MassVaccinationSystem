@@ -1,43 +1,105 @@
 # MassVaccinationSystem Sandbox
 The files contained here will allow you to run all the required components/services for 
-a complete system on one workstation or server using Docker.
+a complete system on one workstation or server using Docker. Use this as a starting point for
+your own installation.
 
 ![SandboxContainers](SandboxContainers.jpg)
 
-## How to run sandbox
-1. Install [Docker Compose](https://docs.docker.com/compose/install/) and any dependencies.
-2. In sandbox directory, generate certificates for https connections (Windows users may need
+## Prerequisites:
+- [Docker Compose](https://docs.docker.com/compose/install/) and any dependencies are installed.
+- MassVaccinationSystem project source code downloaded.
+
+## Steps:
+1. In sandbox directory, generate certificates for https connections (Windows users may need
 to install an OpenSSL binary):
 
         openssl req -newkey rsa:2048 -nodes -keyout sandbox.key -x509 -days 365 -out sandbox.crt
 
-3. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
+2. In sandbox directory, copy **env.template** to a file named **.env** (note the dot in .env filename).
+3. In sandbox directory, copy **hapi.properties.template** to a file named **hapi.properties**.
+4. Protect .env and hapi.properties files to allow only Docker host root/admin user access.
+5. Edit .env and hapi.properties file to change default database passwords (_BROKER_DB_PASSWORD_ 
+and _HAPI_DB_PASSWORD_). Make sure the passwords match in .env and hapi.properties.
+6. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
 
-        cd <MassVaccinationSystem>/sandbox
         docker-compose -p massvaxx up
 
     Or, if you want the services to run in the background, use:
 
         docker-compose -p massvaxx up -d
 
-    To stop the containers:
+## Connecting to sandbox using a web browser
+**NOTE**: Some browsers (e.g. Chrome) will not allow connections to sites using a self-signed certificate.
+Others will require acknowledging the security rish to enter the site. See below for how to set up a
+recognized certificate if needed.
+- All http requests will be redirected to https.
+- **PatientRegistrationApp** will be at:
+
+    https://<your_ip_address_or_host> (e.g., https://demo.massvaxx.com)
+
+- Alternatively, PatientRegistrationApp will also be at:   
+
+    https://<your_ip_address_or_host>/Registration (e.g., https://demo.massvaxx.com/Registration) 
+
+- **PointOfDispensingApp** will be at:  
+
+    https://<your_ip_address_or_host>/POD (e.g., https://mypc.local/POD)
+
+- **Broker endpoints** will be at:  
+
+    https://<your_ip_address_or_host>/broker/<endpoint> (e.g., https://192.168.0.100/broker/healthcheck)
+
+Direct access to the other services is not provided with the default docker-compose.yml.
+To expose the other services, uncomment the ports as neccessary and re-run 'docker-compose up'. You may need to do this to configure some things.
+
+## Stopping and cleaning up
+- To stop the containers:
 
         docker-compose -p massvaxx stop
 
-    To clean up the containers and resources after stopping:
+- To clean up the containers and resources after stopping:
 
         docker container prune
         docker network prune
         docker volume prune
 
-## Connecting to sandbox using a browser
-- All http requests will be redirected to https.
-- PatientRegistrationApp will be at https://<your_ip_address_or_host>/Registration (e.g., https://demo.massvaxx.com/Registration)
-- PointOfDispensingApp will be at https://<your_ip_address_or_host>/POD (e.g., https://mypc.local/POD)
-- Broker endpoints will be at https://<your_ip_address_or_host>/broker/<endpoint> (e.g., https://192.168.0.100/broker/healthcheck)
 
-Direct access to the other services is not provided with the default docker-compose.yml.
-To expose the other services, uncomment the ports as neccessary and re-run 'docker-compose up'. You may need to do this to configure some things.
+## Security and Optional Setup Notes
+- A firewall for the Docker host should be enabled and block connections to the back-end services, especially if you have exposed them for configuration. Only access to ports 80 (http) and 443 (https) should be required. The firewall should also be tested to make sure if those ports are disabled, the system cannot be accessed. Some firewalls have known interactions with Docker (e.g., Ubuntu's ufw https://github.com/docker/for-linux/issues/690).
+- The database files may not be encrypted. An encrypted file system is highly suggested.
+- The database files should be backed up and a restore tested.
+- Apply OS and package updates on Docker host reqularly and often.
+- The containers might be run on multiple hosts. That exercise is left to interested deployer.
 
 ## Certificate for https
-**Note:** The certificate created above for https is self-signed, so you will need to use a browser that allows that and accept the warnings. Alternatively, you can use [Let's Encrypt](https://letsencrypt.org/) to get a real certificate. This will require you to have a subdomain with an A or AAAA record pointing to your IP address.
+The certificate created above for https is self-signed, so you will need to use a browser that allows that and accept the warnings. Alternatively, you can use [Let's Encrypt](https://letsencrypt.org/) to get a real certificate. This will require you to have a FQDN (e.g., demo.massvaxx.com) with an A or AAAA record pointing to your IP address. Refer to the niginx.conf and .env files for mapping existing certificate files for use by the proxy container.
+
+If you are using a Linux distro as your Docker host and would like the use Let's Encruypt, the following changes should allow you to create and use your own cert (prepend commands with sudo if not running as root):
+
+1. Install certbot. For Ubuntu 20.04 TLS this can be done by:
+
+        snap install --classic certbot
+
+2. Run certbot in standalone mode to create the certificates:
+
+        certbot certonly --standalone
+
+    Enter the data required at the prompts.
+
+3. Edit .env file, replace the following lines:
+
+        PROXY_VOLUME_MAP1=./nginx.conf:/etc/nginx/nginx.conf
+        PROXY_VOLUME_MAP2=./sandbox.crt:/etc/nginx/sandbox.crt
+        PROXY_VOLUME_MAP3=./sandbox.crt:/etc/nginx/sandbox.key
+
+    with (replace \<FQDN\> with):
+
+        PROXY_VOLUME_MAP1=./nginx-letsencrypt.conf:/etc/nginx/nginx.conf
+        PROXY_VOLUME_MAP2=/etc/letsencrypt/<FQDN>:/etc/letsencrypt/fqdn
+        PROXY_VOLUME_MAP3=/etc/letsencrypt:/etc/letsencrypt
+
+4. Periodically refresh your certificate (Let's Encrypt certs expire after 90 days, but can be renewed after 60 days):
+
+        certbot renew
+
+    Suggestion is to set this up as a cron job to avoid having certs expire.
