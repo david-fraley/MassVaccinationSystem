@@ -17,9 +17,11 @@ to install an OpenSSL binary):
 
 2. In sandbox directory, copy **env.template** to a file named **.env** (note the dot in .env filename).
 3. In sandbox directory, copy **hapi.properties.template** to a file named **hapi.properties**.
-4. Edit .env and hapi.properties file to change default database passwords (_BROKER_DB_PASSWORD_ 
+4. (Optional) Edit .env and hapi.properties file to change default database passwords (_BROKER_DB_PASSWORD_ 
 and _HAPI_DB_PASSWORD_). Make sure the passwords match in .env and hapi.properties.
-5. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
+5. (Optional) Edit .env and hapi.properties file to change default ports (_PORXY_HTTP_PORT_ 
+and _PROXY_HTTPS_PORT_). properties.
+6. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
 
         docker-compose -p massvaxx up
 
@@ -29,24 +31,27 @@ and _HAPI_DB_PASSWORD_). Make sure the passwords match in .env and hapi.properti
 
 ## Connecting to sandbox using a web browser
 **NOTE**: Some browsers (e.g. Chrome) will not allow connections to sites using a self-signed certificate.
+
+**NOTE**: If you chnaged the port value in the .env file, you will need to add the port to the URLs below (e.g., http://\<your_ip_address_or_host\>:\<port\>).
+
 Others will require acknowledging the security rish to enter the site. See below for how to set up a
 recognized certificate if needed.
 - All http requests will be redirected to https.
 - **PatientRegistrationApp** will be at:
 
-    https://<your_ip_address_or_host> (e.g., https://demo.massvaxx.com)
+    https://\<your_ip_address_or_host\> (e.g., https://demo.massvaxx.com)
 
 - Alternatively, PatientRegistrationApp will also be at:   
 
-    https://<your_ip_address_or_host>/Registration (e.g., https://demo.massvaxx.com/Registration) 
+    https://\<your_ip_address_or_host\>/Registration (e.g., https://demo.massvaxx.com/Registration) 
 
 - **PointOfDispensingApp** will be at:  
 
-    https://<your_ip_address_or_host>/POD (e.g., https://mypc.local/POD)
+    https://\<your_ip_address_or_host\>/POD (e.g., https://mypc.local/POD)
 
 - **Broker endpoints** will be at:  
 
-    https://<your_ip_address_or_host>/broker/<endpoint> (e.g., https://192.168.0.100/broker/healthcheck)
+    https://\<your_ip_address_or_host\>/broker/\<endpoint\> (e.g., https://192.168.0.100/broker/healthcheck)
 
 Direct access to the other services is not provided with the default docker-compose.yml.
 To expose the other services, uncomment the ports as neccessary and re-run 'docker-compose up'. You may need to do this to configure some things.
@@ -64,6 +69,10 @@ To expose the other services, uncomment the ports as neccessary and re-run 'dock
 
 
 ## Security and Optional Setup Notes
+- If you wish to change other settings in the default docker-compose.yml, you can make a copy and then specify the copy in the docker-compose command:
+
+        docker-compose -f docker-compose-copy.yml -p massvaxx up -d
+
 - A firewall for the Docker host should be enabled and block connections to the back-end services, especially if you have exposed them for configuration. Only access to ports 80 (http) and 443 (https) should be required. The firewall should also be tested to make sure if those ports are disabled, the system cannot be accessed. Some firewalls have known interactions with Docker (e.g., Ubuntu's ufw https://github.com/docker/for-linux/issues/690).
 - Protect .env and hapi.properties files to allow only Docker has read access (e.g., On Linux, 'chown root:root .env hapi.properties && chmod 400 .env hapi.properties').
 - The database files may not be encrypted. An encrypted file system is highly suggested.
@@ -92,10 +101,10 @@ If you are using a Linux distro as your Docker host and would like the use Let's
         PROXY_VOLUME_MAP2=./sandbox.crt:/etc/nginx/sandbox.crt
         PROXY_VOLUME_MAP3=./sandbox.crt:/etc/nginx/sandbox.key
 
-    with (replace \<FQDN\> with your FQDN):
+    with (replace \\<FQDN\\> with your FQDN):
 
         PROXY_VOLUME_MAP1=./nginx-letsencrypt.conf:/etc/nginx/nginx.conf
-        PROXY_VOLUME_MAP2=/etc/letsencrypt/<FQDN>:/etc/letsencrypt/fqdn
+        PROXY_VOLUME_MAP2=/etc/letsencrypt/\<FQDN\>:/etc/letsencrypt/fqdn
         PROXY_VOLUME_MAP3=/etc/letsencrypt:/etc/letsencrypt
 
 4. Periodically refresh your certificate (Let's Encrypt certs expire after 90 days, but can be renewed after 60 days):
