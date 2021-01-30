@@ -99,6 +99,7 @@ export default {
     return axios
       .post("/broker/Immunization", { Immunization: data })
       .then((response) => {
+        console.log(`/Immunization/${response.data.id}`);
         return { data: response.data };
       })
       .catch((e) => {

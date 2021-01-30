@@ -75,6 +75,7 @@ exports.toModel = (immunization) => {
   let model;
   try {
     model = {
+      id: immunization.id,
       vaccine: immunization.vaccineCode.coding[0].display,
       patient: immunization.patient.reference,
       encounter: immunization.encounter.reference,

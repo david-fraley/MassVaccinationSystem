@@ -132,6 +132,7 @@ exports.toModel = (immunization) => {
   let model;
   try {
     model = {
+      id: immunization.id,
       vaccine: immunization.vaccineCode.coding[0].code,
       manufacturer: immunization.manufacturer.reference,
       lotNumber: immunization.lotNumber,
