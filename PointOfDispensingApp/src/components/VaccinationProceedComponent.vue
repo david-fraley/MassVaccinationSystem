@@ -306,12 +306,12 @@ export default {
       doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
       vaccinationSiteOptions: ["Left arm", "Right arm"],
       status: "completed",
-      doseQuantity: "",
-      site: "",
-      lotNumber: "",
-      expirationDate: "",
-      manufacturer: "",
-      note: "",
+      doseQuantity: this.$store.state.immunizationResource.doseQuantity,
+      site: this.$store.state.immunizationResource.site,
+      lotNumber: this.$store.state.immunizationResource.lotNumber,
+      expirationDate: this.$store.state.immunizationResource.expirationDate,
+      manufacturer: this.$store.state.immunizationResource.manufacturer,
+      note: this.$store.state.immunizationResource.note,
       // Placeholder for patient history
       doseNumber: 1,
     };

@@ -179,8 +179,8 @@ export default {
         "Patient Objection",
       ],
       status: "not-done",
-      reason: "",
-      note: "",
+      reason: this.$store.state.immunizationResource.reason,
+      note: this.$store.state.immunizationResource.note,
     };
   },
 };
