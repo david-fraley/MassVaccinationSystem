@@ -46,12 +46,12 @@
 		console.log("hello");
 		this.dateFunct = new Date();
 
-		this.now = this.dateFunct.toISOString();
+		this.now = this.dateFunct;
+		this.firstDose = new Date("2021-01-25T02:48:30.166Z");
 
-		this.firstDose = new Date("2021-01-25T02:48:30.166Z").toISOString();
-
-		this.numDaysSinceLastVaccination = ((this.now-this.firstDose));// / (1000*60*60*24));
+		this.numDaysSinceLastVaccination = Math.ceil((this.now-this.firstDose) / (1000*60*60*24));
 		console.log(this.numDaysSinceLastVaccination);
+
 	},
     },
     components: 
