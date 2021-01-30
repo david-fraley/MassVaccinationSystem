@@ -17,10 +17,9 @@ to install an OpenSSL binary):
 
 2. In sandbox directory, copy **env.template** to a file named **.env** (note the dot in .env filename).
 3. In sandbox directory, copy **hapi.properties.template** to a file named **hapi.properties**.
-4. Protect .env and hapi.properties files to allow only Docker host root/admin user access.
-5. Edit .env and hapi.properties file to change default database passwords (_BROKER_DB_PASSWORD_ 
+4. Edit .env and hapi.properties file to change default database passwords (_BROKER_DB_PASSWORD_ 
 and _HAPI_DB_PASSWORD_). Make sure the passwords match in .env and hapi.properties.
-6. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
+5. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
 
         docker-compose -p massvaxx up
 
@@ -66,6 +65,7 @@ To expose the other services, uncomment the ports as neccessary and re-run 'dock
 
 ## Security and Optional Setup Notes
 - A firewall for the Docker host should be enabled and block connections to the back-end services, especially if you have exposed them for configuration. Only access to ports 80 (http) and 443 (https) should be required. The firewall should also be tested to make sure if those ports are disabled, the system cannot be accessed. Some firewalls have known interactions with Docker (e.g., Ubuntu's ufw https://github.com/docker/for-linux/issues/690).
+- Protect .env and hapi.properties files to allow only Docker has read access (e.g., On Linux, 'chown root:root .env hapi.properties && chmod 400 .env hapi.properties').
 - The database files may not be encrypted. An encrypted file system is highly suggested.
 - The database files should be backed up and a restore tested.
 - Apply OS and package updates on Docker host reqularly and often.
