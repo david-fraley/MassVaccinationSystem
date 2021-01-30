@@ -19,18 +19,7 @@
 		
       </v-col>
     </v-row>
-	<v-row>
-		<v-col cols="6">
-			<v-btn @click="calculatedDaysSinceDose()">
-				calculate
-				</v-btn>
-		</v-col>
-		<v-col cols="6">
-		<v-text-field
-			v-model="daysSinceDose">
-		</v-text-field>
-		</v-col>
-		</v-row>
+
   </v-container>
 </template>
 
@@ -43,6 +32,7 @@
         row.select(true);
 		},
 	calculatedDaysSinceDose() {
+		// if (immunizationTimeStamp !== '' ) //checks to see if there is a time stamp
 		console.log("hello");
 		this.dateFunct = new Date();
 
@@ -51,7 +41,10 @@
 
 		this.numDaysSinceLastVaccination = Math.ceil((this.now-this.firstDose) / (1000*60*60*24));
 		console.log(this.numDaysSinceLastVaccination);
-		return this.numDaysSinceLastVaccination;
+
+		// else numDays = 'N/A'
+
+		return this.numDaysSinceLastVaccination.toString();
 	},
     },
     components: 
