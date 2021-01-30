@@ -19,6 +19,18 @@
 		
       </v-col>
     </v-row>
+	<v-row>
+		<v-col cols="6">
+			<v-btn @click="calculatedDaysSinceDose()">
+				calculate
+				</v-btn>
+		</v-col>
+		<v-col cols="6">
+		<v-text-field
+			v-model="daysSinceDose">
+		</v-text-field>
+		</v-col>
+		</v-row>
   </v-container>
 </template>
 
@@ -30,6 +42,17 @@
 	rowClick: function (item, row) {      
         row.select(true);
 		},
+	calculatedDaysSinceDose() {
+		console.log("hello");
+		this.dateFunct = new Date();
+
+		this.now = this.dateFunct.toISOString();
+
+		this.firstDose = new Date("2021-01-25T02:48:30.166Z").toISOString();
+
+		this.numDaysSinceLastVaccination = ((this.now-this.firstDose));// / (1000*60*60*24));
+		console.log(this.numDaysSinceLastVaccination);
+	},
     },
     components: 
     {
@@ -44,6 +67,7 @@
 		practitionerName: '',
 		adverseEffects: '',
 		selectedId: -1,
+		daysSinceDose: '',
 		
 		headers: [
 		{

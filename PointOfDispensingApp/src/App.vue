@@ -22,7 +22,7 @@
       <v-list>
         <v-list-item-group v-model="leftMenu" color="white">
           <!-- Retrieve Patient Record -->
-          <v-list-item :disabled="false" router :to="'/RetrievePatientRecord'">
+          <v-list-item :disabled="true" router :to="'/RetrievePatientRecord'">
             <v-list-item-action>
               <v-icon large>mdi-binoculars</v-icon>
             </v-list-item-action>
@@ -107,7 +107,7 @@
         return this.$store.getters.isCheckInPageDisabled
       },
       isPatientHistoryPageDisabled() {
-        return this.$store.getters.isPatientHistoryPageDisabled
+        return false;//this.$store.getters.isPatientHistoryPageDisabled
       },
       isVaccinationEventPageDisabled() {
         return this.$store.getters.isVaccinationEventPageDisabled
