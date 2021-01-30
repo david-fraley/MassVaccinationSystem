@@ -51,7 +51,7 @@
 
 		this.numDaysSinceLastVaccination = Math.ceil((this.now-this.firstDose) / (1000*60*60*24));
 		console.log(this.numDaysSinceLastVaccination);
-
+		return this.numDaysSinceLastVaccination;
 	},
     },
     components: 
@@ -63,7 +63,7 @@
 		tradeName: '',
 		doseQty: '',
 		timeAdministered: '',
-		LOT: '',
+		numDaysSinceLastVaccination: '',
 		practitionerName: '',
 		adverseEffects: '',
 		selectedId: -1,
@@ -79,7 +79,7 @@
 			{ text: 'Trade Name', value: 'tradeName' },
 			{ text: 'Dose Qty.', value: 'doseQty' },
 			{ text: 'Time Administered', value: 'timeAdministered' },
-			{ text: 'LOT', value: 'LOT' },
+			{ text: 'Days Since Last Vaccination', value: 'numDaysSinceLastVaccination' },
 			{ text: 'Practitioner', value: 'practitionerName' },
 			{ text: 'Adverse Effects', value: 'adverseEffects' },
 			],
@@ -90,7 +90,7 @@
 				tradeName: 'VaxMan Inc.',
 				doseQty: '0.5 mL',
 				timeAdministered: '2020-08-16 16:22:25',
-				LOT: 'PTL16359',
+				numDaysSinceLastVaccination: this.calculatedDaysSinceDose(),
 				practitionerName: 'Doogie Howser',
 				adverseEffects: 'N/A'
 			},	
