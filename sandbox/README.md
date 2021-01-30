@@ -19,7 +19,7 @@ to install an OpenSSL binary):
 3. In sandbox directory, copy **hapi.properties.template** to a file named **hapi.properties**.
 4. (Optional) Edit .env and hapi.properties file to change default database passwords (_BROKER_DB_PASSWORD_ 
 and _HAPI_DB_PASSWORD_). Make sure the passwords match in .env and hapi.properties.
-5. (Optional) Edit .env and hapi.properties file to change default ports (_PORXY_HTTP_PORT_ 
+5. (Optional) Edit .env and hapi.properties file to change default ports (_PROXY_HTTP_PORT_ 
 and _PROXY_HTTPS_PORT_). properties.
 6. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
 
