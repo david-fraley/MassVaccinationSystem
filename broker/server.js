@@ -26,7 +26,7 @@ if (process.env.DEVELOPMENT == 1) {
   app.use("/Registration", express.static(reg_path));
   app.use("/POD", express.static(pod_path));
 
-  app.get("/broker/*", (req, res) => {
+  app.all("/broker/*", (req, res) => {
     req.url = req.url.replace(/^(\/broker)/, "");
     app.handle(req, res);
   });

@@ -99,7 +99,11 @@ exports.toFHIR = function (patient) {
       },
     ],
     link: [
-      // add link
+      {
+      other: {
+        reference: patient.link[0],
+      },
+    }
     ],
   };
 
@@ -126,20 +130,13 @@ exports.toFHIR = function (patient) {
       rank: `${idx}`,
     });
   }
-  // add link
-  for (link of patient.link) {
-    resource.link.push({
-      other: {
-        reference: link,
-      },
-    });
-  }
 
   return resource;
 };
 
 exports.toModel = function (patient) {
   let model = {
+    resourceType: patient.resourceType,
     id: patient.id,
     family: patient.name ? patient.name[0].family : "",
     given: patient.name
@@ -175,6 +172,7 @@ exports.toModel = function (patient) {
         ? patient.communication[0].language.text
         : ""
       : "",
+    link: patient.link ? patient.link[0].other.reference : null,
   };
 
   return model;
