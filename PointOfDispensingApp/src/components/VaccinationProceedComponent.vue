@@ -155,12 +155,12 @@
             <div class="secondary--text">Route</div>
           </v-col>
           <v-col cols="8">
-            <v-text-field 
-              outlined 
-              dense 
-              filled 
+            <v-text-field
+              outlined
+              dense
+              filled
               readonly
-              :value=route
+              :value="route"
               :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
@@ -201,10 +201,14 @@
                   Back
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn	
+                <v-btn
                   color="primary"
                   text
-                  @click="submitVaccinationRecord(); endEncounter();">
+                  @click="
+                    submitVaccinationRecord();
+                    endEncounter();
+                  "
+                >
                   Submit
                 </v-btn>
               </v-card-actions>
@@ -217,18 +221,24 @@
 </template>
 
 <script>
-  import brokerRequests from "../brokerRequests";
-  
-  export default {
-    name: 'VaccinationProceedComponent',
-    computed: {
-      healthcarePractitioner() {
-        return this.$store.state.immunizationResource.healthcarePractitioner
-      },
-      isVaccinationEventPageReadOnly() {
-        return this.$store.getters.isVaccinationEventPageReadOnly
-      },
+import brokerRequests from "../brokerRequests";
+
+export default {
+  name: "VaccinationProceedComponent",
+  computed: {
+    healthcarePractitioner() {
+      return this.$store.state.immunizationResource.healthcarePractitioner;
     },
+    isVaccinationEventPageReadOnly() {
+      return this.$store.getters.isVaccinationEventPageReadOnly
+    },
+    encounterID() {
+      return this.$store.state.encounterResource.id;
+    },
+    appointmentID() {
+      return this.$store.state.appointmentResource.id;
+    },
+  },
   methods: {
     onSuccessSubmitVaccinationRecord() {
       const vaccinationCompletePlayload = {
@@ -245,23 +255,17 @@
         notes: this.notes,
       };
 
-        //send data to Vuex
-        this.$store.dispatch("vaccinationComplete", vaccinationCompletePlayload);
-
-        //Advance to the Discharge page
-        this.$router.push("Discharge");
-
-        //Close the dialog
-        this.dialog = false;
-    },
-    onSuccessEndEncounter() {
-      //the following is sending dummy data until we have the API in place
-      const encounterResourcePayload = {
-        encounterStatus: "Finished",
-        encounterTimeStamp: new Date().toISOString(),
-      };
       //send data to Vuex
-      this.$store.dispatch("patientDischarged", encounterResourcePayload);
+      this.$store.dispatch("vaccinationComplete", vaccinationCompletePlayload);
+
+      //Advance to the Discharge page
+      this.$router.push("Discharge");
+
+      //Close the dialog
+      this.dialog = false;
+    },
+    onDischarge(payload) {
+      this.$store.dispatch("patientDischarged", payload);
     },
     submitVaccinationRecord() {
       brokerRequests.submitVaccination().then((response) => {
@@ -273,11 +277,16 @@
       });
     },
     endEncounter() {
-      brokerRequests.discharge().then((response) => {
+      let data = {
+        apptID: this.appointmentID,
+        encounterID: this.encounterID,
+      };
+      brokerRequests.discharge(data).then((response) => {
         if (response.data) {
-          this.onSuccessEndEncounter();
+          this.onDischarge(response.data);
         } else if (response.error) {
-          alert("Discharge not successful");
+          console.log(response.error);
+          alert(`Patient not discharged`);
         }
       });
     },

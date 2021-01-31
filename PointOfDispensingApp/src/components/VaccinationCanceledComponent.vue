@@ -72,7 +72,15 @@
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="6">
-        <v-btn block color="accent" @click="submitVaccinationRecord(); endEncounter();" :disabled="isVaccinationEventPageReadOnly">
+        <v-btn
+          block
+          color="accent"
+          @click="
+            submitVaccinationRecord();
+            endEncounter();
+          "
+          :disabled="isVaccinationEventPageReadOnly"
+        >
           Submit vaccination record
         </v-btn>
       </v-col>
@@ -97,7 +105,13 @@ export default {
     },
     isVaccinationEventPageReadOnly() {
         return this.$store.getters.isVaccinationEventPageReadOnly
-      },
+    },
+    encounterID() {
+      return this.$store.state.encounterResource.id;
+    },
+    appointmentID() {
+      return this.$store.state.appointmentResource.id;
+    },
   },
   methods: {
     onSuccessSubmitVaccinationRecord() {
@@ -107,25 +121,19 @@ export default {
         healthcarePractitioner: this.healthcarePractitioner,
         notAdministeredReason: this.notAdministeredReason,
         notes: this.notes,
-        };
-
-        //send data to Vuex
-        this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
-
-        //Advance to the Discharge page
-        this.$router.push("Discharge");
-
-        //Close the dialog
-        this.dialog = false;
-    },
-    onSuccessEndEncounter() {
-      //the following is sending dummy data until we have the API in place
-      const encounterResourcePayload = {
-        encounterStatus: "Finished",
-        encounterTimeStamp: new Date().toISOString(),
       };
+
       //send data to Vuex
-      this.$store.dispatch("patientDischarged", encounterResourcePayload);
+      this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
+
+      //Advance to the Discharge page
+      this.$router.push("Discharge");
+
+      //Close the dialog
+      this.dialog = false;
+    },
+    onDischarge(payload) {
+      this.$store.dispatch("patientDischarged", payload);
     },
     submitVaccinationRecord() {
       brokerRequests.submitVaccination().then((response) => {
@@ -137,14 +145,19 @@ export default {
       });
     },
     endEncounter() {
-      brokerRequests.discharge().then((response) => {
-      if (response.data) {
-        this.onSuccessEndEncounter();
-      } else if (response.error) {
-        alert("Discharge not successful");
-      }
-    });
-  },
+      let data = {
+        apptID: this.appointmentID,
+        encounterID: this.encounterID,
+      };
+      brokerRequests.discharge(data).then((response) => {
+        if (response.data) {
+          this.onDischarge(response.data);
+        } else if (response.error) {
+          console.log(response.error);
+          alert(`Patient not discharged`);
+        }
+      });
+    },
   },
   components: {},
   data() {

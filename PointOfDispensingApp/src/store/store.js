@@ -13,10 +13,8 @@ export default new Vuex.Store({
             locationId: '1234567890',
             locationName: 'Western Lakes FD'
         },
-        encounterResource: {
-            encounterStatus: '',
-            encounterTimeStamp: ''
-        },
+        encounterResource: {},
+        appointmentResource: {},
         immunizationResource: {
             lotNumber: '',
             expirationDate: '',
@@ -101,8 +99,8 @@ export default new Vuex.Store({
                 state.patientResource = patientResourcePayload;
 
                 //reset patient-specific data
-                state.encounterResource.encounterStatus = ''
-                state.encounterResource.encounterTimeStamp = ''
+                state.encounterResource = {};
+                state.appointmentResource = {};
                 state.immunizationResource.lotNumber = '',
                 state.immunizationResource.expirationDate = '',
                 state.immunizationResource.manufacturer = '',
@@ -131,10 +129,10 @@ export default new Vuex.Store({
 
             }
         },
-        patientAdmitted(state, encounterResourcePayload) {
+        patientAdmitted(state, payload) {
             state.activeWorkflowState = 'ADMITTED'
-            state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
-            state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
+            state.encounterResource = payload.Encounter
+            state.appointmentResource = payload.Appointment
         },
         vaccinationScreeningUpdate (state, screeningResponsesPayload) {
             state.screeningResponses.vaccinationDecision = screeningResponsesPayload.vaccinationDecision
@@ -173,10 +171,10 @@ export default new Vuex.Store({
             state.immunizationResource.notAdministeredReason= vaccinationCanceledPlayload.notAdministeredReason
             state.immunizationResource.notes= vaccinationCanceledPlayload.notes
         },
-        patientDischarged(state, encounterResourcePayload) {
+        patientDischarged(state, payload) {
             state.activeWorkflowState = 'DISCHARGED'
-            state.encounterResource.encounterStatus = encounterResourcePayload.encounterStatus
-            state.encounterResource.encounterTimeStamp = encounterResourcePayload.encounterTimeStamp
+            state.encounterResource = payload.Encounter;
+            state.appointmentResource = payload.Appointment;
         },
         unknownErrorCondition(state) {
             state.activeWorkflowState = 'ERROR'
@@ -188,8 +186,8 @@ export default new Vuex.Store({
         patientRecordRetrieved(context, patientResourcePayload) {
             context.commit('patientRecordRetrieved', patientResourcePayload)
         },
-        patientAdmitted(context, encounterResourcePayload) {
-            context.commit('patientAdmitted', encounterResourcePayload)
+        patientAdmitted(context, payload) {
+            context.commit('patientAdmitted', payload)
         },
         vaccinationScreeningUpdate(context, screeningResponsesPayload) {
             context.commit('vaccinationScreeningUpdate', screeningResponsesPayload)
@@ -200,8 +198,8 @@ export default new Vuex.Store({
         vaccinationCanceled(context, vaccinationCanceledPlayload) {
             context.commit('vaccinationCanceled', vaccinationCanceledPlayload)
         },
-        patientDischarged(context, encounterResourcePayload) {
-            context.commit('patientDischarged', encounterResourcePayload)
+        patientDischarged(context, payload) {
+            context.commit('patientDischarged', payload)
         },
         unknownErrorCondition(context) {
             context.commit('unknownErrorCondition')

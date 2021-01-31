@@ -1,6 +1,11 @@
-const Appointment = `{
+/**
+ * Example request data for endpoint testing
+ */
+
+module.exports = {
+  Appointment: `{
   "Appointment": {
-    "status":"booked",
+    "status":"fulfilled",
     "participant":[
       {
         "type":"patient",
@@ -13,30 +18,27 @@ const Appointment = `{
     ],
     "slot":"Slot/example"
   }
-}`;
+}`,
 
-const Encounter = `{
+  Encounter: `{
   "Encounter": {
-    "status" : "planned",
+    "status" : "finished",
     "class" : "FLD",
     "subject" : "Patient/example",
-    "appointment" : "Appointment/example",
-    "start" : "2020-09-17T05:10:19+00:00",
-    "end" : "2020-09-18T05:15:19+00:00",
     "location" : "Location/example",
     "serviceProvider" : "Organization/example"
   }
-}`;
+}`,
 
-const EpisodeOfCare = `{
+  EpisodeOfCare: `{
   "EpisodeOfCare": {
     "status" : "planned",
     "patient" : "Patient/example",
     "managingOrganization" : "Organization/example"
   }
-}`;
+}`,
 
-const Immunization = `{
+  Immunization: `{
   "Immunization": {
     "vaccine": "FLUVAX",
     "manufacturer": "Organization/example",
@@ -60,9 +62,9 @@ const Immunization = `{
     "doseNumber": 1,
     "seriesDoses": 2
   }
-}`;
+}`,
 
-const Location = `{
+  Location: `{
   "Location": { 
     "wirClientID": "WIRID",
     "status" : "active",
@@ -78,9 +80,9 @@ const Location = `{
     },
     "physicalType": "Site"
   }
-}`;
+}`,
 
-const Observation = `{
+  Observation: `{
   "Observation": {
     "status": "final",
     "category": "procedure",
@@ -94,17 +96,27 @@ const Observation = `{
     ],
     "partOf": "Immunization/example"
   }
-}`;
+}`,
 
-const Organization = `{
+  Organization: `{
   "Organization": {
     "active" : true,
     "type" : "cg",
     "name" : "ManagingOrganizationName"
   }
-}`;
+}`,
 
-const Patient = `{
+  ExamplePatient: `{
+  "resourceType": "Patient",
+  "id": "example",
+  "name": [ {
+    "family": "Patient",
+    "given": [ "Example" ]
+  } ],
+  "birthDate": "2000-01-01"
+}`,
+
+  Patient: `{
   "Patient": [
     {
       "family": "Smith",
@@ -148,9 +160,9 @@ const Patient = `{
       "relationship": "ONESELF"
     }
   ]
-}`;
+}`,
 
-const Practitioner = `{
+  Practitioner: `{
   "Practitioner": {
     "family" : "George",
     "given" : "James",
@@ -168,16 +180,36 @@ const Practitioner = `{
     },
     "qualificationCode": "CER"
   }
-}`;
+}`,
 
-module.exports = {
-  Appointment: Appointment,
-  Encounter: Encounter,
-  EpisodeOfCare: EpisodeOfCare,
-  Immunization: Immunization,
-  Location: Location,
-  Observation: Observation,
-  Organization: Organization,
-  Patient: Patient,
-  Practitioner: Practitioner,
+  CheckInEncounter: `{
+  "resourceType": "Encounter",
+  "id": "example",
+  "status": "planned",
+  "class": {
+    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+    "code": "FLD",
+    "display": "FLD"
+  },
+  "appointment": [ {
+    "reference": "Appointment/example"
+  } ],
+  "subject": {
+    "reference": "Patient/example"
+  },
+  "location": [{ "location": { "reference": "Location/example" } }],
+  "serviceProvider": { "reference": "Organization/example" }
+}`,
+
+  CheckInAppointment: `{
+  "resourceType": "Appointment",
+  "id": "example",
+  "status": "booked",
+  "slot": [{ "reference": "Slot/example" }],
+  "participant": [ {
+    "actor": {
+      "reference": "Patient/example"
+    }
+  } ]
+}`,
 };
