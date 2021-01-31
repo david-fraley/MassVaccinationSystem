@@ -2,6 +2,7 @@ const axios = require("../services/axiosInstance.js");
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
 const PatientIdService = require("../services/PatientIdService");
+const {body, validationResult} = require('express-validator');
 
 exports.read = (req, res) => {
   
@@ -33,21 +34,51 @@ exports.read = (req, res) => {
   });
 };
 
-exports.search = (req, res) => {
+exports.search = [
 
-  const patientSearchPayload = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    birthDate: req.body.birthDate,
-    postalCode: req.body.postalCode
-  };
+  // Demonstrates standard usage of express-validator
+  // Note that exports.search is now an array of functions, rather than a single function
+  // Docs: https://express-validator.github.io/docs/index.html
+  body('firstName', "Please enter the patient's first name").isLength({ min: 1}).trim().escape(),
+  body('lastName', "Please enter the patient's last name").isLength({ min: 1 }).trim().escape(),
+  body('birthDate', "Please enter a valid patient birth date").isISO8601({ strict: true}).toDate(),
+  body('postalCode', "Invalid postal code entered").optional().trim().isNumeric().isLength({ min: 5, max: 5}),
   
-  // We should validate that all required info was sent from the client
-  // https://express-validator.github.io/docs/ ??
+  (req, res) => {
 
-  // Use POST request so no PHI is included in URL query parameters
-  axios
-    .post(`${process.env.FHIR_URL_BASE}/SearchPatients`, patientSearchPayload)
+    console.log('here');
+
+    // Check for errors emitted by the express-validator functions above
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      console.log(errors.array());
+      let errorString = '';
+      errors.array().forEach((error) => {
+        errorString += error.msg + ', ';
+      });
+      return res.status(400).json({error: errorString.slice(0, -2)});
+    }
+
+    // const patientSearchPayload = {
+    //   firstName: req.body.firstName,
+    //   lastName: req.body.lastName,
+    //   birthDate: req.body.birthDate,
+    //   postalCode: req.body.postalCode
+    // };
+
+    let endpoint = `${process.env.FHIR_URL_BASE}/Patient?
+      given=${req.body.firstName}&
+      family=${req.body.lastName}&
+      birthdate=${req.body.birthDate}
+    `
+    if(req.body.postalCode) {
+      endpoint += `&address-postalcode=${req.body.postalCode}`;
+    }
+    console.log(endpoint);
+
+    // Use POST request so no PHI is included in URL query parameters
+    axios
+    .post(endpoint)
     .then((response) => {
       let patientArray = response.data.entry.map((entry) => {
         Patient.toModel(entry.resource);
@@ -65,7 +96,8 @@ exports.search = (req, res) => {
         error: err.response ? err.response.data: err.message,
       });
     })
-}
+  } 
+]
 
 exports.create = (req, res) => {
   createPatient(req, res).catch((e) =>

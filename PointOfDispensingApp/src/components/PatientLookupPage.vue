@@ -241,7 +241,7 @@ export default {
         if (response.patients) {
           this.patientLookupTable = response.patients;
         } else if (response.error) {
-          alert("No patients found");
+          alert(response.error.error);
         }
         this.loading = false;
       });
