@@ -1,4 +1,5 @@
 const axios = require("../services/axiosInstance.js");
+const PatientIdService = require("../services/PatientIdService");
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
 
@@ -22,66 +23,53 @@ exports.read = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  createPatient(req, res).catch((e) =>
+  createPatients(req, res).catch((e) =>
     res.status(400).json({
       error: e.response ? e.response.data : e.message,
     })
   );
 };
 
-async function createPatient(req, res) {
+async function createPatients(req, res) {
   let patients = req.body.Patient;
   let patient = patients.shift();
   let promises = [];
-  let response = { Patient: [] };
 
-  // resource for head of household
-  if (patient) {
-    let related = { resourceType: "RelatedPerson" };
-    let result = await createPatientWithLink(patient, related);
-    response.Patient.push(result);
-
-    // update related
-    let related_id = result.link.split("/")[1];
-    let resource = RelatedPerson.toFHIR({
-      patient: `Patient/${result.id}`,
-      relationship: patient.relationship,
-    });
-    resource.id = related_id;
-    await axios.put(`/RelatedPerson/${related_id}`, resource);
-  } else {
+  if (!patient) {
     res.status(400).json({ error: "at least one patient should be provided" });
     return;
   }
 
+  let resource = Patient.toFHIR(patient);
+  let head = (await axios.post(`/Patient`, resource)).data.id;
+  console.log(head);
+  promises.push(PatientIdService.createQrCode(head));
+
   // resources for members
   for (patient of patients) {
-    let related = {
-      patient: `Patient/${response.Patient[0].id}`,
-      relationship: patient.relationship,
-    };
-
-    promises.push(createPatientWithLink(patient, related));
+    promises.push(createMember(patient, head));
   }
 
   Promise.all(promises).then((results) => {
-    for (result of results) {
-      response.Patient.push(result);
-    }
-    res.json(response);
+    res.json({ Patient: results.map((x) => x.qr_code) });
   });
 }
 
 // create patient and link to relatedperson
-async function createPatientWithLink(patient, related) {
+async function createMember(patient, head) {
   // create related person
+  let related = {
+    patient: `Patient/${head}`,
+    relationship: patient.relationship,
+  };
   let resource = RelatedPerson.toFHIR(related);
-  let related_id = (await axios.post(`/RelatedPerson`, resource)).data.id;
+  let relatedID = (await axios.post(`/RelatedPerson`, resource)).data.id;
 
   // create patient pointing to related person
-  patient.link = [`RelatedPerson/${related_id}`];
+  patient.link = `RelatedPerson/${relatedID}`;
   resource = Patient.toFHIR(patient);
-  let result = await axios.post(`/Patient`, resource);
+  let id = (await axios.post(`/Patient`, resource)).data.id;
+  console.log(id);
 
-  return Patient.toModel(result.data);
+  return PatientIdService.createQrCode(id);
 }
