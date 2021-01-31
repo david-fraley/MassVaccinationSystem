@@ -91,12 +91,12 @@ export default new Vuex.Store({
 
     mutations: {
         patientRecordRetrieved(state, patientResourcePayload) {
+            state.patientResource = patientResourcePayload;
             
             //TO DO:  retrieve encounter resource, immunization resource, and appointment resource 'status' fields to determine the workflow state
             if((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
             {
                 state.activeWorkflowState = 'RECORD_RETRIEVED'
-                state.patientResource = patientResourcePayload;
 
                 //reset patient-specific data
                 state.encounterResource = {};
