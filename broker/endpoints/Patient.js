@@ -39,12 +39,12 @@ async function createPatient(req, res) {
   if (patient) {
     let related = { resourceType: "RelatedPerson" };
     let result = await createPatientWithLink(patient, related);
-    response.Patient.push(result.data);
+    response.Patient.push(result);
 
     // update related
-    let related_id = result.data.link[0].other.reference.split("/")[1];
-    resource = RelatedPerson.toFHIR({
-      patient: `Patient/${result.data.id}`,
+    let related_id = result.link.split("/")[1];
+    let resource = RelatedPerson.toFHIR({
+      patient: `Patient/${result.id}`,
       relationship: patient.relationship,
     });
     resource.id = related_id;
@@ -66,7 +66,7 @@ async function createPatient(req, res) {
 
   Promise.all(promises).then((results) => {
     for (result of results) {
-      response.Patient.push(result.data);
+      response.Patient.push(result);
     }
     res.json(response);
   });
@@ -83,5 +83,5 @@ async function createPatientWithLink(patient, related) {
   resource = Patient.toFHIR(patient);
   let result = await axios.post(`/Patient`, resource);
 
-  return result;
+  return Patient.toModel(result.data);
 }
