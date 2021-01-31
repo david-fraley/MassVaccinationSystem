@@ -31,13 +31,14 @@
 	rowClick: function (item, row) {      
         row.select(true);
 		},
-	calculatedDaysSinceDose() {
+	calculatedDaysSinceDose(firstDoseDateTime) {
 		// if (immunizationTimeStamp !== '' ) //checks to see if there is a time stamp
-		console.log("hello");
+		console.log((firstDoseDateTime));
+		
 		this.dateFunct = new Date();
 
 		this.now = this.dateFunct;
-		this.firstDose = new Date("2021-01-25T02:48:30.166Z");
+		this.firstDose = new Date(firstDoseDateTime);
 
 		this.numDaysSinceLastVaccination = Math.ceil((this.now-this.firstDose) / (1000*60*60*24));
 		console.log(this.numDaysSinceLastVaccination);
@@ -83,7 +84,7 @@
 				tradeName: 'VaxMan Inc.',
 				doseQty: '0.5 mL',
 				timeAdministered: '2020-08-16 16:22:25',
-				numDaysSinceLastVaccination: this.calculatedDaysSinceDose(),
+				numDaysSinceLastVaccination: this.calculatedDaysSinceDose(this.timeAdministered = '2020-09-22 16:22:25'),
 				practitionerName: 'Doogie Howser',
 				adverseEffects: 'N/A'
 			},	
