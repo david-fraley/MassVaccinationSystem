@@ -64,9 +64,9 @@ export default {
   getPatient: (data) => {
     const patient = {
       id: data.id,
-      family: "Fraley",
-      given: "David",
-      birthDate: "1950-01-01",
+      family: "Patient",
+      given: "Example",
+      birthDate: "2000-01-01",
       gender: "Male",
       address: {
         line: "1234 Main Street",
