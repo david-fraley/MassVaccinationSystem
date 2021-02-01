@@ -59,8 +59,8 @@
               :rules="birthdateRules"
               placeholder="MM/DD/YYYY"
               v-mask="'##/##/####'"
-              prepend-icon="mdi-calendar"
-              @click:prepend="on.click"
+              prepend-icon="mdi-blank"
+              @click:beforeprint="on.click"
               @blur="date = parseDate(dateFormatted)"
             >
             <template #label>
