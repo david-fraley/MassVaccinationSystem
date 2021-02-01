@@ -42,16 +42,13 @@ exports.search = [
   body('firstName', "Please enter the patient's first name").isLength({ min: 1}).trim().escape(),
   body('lastName', "Please enter the patient's last name").isLength({ min: 1 }).trim().escape(),
   body('birthDate', "Please enter a valid patient birth date").isISO8601({ strict: true}).toDate(),
-  body('postalCode', "Invalid postal code entered").optional().trim().isNumeric().isLength({ min: 5, max: 5}),
+  body('postalCode', "Invalid postal code entered").optional({checkFalsy: true}).trim().isNumeric().isLength({ min: 5, max: 5}),
   
   (req, res) => {
-
-    console.log('here');
 
     // Check for errors emitted by the express-validator functions above
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-      console.log(errors.array());
       let errorString = '';
       errors.array().forEach((error) => {
         errorString += error.msg + ', ';
@@ -66,23 +63,28 @@ exports.search = [
     //   postalCode: req.body.postalCode
     // };
 
-    let endpoint = `${process.env.FHIR_URL_BASE}/Patient?
-      given=${req.body.firstName}&
-      family=${req.body.lastName}&
-      birthdate=${req.body.birthDate}
-    `
+    let endpoint = process.env.FHIR_URL_BASE + '/Patient?' +
+      'given=' + req.body.firstName +
+      '&family=' + req.body.lastName +
+      '&birthdate=' + new Date(req.body.birthDate).toISOString().split('T')[0];
+  
     if(req.body.postalCode) {
-      endpoint += `&address-postalcode=${req.body.postalCode}`;
+      endpoint += '&address-postalcode=' + req.body.postalCode;
     }
     console.log(endpoint);
 
     // Use POST request so no PHI is included in URL query parameters
     axios
-    .post(endpoint)
+    .get(endpoint)
     .then((response) => {
-      let patientArray = response.data.entry.map((entry) => {
-        Patient.toModel(entry.resource);
-      });
+      console.log(response);
+      console.log(response.data.link);
+      let patientArray;
+      if(response.data.entry) {
+        patientArray = response.data.entry.map((entry) => {
+          Patient.toModel(entry.resource);
+        });
+      }
       if(!patientArray || patientArray.length === 0) {
         throw {
           status: 404,

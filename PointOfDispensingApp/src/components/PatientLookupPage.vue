@@ -240,8 +240,16 @@ export default {
       brokerRequests.searchPatient(data).then((response) => {
         if (response.patients) {
           this.patientLookupTable = response.patients;
-        } else if (response.error) {
+        }
+
+        // Accomodate form validation errors
+        else if(typeof(response.error) === 'string') {
           alert(response.error.error);
+        }
+
+        // Accomodate FHIR errors
+        else {
+          alert('No patients found');
         }
         this.loading = false;
       });
