@@ -54,7 +54,8 @@ export default {
       dataPersonalInfo: [],
       correctionLevel: "H",
       qrValue: ' ',
-      sendQr: ' '
+      sendQr: ' ',
+      dataScreeningResponses: []
     };
   },
   methods: {
@@ -83,6 +84,10 @@ export default {
     updatePersonalInfoData(personalInfoPayload) {
       this.dataPersonalInfo = personalInfoPayload;
       this.qrValue = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix
+    },
+    updateScreeningResponseData(screeningResponsesPayload) {
+      this.dataScreeningResponses = screeningResponsesPayload;
+      
     }
 },
   components:{
@@ -91,6 +96,9 @@ export default {
   mounted() {
 		EventBus.$on('DATA_PERSONAL_INFO_PUBLISHED', (personalInfoPayload) => {
 			this.updatePersonalInfoData(personalInfoPayload)
+    }),
+    EventBus.$on('DATA_SCREENING_RESPONSES_PUBLISHED', (screeningResponsesPayload) => {
+			this.updateScreeningResponseData(screeningResponsesPayload)
     })
   }
 }
