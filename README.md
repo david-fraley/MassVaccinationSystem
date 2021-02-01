@@ -1,5 +1,8 @@
 # MassVaccinationSystem
 
+## Setup
+Add or update /broker/.env with the following line: `FHIR_URL_BASE=http://localhost:8080/hapi-fhir-jpaserver/fhir`
+
 ## How to run
 Perform each of the following in a separate terminal:
 1. Navigate to / and run `docker-compose -f docker-compose-dev.yml up --build`
