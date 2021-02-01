@@ -12,7 +12,7 @@ CREATE SCHEMA massvaxx;
 SET search_path = massvaxx, pg_catalog;
 
 ALTER SCHEMA massvaxx OWNER TO massvaxxadmin;
-GRANT USAGE ON SCHEMA massvaxx TO massvaxx_role;
+--GRANT USAGE ON SCHEMA massvaxx TO massvaxx_role;
 
 CREATE TABLE massvaxx.users (
 	user_id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
