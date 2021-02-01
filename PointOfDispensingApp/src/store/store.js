@@ -31,10 +31,17 @@ export default new Vuex.Store({
         },
         screeningResponses: {
             vaccinationDecision: '',
-            patientInfoConfirmed: '',
-            consentFormSigned: '',
-            screeningCompleted: '',
-            factSheetProvided: '',
+            screeningQ1: '',
+            screeningQ2: '',
+            screeningQ2b: '',
+            screeningQ3a: '',
+            screeningQ3b: '',
+            screeningQ3c: '',
+            screeningQ4: '',
+            screeningQ5: '',
+            screeningQ6: '',
+            screeningQ7: '',
+            screeningQ8: '',
             screeningComplete: false
         }
     },
@@ -48,20 +55,24 @@ export default new Vuex.Store({
             return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
         },
         isPatientHistoryPageDisabled: state => {
-            //Patient History page is not accessible before the patient record has been loaded or after the patient has been discharged
-            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
+            //Patient History page is not accessible before the patient record has been loaded 
+            return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
         },
         isVaccinationEventPageDisabled: state => {
-            //Vaccination Event page is not accessible before the patient has been checked in or after the patient has been discharged
-            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED') || (state.activeWorkflowState == 'DISCHARGED'))
+            //Vaccination Event page is not accessible before the patient has been checked 
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
         },
         isAdverseReactionPageDisabled: state => {
-            //The Adverse Reaction page is only accessible after the vaccine has been administered and before the patient has been discharged
-            return (state.activeWorkflowState != 'VACCINATION_COMPLETE')
+            //The Adverse Reaction page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
+            return (state.activeWorkflowState != 'DISCHARGED')
+        },
+        isConsentScreeningPageDisabled: state => {
+            //Consent and Screening page is not accessible before the patient record has been loaded 
+            return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
         },
         isDischargePageDisabled: state => {
-            //The Discharge page is not accessible before the patient has been checked in
-            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
+            //The Discharge page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
+            return (state.activeWorkflowState != 'DISCHARGED')
         },
         isConfigurationPageDisabled: state => {
             //The Configuration page is only accessible before a patient has been checked in or after a patient has been discharged
@@ -104,10 +115,17 @@ export default new Vuex.Store({
         },
         vaccinationScreeningUpdate (state, screeningResponsesPayload) {
             state.screeningResponses.vaccinationDecision = screeningResponsesPayload.vaccinationDecision
-            state.screeningResponses.patientInfoConfirmed = screeningResponsesPayload.patientInfoConfirmed
-            state.screeningResponses.consentFormSigned = screeningResponsesPayload.consentFormSigned
-            state.screeningResponses.screeningCompleted = screeningResponsesPayload.screeningCompleted
-            state.screeningResponses.factSheetProvided = screeningResponsesPayload.factSheetProvided
+            state.screeningResponses.screeningQ1 = screeningResponsesPayload.screeningQ1
+            state.screeningResponses.screeningQ2 = screeningResponsesPayload.screeningQ2
+            state.screeningResponses.screeningQ2b = screeningResponsesPayload.screeningQ2b
+            state.screeningResponses.screeningQ3a = screeningResponsesPayload.screeningQ3a
+            state.screeningResponses.screeningQ3b = screeningResponsesPayload.screeningQ3b
+            state.screeningResponses.screeningQ3c = screeningResponsesPayload.screeningQ3c
+            state.screeningResponses.screeningQ4 = screeningResponsesPayload.screeningQ4
+            state.screeningResponses.screeningQ5 = screeningResponsesPayload.screeningQ5
+            state.screeningResponses.screeningQ6 = screeningResponsesPayload.screeningQ6
+            state.screeningResponses.screeningQ7 = screeningResponsesPayload.screeningQ7
+            state.screeningResponses.screeningQ8 = screeningResponsesPayload.screeningQ8
             state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
