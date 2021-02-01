@@ -1,55 +1,36 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="4">
-        Reason vaccine was not administered
-      </v-col>
-      <v-col cols="4">
-        <v-select
-          :items="vaccineNotAdministeredOptions"
-          outlined
-          dense
-          required
-          :rules="[(v) => !!v || 'Reason field is required']"
-          v-model="notAdministeredReason"
-        ></v-select>
-      </v-col>
+      <p> </p> <!--blank row for spacing-->
     </v-row>
     <v-row>
-      <v-col cols="2">
-        Vaccination status
+      <v-col cols="6">
+        <v-row no-gutters>
+          <v-col cols="6">
+            <div class="secondary--text">Healthcare Practitioner</div>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field outlined dense filled readonly
+              :value=healthcarePractitioner
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <div class="secondary--text"><span style="color:red">*</span>Reason vaccine was not administered</div>
+          </v-col>
+          <v-col cols="6">
+            <v-select
+              :items="vaccineNotAdministeredOptions"
+              outlined
+              dense
+              required
+              :rules="[v => !!v || 'Reason vaccine was not administered field is required']"
+              v-model="notAdministeredReason"
+            ></v-select>
+          </v-col>
+        </v-row>
       </v-col>
-      <v-col cols="4">
-        <v-text-field
-          outlined
-          dense
-          filled
-          readonly
-          :value="immunizationStatus"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="4">
-        <v-text-field
-          outlined
-          dense
-          filled
-          readonly
-          :value="immunizationTimeStamp"
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="2">
-        Healthcare practitioner
-      </v-col>
-      <v-col cols="4">
-        <v-text-field
-          outlined
-          dense
-          filled
-          readonly
-          :value="healthcarePractitioner"
-        ></v-text-field>
+      <!--blank column for spacing-->
+      <v-col cols="6">
       </v-col>
     </v-row>
     <v-row>
@@ -64,30 +45,64 @@
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
-      <v-col cols="6">
-        <v-btn block color="accent" @click="submitVaccinationRecord(); endEncounter();">
-          Submit vaccination record
-        </v-btn>
-      </v-col>
+      <template> 
+        <div class="text-center">
+          <v-dialog
+            v-model="dialog"
+            width="500"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-col cols="6">
+                <v-btn block color="accent" v-bind="attrs" v-on="on">
+                  Submit vaccination record
+                </v-btn>
+              </v-col>
+          </template>
+            <v-card>
+              <v-card-title class="headline grey lighten-2 justify-center"> 
+                Are you sure you want to submit?
+              </v-card-title>
+              <v-card-actions>
+                <v-btn	
+                  color="primary"
+                  text
+                  @click="dialog = false">
+                  Back
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn	
+                  color="primary"
+                  text
+                  @click="
+                    submitVaccinationRecord(); 
+                    endEncounter();
+                  ">
+                  Submit
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
+      </template>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import brokerRequests from "../brokerRequests";
-
-export default {
-  name: "VaccinationCanceledComponent",
-  computed: {
-    immunizationStatus() {
-      return this.$store.state.immunizationResource.immunizationStatus;
-    },
-    immunizationTimeStamp() {
-      return this.$store.state.immunizationResource.immunizationTimeStamp;
-    },
-    healthcarePractitioner() {
-      return this.$store.state.immunizationResource.healthcarePractitioner;
-    },
+  import brokerRequests from "../brokerRequests";
+  
+  export default {
+    name: 'VaccinationCanceledComponent',
+    computed: {
+      healthcarePractitioner() {
+        return this.$store.state.immunizationResource.healthcarePractitioner
+      },
+      encounterID() {
+        return this.$store.state.encounterResource.id;
+      },
+      appointmentID() {
+        return this.$store.state.appointmentResource.id;
+      },
   },
   methods: {
     onSuccessSubmitVaccinationRecord() {
@@ -97,25 +112,19 @@ export default {
         healthcarePractitioner: this.healthcarePractitioner,
         notAdministeredReason: this.notAdministeredReason,
         notes: this.notes,
-        };
-
-        //send data to Vuex
-        this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
-
-        //Advance to the Discharge page
-        this.$router.push("Discharge");
-
-        //Close the dialog
-        this.dialog = false;
-    },
-    onSuccessEndEncounter() {
-      //the following is sending dummy data until we have the API in place
-      const encounterResourcePayload = {
-        encounterStatus: "Finished",
-        encounterTimeStamp: new Date().toISOString(),
       };
+
       //send data to Vuex
-      this.$store.dispatch("patientDischarged", encounterResourcePayload);
+      this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
+
+      //Advance to the Discharge page
+      this.$router.push("Discharge");
+
+      //Close the dialog
+      this.dialog = false;
+    },
+    onDischarge(payload) {
+      this.$store.dispatch("patientDischarged", payload);
     },
     submitVaccinationRecord() {
       brokerRequests.submitVaccination().then((response) => {
@@ -127,14 +136,19 @@ export default {
       });
     },
     endEncounter() {
-      brokerRequests.discharge().then((response) => {
-      if (response.data) {
-        this.onSuccessEndEncounter();
-      } else if (response.error) {
-        alert("Discharge not successful");
-      }
-    });
-  },
+      let data = {
+        apptID: this.appointmentID,
+        encounterID: this.encounterID,
+      };
+      brokerRequests.discharge(data).then((response) => {
+        if (response.data) {
+          this.onDischarge(response.data);
+        } else if (response.error) {
+          console.log(response.error);
+          alert(`Patient not discharged`);
+        }
+      });
+    },
   },
   components: {},
   data() {

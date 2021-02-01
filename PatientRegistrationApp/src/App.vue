@@ -80,7 +80,7 @@
 								<!-- Single Patient: Screening Questions -->
 								<v-stepper-content step="5">
 									<v-toolbar flat>
-										<v-toolbar-title class="text-wrap">Please complete the screening questions</v-toolbar-title>
+										<v-toolbar-title class="text-wrap">Please complete these screening questions</v-toolbar-title>
 									</v-toolbar>
 									<v-card flat><ScreeningQuestions ref="singlepatientscreeningquestions"/></v-card>							
 								</v-stepper-content>

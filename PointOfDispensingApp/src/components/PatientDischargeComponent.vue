@@ -42,11 +42,11 @@
           dense
           readonly
           outlined
-          :value="encounterTimeStamp"
+          :value="encounterEndTime"
         ></v-text-field>
       </v-col>
     </v-row>
-    <!--v-row>
+    <!-- <v-row>
       <v-col cols="2">
       </v-col>    
       <v-col cols="6">
@@ -54,7 +54,7 @@
           End encounter
         </v-btn>
       </v-col>
-    </v-row-->
+    </v-row> -->
     <v-row>
       <v-col cols="12">
         <v-divider></v-divider>
@@ -95,14 +95,13 @@ export default {
       return this.$store.state.immunizationResource.immunizationTimeStamp;
     },
     encounterStatus() {
-      return this.$store.state.encounterResource.encounterStatus;
+      return this.$store.state.encounterResource.status;
     },
-    encounterTimeStamp() {
-      return this.$store.state.encounterResource.encounterTimeStamp;
+    encounterEndTime() {
+      return this.$store.state.encounterResource.end;
     },
   },
   methods: {},
-  components: {},
   data() {
     return {};
   },

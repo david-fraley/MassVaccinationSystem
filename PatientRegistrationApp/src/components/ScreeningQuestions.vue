@@ -1,6 +1,18 @@
 <template>
   <v-container fill-height fluid>
-	<v-form ref="form" v-model="valid">
+    <v-row align="center" justify="start">
+      <v-col cols="12">
+        <div>Information collected on this form will be used to document authorization for receipt of vaccines.  
+          Your responses will be verified when receiving the vaccine.  The information will be shared through the 
+          Wisconsin Immunization Registry (WIR) with other health care providers directly involved with the 
+          patient to assure completion of the vaccine schedule.  Information collected on this form is confidential.
+        </div>
+        <div><br></div>
+      </v-col>
+    </v-row>
+    <v-row no-gutters>
+      <v-divider></v-divider>
+    </v-row>
     <v-row no-gutters>
       <v-col cols="12">
         <v-row no-gutters>
@@ -67,7 +79,7 @@
           <v-divider></v-divider>
         </v-row>
         <v-row no-gutters>
-          <v-col cols="12">
+          <v-col cols="12" sm="8" md="9" lg="10">
             <v-row no-gutters>
               <v-radio-group>
                 <template v-slot:label>
@@ -250,7 +262,6 @@
         </v-row>
       </v-col>
     </v-row>
-	</v-form>
   </v-container>
 </template>
 
@@ -287,14 +298,14 @@ export default {
         screeningQ1: this.screeningQ1,
         screeningQ2: this.screeningQ2,
         screeningQ2b: this.screeningQ2b,
-		screeningQ3a: this.screeningQ3a,
-		screeningQ3b: this.screeningQ3b,
-		screeningQ3c: this.screeningQ3c,
-		screeningQ4: this.screeningQ4,
-		screeningQ5: this.screeningQ5,
-		screeningQ6: this.screeningQ6,
-		screeningQ7: this.screeningQ7,
-		screeningQ8: this.screeningQ8,
+        screeningQ3a: this.screeningQ3a,
+        screeningQ3b: this.screeningQ3b,
+        screeningQ3c: this.screeningQ3c,
+        screeningQ4: this.screeningQ4,
+        screeningQ5: this.screeningQ5,
+        screeningQ6: this.screeningQ6,
+        screeningQ7: this.screeningQ7,
+        screeningQ8: this.screeningQ8,
       }
       EventBus.$emit('DATA_SCREENING_RESPONSES_PUBLISHED', screeningResponsesPayload)
     },
