@@ -25,7 +25,12 @@
 
 <script>
   export default {
-    name: 'PatientHistoryComponent',
+	name: 'PatientHistoryComponent',
+	computed: {
+		immunizations(){
+			return this.$store.state.patientHistory
+		}
+	},
     methods: 
     {
 	rowClick: function (item, row) {      
@@ -71,18 +76,7 @@
 			{ text: 'Practitioner', value: 'practitionerName' },
 			{ text: 'Adverse Effects', value: 'adverseEffects' },
 			],
-		patientHistoryTable: [
-			{
-        id: 1,
-				doseNum: '1',
-				tradeName: 'VaxMan Inc.',
-				doseQty: '0.5 mL',
-				timeAdministered: '2021-01-15 16:22:25',
-				numDaysSinceLastVaccination: this.calculatedDaysSinceDose(this.timeAdministered = '2021-01-15 16:22:25'),
-				practitionerName: 'Doogie Howser',
-				adverseEffects: 'N/A'
-			},	
-				],
+		patientHistoryTable: this.immunizations,
       }
     },
   }

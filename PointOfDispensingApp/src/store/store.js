@@ -168,6 +168,9 @@ export default new Vuex.Store({
         },
         unknownErrorCondition(state) {
             state.activeWorkflowState = 'ERROR'
+        },
+        patientHistory(state, payload){
+            state.patientHistory = payload;
         }
 
     },
@@ -193,6 +196,9 @@ export default new Vuex.Store({
         },
         unknownErrorCondition(context) {
             context.commit('unknownErrorCondition')
+        },
+        patientHistory(context, payload){
+            context.commit('patientHistory', payload)
         }
     },
     activeWorkflowStateEnum:

@@ -76,6 +76,17 @@ export default {
       });
   },
 
+  getImmunization:(patID) => {
+    return axios
+    .get('/broker/Immunization', {params: { patient: patID}})
+    .then((response) => {
+      return {data: response.data};
+    })
+    .catch((e) => {
+      return toResponse(e);
+    });
+  },
+
   // Check-in patient
   // patID: patient ID
   checkIn: (patID) => {

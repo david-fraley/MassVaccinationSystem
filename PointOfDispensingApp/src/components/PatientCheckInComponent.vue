@@ -100,5 +100,15 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    var Immunization = brokerRequests.getImmunization(patientId).then((response) => {
+      if(response.data){
+        this.onSuccess(response.data);
+      } else if (response.error){
+        alert('Failed to load history\n${response.error}')
+      }
+    });
+    this.$store.dispatch("patientHistory", Immunization);
+  }
 };
 </script>
