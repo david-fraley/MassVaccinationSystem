@@ -63,7 +63,7 @@ export default {
       const qrcode = document.getElementById('qrCodeId');
       let pdfDoc = new jsPDF();
       let imageData= this.getBase64Image(qrcode);
-      let string = this.qrValue;
+      let string = this.dataPersonalInfo.familyName + ", " + this.dataPersonalInfo.givenName + " " + this.dataPersonalInfo.middleName + " " + this.dataPersonalInfo.suffix;
       pdfDoc.setFontSize(10);
       pdfDoc.text("COVID-19 Vaccination Registration",10,15);
       pdfDoc.text("Use this QR code to easily check-in at the site where you receive your vaccine.",10,25);
@@ -74,8 +74,8 @@ export default {
     },
     getBase64Image(img) {
       var canvas = document.createElement("canvas");
-      canvas.width = 200;
-      canvas.height = 200;
+      canvas.width = 400;
+      canvas.height = 400;
       var ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0);
       var dataURL = canvas.toDataURL("image/png");
@@ -88,6 +88,13 @@ export default {
     updateScreeningResponseData(screeningResponsesPayload) {
       this.dataScreeningResponses = screeningResponsesPayload;
       
+      //add the screening responses to the qrValue string 
+      this.qrValue += "|" + this.dataScreeningResponses.screeningQ1 + "|" + this.dataScreeningResponses.screeningQ2 + "|"
+       + this.dataScreeningResponses.screeningQ2b + "|" + this.dataScreeningResponses.screeningQ3a + "|"
+        + this.dataScreeningResponses.screeningQ3b + "|" + this.dataScreeningResponses.screeningQ3c + "|"
+         + this.dataScreeningResponses.screeningQ4 + "|" + this.dataScreeningResponses.screeningQ5 + "|"
+          + this.dataScreeningResponses.screeningQ6 + "|" + this.dataScreeningResponses.screeningQ7 + "|"
+           + this.dataScreeningResponses.screeningQ8 + "|"
     }
 },
   components:{
@@ -112,4 +119,3 @@ export default {
   display: block
   max-width: 100%
 </style>
-
