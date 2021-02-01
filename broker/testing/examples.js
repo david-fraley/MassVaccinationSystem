@@ -6,16 +6,7 @@ module.exports = {
   Appointment: `{
   "Appointment": {
     "status":"fulfilled",
-    "participant":[
-      {
-        "type":"patient",
-        "actor":"Patient/example"
-      },
-      {
-        "type":"pratitioner",
-        "actor":"Practitioner/example"
-      }
-    ],
+    "participant":["ab"],
     "slot":"Slot/example"
   }
 }`,
