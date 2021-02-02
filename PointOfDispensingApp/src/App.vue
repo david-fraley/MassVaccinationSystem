@@ -22,7 +22,7 @@
       <v-list>
         <v-list-item-group v-model="leftMenu" color="white">
           <!-- Retrieve Patient Record -->
-          <v-list-item :disabled="true" router :to="'/RetrievePatientRecord'">
+          <v-list-item :disabled="false" router :to="'/RetrievePatientRecord'">
             <v-list-item-action>
               <v-icon large>mdi-binoculars</v-icon>
             </v-list-item-action>
