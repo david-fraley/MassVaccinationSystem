@@ -116,9 +116,6 @@ export default {
     config() {
       return this.$store.state.config;
     },
-    isVaccinationEventPageReadOnly() {
-        return this.$store.getters.isVaccinationEventPageReadOnly
-    },
     encounterID() {
       return this.$store.state.encounterResource.id;
     },

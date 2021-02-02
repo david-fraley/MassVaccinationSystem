@@ -22,8 +22,6 @@
               required
               :rules="[(v) => !!v || 'Lot Number field is required']"
               v-model="lotNumber"
-              :filled="isVaccinationEventPageReadOnly"
-              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -38,8 +36,6 @@
               required
               :rules="[(v) => !!v || 'Expiration Date field is required']"
               v-model="expirationDate"
-              :filled="isVaccinationEventPageReadOnly"
-              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -54,8 +50,6 @@
               required
               :rules="[(v) => !!v || 'Manufacturer field is required']"
               v-model="manufacturer"
-              :filled="isVaccinationEventPageReadOnly"
-              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -77,8 +71,6 @@
               required
               :rules="[(v) => !!v || 'Dose Quantity field is required']"
               v-model="doseQuantity"
-              :readonly="isVaccinationEventPageReadOnly"
-              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
           <v-col cols="4">
@@ -94,8 +86,6 @@
               v-model="doseNumber"
               required
               :rules="[(v) => !!v || 'Dose Number field is required']"
-              :readonly="isVaccinationEventPageReadOnly"
-              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
         </v-row>
@@ -138,8 +128,6 @@
               required
               :rules="[(v) => !!v || 'Site of Vaccination field is required']"
               v-model="site"
-              :readonly="isVaccinationEventPageReadOnly"
-              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
         </v-row>
@@ -179,7 +167,7 @@
           <v-dialog v-model="dialog" width="500">
             <template v-slot:activator="{ on, attrs }">
               <v-col cols="6">
-                <v-btn block color="accent" v-bind="attrs" v-on="on" :disabled="isVaccinationEventPageReadOnly">
+                <v-btn block color="accent" v-bind="attrs" v-on="on">
                   Submit vaccination record
                 </v-btn>
               </v-col>
@@ -237,9 +225,6 @@ export default {
     },
     config() {
       return this.$store.state.config;
-    },
-    isVaccinationEventPageReadOnly() {
-      return this.$store.getters.isVaccinationEventPageReadOnly
     },
     encounterID() {
       return this.$store.state.encounterResource.id;
