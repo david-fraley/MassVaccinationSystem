@@ -1,13 +1,14 @@
 <template>
-  <v-container fluid> 
+  <v-container fluid>
     <v-row align="center" justify="start">
       <!-- Last name -->
       <v-col cols="12" sm="6" md="6" lg="4">
-        <v-text-field  
+        <v-text-field
           required
-          :rules="[v => !!v || 'Last name field is required']"
+          :rules="[(v) => !!v || 'Last name field is required']"
           v-model="familyName"
-          prepend-icon="mdi-blank">
+          prepend-icon="mdi-blank"
+        >
           <template #label>
             <span class="red--text"><strong>* </strong></span>Last Name
           </template>
@@ -15,11 +16,12 @@
       </v-col>
       <!-- First name -->
       <v-col cols="12" sm="6" md="6" lg="4">
-        <v-text-field 
+        <v-text-field
           required
-          :rules="[v => !!v || 'First name field is required']"
+          :rules="[(v) => !!v || 'First name field is required']"
           v-model="givenName"
-          prepend-icon="mdi-blank">
+          prepend-icon="mdi-blank"
+        >
           <template #label>
             <span class="red--text"><strong>* </strong></span>First Name
           </template>
@@ -27,19 +29,21 @@
       </v-col>
       <!-- Middle name -->
       <v-col cols="12" sm="6" md="6" lg="3">
-        <v-text-field 
+        <v-text-field
           v-model="middleName"
           label="Middle Name"
-          prepend-icon="mdi-blank">
+          prepend-icon="mdi-blank"
+        >
         </v-text-field>
       </v-col>
       <!-- Suffix -->
       <v-col cols="12" sm="6" md="6" lg="1">
-        <v-select 
-          label="Suffix" 
-          :items="suffixOptions" 
+        <v-select
+          label="Suffix"
+          :items="suffixOptions"
           v-model="suffix"
-          prepend-icon="mdi-blank">
+          prepend-icon="mdi-blank"
+        >
         </v-select>
       </v-col>
     </v-row>
@@ -51,7 +55,8 @@
           :rules="birthdateRules"
           placeholder="MM/DD/YYYY"
           v-mask="'##/##/####'"
-          prepend-icon="mdi-blank">
+          prepend-icon="mdi-blank"
+        >
           <template #label>
             <span class="red--text"><strong>* </strong></span>Date of Birth
           </template>
@@ -62,9 +67,10 @@
         <v-select
           :items="genderIdOptions"
           required
-          :rules="[v => !!v || 'Gender identity field is required']"
+          :rules="[(v) => !!v || 'Gender identity field is required']"
           v-model="gender"
-          prepend-icon="mdi-blank">
+          prepend-icon="mdi-blank"
+        >
           <template #label>
             <span class="red--text"><strong>* </strong></span>Gender Identity
           </template>
@@ -78,12 +84,14 @@
           v-model="race"
           :items="raceOptions"
           required
-          :rules="[v => !!v || 'Race is required']"
-          prepend-icon="mdi-blank">
+          :rules="[(v) => !!v || 'Race is required']"
+          prepend-icon="mdi-blank"
+        >
           <template #label>
             <span class="red--text"><strong>* </strong></span>Race
           </template>
-        ></v-select>
+          ></v-select
+        >
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Ethnicity -->
@@ -91,12 +99,14 @@
           v-model="ethnicity"
           :items="ethnicityOptions"
           required
-          :rules="[v => !!v || 'Ethnicity is required']"
-          prepend-icon="mdi-blank">
+          :rules="[(v) => !!v || 'Ethnicity is required']"
+          prepend-icon="mdi-blank"
+        >
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
           </template>
-        ></v-select>
+          ></v-select
+        >
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
@@ -105,7 +115,11 @@
         <!-- the "rules" checks that the image size is less than 2 MB -->
         <v-file-input
           accept="image/png, image/jpeg, image/bmp"
-          :rules="[(v) => (v ? v.size : 0) < 2097152 || 'Image size should be less than 2 MB!']"
+          :rules="[
+            (v) =>
+              (v ? v.size : 0) < 2097152 ||
+              'Image size should be less than 2 MB!',
+          ]"
           placeholder="Upload a recent photo"
           v-model="patientPhoto"
           label="Photo"
@@ -150,7 +164,9 @@ export default {
       birthdateRules: [
         (v) => !!v || "DOB is required",
         // check if v exists before seeing if the length is 10
-        (v) => !!v && v.length === 10 || "DOB must be in specified format, MM/DD/YYYY",
+        (v) =>
+          (!!v && v.length === 10) ||
+          "DOB must be in specified format, MM/DD/YYYY",
         (v) => this.validBirthdate(v) || "Invalid DOB",
       ],
     };
@@ -162,7 +178,7 @@ export default {
         d.getFullYear(),
         ("0" + (d.getMonth() + 1)).slice(-2),
         ("0" + d.getDate()).slice(-2),
-        ].join("-");
+      ].join("-");
 
       return date;
     },
@@ -173,25 +189,25 @@ export default {
       var maxDate = Date.parse(this.maxDateStr);
       var formattedDate = () => {
         // Ensure birthdate is fully entered and can be converted into 3 variables
-        if(birthdate) {
-          if(birthdate.split('/').length === 3) {
-            const [month, day, year] = birthdate.split('/');
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        if (birthdate) {
+          if (birthdate.split("/").length === 3) {
+            const [month, day, year] = birthdate.split("/");
+            return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
           }
         }
         return false;
-      }
+      };
       var date = Date.parse(formattedDate());
 
       return !Number.isNaN(date) && minDate <= date && date <= maxDate;
     },
-    parseDate (date) {
+    parseDate(date) {
       if (!date) return null;
       // Ensure birthdate is fully entered and can be converted into 3 variables before parsing
-      if (date.split('/').length !== 3) return null;
+      if (date.split("/").length !== 3) return null;
 
-      const [month, day, year] = date.split('/');
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      const [month, day, year] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
     sendPersonalInfoDataToReviewPage() {
       const personalInfoPayload = {
@@ -202,7 +218,10 @@ export default {
         birthDate: this.dob,
         gender: this.gender,
         patientPhoto: this.patientPhoto,
-        patientPhotoSrc:  (this.patientPhoto && this.patientPhoto.size) ? URL.createObjectURL( this.patientPhoto ) : undefined,
+        patientPhotoSrc:
+          this.patientPhoto && this.patientPhoto.size
+            ? URL.createObjectURL(this.patientPhoto)
+            : undefined,
         race: this.race,
         ethnicity: this.ethnicity,
         preferredLanguage: this.preferredLanguage,
@@ -242,10 +261,11 @@ export default {
       if (this.patientPhoto && this.patientPhoto.size > 2097152) {
         if (!valid) {
           message += "\n";
-          message += "Your selected photo is too large. Please resubmit one under 2MBs.";
-        }
-        else {
-          message = "Your selected photo is too large. Please resubmit one under 2MBs.";
+          message +=
+            "Your selected photo is too large. Please resubmit one under 2MBs.";
+        } else {
+          message =
+            "Your selected photo is too large. Please resubmit one under 2MBs.";
         }
         valid = false;
       }
@@ -253,15 +273,15 @@ export default {
         if (!valid) {
           message += ",";
         }
-        message+= " Race"
-        valid = false
+        message += " Race";
+        valid = false;
       }
       if (this.ethnicity == "") {
         if (!valid) {
-            message += ",";
+          message += ",";
         }
-        message += " Ethnicity"
-        valid = false
+        message += " Ethnicity";
+        valid = false;
       }
       if (valid == false) {
         alert(message);
@@ -279,4 +299,3 @@ export default {
   },
 };
 </script>
-

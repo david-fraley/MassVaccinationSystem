@@ -28,9 +28,7 @@ function healthcheckPromise() {
 
 // define functions for API requests here
 export default {
-
   submitRegistration: () => {
     return healthcheckPromise();
   },
-  
 };
