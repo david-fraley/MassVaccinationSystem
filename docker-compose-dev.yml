@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    hapi:
+        build: './hapi_fhir'
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./hapi_fhir/data/hapi:/data/hapi
+    db:
+        build: './postgres_db'
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data/
+# named volume for persistent database
+volumes:
+    pgdata:

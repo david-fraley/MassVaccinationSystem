@@ -6,7 +6,8 @@
   "repository": "github:david-fraley/MassVaccinationSystem",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devstart": "nodemon server"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +20,8 @@
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

@@ -78,7 +78,9 @@
 		<v-row>	
 			<v-col cols="12">
 				<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactFamilyName}}, 
-					{{dataEmergencyContact.emergencyContactGivenName}}</span></div>
+					{{dataEmergencyContact.emergencyContactGivenName}}
+					<span v-if="dataEmergencyContact.emergencyContactRelationship != ''">(Relationship: {{dataEmergencyContact.emergencyContactRelationship}})</span>
+					</span></div>
 				<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataEmergencyContact.emergencyContactPhoneNumber}} 
 					<span v-if="dataEmergencyContact.emergencyContactPhoneNumberType != ''">({{dataEmergencyContact.emergencyContactPhoneNumberType}})</span></span></div>
 			</v-col>
@@ -92,7 +94,8 @@
 </template>
  
 <script>
-import EventBus from '../eventBus'
+import EventBus from '../eventBus' 
+import brokerRequests from '../brokerRequests'
 
 	export default {
 	data () {
@@ -146,7 +149,23 @@ import EventBus from '../eventBus'
 		},
 		updateContactInfoData(contactInfoPayload) {
 			this.dataContactInfo = contactInfoPayload
-		}
+		},
+		submitPatientInfo() {
+			brokerRequests.submitRegistration().then((response) => {
+				if (response.data) {
+					this.onSuccess();
+				}	else if (response.error) {
+					alert("Registration not successful");
+				}
+			});
+		},
+		onSuccess() {
+			//Do we need anything here, yet?
+			/*const PatientSubmitPayload = {
+				registrationStatus: "Finished",
+				registrationTimeStamp: new Date().toISOString(),
+			};*/
+		},
 	},
 	mounted() {
 		EventBus.$on('DATA_PERSONAL_INFO_PUBLISHED', (personalInfoPayload) => {

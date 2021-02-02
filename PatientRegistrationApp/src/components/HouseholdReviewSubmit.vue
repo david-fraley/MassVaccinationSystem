@@ -79,7 +79,10 @@
 						<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].preferredLanguage}}</span></div>
 						<div class="font-weight-light">Emergency Contact</div>
 						<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.emergencyContactFamilyName}}, 
-						{{dataHouseholdEmergencyContact.emergencyContactGivenName}}</span></div>
+						{{dataHouseholdEmergencyContact.emergencyContactGivenName}}
+							<span v-if="dataHouseholdEmergencyContact.emergencyContactRelationship != ''">
+							(Relationship: {{dataHouseholdEmergencyContact.emergencyContactRelationship}})</span>
+							</span></div>
 						<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdEmergencyContact.emergencyContactPhoneNumber}} 
 						<span v-if="dataHouseholdEmergencyContact.emergencyContactPhoneNumberType != ''">({{dataHouseholdEmergencyContact.emergencyContactPhoneNumberType}})</span></span></div>
 						<v-card-actions>
@@ -110,7 +113,7 @@
 							<div class="font-weight-medium">Preferred Language:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[index].preferredLanguage}}</span></div>
 							<div class="font-weight-light">Emergency Contact</div>
 							<div class="font-weight-medium">Name:  <span class="font-weight-regular">{{dataHouseholdPersonalInfo[0].familyName}}, 
-							{{dataHouseholdPersonalInfo[0].givenName}}</span></div>
+							{{dataHouseholdPersonalInfo[0].givenName}} (Relationship: {{dataHouseholdPersonalInfo[index].relationship}})</span></div>
 							<div class="font-weight-medium">Phone:  <span class="font-weight-regular">{{dataHouseholdContactInfo.primaryPhoneNumber}} 
 							<span v-if="dataHouseholdContactInfo.primaryPhoneNumberType != ''">({{dataHouseholdContactInfo.primaryPhoneNumberType}})</span></span></div>
 							<v-card-actions>
@@ -133,6 +136,7 @@
 
 <script>
 import EventBus from '../eventBus'
+import brokerRequests from '../brokerRequests'
 
 	export default {
 	data () {
@@ -195,7 +199,23 @@ import EventBus from '../eventBus'
 		editPersonalInfo(householdMemberNumber)
 		{
 			EventBus.$emit('DATA_HOUSEHOLD_PERSONAL_INFO_EDIT', householdMemberNumber)
-		}
+		},
+		submitPatientInfo() {
+			brokerRequests.submitRegistration().then((response) => {
+				if (response.data) {
+					this.onSuccess();
+				}	else if (response.error) {
+					alert("Registration not successful");
+				}
+			});
+		},
+		onSuccess() {
+			//Do we need anything here, yet?
+			/*const PatientSubmitPayload = {
+				registrationStatus: "Finished",
+				registrationTimeStamp: new Date().toISOString(),
+			};*/
+		},
 	},
 	mounted() 
 	{

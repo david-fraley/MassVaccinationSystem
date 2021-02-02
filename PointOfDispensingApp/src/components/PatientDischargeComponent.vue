@@ -89,10 +89,10 @@ export default {
   name: "PatientDischargeComponent",
   computed: {
     immunizationStatus() {
-      return this.$store.state.immunizationResource.immunizationStatus;
+      return this.$store.state.immunizationResource.status;
     },
     immunizationTimeStamp() {
-      return this.$store.state.immunizationResource.immunizationTimeStamp;
+      return this.$store.state.immunizationResource.occurrence;
     },
     encounterStatus() {
       return this.$store.state.encounterResource.status;

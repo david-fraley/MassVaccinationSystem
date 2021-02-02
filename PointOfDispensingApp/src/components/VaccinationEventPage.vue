@@ -10,12 +10,14 @@
     </v-row>
     <v-row>
       <PatientInfoComponent />
-      <VaccinationScreeningComponent @VaccinationProceed_Yes="setVaccinationProceedDecision(true)" @VaccinationProceed_No="setVaccinationProceedDecision(false)"/>
       <template v-if="wasDecisionMadeToProceed()">
       <VaccinationProceedComponent />
       </template>
       <template v-else-if="wasDecisionMadeToCancel()">
       <VaccinationCanceledComponent />
+      </template>
+      <template v-else>
+        <div class="font-weight-medium secondary--text">Please review and complete the screening questions.</div>
       </template>
     </v-row>
   </v-container>
@@ -23,7 +25,6 @@
 
 <script>
 import PatientInfoComponent from './PatientInfoComponent';
-import VaccinationScreeningComponent from './VaccinationScreeningComponent';
 import VaccinationProceedComponent from './VaccinationProceedComponent';
 import VaccinationCanceledComponent from './VaccinationCanceledComponent';
 
@@ -31,11 +32,6 @@ import VaccinationCanceledComponent from './VaccinationCanceledComponent';
     name: 'VaccinationEventPage',
     methods: 
     {
-      setVaccinationProceedDecision(decision)
-      {
-        decision ? (this.vaccinationProceedDecision = 'Yes') :
-        (this.vaccinationProceedDecision = 'No');
-      },
       wasDecisionMadeToProceed()
       {
         return (this.vaccinationProceedDecision=='Yes')
@@ -48,7 +44,6 @@ import VaccinationCanceledComponent from './VaccinationCanceledComponent';
     components: 
     {
       PatientInfoComponent,
-      VaccinationScreeningComponent,
       VaccinationProceedComponent,
       VaccinationCanceledComponent,
     },
