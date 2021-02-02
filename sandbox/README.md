@@ -95,7 +95,7 @@ If you are using a Linux distro as your Docker host and would like the use Let's
 
     Enter the data required at the prompts.
 
-3. Edit .env file, replace the following lines:
+4. Edit .env file, replace the following lines:
 
         PROXY_VOLUME_MAP1=./nginx.conf:/etc/nginx/nginx.conf
         PROXY_VOLUME_MAP2=./sandbox.crt:/etc/nginx/sandbox.crt
@@ -104,11 +104,20 @@ If you are using a Linux distro as your Docker host and would like the use Let's
     with (replace \\<FQDN\\> with your FQDN):
 
         PROXY_VOLUME_MAP1=./nginx-letsencrypt.conf:/etc/nginx/nginx.conf
-        PROXY_VOLUME_MAP2=/etc/letsencrypt/\<FQDN\>:/etc/letsencrypt/fqdn
-        PROXY_VOLUME_MAP3=/etc/letsencrypt:/etc/letsencrypt
+        PROXY_VOLUME_MAP2=./certs:/etc/certs
+        PROXY_VOLUME_MAP3=./dummy:/etc/dummy
 
-4. Periodically refresh your certificate (Let's Encrypt certs expire after 90 days, but can be renewed after 60 days):
+5. Need to do some additional steps to get certificates into proxy container in sandbox directory:
+
+        mkdir <sandbox_dir>/certs
+        mkdir <sandbox_dir>/dummy
+        cp /etc/letsencrypt/live/<FQDN>/fullchain.pem <sandbox_dir>/sandbox/certs
+        cp /etc/letsencrupt/live/<FQDN>/privkey.pem <sandbox_dir>/certs        
+
+6. Periodically refresh your certificate (Let's Encrypt certs expire after 90 days, but can be renewed after 60 days):
 
         certbot renew
+        cp /etc/letsencrypt/live/<FQDN>/fullchain.pem <sandbox_dir>/certs
+        cp /etc/letsencrupt/live/<FQDN>/privkey.pem <sandbox_dir>/certs 
 
     Suggestion is to set this up as a cron job to avoid having certs expire.
