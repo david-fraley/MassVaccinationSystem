@@ -32,18 +32,12 @@
         row.select(true);
 		},
 	calculatedDaysSinceDose(firstDoseDateTime) {
-		// if (immunizationTimeStamp !== '' ) //checks to see if there is a time stamp
-		console.log((firstDoseDateTime));
-		
 		this.dateFunct = new Date();
 
 		this.now = this.dateFunct;
 		this.firstDose = new Date(firstDoseDateTime);
 
 		this.numDaysSinceLastVaccination = Math.ceil((this.now-this.firstDose) / (1000*60*60*24));
-		console.log(this.numDaysSinceLastVaccination);
-
-		// else numDays = 'N/A'
 
 		return this.numDaysSinceLastVaccination.toString();
 	},
@@ -83,8 +77,8 @@
 				doseNum: '1',
 				tradeName: 'VaxMan Inc.',
 				doseQty: '0.5 mL',
-				timeAdministered: '2020-08-16 16:22:25',
-				numDaysSinceLastVaccination: this.calculatedDaysSinceDose(this.timeAdministered = '2020-09-22 16:22:25'),
+				timeAdministered: '2021-01-15 16:22:25',
+				numDaysSinceLastVaccination: this.calculatedDaysSinceDose(this.timeAdministered = '2021-01-15 16:22:25'),
 				practitionerName: 'Doogie Howser',
 				adverseEffects: 'N/A'
 			},	
