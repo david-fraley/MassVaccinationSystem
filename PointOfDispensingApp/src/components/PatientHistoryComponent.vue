@@ -19,6 +19,7 @@
 		
       </v-col>
     </v-row>
+
   </v-container>
 </template>
 
@@ -30,6 +31,16 @@
 	rowClick: function (item, row) {      
         row.select(true);
 		},
+	calculatedDaysSinceDose(firstDoseDateTime) {
+		this.dateFunct = new Date();
+
+		this.now = this.dateFunct;
+		this.firstDose = new Date(firstDoseDateTime);
+
+		this.numDaysSinceLastVaccination = Math.ceil((this.now-this.firstDose) / (1000*60*60*24));
+
+		return this.numDaysSinceLastVaccination.toString();
+	},
     },
     components: 
     {
@@ -40,10 +51,11 @@
 		tradeName: '',
 		doseQty: '',
 		timeAdministered: '',
-		LOT: '',
+		numDaysSinceLastVaccination: '',
 		practitionerName: '',
 		adverseEffects: '',
 		selectedId: -1,
+		daysSinceDose: '',
 		
 		headers: [
 		{
@@ -55,7 +67,7 @@
 			{ text: 'Trade Name', value: 'tradeName' },
 			{ text: 'Dose Qty.', value: 'doseQty' },
 			{ text: 'Time Administered', value: 'timeAdministered' },
-			{ text: 'LOT', value: 'LOT' },
+			{ text: 'Days Since Last Vaccination', value: 'numDaysSinceLastVaccination' },
 			{ text: 'Practitioner', value: 'practitionerName' },
 			{ text: 'Adverse Effects', value: 'adverseEffects' },
 			],
@@ -65,8 +77,8 @@
 				doseNum: '1',
 				tradeName: 'VaxMan Inc.',
 				doseQty: '0.5 mL',
-				timeAdministered: '2020-08-16 16:22:25',
-				LOT: 'PTL16359',
+				timeAdministered: '2021-01-15 16:22:25',
+				numDaysSinceLastVaccination: this.calculatedDaysSinceDose(this.timeAdministered = '2021-01-15 16:22:25'),
 				practitionerName: 'Doogie Howser',
 				adverseEffects: 'N/A'
 			},	

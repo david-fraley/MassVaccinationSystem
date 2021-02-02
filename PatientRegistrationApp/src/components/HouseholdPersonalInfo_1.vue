@@ -52,35 +52,16 @@
     <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Date of Birth -->
-        <v-menu
-          attach
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              v-model="dateFormatted"
-              :rules="birthdateRules"
-              placeholder="MM/DD/YYYY"
-              v-mask="'##/##/####'"
-              prepend-icon="mdi-calendar"
-              @click:prepend="on.click"
-              @blur="date = parseDate(dateFormatted)"
-            >
-            <template #label>
-              <span class="red--text"><strong>* </strong></span>Date of Birth
-            </template>
-            </v-text-field>
+        <v-text-field
+          v-model="dob"
+          :rules="birthdateRules"
+          placeholder="MM/DD/YYYY"
+          v-mask="'##/##/####'"
+          prepend-icon="mdi-blank">
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Date of Birth
           </template>
-          <v-date-picker
-            reactive
-            v-model="date"
-            :min="minDateStr"
-            :max="maxDateStr"
-          ></v-date-picker>
-        </v-menu>
+        </v-text-field>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Gender identity -->
@@ -166,8 +147,7 @@ export default {
       givenName: "",
       middleName: "",
       suffix: "",
-      date: "",
-      dateFormatted: "",
+      dob: "",
       gender: "",
       patientPhoto: [],
       race: "",
@@ -181,11 +161,6 @@ export default {
         (v) => this.validBirthdate(v) || "Invalid DOB",
       ],
     };
-  },
-  watch: {
-    date () {
-      this.dateFormatted = this.formatDate(this.date)
-    },
   },
   computed: {
     maxDateStr: function() {
@@ -217,12 +192,6 @@ export default {
 
       return !Number.isNaN(date) && minDate <= date && date <= maxDate;
     },
-    formatDate (date) {
-      if (!date) return null;
-
-      const [year, month, day] = date.split('-');
-      return `${month}/${day}/${year}`;
-    },
     parseDate (date) {
       if (!date) return null;
       // Ensure birthdate is fully entered and can be converted into 3 variables before parsing
@@ -237,7 +206,7 @@ export default {
         givenName: this.givenName,
         middleName: this.middleName,
         suffix: this.suffix,
-        birthDate: this.date,
+        birthDate: this.dob,
         gender: this.gender,
         patientPhoto: this.patientPhoto,
         patientPhotoSrc: (this.patientPhoto && this.patientPhoto.size) ? URL.createObjectURL( this.patientPhoto ) : undefined,
@@ -272,7 +241,7 @@ export default {
         message += " First Name";
         valid = false;
       }
-      if (this.date == "") {
+      if (this.dob == "") {
         if (!valid) {
           message += ",";
         }

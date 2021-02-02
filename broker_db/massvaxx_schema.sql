@@ -12,7 +12,7 @@ CREATE SCHEMA massvaxx;
 SET search_path = massvaxx, pg_catalog;
 
 ALTER SCHEMA massvaxx OWNER TO massvaxxadmin;
-GRANT USAGE ON SCHEMA massvaxx TO massvaxx_role;
+--GRANT USAGE ON SCHEMA massvaxx TO massvaxx_role;
 
 CREATE TABLE massvaxx.users (
 	user_id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -25,8 +25,8 @@ CREATE TABLE massvaxx.users (
 ALTER TABLE massvaxx.users OWNER TO massvaxxadmin;
 GRANT ALL ON  massvaxx.users TO massvaxxadmin;
 REVOKE ALL ON massvaxx.users FROM PUBLIC;
-GRANT SELECT ON massvaxx.users TO massvaxx_readonly_role;
-GRANT SELECT, INSERT, UPDATE, DELETE ON massvaxx.users TO massvaxx_role;
+--GRANT SELECT ON massvaxx.users TO massvaxx_readonly_role;
+--GRANT SELECT, INSERT, UPDATE, DELETE ON massvaxx.users TO massvaxx_role;
 
 CREATE TABLE massvaxx.patient_ids (
 	patient_id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -37,8 +37,8 @@ CREATE TABLE massvaxx.patient_ids (
 ALTER TABLE massvaxx.patient_ids OWNER TO massvaxxadmin;
 GRANT ALL ON  massvaxx.patient_ids TO massvaxxadmin;
 REVOKE ALL ON massvaxx.patient_ids FROM PUBLIC;
-GRANT SELECT ON massvaxx.patient_ids TO massvaxx_readonly_role;
-GRANT SELECT, INSERT, UPDATE, DELETE ON massvaxx.patient_ids TO massvaxx_role;
+--GRANT SELECT ON massvaxx.patient_ids TO massvaxx_readonly_role;
+--GRANT SELECT, INSERT, UPDATE, DELETE ON massvaxx.patient_ids TO massvaxx_role;
 
 CREATE TABLE massvaxx.qr_codes (
     qr_code_id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -51,5 +51,5 @@ ALTER TABLE massvaxx.qr_codes ADD CONSTRAINT qr_code_patient_id_fkey FOREIGN KEY
 ALTER TABLE massvaxx.qr_codes OWNER TO massvaxxadmin;
 GRANT ALL ON  massvaxx.qr_codes TO massvaxxadmin;
 REVOKE ALL ON massvaxx.qr_codes FROM PUBLIC;
-GRANT SELECT ON massvaxx.qr_codes TO massvaxx_readonly_role;
-GRANT SELECT, INSERT, UPDATE, DELETE ON massvaxx.qr_codes TO massvaxx_role;
+--GRANT SELECT ON massvaxx.qr_codes TO massvaxx_readonly_role;
+--GRANT SELECT, INSERT, UPDATE, DELETE ON massvaxx.qr_codes TO massvaxx_role;

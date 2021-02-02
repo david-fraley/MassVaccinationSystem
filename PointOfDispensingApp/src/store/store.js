@@ -10,24 +10,16 @@ export default new Vuex.Store({
         activeWorkflowState: 'NO_PATIENT_LOADED',
         patientResource: {},
         locationResource: {
-            locationId: '1234567890',
-            locationName: 'Western Lakes FD'
+            id: 'example',
+            name: 'Western Lakes FD'
         },
         encounterResource: {},
         appointmentResource: {},
-        immunizationResource: {
-            lotNumber: '',
-            expirationDate: '',
-            manufacturer: '',
-            doseQuantity: '',
-            doseNumber: '',
-            immunizationStatus: '',
-            immunizationTimeStamp: '',
-            healthcarePractitioner: 'White, Betty',
-            site: '',
-            route: 'Injection',
-            notes: '',
-            notAdministeredReason: ''
+        immunizationResource: {},
+        practitionerResource: {
+            id: "example",
+            family: "White",
+            given: "Betty"
         },
         screeningResponses: {
             vaccinationDecision: '',
@@ -43,6 +35,13 @@ export default new Vuex.Store({
             screeningQ7: '',
             screeningQ8: '',
             screeningComplete: false
+        },
+        config: {
+            vaccine: "COVID",
+            route: "Intramuscular injection",
+            education: ["education"],
+            series: "series",
+            seriesDoses: 2,
         }
     },
 
@@ -62,10 +61,6 @@ export default new Vuex.Store({
             //Vaccination Event page is not accessible before the patient has been checked 
             return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
         },
-        isVaccinationEventPageReadOnly: state => {
-            //Vaccination Event page is "read only after the patient has been discharged
-            return (state.activeWorkflowState == 'DISCHARGED')
-        },
         isAdverseReactionPageDisabled: state => {
             //The Adverse Reaction page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
             return (state.activeWorkflowState != 'DISCHARGED')
@@ -73,10 +68,6 @@ export default new Vuex.Store({
         isConsentScreeningPageDisabled: state => {
             //Consent and Screening page is not accessible before the patient record has been loaded 
             return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
-        },
-        isConsentScreeningPageReadOnly: state => {
-            //Consent and Screening page is "read only after the patient has been discharged
-            return (state.activeWorkflowState == 'DISCHARGED')
         },
         isDischargePageDisabled: state => {
             //The Discharge page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
@@ -129,7 +120,6 @@ export default new Vuex.Store({
                 state.screeningResponses.screeningQ7 = '',
                 state.screeningResponses.screeningQ8 = '',
                 state.screeningResponses.screeningComplete = false
-
             }
         },
         patientAdmitted(state, payload) {
@@ -165,25 +155,11 @@ export default new Vuex.Store({
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
             state.activeWorkflowState = 'VACCINATION_COMPLETE'
-            state.immunizationResource.lotNumber= vaccinationCompletePlayload.lotNumber
-            state.immunizationResource.expirationDate= vaccinationCompletePlayload.expirationDate
-            state.immunizationResource.manufacturer= vaccinationCompletePlayload.manufacturer
-            state.immunizationResource.doseQuantity= vaccinationCompletePlayload.doseQuantity
-            state.immunizationResource.doseNumber= vaccinationCompletePlayload.doseNumber
-            state.immunizationResource.site= vaccinationCompletePlayload.site
-            state.immunizationResource.route= vaccinationCompletePlayload.route
-            state.immunizationResource.immunizationStatus= vaccinationCompletePlayload.immunizationStatus
-            state.immunizationResource.immunizationTimeStamp= vaccinationCompletePlayload.immunizationTimeStamp
-            state.immunizationResource.healthcarePractitioner= vaccinationCompletePlayload.healthcarePractitioner
-            state.immunizationResource.notes= vaccinationCompletePlayload.notes
+            state.immunizationResource = vaccinationCompletePlayload
         },
         vaccinationCanceled(state, vaccinationCanceledPlayload) {
             state.activeWorkflowState = 'VACCINATION_CANCELED'
-            state.immunizationResource.immunizationStatus= vaccinationCanceledPlayload.immunizationStatus
-            state.immunizationResource.immunizationTimeStamp= vaccinationCanceledPlayload.immunizationTimeStamp
-            state.immunizationResource.healthcarePractitioner= vaccinationCanceledPlayload.healthcarePractitioner
-            state.immunizationResource.notAdministeredReason= vaccinationCanceledPlayload.notAdministeredReason
-            state.immunizationResource.notes= vaccinationCanceledPlayload.notes
+            state.immunizationResource = vaccinationCanceledPlayload
         },
         patientDischarged(state, payload) {
             state.activeWorkflowState = 'DISCHARGED'

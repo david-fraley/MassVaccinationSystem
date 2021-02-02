@@ -13,13 +13,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ1" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ1" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -40,13 +36,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ2" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ2" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -65,15 +57,11 @@
       </v-col>
       <v-col cols="7">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ2b" 
-            row 
-            @change="screeningChecklistUpdate()" 
-            :disabled="this.screeningQ2 != 'Yes' || isConsentScreeningPageReadOnly">
-            <v-radio label="Pfizer" value="Pfizer"></v-radio>
-            <v-radio label="Moderna" value="Moderna"></v-radio>
-            <v-radio label="Other" value="Other"></v-radio>
-            <v-radio label="I don't know" value="I don't know"></v-radio>
+          <v-radio-group v-model="screeningQ2b" row @change="screeningChecklistUpdate()" :disabled="(this.screeningQ2 != 'Yes')">
+            <v-radio label="Pfizer" value="Pfizer" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="Moderna" value="Moderna" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="Other" value="Other" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="I don't know" value="I don't know" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -89,7 +77,7 @@
               <div><span class="font-weight-medium secondary--text">3. Have you ever had an allergic reaction to:</span><br>
               <span style="font-size:.8rem">(This would include a severe allergic reaction [e.g. anaphylaxis] that required treatment with epinephrine 
               or EpiPen or that caused you to go to the hospital.  It would also include an allergic reaction that 
-              occurred within 4 hours that caused hives, swelling, or respiratory distress, includign wheezing.)</span></div>
+              occurred within 4 hours that caused hives, swelling, or respiratory distress, including wheezing.)</span></div>
             </template>
           </v-radio-group>
         </v-row>
@@ -112,13 +100,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ3a" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ3a" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -137,13 +121,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ3b" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ3b" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -162,13 +142,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ3c" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ3c" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -184,7 +160,7 @@
               <div><span class="red--text"><strong>* </strong></span>
               <span class="font-weight-medium secondary--text">4. Have you ever had an allergic reaction to another vaccine (other than COVID-19 vaccine) or an injectable medication?<br></span>
               <span style="font-size:.8rem">(This would include a severe allergic reaction [e.g. anaphylaxis] that required treatment with epinephrine or EpiPen or that caused you to go to the hospital.  
-              It would also include an allergic reaction that occurred within 4 hours that caused hives, swelling, or respiratory distress, includign wheezing.)</span></div>
+              It would also include an allergic reaction that occurred within 4 hours that caused hives, swelling, or respiratory distress, including wheezing.)</span></div>
             </template>
           </v-radio-group>
         </v-row>
@@ -193,13 +169,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ4" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ4" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -221,13 +193,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ5" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ5" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -248,13 +216,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ6" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ6" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -275,13 +239,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ7" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ7" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -302,13 +262,9 @@
       </v-col>
       <v-col cols="2">
         <v-row align="center" justify="end">
-          <v-radio-group 
-            v-model="screeningQ8" 
-            row 
-            @change="screeningChecklistUpdate()"
-            :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+          <v-radio-group v-model="screeningQ8" row @change="screeningChecklistUpdate()">
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -322,11 +278,7 @@
               Proceed with vaccination?
           </v-card-title>
           <v-row align="center" justify="center">
-            <v-radio-group 
-              v-model="vaccinationProceed" 
-              row 
-              @change="vaccinationProceedDecision()"
-              :disabled="isConsentScreeningPageReadOnly">
+            <v-radio-group v-model="vaccinationProceed" row @change="vaccinationProceedDecision()">
                   <v-radio
                     label="Yes"
                     value="Yes"
@@ -346,11 +298,7 @@
 
   export default {
     name: 'VaccinationScreeningComponent',
-    computed: {
-      isConsentScreeningPageReadOnly() {
-        return this.$store.getters.isConsentScreeningPageReadOnly
-      },
-    },
+    computed: {},
     methods: 
     {
      screeningChecklistUpdate()
@@ -426,5 +374,4 @@
   margin-top: 1px;
   padding-top: 1px;
 }	
-
 </style>
