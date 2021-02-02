@@ -96,35 +96,25 @@
 
     <v-row>
       <v-col cols="12">
-        <template v-if="dataContactInfo.patientPhoneNumber != ''">
-          <div class="font-weight-medium">
-            Phone:
-            <span class="font-weight-regular"
-              >{{ dataContactInfo.patientPhoneNumber }}
-              <span v-if="dataContactInfo.patientPhoneNumberType != ''"
-                >({{ dataContactInfo.patientPhoneNumberType }})</span
-              ></span
-            >
-          </div>
-        </template>
-        <template v-else>
-          <div class="font-weight-medium">
-            Phone: <span class="font-weight-regular">Not provided</span>
-          </div>
-        </template>
-        <template v-if="dataContactInfo.patientEmail != ''">
-          <div class="font-weight-medium">
-            E-mail:
-            <span class="font-weight-regular">{{
-              dataContactInfo.patientEmail
-            }}</span>
-          </div>
-        </template>
-        <template v-else>
-          <div class="font-weight-medium">
-            E-mail: <span class="font-weight-regular">Not provided</span>
-          </div>
-        </template>
+        <div class="font-weight-medium">
+          Phone:
+          <span
+            v-if="dataContactInfo.patientPhoneNumber"
+            class="font-weight-regular"
+            >{{ dataContactInfo.patientPhoneNumber }}
+            <span v-if="dataContactInfo.patientPhoneNumberType"
+              >({{ dataContactInfo.patientPhoneNumberType }})</span
+            ></span
+          ><span v-else class="font-weight-regular">Not provided</span>
+        </div>
+        <div class="font-weight-medium">
+          E-mail:
+          <span
+            v-if="dataContactInfo.patientEmail"
+            class="font-weight-regular"
+            >{{ dataContactInfo.patientEmail }}</span
+          ><span v-else class="font-weight-regular">Not provided</span>
+        </div>
       </v-col>
     </v-row>
 
@@ -141,7 +131,7 @@
           <span class="font-weight-regular"
             >{{ dataEmergencyContact.emergencyContactFamilyName }},
             {{ dataEmergencyContact.emergencyContactGivenName }}
-            <span v-if="dataEmergencyContact.emergencyContactRelationship != ''"
+            <span v-if="dataEmergencyContact.emergencyContactRelationship"
               >(Relationship:
               {{ dataEmergencyContact.emergencyContactRelationship }})</span
             >
@@ -151,8 +141,7 @@
           Phone:
           <span class="font-weight-regular"
             >{{ dataEmergencyContact.emergencyContactPhoneNumber }}
-            <span
-              v-if="dataEmergencyContact.emergencyContactPhoneNumberType != ''"
+            <span v-if="dataEmergencyContact.emergencyContactPhoneNumberType"
               >({{
                 dataEmergencyContact.emergencyContactPhoneNumberType
               }})</span
@@ -188,14 +177,13 @@ export default {
       },
       dataEmergencyContact: {
         emergencyContactFamilyName: "",
-        emergencyContactFivenName: "",
+        emergencyContactGivenName: "",
         emergencyContactPhoneNumber: "",
         emergencyContactPhoneNumberType: "",
       },
       dataHomeAddress: {
         lineAddress: "",
         cityAddress: "",
-        districtAddress: "",
         stateAddress: "",
         countryAddress: "",
         postalCode: "",
@@ -204,7 +192,6 @@ export default {
         patientPhoneNumber: "",
         patientPhoneNumberType: "",
         patientEmail: "",
-        approval: "",
       },
     };
   },
@@ -221,8 +208,56 @@ export default {
     updateContactInfoData(contactInfoPayload) {
       this.dataContactInfo = contactInfoPayload;
     },
+    dataPayload() {
+      let data = { Patient: [] };
+      let patient = {
+        family: this.dataPersonalInfo.familyName,
+        given: this.dataPersonalInfo.givenName,
+        middle: this.dataPersonalInfo.middleName,
+        suffix: this.dataPersonalInfo.suffix,
+        gender: this.dataPersonalInfo.gender,
+        birthDate: this.dataPersonalInfo.birthDate,
+        race: this.dataPersonalInfo.race,
+        ethnicity: this.dataPersonalInfo.ethnicity,
+        language: this.dataPersonalInfo.preferredLanguage,
+      };
+
+      patient.phone = [];
+      if (this.dataContactInfo.primaryPhoneNumber)
+        patient.phone.push({
+          value: this.dataContactInfo.primaryPhoneNumber,
+          use: this.dataContactInfo.primaryPhoneNumberType,
+        });
+      patient.email = [];
+      if (this.dataContactInfo.primaryEmail)
+        patient.email.push(this.dataContactInfo.primaryEmail);
+
+      patient.contact = {
+        family: this.dataEmergencyContact.emergencyContactFamilyName,
+        given: this.dataEmergencyContact.emergencyContactGivenName,
+        phone: {
+          value: this.dataEmergencyContact.emergencyContactPhoneNumber,
+          use: this.dataEmergencyContact.emergencyContactPhoneNumberType,
+        },
+      };
+
+      patient.address = {
+        use: this.dataHomeAddress.addressType,
+        line: this.dataHomeAddress.lineAddress1,
+        city: this.dataHomeAddress.cityAddress,
+        state: this.dataHomeAddress.stateAddress,
+        postalCode: this.dataHomeAddress.postalCode,
+        country: this.dataHomeAddress.countryAddress,
+      };
+      if (this.dataHomeAddress.lineAddress2)
+        patient.address.line += ` ${this.dataHomeAddress.lineAddress2}`;
+
+      data.Patient.push(patient);
+      return data;
+    },
     submitPatientInfo() {
-      brokerRequests.submitRegistration().then((response) => {
+      let data = this.dataPayload();
+      brokerRequests.submitRegistration(data).then((response) => {
         if (response.data) {
           this.onSuccess();
         } else if (response.error) {
@@ -230,13 +265,7 @@ export default {
         }
       });
     },
-    onSuccess() {
-      //Do we need anything here, yet?
-      /*const PatientSubmitPayload = {
-				registrationStatus: "Finished",
-				registrationTimeStamp: new Date().toISOString(),
-			};*/
-    },
+    onSuccess() {},
   },
   mounted() {
     EventBus.$on("DATA_PERSONAL_INFO_PUBLISHED", (personalInfoPayload) => {

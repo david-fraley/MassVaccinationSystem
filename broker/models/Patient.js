@@ -10,7 +10,7 @@ Patient {
   }]
   email : array of strings
   gender : enum (male, female, other, unknown)
-  birthdate : string
+  birthDate : string
   race : enum (American Indian or Alaskan Native, Asian, Native Hawaiian or Other Pacific Islander, Black or African-American, White, Other Race)
   ethnicity: enum (Hispanic, Not Hispanic)
   address: {
@@ -33,6 +33,25 @@ Patient {
   relationship: enum (DOMPART Domestic Partner, INLAW In-Law, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
 }
 */
+
+let genderEnums = {
+  Male: "male",
+  Female: "female",
+  Other: "other",
+  "Decline to answer": "unknown",
+};
+
+let addressUseEnums = {
+  Home: "home",
+  Temporary: "temp",
+};
+
+let phoneUseEnums = {
+  Home: "home",
+  Mobile: "mobile",
+  Work: "work",
+};
+
 exports.toFHIR = function (patient) {
   let resource = {
     resourceType: "Patient",
@@ -46,11 +65,11 @@ exports.toFHIR = function (patient) {
     telecom: [
       // add later
     ],
-    gender: patient.gender,
+    gender: genderEnums[patient.gender],
     birthDate: patient.birthDate,
     address: [
       {
-        use: patient.address.use,
+        use: addressUseEnums[patient.address.use],
         line: [patient.address.line],
         city: patient.address.city,
         state: patient.address.state,
@@ -85,7 +104,7 @@ exports.toFHIR = function (patient) {
           {
             system: "phone",
             value: patient.contact.phone.value,
-            use: patient.contact.phone.use,
+            use: phoneUseEnums[patient.contact.phone.use],
           },
         ],
       },
@@ -100,10 +119,10 @@ exports.toFHIR = function (patient) {
     ],
     link: [
       {
-      other: {
-        reference: patient.link[0],
+        other: {
+          reference: patient.link,
+        },
       },
-    }
     ],
   };
 
@@ -119,7 +138,7 @@ exports.toFHIR = function (patient) {
     resource.telecom.push({
       system: "phone",
       value: patient.phone[idx].value,
-      use: patient.phone[idx].use,
+      use: phoneUseEnums[patient.phone[idx].use],
       rank: `${idx}`,
     });
   }
