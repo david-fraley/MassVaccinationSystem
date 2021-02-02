@@ -33,7 +33,6 @@ exports.toFHIR = function (appt) {
   };
   // add participants
   let participant;
-  /*
   for (participant of appt.participant) {
     resource.participant.push({
       type: [
@@ -52,7 +51,6 @@ exports.toFHIR = function (appt) {
       },
     });
   }
-*/
   return resource;
 };
 
