@@ -68,10 +68,10 @@ export default {
       return this.$store.state.patientResource.id;
     },
     locationId() {
-      return this.$store.state.locationResource.locationId;
+      return this.$store.state.locationResource.id;
     },
     locationName() {
-      return this.$store.state.locationResource.locationName;
+      return this.$store.state.locationResource.name;
     },
     encounterStatus() {
       return this.$store.state.encounterResource.status;

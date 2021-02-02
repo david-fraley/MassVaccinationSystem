@@ -11,7 +11,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field outlined dense filled readonly
-              :value=healthcarePractitioner
+              :value="practitionerName"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -24,7 +24,7 @@
               dense
               required
               :rules="[v => !!v || 'Reason vaccine was not administered field is required']"
-              v-model="notAdministeredReason"
+              v-model="reason"
             ></v-select>
           </v-col>
         </v-row>
@@ -39,8 +39,7 @@
           placeholder="Notes"
           outlined
           rows="4"
-          :value="notes"
-          v-model="notes"
+          v-model="note"
         ></v-textarea>
       </v-col>
     </v-row>
@@ -89,33 +88,41 @@
 </template>
 
 <script>
-  import brokerRequests from "../brokerRequests";
-  
-  export default {
-    name: 'VaccinationCanceledComponent',
-    computed: {
-      healthcarePractitioner() {
-        return this.$store.state.immunizationResource.healthcarePractitioner
-      },
-      encounterID() {
-        return this.$store.state.encounterResource.id;
-      },
-      appointmentID() {
-        return this.$store.state.appointmentResource.id;
-      },
+import brokerRequests from "../brokerRequests";
+
+export default {
+  name: "VaccinationCanceledComponent",
+  computed: {
+    practitioner() {
+      return `Practitioner/${this.$store.state.practitionerResource.id}`;
+    },
+    practitionerName() {
+      let practitioner = this.$store.state.practitionerResource;
+      return `${practitioner.family}, ${practitioner.given}`;
+    },
+    patient() {
+      return `Patient/${this.$store.state.patientResource.id}`;
+    },
+    encounter() {
+      return `Encounter/${this.$store.state.encounterResource.id}`;
+    },
+    location() {
+      return `Location/${this.$store.state.locationResource.id}`;
+    },
+    config() {
+      return this.$store.state.config;
+    },
+    encounterID() {
+      return this.$store.state.encounterResource.id;
+    },
+    appointmentID() {
+      return this.$store.state.appointmentResource.id;
+    },
   },
   methods: {
-    onSuccessSubmitVaccinationRecord() {
-      const vaccinationCanceledPlayload = {
-        immunizationStatus: "Not-done",
-        immunizationTimeStamp: new Date().toISOString(),
-        healthcarePractitioner: this.healthcarePractitioner,
-        notAdministeredReason: this.notAdministeredReason,
-        notes: this.notes,
-      };
-
+    onVaccination(immunization) {
       //send data to Vuex
-      this.$store.dispatch("vaccinationCanceled", vaccinationCanceledPlayload);
+      this.$store.dispatch("vaccinationCanceled", immunization);
 
       //Advance to the Discharge page
       this.$router.push("Discharge");
@@ -127,10 +134,21 @@
       this.$store.dispatch("patientDischarged", payload);
     },
     submitVaccinationRecord() {
-      brokerRequests.submitVaccination().then((response) => {
+      let data = {
+        vaccine: this.config.vaccine,
+        patient: this.patient,
+        encounter: this.encounter,
+        status: this.status,
+        reason: this.reason,
+        location: this.location,
+        performer: this.practitioner,
+        note: this.note,
+      };
+      brokerRequests.submitVaccination(data).then((response) => {
         if (response.data) {
-          this.onSuccessSubmitVaccinationRecord();
+          this.onVaccination(response.data);
         } else if (response.error) {
+          console.log(response.error);
           alert("Vaccination record not submitted");
         }
       });
@@ -155,14 +173,14 @@
     return {
       dialog: false,
       vaccineNotAdministeredOptions: [
-        "Medical precaution",
-        "Immune",
+        "Medical Precaution",
+        "Immunity",
         "Out of Stock",
         "Patient Objection",
       ],
-      notAdministeredReason: this.$store.state.immunizationResource
-        .notAdministeredReason,
-      notes: this.$store.state.immunizationResource.notes,
+      status: "not-done",
+      reason: this.$store.state.immunizationResource.reason,
+      note: this.$store.state.immunizationResource.note,
     };
   },
 };
