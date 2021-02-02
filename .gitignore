@@ -2,6 +2,7 @@
 ._.DS_Store
 
 # local env files
+.env
 .env.local
 .env.*.local
 
@@ -367,3 +368,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+sandbox/sandbox.crt
+sandbox/sandbox.key
+package-lock.json
+
+
+sandbox/hapi.properties
