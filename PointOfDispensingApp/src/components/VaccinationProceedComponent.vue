@@ -264,8 +264,8 @@ export default {
       //send data to Vuex
       this.$store.dispatch("vaccinationComplete", immunization);
 
-        //Advance to the Discharge page
-        this.$router.push("Discharge");
+      //Advance to the Discharge page
+      this.$router.push("Discharge");
 
       //Close the dialog
       this.dialog = false;
@@ -302,22 +302,37 @@ export default {
         }
       });
     },
-    components: {},
-    data() {
-      return {
-        dialog: false,
-        doseNumberOptions: [1, 2],
-        doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
-        vaccinationSiteOptions: ["Left arm", "Right arm"],
-        status: "completed",
-        doseQuantity: this.$store.state.immunizationResource.doseQuantity,
-        site: this.$store.state.immunizationResource.site,
-        lotNumber: this.$store.state.immunizationResource.lotNumber,
-        expirationDate: this.$store.state.immunizationResource.expirationDate,
-        manufacturer: this.$store.state.immunizationResource.manufacturer,
-        note: this.$store.state.immunizationResource.note,
-        // Placeholder for patient history
-        doseNumber: 1,
+    endEncounter() {
+      let data = {
+        apptID: this.appointmentID,
+        encounterID: this.encounterID,
+      };
+      brokerRequests.discharge(data).then((response) => {
+        if (response.data) {
+          this.onDischarge(response.data);
+        } else if (response.error) {
+          console.log(response.error);
+          alert(`Patient not discharged`);
+        }
+      });
+    },
+  },
+  components: {},
+  data() {
+    return {
+      dialog: false,
+      doseNumberOptions: [1, 2],
+      doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
+      vaccinationSiteOptions: ["Left arm", "Right arm"],
+      status: "completed",
+      doseQuantity: this.$store.state.immunizationResource.doseQuantity,
+      site: this.$store.state.immunizationResource.site,
+      lotNumber: this.$store.state.immunizationResource.lotNumber,
+      expirationDate: this.$store.state.immunizationResource.expirationDate,
+      manufacturer: this.$store.state.immunizationResource.manufacturer,
+      note: this.$store.state.immunizationResource.note,
+      // Placeholder for patient history
+      doseNumber: 1,
     };
   },
 };
