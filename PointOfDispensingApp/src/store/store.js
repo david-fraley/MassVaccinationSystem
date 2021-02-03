@@ -10,24 +10,16 @@ export default new Vuex.Store({
         activeWorkflowState: 'NO_PATIENT_LOADED',
         patientResource: {},
         locationResource: {
-            locationId: '1234567890',
-            locationName: 'Western Lakes FD'
+            id: 'example',
+            name: 'Western Lakes FD'
         },
         encounterResource: {},
         appointmentResource: {},
-        immunizationResource: {
-            lotNumber: '',
-            expirationDate: '',
-            manufacturer: '',
-            doseQuantity: '',
-            doseNumber: '',
-            immunizationStatus: '',
-            immunizationTimeStamp: '',
-            healthcarePractitioner: 'White, Betty',
-            site: '',
-            route: 'Injection',
-            notes: '',
-            notAdministeredReason: ''
+        immunizationResource: {},
+        practitionerResource: {
+            id: "example",
+            family: "White",
+            given: "Betty"
         },
         screeningResponses: {
             vaccinationDecision: '',
@@ -43,6 +35,13 @@ export default new Vuex.Store({
             screeningQ7: '',
             screeningQ8: '',
             screeningComplete: false
+        },
+        config: {
+            vaccine: "COVID",
+            route: "Intramuscular injection",
+            education: ["education"],
+            series: "series",
+            seriesDoses: 2,
         }
     },
 
@@ -91,37 +90,45 @@ export default new Vuex.Store({
 
     mutations: {
         patientRecordRetrieved(state, patientResourcePayload) {
-            state.activeWorkflowState = 'RECORD_RETRIEVED'
             state.patientResource = patientResourcePayload;
+            console.log('patient record retrieved')
+            console.log(state.activeWorkflowState)
+            
+            //TO DO:  retrieve encounter resource, immunization resource, and appointment resource 'status' fields to determine the workflow state
+            if((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
+            {
+                state.activeWorkflowState = 'RECORD_RETRIEVED'
 
-            //reset patient-specific data
-            state.encounterResource = {};
-            state.appointmentResource = {};
-            state.immunizationResource.lotNumber = '',
-            state.immunizationResource.expirationDate = '',
-            state.immunizationResource.manufacturer = '',
-            state.immunizationResource.doseQuantity = '',
-            state.immunizationResource.doseNumber = '',
-            state.immunizationResource.immunizationStatus = '',
-            state.immunizationResource.immunizationTimeStamp = '',
-            state.immunizationResource.healthcarePractitioner = 'White, Betty',
-            state.immunizationResource.site = '',
-            state.immunizationResource.route = 'Injection',
-            state.immunizationResource.notes = '',
-            state.immunizationResource.notAdministeredReason = ''
-            state.screeningResponses.vaccinationDecision = '',
-            state.screeningResponses.screeningQ1 = '',
-            state.screeningResponses.screeningQ2 = '',
-            state.screeningResponses.screeningQ2b = '',
-            state.screeningResponses.screeningQ3a = '',
-            state.screeningResponses.screeningQ3b = '',
-            state.screeningResponses.screeningQ3c = '',
-            state.screeningResponses.screeningQ4 = '',
-            state.screeningResponses.screeningQ5 = '',
-            state.screeningResponses.screeningQ6 = '',
-            state.screeningResponses.screeningQ7 = '',
-            state.screeningResponses.screeningQ8 = '',
-            state.screeningResponses.screeningComplete = false
+                //reset patient-specific data
+                state.encounterResource = {};
+                state.appointmentResource = {};
+                state.immunizationResource.lotNumber = '',
+                state.immunizationResource.expirationDate = '',
+                state.immunizationResource.manufacturer = '',
+                state.immunizationResource.doseQuantity = '',
+                state.immunizationResource.doseNumber = '',
+                state.immunizationResource.immunizationStatus = '',
+                state.immunizationResource.immunizationTimeStamp = '',
+                state.immunizationResource.healthcarePractitioner = 'White, Betty',
+                state.immunizationResource.site = '',
+                state.immunizationResource.route = 'Injection',
+                state.immunizationResource.notes = '',
+                state.immunizationResource.notAdministeredReason = ''
+                state.screeningResponses.vaccinationDecision = '',
+                console.log('Reset screening question responses')
+                state.screeningResponses.screeningQ1 = '',
+                state.screeningResponses.screeningQ2 = '',
+                state.screeningResponses.screeningQ2b = '',
+                state.screeningResponses.screeningQ3a = '',
+                state.screeningResponses.screeningQ3b = '',
+                state.screeningResponses.screeningQ3c = '',
+                state.screeningResponses.screeningQ4 = '',
+                state.screeningResponses.screeningQ5 = '',
+                state.screeningResponses.screeningQ6 = '',
+                state.screeningResponses.screeningQ7 = '',
+                state.screeningResponses.screeningQ8 = '',
+                state.screeningResponses.screeningComplete = false
+            }
         },
         patientAdmitted(state, payload) {
             state.activeWorkflowState = 'ADMITTED'
@@ -142,28 +149,25 @@ export default new Vuex.Store({
             state.screeningResponses.screeningQ7 = screeningResponsesPayload.screeningQ7
             state.screeningResponses.screeningQ8 = screeningResponsesPayload.screeningQ8
             state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
+            console.log(state.screeningResponses.screeningQ1)
+            console.log(state.screeningResponses.screeningQ2)
+            console.log(state.screeningResponses.screeningQ2b)
+            console.log(state.screeningResponses.screeningQ3a)
+            console.log(state.screeningResponses.screeningQ3b)
+            console.log(state.screeningResponses.screeningQ3c)
+            console.log(state.screeningResponses.screeningQ4)
+            console.log(state.screeningResponses.screeningQ5)
+            console.log(state.screeningResponses.screeningQ6)
+            console.log(state.screeningResponses.screeningQ7)
+            console.log(state.screeningResponses.screeningQ8)
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
             state.activeWorkflowState = 'VACCINATION_COMPLETE'
-            state.immunizationResource.lotNumber= vaccinationCompletePlayload.lotNumber
-            state.immunizationResource.expirationDate= vaccinationCompletePlayload.expirationDate
-            state.immunizationResource.manufacturer= vaccinationCompletePlayload.manufacturer
-            state.immunizationResource.doseQuantity= vaccinationCompletePlayload.doseQuantity
-            state.immunizationResource.doseNumber= vaccinationCompletePlayload.doseNumber
-            state.immunizationResource.site= vaccinationCompletePlayload.site
-            state.immunizationResource.route= vaccinationCompletePlayload.route
-            state.immunizationResource.immunizationStatus= vaccinationCompletePlayload.immunizationStatus
-            state.immunizationResource.immunizationTimeStamp= vaccinationCompletePlayload.immunizationTimeStamp
-            state.immunizationResource.healthcarePractitioner= vaccinationCompletePlayload.healthcarePractitioner
-            state.immunizationResource.notes= vaccinationCompletePlayload.notes
+            state.immunizationResource = vaccinationCompletePlayload
         },
         vaccinationCanceled(state, vaccinationCanceledPlayload) {
             state.activeWorkflowState = 'VACCINATION_CANCELED'
-            state.immunizationResource.immunizationStatus= vaccinationCanceledPlayload.immunizationStatus
-            state.immunizationResource.immunizationTimeStamp= vaccinationCanceledPlayload.immunizationTimeStamp
-            state.immunizationResource.healthcarePractitioner= vaccinationCanceledPlayload.healthcarePractitioner
-            state.immunizationResource.notAdministeredReason= vaccinationCanceledPlayload.notAdministeredReason
-            state.immunizationResource.notes= vaccinationCanceledPlayload.notes
+            state.immunizationResource = vaccinationCanceledPlayload
         },
         patientDischarged(state, payload) {
             state.activeWorkflowState = 'DISCHARGED'

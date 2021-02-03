@@ -18,8 +18,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -45,8 +45,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -70,10 +70,10 @@
             row 
             @change="screeningChecklistUpdate()" 
             :disabled="this.screeningQ2 != 'Yes' || isConsentScreeningPageReadOnly">
-            <v-radio label="Pfizer" value="Pfizer"></v-radio>
-            <v-radio label="Moderna" value="Moderna"></v-radio>
-            <v-radio label="Other" value="Other"></v-radio>
-            <v-radio label="I don't know" value="I don't know"></v-radio>
+            <v-radio label="Pfizer" value="Pfizer" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="Moderna" value="Moderna" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="Other" value="Other" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="I don't know" value="I don't know" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -89,7 +89,7 @@
               <div><span class="font-weight-medium secondary--text">3. Have you ever had an allergic reaction to:</span><br>
               <span style="font-size:.8rem">(This would include a severe allergic reaction [e.g. anaphylaxis] that required treatment with epinephrine 
               or EpiPen or that caused you to go to the hospital.  It would also include an allergic reaction that 
-              occurred within 4 hours that caused hives, swelling, or respiratory distress, includign wheezing.)</span></div>
+              occurred within 4 hours that caused hives, swelling, or respiratory distress, including wheezing.)</span></div>
             </template>
           </v-radio-group>
         </v-row>
@@ -117,8 +117,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -142,8 +142,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -167,8 +167,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -184,7 +184,7 @@
               <div><span class="red--text"><strong>* </strong></span>
               <span class="font-weight-medium secondary--text">4. Have you ever had an allergic reaction to another vaccine (other than COVID-19 vaccine) or an injectable medication?<br></span>
               <span style="font-size:.8rem">(This would include a severe allergic reaction [e.g. anaphylaxis] that required treatment with epinephrine or EpiPen or that caused you to go to the hospital.  
-              It would also include an allergic reaction that occurred within 4 hours that caused hives, swelling, or respiratory distress, includign wheezing.)</span></div>
+              It would also include an allergic reaction that occurred within 4 hours that caused hives, swelling, or respiratory distress, including wheezing.)</span></div>
             </template>
           </v-radio-group>
         </v-row>
@@ -198,8 +198,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -226,8 +226,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -253,8 +253,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -280,8 +280,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -307,8 +307,8 @@
             row 
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly">
-            <v-radio label="Yes" value="Yes"></v-radio>
-            <v-radio label="No" value="No"></v-radio>
+            <v-radio label="Yes" value="Yes" class="font-weight-medium secondary--text"></v-radio>
+            <v-radio label="No" value="No" class="font-weight-medium secondary--text"></v-radio>
           </v-radio-group>
         </v-row>
       </v-col>
@@ -426,5 +426,4 @@
   margin-top: 1px;
   padding-top: 1px;
 }	
-
 </style>

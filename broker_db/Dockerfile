@@ -9,12 +9,11 @@
 FROM postgres
 EXPOSE 5432
 
-# Set POSTGRES_PASSWORD using -e option for docker run.
+# Set POSTGRES_DB, POSTGRES_USER, and POSTGRES_PASSWORD using -e option for docker run.
+# Refer to base postgres container for more about these variables.
 #
-ENV POSTGRES_USER massvaxxadmin
-ENV POSTGRES_DB massvaxx
 
-# Set up Broker roles and schema.
+# Set up Broker schema.
 #
 COPY . /var/local/massvaxx
 COPY massvaxx_db_init.sh /docker-entrypoint-initdb.d/massvaxx_db_init.sh

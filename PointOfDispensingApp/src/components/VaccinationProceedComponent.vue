@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent" :disabled="isVaccinationEventPageReadOnly">
+        <v-btn color="accent" @click="scanBarcode" :disabled="isVaccinationEventPageReadOnly">
           Scan vaccine barcode
         </v-btn>
       </v-col>
@@ -35,7 +35,6 @@
             <v-text-field
               outlined
               dense
-              :value="expirationDate"
               required
               :rules="[(v) => !!v || 'Expiration Date field is required']"
               v-model="expirationDate"
@@ -52,7 +51,6 @@
             <v-text-field
               outlined
               dense
-              :value="manufacturer"
               required
               :rules="[(v) => !!v || 'Manufacturer field is required']"
               v-model="manufacturer"
@@ -119,12 +117,12 @@
             <div class="secondary--text">Healthcare Practitioner</div>
           </v-col>
           <v-col cols="8">
-            <v-text-field
-              outlined
-              dense
-              filled
+            <v-text-field 
+              outlined 
+              dense 
+              filled 
               readonly
-              :value="healthcarePractitioner"
+              :value="practitionerName"
               :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
@@ -160,7 +158,7 @@
               dense
               filled
               readonly
-              :value="route"
+              :value="config.route"
               :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
@@ -173,8 +171,7 @@
           placeholder="Notes"
           outlined
           rows="4"
-          :value="notes"
-          v-model="notes"
+          v-model="note"
           :filled="isVaccinationEventPageReadOnly"
           :disabled="isVaccinationEventPageReadOnly"
         ></v-textarea>
@@ -221,92 +218,107 @@
 </template>
 
 <script>
-  import brokerRequests from "../brokerRequests";
-  
-  export default {
-    name: 'VaccinationProceedComponent',
-    computed: {
-      healthcarePractitioner() {
-        return this.$store.state.immunizationResource.healthcarePractitioner
-      },
-      isVaccinationEventPageReadOnly() {
-        return this.$store.getters.isVaccinationEventPageReadOnly
-      },
-      encounterID() {
-        return this.$store.state.encounterResource.id;
-      },
-      appointmentID() {
-        return this.$store.state.appointmentResource.id;
-      },
-    },
-    methods: {
-      onSuccessSubmitVaccinationRecord() {
-        const vaccinationCompletePlayload = {
-          lotNumber: this.lotNumber,
-          expirationDate: this.expirationDate,
-          manufacturer: this.manufacturer,
-          doseQuantity: this.doseQuantity,
-          doseNumber: this.doseNumber,
-          site: this.site,
-          route: this.route,
-          immunizationStatus: "Completed",
-          immunizationTimeStamp: new Date().toISOString(),
-          healthcarePractitioner: this.healthcarePractitioner,
-          notes: this.notes,
-        };
+import brokerRequests from "../brokerRequests";
 
-        //send data to Vuex
-        this.$store.dispatch("vaccinationComplete", vaccinationCompletePlayload);
+export default {
+  name: "VaccinationProceedComponent",
+  computed: {
+    practitioner() {
+      return `Practitioner/${this.$store.state.practitionerResource.id}`;
+    },
+    practitionerName() {
+      let practitioner = this.$store.state.practitionerResource;
+      return `${practitioner.family}, ${practitioner.given}`;
+    },
+    patient() {
+      return `Patient/${this.$store.state.patientResource.id}`;
+    },
+    encounter() {
+      return `Encounter/${this.$store.state.encounterResource.id}`;
+    },
+    location() {
+      return `Location/${this.$store.state.locationResource.id}`;
+    },
+    config() {
+      return this.$store.state.config;
+    },
+    encounterID() {
+      return this.$store.state.encounterResource.id;
+    },
+    appointmentID() {
+      return this.$store.state.appointmentResource.id;
+    },
+    isVaccinationEventPageReadOnly() {
+      return this.$store.getters.isVaccinationEventPageReadOnly
+    },
+  },
+  methods: {
+    scanBarcode() {
+      // Placeholder
+      this.lotNumber = "LOT1234";
+      this.expirationDate = "2020-01-01";
+      this.manufacturer = "Organization/example"; // todo
+      this.doseQuantity = "0.1 mL";
+    },
+    onVaccination(immunization) {
+      //send data to Vuex
+      this.$store.dispatch("vaccinationComplete", immunization);
 
         //Advance to the Discharge page
         this.$router.push("Discharge");
 
-        //Close the dialog
-        this.dialog = false;
-      },
-      onDischarge(payload) {
-        this.$store.dispatch("patientDischarged", payload);
-      },
-      submitVaccinationRecord() {
-        brokerRequests.submitVaccination().then((response) => {
-          if (response.data) {
-            this.onSuccessSubmitVaccinationRecord();
-          } else if (response.error) {
-            alert("Vaccination record not submitted");
-          }
-        });
-      },
-      endEncounter() {
-        let data = {
-          apptID: this.appointmentID,
-          encounterID: this.encounterID,
-        };
-        brokerRequests.discharge(data).then((response) => {
-          if (response.data) {
-            this.onDischarge(response.data);
-          } else if (response.error) {
-            console.log(response.error);
-            alert(`Patient not discharged`);
-          }
-        });
-      },
+      //Close the dialog
+      this.dialog = false;
+    },
+    onDischarge(payload) {
+      this.$store.dispatch("patientDischarged", payload);
+    },
+    submitVaccinationRecord() {
+      let data = {
+        vaccine: this.config.vaccine,
+        manufacturer: this.manufacturer,
+        lotNumber: this.lotNumber,
+        expirationDate: this.expirationDate,
+        patient: this.patient,
+        encounter: this.encounter,
+        status: this.status,
+        location: this.location,
+        site: this.site,
+        route: this.config.route,
+        doseQuantity: this.doseQuantity,
+        performer: this.practitioner,
+        note: this.note,
+        education: this.config.education,
+        series: this.config.series,
+        doseNumber: this.doseNumber,
+        seriesDoses: this.config.seriesDoses,
+      };
+      brokerRequests.submitVaccination(data).then((response) => {
+        if (response.data) {
+          this.onVaccination(response.data);
+        } else if (response.error) {
+          console.log(response.error);
+          alert("Vaccination record not submitted");
+        }
+      });
     },
     components: {},
     data() {
       return {
         dialog: false,
-        doseNumberOptions: ["1", "2"],
+        doseNumberOptions: [1, 2],
         doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
         vaccinationSiteOptions: ["Left arm", "Right arm"],
+        status: "completed",
         doseQuantity: this.$store.state.immunizationResource.doseQuantity,
-        doseNumber: this.$store.state.immunizationResource.doseNumber,
         site: this.$store.state.immunizationResource.site,
-        route: this.$store.state.immunizationResource.route,
         lotNumber: this.$store.state.immunizationResource.lotNumber,
         expirationDate: this.$store.state.immunizationResource.expirationDate,
         manufacturer: this.$store.state.immunizationResource.manufacturer,
-        notes: this.$store.state.immunizationResource.notes,
-      };
-    },
+        note: this.$store.state.immunizationResource.note,
+        // Placeholder for patient history
+        doseNumber: 1,
+    };
+  },
 };
 </script>

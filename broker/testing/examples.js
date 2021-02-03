@@ -47,17 +47,14 @@ module.exports = {
     "patient": "Patient/example",
     "encounter": "Encounter/example",
     "status": "completed",
-    "statusReason": "OSTOCK",
-    "occurrence": "2013-01-10",
     "primarySource": true,
     "location": "Location/example",
-    "site": "LA",
-    "route": "IVINJ",
-    "doseQuantity": 5,
-    "doseUnit": "mg",
-    "performer": ["Practitioner/example"],
+    "site": "Left arm",
+    "route": "Intramuscular injection",
+    "doseQuantity": "5 mg",
+    "performer": "Practitioner/example",
     "note": "immunization notes",
-    "education": [""],
+    "education": ["faq"],
     "series": "series",
     "doseNumber": 1,
     "seriesDoses": 2
@@ -110,10 +107,10 @@ module.exports = {
   "resourceType": "Patient",
   "id": "example",
   "name": [ {
-    "family": "Patient",
-    "given": [ "Example" ]
+    "family": "Bush",
+    "given": [ "Joe" ]
   } ],
-  "birthDate": "2000-01-01"
+  "birthDate": "1999-11-11"
 }`,
 
   Patient: `{

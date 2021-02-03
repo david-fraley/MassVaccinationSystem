@@ -1,0 +1,137 @@
+services:
+    # Web server for Patient Registration vue app files.
+    #
+    registration:
+        build: ../PatientRegistrationApp
+        networks:
+            - front_tier
+
+    # Web server for Point of Disensing vue app files.
+    #
+    pod:
+        build: ../PointOfDispensingApp
+        networks:
+            - front_tier
+
+    # Database service for broker
+    #
+    broker-db:
+        build: ../broker_db
+        environment:
+            # Variables read from local .env file
+            - POSTGRES_DB=${BROKER_DB_NAME}
+            - POSTGRES_USER=${BROKER_DB_USERNAME}
+            - POSTGRES_PASSWORD=${BROKER_DB_PASSWORD}
+        volumes:
+            #- broker_db_config:/etc/postgresql
+            #- broker_db_logs:/var/log/postgresql
+            - broker_db_data:/var/lib/postgresql/data
+        #ports:
+            # Should not be exposed to host
+            #- "5432"
+        networks:
+            - back_tier
+    
+    # NextGen Connect Integration Engine (formerly Mirth Connect)
+    #
+    mirth:
+        image: nextgenhealthcare/connect:3.10
+        #ports:
+            # Not exposed to host
+            #- "8444" 
+        networks:
+            - back_tier
+
+    # Node server for broker service.
+    #
+    broker:
+        build: ../broker
+        environment:
+            # Variables read from local .env file
+            - DB_NAME=massvaxx
+            - DB_DIALECT=postgres
+            - DB_HOST=broker-db
+            - DB_PORT=5432
+            - DB_USERNAME=${BROKER_DB_USERNAME}
+            - DB_PASSWORD=${BROKER_DB_PASSWORD}
+        #ports:
+            # Should not be exposed to host
+            #- "3000"
+        depends_on:
+            - broker-db
+            - mirth
+        networks:
+            - front_tier
+            - back_tier
+
+    # Database for HAPI FHIR service
+    #
+    hapi-db:
+        image: postgres
+        environment:
+            # Variables read from local .env file
+            - POSTGRES_DB=${HAPI_DB_NAME}
+            - POSTGRES_USER=${HAPI_DB_USERNAME}
+            - POSTGRES_PASSWORD=${HAPI_DB_PASSWORD}
+        volumes:
+            #- hapi_db_config:/etc/postgresql
+            #- hapi_db_logs:/var/log/postgresql
+            - hapi_db_data:/var/lib/postgresql/data
+        #ports:
+            # Should not be exposed to host
+            #- "5432"
+        networks:
+            - back_tier
+
+    # HAPI FHIR service
+    #
+    hapi:
+        image: hapiproject/hapi:v5.0.0
+        volumes:
+            - ./hapi.properties:/etc/hapi/hapi.properties
+            - hapi_data:/data/hapi
+        environment:
+            - JAVA_OPTS=-Dhapi.properties=/etc/hapi/hapi.properties
+        #ports:
+            # Not exposed to host
+            #- "8080"
+        depends_on:
+            - hapi-db
+        networks:
+            - back_tier
+
+    # proxy handle routing requests to the appropriate back-end service, as
+    # defined in the nginx.conf. 
+    #
+    # It will also handle enabling https (and forcing http to https).
+    #
+    nginx: 
+        image: nginx:stable-alpine
+        volumes:
+            - ${PROXY_VOLUME_MAP1}
+            - ${PROXY_VOLUME_MAP2}
+            - ${PROXY_VOLUME_MAP3}
+        ports:
+            - "${PROXY_HTTP_PORT}:80"
+            - "${PROXY_HTTPS_PORT}:443"
+        depends_on:
+            - broker
+            - pod
+            - registration
+        networks:
+            - front_tier
+
+# Only the front_tier network should have ports exposed to the host.
+#
+networks:
+    front_tier:
+    back_tier:
+
+# Volumes for data that must be preserved if containers stop/re-start.
+#
+volumes:
+    #broker_db_config:
+    #broker_db_logs:
+    broker_db_data:
+    hapi_data:
+    hapi_db_data:
