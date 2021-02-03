@@ -82,18 +82,45 @@ export default new Vuex.Store({
 
     mutations: {
         patientRecordRetrieved(state, patientResourcePayload) {
-            state.activeWorkflowState = 'RECORD_RETRIEVED'
             state.patientResource = patientResourcePayload;
+            console.log('patient record retrieved')
+            console.log(state.activeWorkflowState)
+            
+            //TO DO:  retrieve encounter resource, immunization resource, and appointment resource 'status' fields to determine the workflow state
+            if((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
+            {
+                state.activeWorkflowState = 'RECORD_RETRIEVED'
 
-            //reset patient-specific data
-            state.encounterResource = {}
-            state.immunizationResource = {}
-            state.screeningResponses.vaccinationDecision = '',
-            state.screeningResponses.patientInfoConfirmed = '',
-            state.screeningResponses.consentFormSigned = '',
-            state.screeningResponses.screeningCompleted = '',
-            state.screeningResponses.factSheetProvided = '',
-            state.screeningResponses.screeningComplete = false
+                //reset patient-specific data
+                state.encounterResource = {};
+                state.appointmentResource = {};
+                state.immunizationResource.lotNumber = '',
+                state.immunizationResource.expirationDate = '',
+                state.immunizationResource.manufacturer = '',
+                state.immunizationResource.doseQuantity = '',
+                state.immunizationResource.doseNumber = '',
+                state.immunizationResource.immunizationStatus = '',
+                state.immunizationResource.immunizationTimeStamp = '',
+                state.immunizationResource.healthcarePractitioner = 'White, Betty',
+                state.immunizationResource.site = '',
+                state.immunizationResource.route = 'Injection',
+                state.immunizationResource.notes = '',
+                state.immunizationResource.notAdministeredReason = ''
+                state.screeningResponses.vaccinationDecision = '',
+                console.log('Reset screening question responses')
+                state.screeningResponses.screeningQ1 = '',
+                state.screeningResponses.screeningQ2 = '',
+                state.screeningResponses.screeningQ2b = '',
+                state.screeningResponses.screeningQ3a = '',
+                state.screeningResponses.screeningQ3b = '',
+                state.screeningResponses.screeningQ3c = '',
+                state.screeningResponses.screeningQ4 = '',
+                state.screeningResponses.screeningQ5 = '',
+                state.screeningResponses.screeningQ6 = '',
+                state.screeningResponses.screeningQ7 = '',
+                state.screeningResponses.screeningQ8 = '',
+                state.screeningResponses.screeningComplete = false
+            }
         },
         patientAdmitted(state, payload) {
             state.activeWorkflowState = 'ADMITTED'
@@ -114,6 +141,17 @@ export default new Vuex.Store({
             state.screeningResponses.screeningQ7 = screeningResponsesPayload.screeningQ7
             state.screeningResponses.screeningQ8 = screeningResponsesPayload.screeningQ8
             state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
+            console.log(state.screeningResponses.screeningQ1)
+            console.log(state.screeningResponses.screeningQ2)
+            console.log(state.screeningResponses.screeningQ2b)
+            console.log(state.screeningResponses.screeningQ3a)
+            console.log(state.screeningResponses.screeningQ3b)
+            console.log(state.screeningResponses.screeningQ3c)
+            console.log(state.screeningResponses.screeningQ4)
+            console.log(state.screeningResponses.screeningQ5)
+            console.log(state.screeningResponses.screeningQ6)
+            console.log(state.screeningResponses.screeningQ7)
+            console.log(state.screeningResponses.screeningQ8)
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
             state.activeWorkflowState = 'VACCINATION_COMPLETE'

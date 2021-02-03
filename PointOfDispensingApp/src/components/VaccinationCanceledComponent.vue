@@ -10,7 +10,11 @@
             <div class="secondary--text">Healthcare Practitioner</div>
           </v-col>
           <v-col cols="6">
-            <v-text-field outlined dense filled readonly
+            <v-text-field 
+              outlined 
+              dense 
+              filled 
+              readonly
               :value="practitionerName"
             ></v-text-field>
           </v-col>
