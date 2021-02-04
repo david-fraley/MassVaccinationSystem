@@ -6,6 +6,8 @@ const Appointment = require("../models/Appointment");
 
 const prepend = 'x';
 
+exports.prepend = prepend;
+
 exports.read = (req, res) => {
   axios
     .get(`${req.url}`)
