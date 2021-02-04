@@ -52,6 +52,34 @@ let phoneUseEnums = {
   Work: "work",
 };
 
+/**
+ * Returns the date in YYYY-MM-DD format.
+ * 
+ * @param {Date in MM/DD/YYYY format} date 
+ */
+function parseDate(date) {
+  if (!date) return null;
+  // Ensure date can be converted into 3 variables
+  if (date.split("/").length !== 3) return null;
+
+  const [month, day, year] = date.split("/");
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+}
+
+/**
+ * Returns the date in MM/DD/YYYY format.
+ * 
+ * @param {Date in YYYY-MM-DD format} date 
+ */
+function prettyDate(date) {
+  if (!date) return null;
+  // Ensure date can be converted into 3 variables
+  if (date.split("-").length !== 3) return null;
+
+  const [year, month, day] = date.split("-");
+  return `${month.padStart(2, "0")}/${day.padStart(2, "0")}/${year}`;
+}
+
 exports.toFHIR = function (patient) {
   let resource = {
     resourceType: "Patient",
@@ -66,7 +94,7 @@ exports.toFHIR = function (patient) {
       // add later
     ],
     gender: genderEnums[patient.gender],
-    birthDate: patient.birthDate,
+    birthDate: parseDate(patient.birthDate),
     address: [
       {
         use: addressUseEnums[patient.address.use],
@@ -174,7 +202,7 @@ exports.toModel = function (patient) {
         : ""
       : "",
     gender: patient.gender,
-    birthDate: patient.birthDate,
+    birthDate: prettyDate(patient.birthDate),
     address: {
       line: patient.address
         ? patient.address[0].line

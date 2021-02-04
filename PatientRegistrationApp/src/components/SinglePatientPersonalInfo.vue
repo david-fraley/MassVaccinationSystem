@@ -187,17 +187,8 @@ export default {
     validBirthdate(birthdate) {
       var minDate = Date.parse(this.minDateStr);
       var maxDate = Date.parse(this.maxDateStr);
-      var formattedDate = () => {
-        // Ensure birthdate is fully entered and can be converted into 3 variables
-        if (birthdate) {
-          if (birthdate.split("/").length === 3) {
-            const [month, day, year] = birthdate.split("/");
-            return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-          }
-        }
-        return false;
-      };
-      var date = Date.parse(formattedDate());
+      var formattedDate = this.parseDate(birthdate);
+      var date = Date.parse(formattedDate);
 
       return !Number.isNaN(date) && minDate <= date && date <= maxDate;
     },
