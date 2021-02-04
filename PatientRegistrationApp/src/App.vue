@@ -76,9 +76,17 @@
 									</v-toolbar>
 									<v-card flat><SinglePatientPersonalInfo ref="singlepatientpersonalinfo"/></v-card>							
 								</v-stepper-content>
+
+								<!-- Single Patient: Screening Questions -->
+								<v-stepper-content step="5">
+									<v-toolbar flat>
+										<v-toolbar-title class="text-wrap">Please complete these screening questions</v-toolbar-title>
+									</v-toolbar>
+									<v-card flat><ScreeningQuestions ref="singlepatientscreeningquestions"/></v-card>							
+								</v-stepper-content>
 								
 								<!-- Single Patient: Emergency Contact -->
-								<v-stepper-content step="5">
+								<v-stepper-content step="6">
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap"> Specify an emergency contact</v-toolbar-title>
 									</v-toolbar>
@@ -86,15 +94,15 @@
 								</v-stepper-content>
 								
 								<!-- Single Patient: Review and Submit -->
-								<v-stepper-content step="6">
+								<v-stepper-content step="7">
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap">Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><SinglePatientReviewSubmit/></v-card>
+									<v-card flat><SinglePatientReviewSubmit ref="singlePatientReviewSubmit"/></v-card>
 								</v-stepper-content>
 
 								<!-- Single Patient: Follow up -->
-								<v-stepper-content step="7">
+								<v-stepper-content step="8">
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap">Download your QR code</v-toolbar-title>
 									</v-toolbar>
@@ -164,7 +172,7 @@
 									<v-toolbar flat>
 										<v-toolbar-title class="text-wrap">Please ensure your information is correct</v-toolbar-title>
 									</v-toolbar>
-									<v-card flat><HouseholdReviewSubmit v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
+									<v-card flat><HouseholdReviewSubmit ref="householdReviewSubmit" v-bind:numberOfHouseholdMembers="getNumberOfHouseholdMembers()"/></v-card>
 								</v-stepper-content>
 
 								<!-- Household: Follow up -->
@@ -223,10 +231,10 @@
 											No
 										</v-btn>
 										<v-spacer></v-spacer>
-										<v-btn
+										<v-btn 
 											color="primary"
 											text
-											@click="submit()">
+											@click="submitSinglePatientRegistration()">
 											Yes
 										</v-btn>
 									</v-card-actions>
@@ -272,7 +280,7 @@
 										<v-btn
 											color="primary"
 											text
-											@click="submit()">
+											@click="submitHouseholdRegistration()">
 											Yes
 										</v-btn>
 									</v-card-actions>
@@ -321,13 +329,19 @@ import HouseholdEmergencyContact from './components/HouseholdEmergencyContact';
 import HouseholdPersonalInfo_n from './components/HouseholdPersonalInfo_n';
 import HouseholdReviewSubmit from './components/HouseholdReviewSubmit';
 import HouseholdFollowUp from './components/HouseholdFollowUp';
+import ScreeningQuestions from './components/ScreeningQuestions';
 import config from './config.js';
 import EventBus from './eventBus'
 export default {
 	name: 'App',
 	methods: 
 	{
-		submit() {
+		submitSinglePatientRegistration() {
+			this.$refs.singlePatientReviewSubmit.submitPatientInfo()
+			this.goToNextPage()
+		},
+		submitHouseholdRegistration() {
+			this.$refs.householdReviewSubmit.submitPatientInfo()
 			this.goToNextPage()
 		},
 		goToPage(pageNum) {
@@ -438,8 +452,13 @@ export default {
 						break;
 					case config.registrationPages.SINGLE_PATIENT_PERSONAL_INFO_PAGE:
 						this.$refs.singlepatientpersonalinfo.verifyFormContents() ? 
-						this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE) : 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_SCREENING_PAGE) : 
 						this.goToPage(config.registrationPages.SINGLE_PATIENT_PERSONAL_INFO_PAGE);
+						break;
+					case config.registrationPages.SINGLE_PATIENT_SCREENING_PAGE:
+						this.$refs.singlepatientscreeningquestions.verifyFormContents() ? 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE) : 
+						this.goToPage(config.registrationPages.SINGLE_PATIENT_SCREENING_PAGE);
 						break;
 					case config.registrationPages.SINGLE_PATIENT_EMERGENCY_CONTACT_PAGE:
 						this.$refs.singlepatientemergencycontact.verifyFormContents() ? 
@@ -559,6 +578,7 @@ export default {
 		HouseholdPersonalInfo_n,
 		HouseholdReviewSubmit,
 		HouseholdFollowUp,
+		ScreeningQuestions,
 	},
 	computed: {
 		titleFontSize() {

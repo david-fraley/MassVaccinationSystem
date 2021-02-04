@@ -11,7 +11,7 @@
 
 const globals = require("./globals");
 const generalTest = require("./generalTest");
-const checkInTest = require("./checkInTest");
+const checkInDischargeTest = require("./checkInDischargeTest");
 
 /**
  * Setup for all tests.
@@ -36,11 +36,12 @@ async function setup() {
   let resource;
   for (resource of resources) {
     let data = { resourceType: resource, id: id };
+    if (resource === "Patient") data = globals.examples.ExamplePatient;
 
     let promise = globals.fhirServer.put(`/${resource}/${id}`, data);
     promises.push(promise);
   }
-  
+
   await Promise.all(promises).catch((error) => {
     console.log("Setup failed");
     globals.info(error);
@@ -55,7 +56,7 @@ async function main() {
 
   // Run tests
   generalTest().then();
-  checkInTest().then();
+  checkInDischargeTest().then();
 }
 
 main().then(console.log()).catch(console.error);

@@ -68,10 +68,10 @@ export default {
       return this.$store.state.patientResource.id;
     },
     locationId() {
-      return this.$store.state.locationResource.locationId;
+      return this.$store.state.locationResource.id;
     },
     locationName() {
-      return this.$store.state.locationResource.locationName;
+      return this.$store.state.locationResource.name;
     },
     encounterStatus() {
       return this.$store.state.encounterResource.status;
@@ -81,9 +81,9 @@ export default {
     },
   },
   methods: {
-    onSuccess(encounter) {
+    onSuccess(payload) {
       //send data to Vuex
-      this.$store.dispatch("patientAdmitted", encounter);
+      this.$store.dispatch("patientAdmitted", payload);
     },
     checkIn() {
       // make request

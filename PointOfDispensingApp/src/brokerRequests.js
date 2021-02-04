@@ -12,20 +12,6 @@ function toResponse(error) {
   }
 }
 
-// Returns promise to make a call to healthcheck
-function healthcheckPromise() {
-  return axios
-    .get(`/broker/healthcheck`)
-    .then((response) => {
-      console.log(response.data);
-
-      return { data: response.data };
-    })
-    .catch((e) => {
-      return toResponse(e);
-    });
-}
-
 // define functions for API requests here
 export default {
   // Search patient for patient retrieval
@@ -91,7 +77,12 @@ export default {
     return axios
       .post(`/broker/check-in`, {}, { params: { patient: patID } })
       .then((response) => {
-        return { data: response.data.Encounter };
+        return {
+          data: {
+            Encounter: response.data.Encounter,
+            Appointment: response.data.Appointment,
+          },
+        };
       })
       .catch((e) => {
         return toResponse(e);
@@ -99,12 +90,41 @@ export default {
   },
 
   // Submit vaccination
-  submitVaccination: () => {
-    return healthcheckPromise();
+  submitVaccination: (data) => {
+    return axios
+      .post("/broker/Immunization", { Immunization: data })
+      .then((response) => {
+        console.log(`/Immunization/${response.data.id}`);
+        return { data: response.data };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
   },
 
   // Discharge
-  discharge: () => {
-    return healthcheckPromise();
+  // param data:
+  // {
+  //   apptID: appointment ID,
+  //   encounterID: encounter ID
+  // }
+  discharge: (data) => {
+    return axios
+      .post(
+        `/broker/discharge`,
+        {},
+        { params: { appointment: data.apptID, encounter: data.encounterID } }
+      )
+      .then((response) => {
+        return {
+          data: {
+            Encounter: response.data.Encounter,
+            Appointment: response.data.Appointment,
+          },
+        };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
   },
 };

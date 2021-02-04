@@ -73,3 +73,24 @@ exports.checkIn = async (req) => {
     return Appointment.toModel(response.data);
   });
 };
+
+exports.discharge = async (req) => {
+  const status = "fulfilled";
+  let id = req.query.appointment;
+
+  if (!id) return;
+
+  // patch status and end time
+  let patch = [
+    {
+      op: "add",
+      path: "/status",
+      value: status,
+    },
+  ];
+
+  // update the database with new appointment
+  return axios.patch(`/Appointment/${id}`, patch).then((response) => {
+    return Appointment.toModel(response.data);
+  });
+};

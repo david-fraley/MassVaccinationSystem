@@ -25,8 +25,6 @@ module.exports = {
     "status" : "finished",
     "class" : "FLD",
     "subject" : "Patient/example",
-    "start" : "2020-09-17T05:10:19+00:00",
-    "end" : "2020-09-18T05:15:19+00:00",
     "location" : "Location/example",
     "serviceProvider" : "Organization/example"
   }
@@ -49,17 +47,14 @@ module.exports = {
     "patient": "Patient/example",
     "encounter": "Encounter/example",
     "status": "completed",
-    "statusReason": "OSTOCK",
-    "occurrence": "2013-01-10",
     "primarySource": true,
     "location": "Location/example",
-    "site": "LA",
-    "route": "IVINJ",
-    "doseQuantity": 5,
-    "doseUnit": "mg",
-    "performer": ["Practitioner/example"],
+    "site": "Left arm",
+    "route": "Intramuscular injection",
+    "doseQuantity": "5 mg",
+    "performer": "Practitioner/example",
     "note": "immunization notes",
-    "education": [""],
+    "education": ["faq"],
     "series": "series",
     "doseNumber": 1,
     "seriesDoses": 2
@@ -106,6 +101,16 @@ module.exports = {
     "type" : "cg",
     "name" : "ManagingOrganizationName"
   }
+}`,
+
+  ExamplePatient: `{
+  "resourceType": "Patient",
+  "id": "example",
+  "name": [ {
+    "family": "Bush",
+    "given": [ "Joe" ]
+  } ],
+  "birthDate": "1999-11-11"
 }`,
 
   Patient: `{

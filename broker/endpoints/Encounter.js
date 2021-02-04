@@ -89,3 +89,29 @@ exports.checkIn = async (req) => {
     return Encounter.toModel(response.data);
   });
 };
+
+exports.discharge = async (req) => {
+  const status = "finished";
+  let id = req.query.encounter;
+
+  if (!id) return;
+
+  // patch status and end time
+  let patch = [
+    {
+      op: "add",
+      path: "/status",
+      value: status,
+    },
+    {
+      op: "add",
+      path: "/period/end",
+      value: new Date().toISOString(),
+    },
+  ];
+
+  // update the database with new encounter
+  return axios.patch(`/Encounter/${id}`, patch).then((response) => {
+    return Encounter.toModel(response.data);
+  });
+};
