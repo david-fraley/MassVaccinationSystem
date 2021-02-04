@@ -343,13 +343,16 @@ export default {
       let data = this.dataPayload();
       brokerRequests.submitRegistration(data).then((response) => {
         if (response.data) {
-          this.onSuccess();
+          this.onSuccess(response.data);
         } else if (response.error) {
+          console.log(response.error);
           alert("Registration not successful");
         }
       });
     },
-    onSuccess() {},
+    onSuccess(data) {
+      console.log(JSON.stringify(data));
+    },
   },
   mounted() {
     EventBus.$on(

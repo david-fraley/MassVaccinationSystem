@@ -18,7 +18,6 @@ export default {
     return axios
       .post(`/broker/Patient`, data)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
         return {
           data: response.data,
         };
