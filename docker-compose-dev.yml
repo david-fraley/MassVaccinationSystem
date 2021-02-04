@@ -8,9 +8,14 @@ services:
         volumes:
             - ./hapi_fhir/data/hapi:/data/hapi
     db:
-        build: './postgres_db'
+        build: './broker_db'
         ports:
             - "5432:5432"
+        environment:
+            # Variables read from local .env file
+            - POSTGRES_DB=${DB_NAME}
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
         volumes:
             - pgdata:/var/lib/postgresql/data/
 # named volume for persistent database
