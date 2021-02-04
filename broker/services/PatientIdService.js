@@ -59,10 +59,6 @@ class PatientIdService {
         return { qr_code: null };
     }
 
-    async createQrCode(patientId) {
-      return { qr_code: "12345" + patientId };
-    }
-
     /**
      * Returns entire patient ID record for the provided a patient ID.
      * 
