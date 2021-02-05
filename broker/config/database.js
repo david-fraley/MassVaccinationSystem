@@ -1,7 +1,6 @@
 // Read private configuration settings from .env file into process.env
 //
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config({ path: `${__dirname}/../../.env` });
 
 // Export configuration settings with some values set to defaults.
 // NOTE: login/password settings should not be defaulted.
