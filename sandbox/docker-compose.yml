@@ -48,12 +48,12 @@ services:
         build: ../broker
         environment:
             # Variables read from local .env file
-            - DB_NAME=massvaxx
-            - DB_DIALECT=postgres
-            - DB_HOST=broker-db
-            - DB_PORT=5432
-            - DB_USERNAME=${BROKER_DB_USERNAME}
-            - DB_PASSWORD=${BROKER_DB_PASSWORD}
+            - BROKER_DB_NAME=massvaxx
+            - BROKER_DB_DIALECT=postgres
+            - BROKER_DB_HOST=broker-db
+            - BROKER_DB_PORT=5432
+            - BROKER_DB_USERNAME=${BROKER_DB_USERNAME}
+            - BROKER_DB_PASSWORD=${BROKER_DB_PASSWORD}
         #ports:
             # Should not be exposed to host
             #- "3000"
