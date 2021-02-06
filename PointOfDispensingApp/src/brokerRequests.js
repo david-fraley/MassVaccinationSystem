@@ -26,7 +26,7 @@ export default {
     return axios
       .post(`/broker/SearchPatients`, data)
       .then((response) => {
-        return { patients: response.patients };
+        return { patients: response.data.patients };
       })
       .catch((e) => {
         return toResponse(e);

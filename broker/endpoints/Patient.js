@@ -56,13 +56,6 @@ exports.search = [
       return res.status(400).json({error: errorString.slice(0, -2)});
     }
 
-    // const patientSearchPayload = {
-    //   firstName: req.body.firstName,
-    //   lastName: req.body.lastName,
-    //   birthDate: req.body.birthDate,
-    //   postalCode: req.body.postalCode
-    // };
-
     let endpoint = process.env.FHIR_URL_BASE + '/Patient?' +
       'given=' + req.body.firstName +
       '&family=' + req.body.lastName +
@@ -71,18 +64,15 @@ exports.search = [
     if(req.body.postalCode) {
       endpoint += '&address-postalcode=' + req.body.postalCode;
     }
-    console.log(endpoint);
 
     // Use POST request so no PHI is included in URL query parameters
     axios
     .get(endpoint)
     .then((response) => {
-      console.log(response);
-      console.log(response.data.link);
       let patientArray;
       if(response.data.entry) {
         patientArray = response.data.entry.map((entry) => {
-          Patient.toModel(entry.resource);
+          return Patient.toModel(entry.resource);
         });
       }
       if(!patientArray || patientArray.length === 0) {

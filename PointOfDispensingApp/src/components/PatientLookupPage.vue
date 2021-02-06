@@ -208,7 +208,6 @@ export default {
       }
     },
     onDecode (result) {
-      
       this.result = result
 
       //Interim solution:  extract screening responses from QR code (part 1 of 2)
@@ -228,25 +227,6 @@ export default {
         }
       });
     },
-      onDecode (result) {
-        this.result = result
-
-        //Interim solution:  extract screening responses from QR code (part 1 of 2)
-        var res = this.result.split("|");
-        //end of interim solution (part 1 of 2)
-
-        //the following line of code may need to be updated after removing/changing the interim solution"
-        let qrValue = res[0];
-        let data = { id: qrValue };
-        brokerRequests.getPatient(data).then((response) => {
-          if (response.data) {
-            this.patient = response.data;
-            this.patientRecordRetrieved();
-          } else if (response.error) {
-            alert("Patient not found");
-          }
-        });
-      },
     searchPatient() {
       // validate form
       this.$refs.form.validate();

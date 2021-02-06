@@ -372,7 +372,6 @@ MigrationBackup/
 
 sandbox/sandbox.crt
 sandbox/sandbox.key
-package-lock.json
 
 
 sandbox/hapi.properties
