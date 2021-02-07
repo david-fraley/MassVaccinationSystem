@@ -49,7 +49,11 @@ See [README.md](sandbox/README.md) in sandbox directory for further instructions
 - MassVaccinationSystem project source code downloaded.
 
 ### Setup
-Add or update /broker/.env with the following line: `FHIR_URL_BASE=http://localhost:8080/hapi-fhir-jpaserver/fhir`
+1. In /, copy **env.template** to a file named **.env** (note the dot in .env filename)
+and update the FHIR_URL_BASE variable to `FHIR_URL_BASE=http://localhost:8080/hapi-fhir-jpaserver/fhir`
+3. In /data/hapi/, copy **hapi.properties.template** to a file named **hapi.properties**.
+4. (Optional) Edit .env and /data/hapi/hapi.properties file to change default database passwords (_BROKER_DB_PASSWORD_ 
+and _HAPI_DB_PASSWORD_). Make sure the passwords match in .env and hapi.properties.
 
 ### How to run
 Perform each of the following in a separate terminal:

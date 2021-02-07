@@ -52,7 +52,7 @@ services:
     hapi:
         image: hapiproject/hapi:v5.0.0
         volumes:
-            - ./hapi_fhir/data/hapi/hapi.properties:/etc/hapi/hapi.properties
+            - ./data/hapi/hapi.properties:/etc/hapi/hapi.properties
             - hapi_data:/data/hapi
         environment:
             - JAVA_OPTS=-Dhapi.properties=/etc/hapi/hapi.properties
