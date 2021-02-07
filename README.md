@@ -67,3 +67,36 @@ Perform each of the following in a separate terminal:
 2. The Point of Dispensing App can be viewed at http://localhost:8082
 3. HTTP requests from the Vue servers will automatically be redirected to broker (running on port 3000) for you
 4. Any changes made to the source files for Broker, PatientRegistration, or PointOfDispensing will immediately take effect!  Changes made to the Vue apps will cause the browser to automatically refresh with the updated code/content
+
+# Troubleshooting
+### 1. Database connectivity issues
+If you encounter issues connecting to the database after following the instructions above (e.g. server address not found, invalid database credentials), try performing the steps below.  Note that these commands will delete all existing data from the database.
+
+1. Stop the docker containers and broker
+2. Run `docker-compose down -v` or `docker-compose -f docker-compose-dev.yml down -v` (depending on how you've been running docker) from the root project directory
+3. Restart the docker containers and broker
+
+If you are still having connectivity issues, try the following steps
+1. Stop the docker containers and broker
+2. Run `docker-compose down -v` or `docker-compose -f docker-compose-dev.yml down -v` (depending on how you've been running docker) from the root project directory
+3. Run `docker container prune -f`
+4. Run `docker volume prune -f`
+5. Run `docker network prune -f`
+6. Restart the docker containers and broker
+
+### 2. ECONNREFUSED error in broker after an API request (Windows)
+If an API request fails and you see the above error in broker, you may have incorrect formatting in your broker_db/massvaxx_db_init.sh file.  Perform the following steps to fix it:
+
+1. Navigate to /broker_db in a terminal
+2. Run `vim massvaxx_db_init.sh`
+    1. If your computer doesn't recognize the vim command, download it from https://www.vim.org/download.php#pc
+    2. Run the executable as an administrator
+    3. Change the type of installation to "Full" and complete the installation
+    4. Restart your terminal, navigate back to /broker_db, and re-run the command above
+3. Type `:set ff=unix` (it will appear in the bottom left), then press enter
+4. Type `:wq`, then press enter (this will close VIM)
+5. Restart the docker containers and/or broker
+
+### 3. Broker errors related to patientIds or QR Codes
+It's likely that something prevented the broker database from starting that handles patient Ids and QR Codes.  Perform the steps in issue 1 "Database connectivity issues" above.
+
