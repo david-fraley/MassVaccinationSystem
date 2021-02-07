@@ -12,6 +12,6 @@ module.exports = {
     dialect: process.env.BROKER_DB_DIALECT || 'postgres',
     host: process.env.BROKER_DB_HOST || 'localhost',
     password: process.env.BROKER_DB_PASSWORD,
-    port: process.env.BROKER_DB_PORT || 6432,
+    port: process.env.BROKER_DB_PORT || 5432,
     username: process.env.BROKER_DB_USERNAME
 }

@@ -31,7 +31,7 @@ services:
             #- broker_db_logs:/var/log/postgresql
             - broker_db_data:/var/lib/postgresql/data
         ports:
-            - "6432:5432"
+            - "5432:5432"
 
     # Database for HAPI FHIR service
     #
