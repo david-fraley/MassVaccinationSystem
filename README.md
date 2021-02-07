@@ -84,19 +84,7 @@ If you are still having connectivity issues, try the following steps
 5. Run `docker network prune -f`
 6. Restart the docker containers and broker
 
-### 2. ECONNREFUSED error in broker after an API request (Windows)
-If an API request fails and you see the above error in broker, you may have incorrect formatting in your broker_db/massvaxx_db_init.sh file.  Perform the following steps to fix it:
 
-1. Navigate to /broker_db in a terminal
-2. Run `vim massvaxx_db_init.sh`
-    1. If your computer doesn't recognize the vim command, download it from https://www.vim.org/download.php#pc
-    2. Run the executable as an administrator
-    3. Change the type of installation to "Full" and complete the installation
-    4. Restart your terminal, navigate back to /broker_db, and re-run the command above
-3. Type `:set ff=unix` (it will appear in the bottom left), then press enter
-4. Type `:wq`, then press enter (this will close VIM)
-5. Restart the docker containers and/or broker
-
-### 3. Broker errors related to patientIds or QR Codes
+### 2. Broker errors related to patientIds or QR Codes
 It's likely that something prevented the broker database from starting that handles patient Ids and QR Codes.  Perform the steps in issue 1 "Database connectivity issues" above.
 
