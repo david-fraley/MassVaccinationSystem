@@ -47,6 +47,10 @@ async function createPatients(req, res) {
 
   // Create head of household to be referenced by other members
   let [head, promises] = await createPatient(patient);
+  if (!head) {
+    res.status(500).json({ error: "create patient failed" });
+    return;
+  }
 
   for (patient of patients) {
     createPromises.push(createPatient(patient, head));
@@ -86,6 +90,11 @@ async function createPatient(patient, head) {
   let related;
   let promises = [];
 
+  let id = (await PatientIdService.createPatientId()).patient_id;
+  if (!id) return [];
+
+  promises.push(PatientIdService.createQrCodeForPatientId(id));
+
   // If head is not provided, create RelatedPerson resource first
   // and update reference to patient later.
   if (head == null) related = { resourceType: "RelatedPerson" };
@@ -100,10 +109,7 @@ async function createPatient(patient, head) {
   let relatedID = (await axios.post(`/RelatedPerson`, resource)).data.id;
 
   // Create Patient resource with ID from PatientIdService
-  // and link to RelatedPerson
-  let id = (await PatientIdService.createPatientId()).patient_id;
-  promises.push(PatientIdService.createQrCodeForPatientId(id));
-  
+  // and link to RelatedPerson  
   let patientID = `${prepend}${id}`;
   patient.link = `RelatedPerson/${relatedID}`;
   resource = Patient.toFHIR(patient);
