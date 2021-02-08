@@ -1,5 +1,4 @@
 <template>
-<v-form ref="form" v-model="valid">
   <v-container fluid> 
     <v-row align="center" justify="start">
       <!-- Last name -->
@@ -46,6 +45,7 @@
     </v-row>
     <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
+        <v-form ref="form" v-model="valid">
         <!-- Date of Birth -->
         <v-text-field
           v-model="dob"
@@ -57,6 +57,7 @@
             <span class="red--text"><strong>* </strong></span>Date of Birth
           </template>
         </v-text-field>
+        </v-form>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Gender identity -->
@@ -115,7 +116,6 @@
       </v-col>
     </v-row>
   </v-container>
-</v-form>
 </template>
 <script>
 import EventBus from "../eventBus";

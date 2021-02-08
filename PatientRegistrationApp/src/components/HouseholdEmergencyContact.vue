@@ -1,4 +1,5 @@
 <template>
+<v-form ref="form" v-model="valid">
   <v-container fluid>
     <v-row align="center" justify="start">
     <!-- Last name -->
@@ -62,6 +63,7 @@
 			</v-col>
 		</v-row>
 	</v-container>
+</v-form>
 </template>
 
 <script>
@@ -76,7 +78,8 @@ export default {
       emergencyContactGivenName: '',
       emergencyContactPhoneNumber: '',
       emergencyContactPhoneNumberType: '',
-      emergencyContactRelationship: ''
+      emergencyContactRelationship: '',
+      valid: false,
     };
   },
   methods: {
@@ -116,6 +119,8 @@ export default {
         alert(message)
         return false
       }
+        this.$refs.form.validate();
+        if (!this.valid) return;
       this.sendHouseholdEmergencyContactInfoToReviewPage();
       return true;
     }

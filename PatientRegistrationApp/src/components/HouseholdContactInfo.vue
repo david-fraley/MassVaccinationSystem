@@ -1,4 +1,5 @@
 <template>
+<v-form ref="form" v-model="valid">
 	<v-container fluid>
 		<v-row align="center" justify="start">
 			<v-col cols="12">
@@ -93,6 +94,7 @@
 			</v-col>
 		</v-row>
 	</v-container>
+</v-form>
 </template>
 
 <script>
@@ -120,6 +122,7 @@ import customerSettings from '../customerSettings'
 			disclosureStatement: customerSettings.contactInfoDisclosure,
 			consequenceStatement: customerSettings.contactInfoConsequence,
 			acknowledgementStatement: customerSettings.contactInfoAcknowledgement,
+			valid: false,
 		}
 	},
 	methods: {
@@ -162,7 +165,8 @@ import customerSettings from '../customerSettings'
 				alert (message)
 				return false
 			}
-		
+				this.$refs.form.validate();
+				if (!this.valid) return;	
 			this.sendHouseholdContactInfoInfoToReviewPage();
 			return true;
 		},
