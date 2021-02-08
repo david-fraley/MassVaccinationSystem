@@ -4,7 +4,7 @@ const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
 const Appointment = require("../models/Appointment");
 
-const prepend = 'x';
+const prepend = "x";
 
 exports.prepend = prepend;
 
@@ -109,7 +109,7 @@ async function createPatient(patient, head) {
   let relatedID = (await axios.post(`/RelatedPerson`, resource)).data.id;
 
   // Create Patient resource with ID from PatientIdService
-  // and link to RelatedPerson  
+  // and link to RelatedPerson
   let patientID = `${prepend}${id}`;
   patient.link = `RelatedPerson/${relatedID}`;
   resource = Patient.toFHIR(patient);

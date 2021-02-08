@@ -1,12 +1,29 @@
 /*
 RelatedPerson {
   patient: string
-  relationship: enum (DOMPART Domestic Partner, INLAW In-Law, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
+  relationship: enum (CARE Caregiver, SIB, STPCHLD, G Guardian, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
 }
 */
 const RELATIONSHIP_SYSTEM =
   "http://hl7.org/fhir/ValueSet/relatedperson-relationshiptype";
+
+let relationshipEnums = {
+  "Care Giver": "CARE",
+  Sibling: "SIB",
+  Stepchild: "STPCHLD",
+  Guardian: "G",
+  Child: "CHILD",
+  "Foster Child": "CHLDFOST",
+  Spouse: "SPS",
+  Parent: "PRN",
+  Grandparent: "GRPRN",
+  Other: "O",
+  Self: "ONESELF",
+};
+
 exports.toFHIR = function (related) {
+  if (!related.relationship) related.relationship = "Self";
+
   let resource = {
     resourceType: "RelatedPerson",
     patient: {
@@ -17,7 +34,7 @@ exports.toFHIR = function (related) {
         coding: [
           {
             system: RELATIONSHIP_SYSTEM,
-            code: related.relationship,
+            code: relationshipEnums[related.relationship],
             display: related.relationship,
           },
         ],

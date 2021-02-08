@@ -30,7 +30,7 @@ Patient {
     }
   }
   language: enum (English, Spanish),
-  relationship: enum (DOMPART Domestic Partner, INLAW In-Law, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
+  relationship: enum (CARE Caregiver, SIB, STPCHLD, G Guardian, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
 }
 */
 
@@ -54,8 +54,8 @@ let phoneUseEnums = {
 
 /**
  * Returns the date in YYYY-MM-DD format.
- * 
- * @param {Date in MM/DD/YYYY format} date 
+ *
+ * @param {Date in MM/DD/YYYY format} date
  */
 function parseDate(date) {
   if (!date) return null;
@@ -68,8 +68,8 @@ function parseDate(date) {
 
 /**
  * Returns the date in MM/DD/YYYY format.
- * 
- * @param {Date in YYYY-MM-DD format} date 
+ *
+ * @param {Date in YYYY-MM-DD format} date
  */
 function prettyDate(date) {
   if (!date) return null;

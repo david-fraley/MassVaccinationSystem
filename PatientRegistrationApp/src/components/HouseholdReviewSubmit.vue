@@ -291,6 +291,7 @@ export default {
           race: member.race,
           ethnicity: member.ethnicity,
           language: member.preferredLanguage,
+          relationship: member.relationship,
         };
 
         if (!index) {
