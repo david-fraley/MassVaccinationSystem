@@ -1,4 +1,5 @@
 <template>
+<v-form ref="form" v-model="valid">
 	<v-container fluid>
     <v-row align="center" justify="start">
       <v-col cols="12">
@@ -61,6 +62,7 @@
       </v-col>
     </v-row>
   </v-container>
+</v-form>
 </template>
 
 <script>
@@ -85,6 +87,7 @@ export default {
       disclosureStatement: customerSettings.contactInfoDisclosure,
       consequenceStatement: customerSettings.contactInfoConsequence,
       acknowledgementStatement: customerSettings.contactInfoAcknowledgement,
+      valid: false,
     };
   },
   methods: {
@@ -97,6 +100,7 @@ export default {
       EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)
     },
     verifyFormContents() {
+
       var valid = true
       var message
 	
@@ -116,7 +120,8 @@ export default {
 				alert (message)
 				return false
 			}
-	
+        this.$refs.form.validate();
+        if (!this.valid) return;	
       this.sendContactInfoInfoToReviewPage();
       return true;
     },

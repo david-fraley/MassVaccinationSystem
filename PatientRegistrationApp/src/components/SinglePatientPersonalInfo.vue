@@ -1,4 +1,5 @@
 <template>
+<v-form ref="form" v-model="valid">
   <v-container fluid> 
     <v-row align="center" justify="start">
       <!-- Last name -->
@@ -114,6 +115,7 @@
       </v-col>
     </v-row>
   </v-container>
+</v-form>
 </template>
 <script>
 import EventBus from "../eventBus";
@@ -153,6 +155,7 @@ export default {
         (v) => !!v && v.length === 10 || "DOB must be in specified format, MM/DD/YYYY",
         (v) => this.validBirthdate(v) || "Invalid DOB",
       ],
+      valid: false,
     };
   },
   computed: {
@@ -210,6 +213,7 @@ export default {
       EventBus.$emit("DATA_PERSONAL_INFO_PUBLISHED", personalInfoPayload);
     },
     verifyFormContents() {
+
       //add logic to check form contents
       var valid = true;
       var message = "Woops! You need to enter the following field(s):";
@@ -267,7 +271,8 @@ export default {
         alert(message);
         return false;
       }
-
+        this.$refs.form.validate();
+        if (!this.valid) return;
       this.sendPersonalInfoDataToReviewPage();
       return true;
     },
