@@ -30,7 +30,7 @@ Patient {
     }
   }
   language: enum (English, Spanish),
-  relationship: enum (CARE Caregiver, SIB, STPCHLD, G Guardian, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
+  relationship: enum (CGV Caregiver, SIB, STPCHLD, GUARD Guardian, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
 }
 */
 
