@@ -38,12 +38,112 @@ module.exports = {
   }
 }`,
 
+  ExampleImmunizationCompleted: `{
+  "resourceType": "Immunization",
+  "id": "examplecompleted",
+  "status": "completed",
+  "vaccineCode": {
+    "coding": [ {
+      "code": "COVID",
+      "display": "COVID"
+    } ]
+  },
+  "patient": {
+    "reference": "Patient/example"
+  },
+  "encounter": {
+    "reference": "Encounter/example"
+  },
+  "occurrenceDateTime": "2021-02-09T20:57:11.046Z",
+  "primarySource": true,
+  "location": {
+    "reference": "Location/example"
+  },
+  "manufacturer": {
+    "reference": "Organization/example"
+  },
+  "lotNumber": "AAJN11K",
+  "expirationDate": "2015-02-15",
+  "site": {
+    "coding": [ {
+      "system": "https://www.hl7.org/fhir/v3/ActSite/cs.html",
+      "code": "LA",
+      "display": "Left arm"
+    } ]
+  },
+  "route": {
+    "coding": [ {
+      "system": "https://www.hl7.org/fhir/v3/RouteOfAdministration/cs.html",
+      "code": "IM",
+      "display": "Intramuscular injection"
+    } ]
+  },
+  "doseQuantity": {
+    "value": 5,
+    "system": "http://unitsofmeasure.org",
+    "code": "mg"
+  },
+  "performer": [ {
+    "actor": {
+      "reference": "Practitioner/example"
+    }
+  } ],
+  "note": [ {
+    "text": "immunization notes"
+  } ],
+  "education": [ {
+    "reference": "faq"
+  } ],
+  "protocolApplied": [ {
+    "series": "series",
+    "doseNumberPositiveInt": 1,
+    "seriesDosesPositiveInt": 2
+  } ]
+}`,
+
+  ExampleImmunizationNotDone: `{
+  "resourceType": "Immunization",
+  "id": "examplenotdone",
+  "status": "not-done",
+  "statusReason": {
+    "coding": [ {
+      "system": "https://www.hl7.org/fhir/v3/ActReason/cs.html",
+      "code": "MEDPREC",
+      "display": "Medical Precaution"
+    } ]
+  },
+  "vaccineCode": {
+    "coding": [ {
+      "code": "COVID",
+      "display": "COVID"
+    } ]
+  },
+  "patient": {
+    "reference": "Patient/example"
+  },
+  "encounter": {
+    "reference": "Encounter/example"
+  },
+  "occurrenceDateTime": "2021-02-09T20:52:46.437Z",
+  "location": {
+    "reference": "Location/example"
+  },
+  "performer": [ {
+    "actor": {
+      "reference": "Practitioner/example"
+    }
+  } ],
+  "note": [ {
+    "text": "immunization notes"
+  } ]
+}`,
+
   Immunization: `{
   "Immunization": {
     "vaccine": "FLUVAX",
     "manufacturer": "Organization/example",
     "lotNumber": "AAJN11K",
-    "expiration": "2015-02-15",
+    "expirationDate": "2015-02-15",
     "patient": "Patient/example",
     "encounter": "Encounter/example",
     "status": "completed",
