@@ -271,8 +271,9 @@ export default {
         alert(message);
         return false;
       }
-        this.$refs.form.validate();
-        if (!this.valid) return;
+      this.$refs.form.validate();
+      if (!this.valid) return;
+      
       this.sendPersonalInfoDataToReviewPage();
       return true;
     },

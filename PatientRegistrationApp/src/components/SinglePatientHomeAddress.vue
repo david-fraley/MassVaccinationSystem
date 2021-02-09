@@ -196,8 +196,9 @@ import EventBus from '../eventBus'
 				alert(message)
 				return false
 			}
-				this.$refs.form.validate();
-				if (!this.valid) return;
+			this.$refs.form.validate();
+			if (!this.valid) return;
+			
 			this.sendHomeAddressInfoToReviewPage();
 			return true;
 		},

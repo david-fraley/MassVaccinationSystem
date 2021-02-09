@@ -34,7 +34,7 @@
 				<v-text-field
 					v-model="primaryPhoneNumber"
 					:disabled="!permissionCheckBox"
-					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+					:rules="phoneNumberRules"
 					v-mask="'(###)###-####'"
 					prepend-icon="mdi-phone"
 					label="Primary Phone Number">
@@ -55,7 +55,7 @@
 				<v-text-field
 					v-model="secondaryPhoneNumber"
 					:disabled="!primaryPhoneNumber"
-					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+					:rules="phoneNumberRules"
 					v-mask="'(###)###-####'"
 					label="Secondary Phone Number"
 					prepend-icon="mdi-phone">
@@ -108,8 +108,13 @@ import customerSettings from '../customerSettings'
 			phoneTypeOptions:['Home', 'Mobile', 'Work'],
 			emailRules: [
 				(v) =>
-				/^[\s]*$|.+@.+\..+/.test(v) ||
-				"Please provide a valid e-mail address",
+				/^[\s]*$|.+@.+\..+/.test(v) || 'Please provide a valid e-mail address',
+			],
+			phoneNumberRules: [
+				v => {
+				if (v) return v.length == 13 || 'Phone number must be 10 digits';
+				else return true;
+				}
 			],
 			primaryPhoneNumber: '',
 			primaryPhoneNumberType: '',
@@ -165,8 +170,9 @@ import customerSettings from '../customerSettings'
 				alert (message)
 				return false
 			}
-				this.$refs.form.validate();
-				if (!this.valid) return;	
+			this.$refs.form.validate();
+			if (!this.valid) return;
+
 			this.sendHouseholdContactInfoInfoToReviewPage();
 			return true;
 		},
