@@ -26,7 +26,7 @@ exports.read = (req, res) => {
         message: "No patient found with that QR Code"
       }
     }
-    return axios.get(`${process.env.FHIR_URL_BASE}/Patient/${patientId}`);
+    return axios.get(`${process.env.FHIR_URL_BASE}/Patient/${prepend}${patientId}`);
   })
   .then((patientPayload) => {
     const patientRecord = Patient.toModel(patientPayload.data);
