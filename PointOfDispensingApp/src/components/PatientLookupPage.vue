@@ -53,77 +53,76 @@
     </v-row>
 
     <v-form ref="form" v-model="valid">
-      <v-row>
-        <v-col cols="5">
-          <v-row no-gutters>
-            <v-col cols="4">
-              <div class="secondary--text">Last Name</div>
-            </v-col>
-            <v-col cols="8">
-              <v-text-field
-                outlined
-                dense
-                v-model="lastName"
-                required
-                :rules="[(v) => !!v || 'Last Name is required']"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <div class="secondary--text">Date of Birth</div>
-            </v-col>
-            <v-col cols="8">
-            <!-- Date of Birth -->
-            <v-menu
-              attach
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  outlined dense 
-                  v-model="dateFormatted"
-                  :rules="birthdateRules"
-                  placeholder="MM/DD/YYYY"
-                  v-mask="'##/##/####'"
-                  prepend-icon="mdi-calendar"
-                  @click:prepend="on.click"
-                  @blur="date = parseDate(dateFormatted)"
-                >
-                </v-text-field>
-              </template>
-              <v-date-picker
-                reactive
-                v-model="date"
-              ></v-date-picker>
-            </v-menu>
-          </v-col>
-          </v-row>
+      <v-row no-gutters>
+        <v-col cols="2">
+          <div class="secondary--text">Last Name</div>
         </v-col>
-        <!--blank column for spacing-->
-        <v-col cols="1"> </v-col>
-        <v-col cols="5">
-          <v-row no-gutters>
-            <v-col cols="4">
-              <div class="secondary--text">First Name</div>
-            </v-col>
-            <v-col cols="8">
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            v-model="lastName"
+            required
+            :rules="[(v) => !!v || 'Last Name is required']"
+          ></v-text-field>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="2">
+          <div class="secondary--text">First Name</div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            v-model="firstName"
+            required
+            :rules="[(v) => !!v || 'First Name is required']"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col cols="2">
+          <div class="secondary--text">Date of Birth</div>
+        </v-col>
+        <v-col cols="3">
+        <!-- Date of Birth -->
+          <v-menu
+            attach
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
               <v-text-field
-                outlined
-                dense
-                v-model="firstName"
-                required
-                :rules="[(v) => !!v || 'First Name is required']"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <div class="secondary--text">Zip Code</div>
-            </v-col>
-            <v-col cols="8">
-              <v-text-field outlined dense v-model="postalCode"></v-text-field>
-            </v-col>
-          </v-row>
+                outlined dense 
+                v-model="dateFormatted"
+                :rules="birthdateRules"
+                placeholder="MM/DD/YYYY"
+                v-mask="'##/##/####'"
+                prepend-icon="mdi-calendar"
+                @click:prepend="on.click"
+                @blur="date = parseDate(dateFormatted)"
+              >
+              </v-text-field>
+            </template>
+            <v-date-picker
+              reactive
+              v-model="date"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="2">
+          <div class="secondary--text">Zip Code (optional)</div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field 
+            outlined 
+            dense 
+            :rules="postalCodeRules"
+            v-model="postalCode">
+          </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -328,8 +327,14 @@ export default {
       birthdateRules: [
         (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
       ],
+      postalCodeRules: [
+				(v) => !!v || "Zip code is required",
+				(v) =>
+				/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+				"Zip code format must be ##### or #####-####",
+      ],
       date: new Date().toISOString().substr(0, 10),
-      dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
+      dateFormatted: "",
       headers: [
         {
           text: "Last Name",
