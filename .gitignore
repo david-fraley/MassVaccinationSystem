@@ -374,4 +374,4 @@ sandbox/sandbox.crt
 sandbox/sandbox.key
 
 
-sandbox/hapi.properties
+hapi.properties
