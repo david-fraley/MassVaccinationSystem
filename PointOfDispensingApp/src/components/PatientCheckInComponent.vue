@@ -101,7 +101,7 @@ export default {
     return {};
   },
   mounted() {
-    var Immunization = brokerRequests.getImmunization(patientId).then((response) => {
+    var Immunization = brokerRequests.getImmunization(this.patientId).then((response) => {
       if(response.data){
         this.onSuccess(response.data);
       } else if (response.error){
