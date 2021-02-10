@@ -342,6 +342,7 @@ export default {
           value: "family",
         },
         { text: "First Name", value: "given" },
+        { text: "Age", value: "age"},
         { text: "DOB", value: "birthDate" },
         { text: "Address", value: "address.line" },
         { text: "City", value: "address.city" },
