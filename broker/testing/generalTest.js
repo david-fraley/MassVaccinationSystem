@@ -116,7 +116,6 @@ async function test() {
         if (response.data.id) urls.push(`${url}/${response.data.id}`);
         else if (response.data.Patient)
           // wait for references to be added to cleanup list
-          // console.log("Patient: " + response.data.Patient);
           await markPatients(response.data.Patient);
 
         globals.config(response);
