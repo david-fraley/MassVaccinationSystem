@@ -1,5 +1,14 @@
 <template>
 	<v-container fluid>
+			<!--Intro Text -->
+		<v-row align="center" justify="start"><v-col cols="12">
+			<div><p style="font-size:1.3em" class="font-weight-medium">{{welcome}}</p></div>
+			<div><br>{{introStatement}}</div></v-col></v-row>
+		<v-col cols="12">
+			<v-divider></v-divider>
+		</v-col>
+			<!--input label-->
+		<v-col cols="0" sm="3" md="3" lg="3"></v-col>
 		<v-row align="center" justify="start">
 			<!--input label-->
 			<v-col cols="0" sm="3" md="3" lg="3">
@@ -84,7 +93,9 @@ export default {
 		preferredLanguage: '',
 		isSingleRegistration: false,
 		isHouseholdRegistration: false,
-		householdDefinition: customerSettings.householdDefinition
+		householdDefinition: customerSettings.householdDefinition,
+		welcome: customerSettings.welcome,
+		introStatement: customerSettings.introStatement
 	
 	}),
 	methods: 

@@ -8,4 +8,7 @@ export default {
     //contactInfoConsequence: 'This information will allow us to follow up on any details that need to be handled quickly.',
     
     contactInfoAcknowledgement: 'You understand that we will use the phone number and e-mail that you provide to contact you with vaccination registration and follow-up information.',
+
+    welcome: 'Welcome!',
+    introStatement: 'Thanks for starting the registration for the COVID-19 vaccine. This form will collect your patient information and then have you schedule an appointment to receive your first and second dose of the COVID-19 vaccine. You will be provided with a QR code that contains a patient identifier so that when you arrive at the vaccine clinic, staff can easily look up your patient information. By the end of this form, you will have registered and chosen a date to receive the COVID-19 vaccine. For any questions, please reach out to XXX.',
 }
