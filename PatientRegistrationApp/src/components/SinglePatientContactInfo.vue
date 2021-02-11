@@ -34,7 +34,7 @@
         <v-text-field
           v-model="patientPhoneNumber"
           :disabled="!permissionCheckBox"
-          :rules="phoneNumberRules"
+          :rules="phoneNumberRulesUs"
           v-mask="'(###)###-####'"
           prepend-icon="mdi-phone"
           label="Phone Number">
@@ -78,7 +78,7 @@ export default {
         (v) =>
           /^[\s]*$|.+@.+\..+/.test(v) || 'Please provide a valid e-mail address',
         ],
-      phoneNumberRules: [
+      phoneNumberRulesUs: [
         v => {
           if (v) return v.length == 13 || 'Phone number must be 10 digits';
           else return true;

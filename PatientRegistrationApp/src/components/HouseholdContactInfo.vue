@@ -34,7 +34,7 @@
 				<v-text-field
 					v-model="primaryPhoneNumber"
 					:disabled="!permissionCheckBox"
-					:rules="phoneNumberRules"
+					:rules="phoneNumberRulesUs"
 					v-mask="'(###)###-####'"
 					prepend-icon="mdi-phone"
 					label="Primary Phone Number">
@@ -55,7 +55,7 @@
 				<v-text-field
 					v-model="secondaryPhoneNumber"
 					:disabled="!primaryPhoneNumber"
-					:rules="phoneNumberRules"
+					:rules="phoneNumberRulesUs"
 					v-mask="'(###)###-####'"
 					label="Secondary Phone Number"
 					prepend-icon="mdi-phone">
@@ -110,7 +110,7 @@ import customerSettings from '../customerSettings'
 				(v) =>
 				/^[\s]*$|.+@.+\..+/.test(v) || 'Please provide a valid e-mail address',
 			],
-			phoneNumberRules: [
+			phoneNumberRulesUs: [
 				v => {
 				if (v) return v.length == 13 || 'Phone number must be 10 digits';
 				else return true;
