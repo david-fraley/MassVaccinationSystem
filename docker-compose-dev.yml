@@ -1,18 +1,55 @@
 version: '3'
 
 services:
-    hapi:
-        build: './hapi_fhir'
-        ports:
-            - "8080:8080"
+    # Database service for broker
+    #
+    broker-db:
+        build: ./broker_db
+        environment:
+            # Variables read from local .env file
+            - POSTGRES_DB=${BROKER_DB_NAME}
+            - POSTGRES_USER=${BROKER_DB_USERNAME}
+            - POSTGRES_PASSWORD=${BROKER_DB_PASSWORD}
         volumes:
-            - ./hapi_fhir/data/hapi:/data/hapi
-    db:
-        build: './postgres_db'
+            #- broker_db_config:/etc/postgresql
+            #- broker_db_logs:/var/log/postgresql
+            - broker_db_data:/var/lib/postgresql/data
         ports:
             - "5432:5432"
+
+    # Database for HAPI FHIR service
+    #
+    hapi-db:
+        image: postgres
+        environment:
+            # Variables read from local .env file
+            - POSTGRES_DB=${HAPI_DB_NAME}
+            - POSTGRES_USER=${HAPI_DB_USERNAME}
+            - POSTGRES_PASSWORD=${HAPI_DB_PASSWORD}
         volumes:
-            - pgdata:/var/lib/postgresql/data/
-# named volume for persistent database
+            #- hapi_db_config:/etc/postgresql
+            #- hapi_db_logs:/var/log/postgresql
+            - hapi_db_data:/var/lib/postgresql/data
+
+    # HAPI FHIR service
+    #
+    hapi:
+        image: hapiproject/hapi:v5.0.0
+        volumes:
+            - ./data/hapi/hapi.properties:/etc/hapi/hapi.properties
+            - hapi_data:/data/hapi
+        environment:
+            - JAVA_OPTS=-Dhapi.properties=/etc/hapi/hapi.properties
+        ports:
+            - "8080:8080"
+        depends_on:
+            - hapi-db
+
+# Volumes for data that must be preserved if containers stop/re-start.
+#
 volumes:
-    pgdata:
+    #broker_db_config:
+    #broker_db_logs:
+    broker_db_data:
+    hapi_data:
+    hapi_db_data:

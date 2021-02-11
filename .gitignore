@@ -374,4 +374,4 @@ sandbox/sandbox.key
 package-lock.json
 
 
-sandbox/hapi.properties
+hapi.properties
