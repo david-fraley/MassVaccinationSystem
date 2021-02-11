@@ -337,9 +337,8 @@ export default {
         (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
       ],
       postalCodeRules: [
-				(v) => !!v || "Zip code is required",
 				(v) =>
-				/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+				!v || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) || 
 				"Zip code format must be ##### or #####-####",
       ],
       date: new Date().toISOString().substr(0, 10),
