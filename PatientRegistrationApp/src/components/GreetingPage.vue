@@ -3,7 +3,9 @@
 			<!--Intro Text -->
 		<v-row align="center" justify="start"><v-col cols="12">
 			<div><p style="font-size:1.3em" class="font-weight-medium">{{welcome}}</p></div>
-			<div><br>{{introStatement}}</div></v-col></v-row>
+			<div><br>{{introStatement}}</div>
+			<div><br>{{expectationsStatement}}</div>
+			<div><br>{{finalStatement}}</div></v-col></v-row>
 		<v-col cols="12">
 			<v-divider></v-divider>
 		</v-col>
@@ -95,7 +97,9 @@ export default {
 		isHouseholdRegistration: false,
 		householdDefinition: customerSettings.householdDefinition,
 		welcome: customerSettings.welcome,
-		introStatement: customerSettings.introStatement
+		introStatement: customerSettings.introStatement,
+		expectationsStatement: customerSettings.expectationsStatement,
+		finalStatement: customerSettings.finalStatement,
 	
 	}),
 	methods: 

@@ -10,5 +10,8 @@ export default {
     contactInfoAcknowledgement: 'You understand that we will use the phone number and e-mail that you provide to contact you with vaccination registration and follow-up information.',
 
     welcome: 'Welcome!',
-    introStatement: 'Thanks for starting the registration for the COVID-19 vaccine. This form will collect your patient information and then have you schedule an appointment to receive your first and second dose of the COVID-19 vaccine. You will be provided with a QR code that contains a patient identifier so that when you arrive at the vaccine clinic, staff can easily look up your patient information. By the end of this form, you will have registered and chosen a date to receive the COVID-19 vaccine. For any questions, please reach out to XXX.',
+    introStatement: 'You are about to register as a patient for the COVID-19 vaccine. This form will securely collect your patient information, and you have the option to register your entire household to save time. You will also be asked vaccination Phase eligibility questions. At the time of vaccination, you may be required to bring proof of employment at a medical facility, etc.',
+    expectationsStatement: 'After registering as a patient, you will receive a notification to schedule your COVID vaccination appointment if you are not already eligible to do so based upon the CDC and local Phases. Upon receiving your eligibility notification, you will answer COVID screening questions, provide consent, and choose your date to receive the COVID-19 vaccine. You will also be provided with a QR code that contains a patient identifier so that when you arrive at the vaccine clinic, staff can easily look up your patient information.',
+    finalStatement: 'Thank you for helping to do your part to combat COVID!',
+
 }
