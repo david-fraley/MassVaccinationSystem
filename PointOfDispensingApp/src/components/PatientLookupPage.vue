@@ -307,6 +307,24 @@ export default {
     scanQrCode() {
       this.toggleCamera()
     },
+calculatedAge(givenBirthdate) {
+    
+
+    var dob = new Date(givenBirthdate)
+    var month_diff = Date.now() - dob.getTime();
+    
+    //convert the calculated difference in date format
+    var age_dt = new Date(month_diff); 
+    
+    //extract year from date    
+    var patientBirthYear = age_dt.getUTCFullYear();
+    
+    //now calculate the age of the user
+    var patientAgeYear = Math.abs(patientBirthYear - 1970);
+
+		return patientAgeYear;
+	},
+    
   },
   components: {
     QrcodeStream
@@ -324,6 +342,7 @@ export default {
       noRearCamera: false,
       noFrontCamera: false,
       result: '',
+      patientAge: '',
       birthdateRules: [
         (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
       ],
@@ -342,13 +361,19 @@ export default {
           value: "family",
         },
         { text: "First Name", value: "given" },
-        { text: "Age", value: "age"},
+        { text: "Age", value: "patientAge"},
         { text: "DOB", value: "birthDate" },
         { text: "Address", value: "address.line" },
         { text: "City", value: "address.city" },
         { text: "Zipcode", value: "address.postalCode" },
       ],
-      patientLookupTable: [],
+      patientLookupTable: [
+        {
+        
+				patientAge: this.calculatedAge(this.birthDate = '10/15/1998'),
+				
+			},	
+      ],
     };
   },
 };
