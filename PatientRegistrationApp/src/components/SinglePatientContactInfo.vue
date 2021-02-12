@@ -3,20 +3,31 @@
 	<v-container fluid>
     <v-row align="center" justify="start">
       <v-col cols="12">
-        <div>{{disclosureStatement}}</div>  
-        <div><br>{{consequenceStatement}}</div>
-        <div><strong>We strongly encourage you to provide your e-mail and/or phone number as contact information.</strong></div>
-        <div><br></div>
+        <div>{{ disclosureStatement }}</div>
+        <div><br />{{ consequenceStatement }}</div>
+        <div>
+          <strong
+            >We strongly encourage you to provide your e-mail and/or phone
+            number as contact information.</strong
+          >
+        </div>
+        <div><br /></div>
         <v-divider></v-divider>
-        <div><br>By providing your e-mail and/or phone number as contact information, you agree to the following:</div>
-        <div><strong>{{acknowledgementStatement}}</strong></div>
+        <div>
+          <br />By providing your e-mail and/or phone number as contact
+          information, you agree to the following:
+        </div>
+        <div>
+          <strong>{{ acknowledgementStatement }}</strong>
+        </div>
       </v-col>
-    </v-row> 
+    </v-row>
     <v-row align="center" justify="start" no-gutters>
-      <v-checkbox
-        v-model="acknowledgementCheckBox">
+      <v-checkbox v-model="acknowledgementCheckBox">
         <template #label>
-          <span class="red--text"><strong>* <br></strong></span>I have read and understood the above.
+          <span class="red--text"
+            ><strong>* <br /></strong></span
+          >I have read and understood the above.
         </template>
       </v-checkbox>
     </v-row>
@@ -25,7 +36,7 @@
         v-model="permissionCheckBox"
         :disabled="!acknowledgementCheckBox"
         label="I agree to provide and authorize the use of my contact information as outlined above."
-        >
+      >
       </v-checkbox>
     </v-row>
     <v-divider></v-divider>
@@ -37,7 +48,8 @@
           :rules="phoneNumberRulesUs"
           v-mask="'(###)###-####'"
           prepend-icon="mdi-phone"
-          label="Phone Number">
+          label="Phone Number"
+        >
         </v-text-field>
       </v-col>
       <v-col cols="11" sm="5" md="5" lg="2">
@@ -57,7 +69,8 @@
           :disabled="!permissionCheckBox"
           :rules="emailRules"
           prepend-icon="mdi-email"
-          label="E-mail Address">
+          label="E-mail Address"
+        >
         </v-text-field>
       </v-col>
     </v-row>
@@ -66,8 +79,8 @@
 </template>
 
 <script>
-import EventBus from '../eventBus'
-import customerSettings from '../customerSettings'
+import EventBus from "../eventBus";
+import customerSettings from "../customerSettings";
 
 export default {
   name: "SinglePatientContactInfo",
@@ -101,8 +114,8 @@ export default {
         patientPhoneNumber: this.patientPhoneNumber,
         patientPhoneNumberType: this.patientPhoneNumberType,
         patientEmail: this.patientEmail,
-      }
-      EventBus.$emit('DATA_CONTACT_INFO_PUBLISHED', contactInfoPayload)
+      };
+      EventBus.$emit("DATA_CONTACT_INFO_PUBLISHED", contactInfoPayload);
     },
     verifyFormContents() {
 
@@ -116,10 +129,9 @@ export default {
               valid = false
             }
         }
-      }
-      else {
-        message = "Acknowledgement is required."
-        valid = false
+      } else {
+        message = "Acknowledgement is required.";
+        valid = false;
       }
 			if (valid == false) {
 				alert (message)
@@ -132,5 +144,5 @@ export default {
       return true;
     },
   },
-}
+};
 </script>

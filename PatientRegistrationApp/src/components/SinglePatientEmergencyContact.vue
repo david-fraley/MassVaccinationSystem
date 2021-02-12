@@ -67,14 +67,24 @@
 </template>
 
 <script>
-import EventBus from '../eventBus'
+import EventBus from "../eventBus";
 
 export default {
   name: "SinglePatientEmergencyContact",
   data() {
     return {
 		phoneTypeOptions: ["Home", "Mobile", "Work"],
-		relationshipOptions: ["Spouse", "Parent", "Guardian", "Care Giver", "Sibling", "Grandparent", "Child", "Foster Child", "Stepchild", "Other"],
+		relationshipOptions: [
+      "Spouse", 
+      "Parent", 
+      "Guardian", 
+      "Care Giver", 
+      "Sibling", 
+      "Grandparent", 
+      "Child", 
+      "Foster Child", 
+      "Stepchild", 
+      "Other"],
 		emergencyContactFamilyName: '',
 		emergencyContactGivenName: '',
 		emergencyContactPhoneNumber: '',
@@ -89,10 +99,13 @@ export default {
         emergencyContactFamilyName: this.emergencyContactFamilyName,
         emergencyContactGivenName: this.emergencyContactGivenName,
         emergencyContactPhoneNumber: this.emergencyContactPhoneNumber,
-		emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType,
-		emergencyContactRelationship: this.emergencyContactRelationship
-      }
-      EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
+        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType,
+        emergencyContactRelationship: this.emergencyContactRelationship,
+      };
+      EventBus.$emit(
+        "DATA_EMERGENCY_CONTACT_INFO_PUBLISHED",
+        emergencyContactPayload
+      );
     },
     verifyFormContents() {
 		var valid = true
@@ -128,5 +141,3 @@ export default {
 },
 };
 </script>
-
-
