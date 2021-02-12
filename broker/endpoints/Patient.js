@@ -47,7 +47,7 @@ exports.search = [
   body('firstName', "Please enter the patient's first name").isLength({ min: 1}).trim().escape(),
   body('lastName', "Please enter the patient's last name").isLength({ min: 1 }).trim().escape(),
   body('birthDate', "Please enter a valid patient birth date").isISO8601({ strict: true}).toDate(),
-  body('postalCode', "Invalid postal code entered").optional({checkFalsy: true}).trim().isNumeric().isLength({ min: 5, max: 5}),
+  body('postalCode', "Invalid postal code entered").optional({checkFalsy: true}).trim().matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
   
   (req, res) => {
 
@@ -70,7 +70,6 @@ exports.search = [
       endpoint += '&address-postalcode=' + req.body.postalCode;
     }
 
-    // Use POST request so no PHI is included in URL query parameters
     axios
     .get(endpoint)
     .then((response) => {

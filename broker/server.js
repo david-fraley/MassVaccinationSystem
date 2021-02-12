@@ -39,6 +39,8 @@ app.get("/healthcheck", (req, res) => {
 
 app.post("/Patient", Patient.create);
 app.get("/Patient/:qrCode", Patient.read);
+
+// POST request since client is sending PHI
 app.post("/SearchPatients", Patient.search);
 
 app.post("/Immunization", Immunization.create);

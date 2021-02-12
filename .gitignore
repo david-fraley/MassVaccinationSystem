@@ -5,7 +5,6 @@
 .env
 .env.local
 .env.*.local
-broker/.env
 
 # Editor directories and files
 .idea
