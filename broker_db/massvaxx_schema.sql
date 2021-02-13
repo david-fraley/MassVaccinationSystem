@@ -1,6 +1,9 @@
 --
 -- MassVaxx Database Schema Definition for PostgreSQL.
 --
+-- NOTE 1: if needed, replace massvaxxadmin username with actual database owner username if different.
+-- NOTE 2: if needed, uncomment the grants for a readonly role if it was created.
+--
 
 SET client_encoding TO 'UTF8';
 

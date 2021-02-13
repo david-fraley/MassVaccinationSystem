@@ -1,4 +1,5 @@
 <template>
+<v-form ref="form" v-model="valid">
 	<v-container fluid>
 		<v-row align="center" justify="start">
 			<!-- Last name -->
@@ -62,22 +63,34 @@
 			</v-col>
 		</v-row>
 	</v-container>
+</v-form>
 </template>
 
 <script>
-import EventBus from '../eventBus'
+import EventBus from "../eventBus";
 
 export default {
   name: "SinglePatientEmergencyContact",
   data() {
     return {
 		phoneTypeOptions: ["Home", "Mobile", "Work"],
-		relationshipOptions: ["Spouse", "Parent", "Guardian", "Care Giver", "Sibling", "Grandparent", "Child", "Foster Child", "Stepchild", "Other"],
+		relationshipOptions: [
+      "Spouse", 
+      "Parent", 
+      "Guardian", 
+      "Care Giver", 
+      "Sibling", 
+      "Grandparent", 
+      "Child", 
+      "Foster Child", 
+      "Stepchild", 
+      "Other"],
 		emergencyContactFamilyName: '',
 		emergencyContactGivenName: '',
 		emergencyContactPhoneNumber: '',
 		emergencyContactPhoneNumberType: '',
-		emergencyContactRelationship: ''
+		emergencyContactRelationship: '',
+		valid: false,
     };
   },
   methods: {
@@ -86,10 +99,13 @@ export default {
         emergencyContactFamilyName: this.emergencyContactFamilyName,
         emergencyContactGivenName: this.emergencyContactGivenName,
         emergencyContactPhoneNumber: this.emergencyContactPhoneNumber,
-		emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType,
-		emergencyContactRelationship: this.emergencyContactRelationship
-      }
-      EventBus.$emit('DATA_EMERGENCY_CONTACT_INFO_PUBLISHED', emergencyContactPayload)
+        emergencyContactPhoneNumberType: this.emergencyContactPhoneNumberType,
+        emergencyContactRelationship: this.emergencyContactRelationship,
+      };
+      EventBus.$emit(
+        "DATA_EMERGENCY_CONTACT_INFO_PUBLISHED",
+        emergencyContactPayload
+      );
     },
     verifyFormContents() {
 		var valid = true
@@ -117,11 +133,11 @@ export default {
 			alert(message)
 			return false
 		}
+			this.$refs.form.validate();
+			if (!this.valid) return;
 		this.sendEmergencyContactInfoToReviewPage();
 		return true;
     }
 },
 };
 </script>
-
-

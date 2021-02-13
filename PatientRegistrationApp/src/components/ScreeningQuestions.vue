@@ -86,7 +86,7 @@
                   <div>3. Have you ever had an allergic reaction to:<br>
 					(This would include a severe allergic reaction [e.g. anaphylaxis] that required treatment with epinephrine
 					or EpiPen or that caused you to go to the hospital.  It would also include an allergic reaction that 
-					occurred within 4 hours that caused hives, swelling, or respiratory distress, includign wheezing.)</div>
+					occurred within 4 hours that caused hives, swelling, or respiratory distress, including wheezing.)</div>
                 </template>
               </v-radio-group>
             </v-row>
@@ -155,7 +155,7 @@
                   <div><span class="red--text"><strong>* </strong></span>4. Have you ever had an allergic reaction to another vaccine (other than COVID-19 vaccine) or an injectable medication?<br>
 					(This would include a severe allergic reaction [e.g. anaphylaxis] that required treatment with epinephrine
 					or EpiPen or that caused you to go to the hospital.  It would also include an allergic reaction that 
-					occurred within 4 hours that caused hives, swelling, or respiratory distress, includign wheezing.)</div>
+					occurred within 4 hours that caused hives, swelling, or respiratory distress, including wheezing.)</div>
                 </template>
               </v-radio-group>
             </v-row>
