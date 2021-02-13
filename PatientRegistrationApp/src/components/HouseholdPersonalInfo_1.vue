@@ -55,6 +55,7 @@
     </v-row>
     <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
+        <v-form ref="form" v-model="valid">
         <!-- Date of Birth -->
         <v-text-field
           v-model="dob"
@@ -67,6 +68,7 @@
             <span class="red--text"><strong>* </strong></span>Date of Birth
           </template>
         </v-text-field>
+        </v-form>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Gender identity -->
@@ -174,6 +176,7 @@ export default {
           "DOB must be in specified format, MM/DD/YYYY",
         (v) => this.validBirthdate(v) || "Invalid DOB",
       ],
+      valid: false,
     };
   },
   computed: {
@@ -292,7 +295,8 @@ export default {
         alert(message);
         return false;
       }
-
+        this.$refs.form.validate();
+        if (!this.valid) return;
       this.sendHouseholdPersonalInfoDataToReviewPage();
       return true;
     },

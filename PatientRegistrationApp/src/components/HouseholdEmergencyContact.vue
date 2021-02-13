@@ -1,4 +1,5 @@
 <template>
+<v-form ref="form" v-model="valid">
   <v-container fluid>
     <v-row align="center" justify="start">
       <!-- Last name -->
@@ -54,18 +55,18 @@
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
-      <!-- Relationship Type -->
-      <v-col cols="12" sm="6" md="6" lg="4">
-        <v-select
-          v-model="emergencyContactRelationship"
-          :items="relationshipOptions"
-          label="Relationship: this person is your"
-          prepend-icon="mdi-blank"
-        >
-        </v-select>
-      </v-col>
-    </v-row>
-  </v-container>
+			<!-- Relationship Type -->
+			<v-col cols="12" sm="6" md="6" lg="4">
+				<v-select
+					v-model="emergencyContactRelationship"
+					:items="relationshipOptions"
+					label="Relationship: this person is your"
+					prepend-icon="mdi-blank">
+				</v-select>
+			</v-col>
+		</v-row>
+	</v-container>
+</v-form>
 </template>
 
 <script>
@@ -75,23 +76,13 @@ export default {
   data() {
     return {
       phoneTypeOptions: ["Home", "Mobile", "Work"],
-      relationshipOptions: [
-        "Spouse",
-        "Parent",
-        "Guardian",
-        "Care Giver",
-        "Sibling",
-        "Grandparent",
-        "Child",
-        "Foster Child",
-        "Stepchild",
-        "Other",
-      ],
-      emergencyContactFamilyName: "",
-      emergencyContactGivenName: "",
-      emergencyContactPhoneNumber: "",
-      emergencyContactPhoneNumberType: "",
-      emergencyContactRelationship: "",
+      relationshipOptions: ["Spouse", "Parent", "Guardian", "Care Giver", "Sibling", "Grandparent", "Child", "Foster Child", "Stepchild", "Other"],
+      emergencyContactFamilyName: '',
+      emergencyContactGivenName: '',
+      emergencyContactPhoneNumber: '',
+      emergencyContactPhoneNumberType: '',
+      emergencyContactRelationship: '',
+      valid: false,
     };
   },
   methods: {
@@ -134,6 +125,8 @@ export default {
         alert(message);
         return false;
       }
+        this.$refs.form.validate();
+        if (!this.valid) return;
       this.sendHouseholdEmergencyContactInfoToReviewPage();
       return true;
     },
