@@ -2,6 +2,7 @@ const axios = require("../services/axiosInstance.js");
 const PatientIdService = require("../services/PatientIdService");
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
+const {body, validationResult} = require('express-validator');
 const Appointment = require("../models/Appointment");
 
 const prepend = "x";
@@ -9,23 +10,90 @@ const prepend = "x";
 exports.prepend = prepend;
 
 exports.read = (req, res) => {
-  axios
-    .get(`${req.url}`)
-    .then((response) => {
-      let r;
-      if (response.data.resourceType === "Bundle") {
-        r = response.data.entry.map((entry) => Patient.toModel(entry.resource));
-      } else {
-        r = Patient.toModel(response.data);
-      }
-      res.json(r);
+  
+  if(!req.params.qrCode) {
+    return res.status(400).json({
+      error: "No QR Code provided for patient lookup"
     })
-    .catch((e) => {
-      res.status(400).json({
-        error: e.response ? e.response.data : e.message,
-      });
+  }
+
+  PatientIdService.getPatientIdForQrCode(req.params.qrCode)
+  .then((patientIdRecord) => {
+    const patientId = patientIdRecord.patient_id;
+    if(!patientId) {
+      throw {
+        status: 404,
+        message: "No patient found with that QR Code"
+      }
+    }
+    return axios.get(`${process.env.FHIR_URL_BASE}/Patient/${prepend}${patientId}`);
+  })
+  .then((patientPayload) => {
+    const patientRecord = Patient.toModel(patientPayload.data);
+    return res.json(patientRecord);
+  })
+  .catch((err) => {
+    res.status(err.status || 400).json({
+      error: err.response ? err.response.data : err.message,
     });
+  });
 };
+
+exports.search = [
+
+  // Demonstrates standard usage of express-validator
+  // Note that exports.search is now an array of functions, rather than a single function
+  // Docs: https://express-validator.github.io/docs/index.html
+  body('firstName', "Please enter the patient's first name").isLength({ min: 1}).trim().escape(),
+  body('lastName', "Please enter the patient's last name").isLength({ min: 1 }).trim().escape(),
+  body('birthDate', "Please enter a valid patient birth date").isISO8601({ strict: true}).toDate(),
+  body('postalCode', "Invalid postal code entered").optional({checkFalsy: true}).trim().matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
+  
+  (req, res) => {
+
+    // Check for errors emitted by the express-validator functions above
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      let errorString = '';
+      errors.array().forEach((error) => {
+        errorString += error.msg + ', ';
+      });
+      return res.status(400).json({error: errorString.slice(0, -2)});
+    }
+
+    let endpoint = process.env.FHIR_URL_BASE + '/Patient?' +
+      'given=' + req.body.firstName +
+      '&family=' + req.body.lastName +
+      '&birthdate=' + new Date(req.body.birthDate).toISOString().split('T')[0];
+  
+    if(req.body.postalCode) {
+      endpoint += '&address-postalcode=' + req.body.postalCode;
+    }
+
+    axios
+    .get(endpoint)
+    .then((response) => {
+      let patientArray;
+      if(response.data.entry) {
+        patientArray = response.data.entry.map((entry) => {
+          return Patient.toModel(entry.resource);
+        });
+      }
+      if(!patientArray || patientArray.length === 0) {
+        throw {
+          status: 404,
+          message: "We couldn't find any patients with that information"
+        }
+      }
+      return res.json({patients: patientArray});
+    })
+    .catch((err) => {
+      res.status(err.status || 400).json({
+        error: err.response ? err.response.data: err.message,
+      });
+    })
+  } 
+]
 
 exports.create = (req, res) => {
   createPatients(req, res).catch((e) =>
