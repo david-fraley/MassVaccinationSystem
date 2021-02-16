@@ -81,10 +81,7 @@
                 <v-btn	
                   color="primary"
                   text
-                  @click="
-                    submitVaccinationRecord(); 
-                    endEncounter();
-                  ">
+                  @click="submitVaccinationRecord()">
                   Submit
                 </v-btn>
               </v-card-actions>
@@ -141,6 +138,9 @@ export default {
 
       //Close the dialog
       this.dialog = false;
+
+      //end the encounter
+      this.endEncounter()
     },
     onDischarge(payload) {
       this.$store.dispatch("patientDischarged", payload);

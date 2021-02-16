@@ -51,7 +51,11 @@ export default new Vuex.Store({
         },
         isCheckInPageDisabled: state => {
             //Check-In page is not accessible before the patient record has been loaded or after the patient has been discharged
-            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
+            return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
+        },
+        isCheckInPageReadOnly: state => {
+            //Check-In page is "read only" unless the patient record has just been retrieved
+            return (state.activeWorkflowState != 'RECORD_RETRIEVED')
         },
         isPatientHistoryPageDisabled: state => {
             //Patient History page is not accessible before the patient record has been loaded 
@@ -62,7 +66,7 @@ export default new Vuex.Store({
             return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
         },
         isVaccinationEventPageReadOnly: state => {
-            //Vaccination Event page is "read only after the patient has been discharged
+            //Vaccination Event page is "read only" after the patient has been discharged
             return (state.activeWorkflowState == 'DISCHARGED')
         },
         isAdverseReactionPageDisabled: state => {
@@ -74,7 +78,7 @@ export default new Vuex.Store({
             return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
         },
         isConsentScreeningPageReadOnly: state => {
-            //Consent and Screening page is "read only after the patient has been discharged
+            //Consent and Screening page is "read only" after the patient has been discharged
             return (state.activeWorkflowState == 'DISCHARGED')
         },
         isDischargePageDisabled: state => {
@@ -132,6 +136,7 @@ export default new Vuex.Store({
         },
         patientAdmitted(state, payload) {
             state.activeWorkflowState = 'ADMITTED'
+            console.log(state.activeWorkflowState)
             state.encounterResource = payload.Encounter
             state.appointmentResource = payload.Appointment
         },
@@ -149,33 +154,26 @@ export default new Vuex.Store({
             state.screeningResponses.screeningQ7 = screeningResponsesPayload.screeningQ7
             state.screeningResponses.screeningQ8 = screeningResponsesPayload.screeningQ8
             state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
-            console.log(state.screeningResponses.screeningQ1)
-            console.log(state.screeningResponses.screeningQ2)
-            console.log(state.screeningResponses.screeningQ2b)
-            console.log(state.screeningResponses.screeningQ3a)
-            console.log(state.screeningResponses.screeningQ3b)
-            console.log(state.screeningResponses.screeningQ3c)
-            console.log(state.screeningResponses.screeningQ4)
-            console.log(state.screeningResponses.screeningQ5)
-            console.log(state.screeningResponses.screeningQ6)
-            console.log(state.screeningResponses.screeningQ7)
-            console.log(state.screeningResponses.screeningQ8)
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
             state.activeWorkflowState = 'VACCINATION_COMPLETE'
+            console.log(state.activeWorkflowState)
             state.immunizationResource = vaccinationCompletePlayload
         },
         vaccinationCanceled(state, vaccinationCanceledPlayload) {
             state.activeWorkflowState = 'VACCINATION_CANCELED'
+            console.log(state.activeWorkflowState)
             state.immunizationResource = vaccinationCanceledPlayload
         },
         patientDischarged(state, payload) {
             state.activeWorkflowState = 'DISCHARGED'
+            console.log(state.activeWorkflowState)
             state.encounterResource = payload.Encounter;
             state.appointmentResource = payload.Appointment;
         },
         unknownErrorCondition(state) {
             state.activeWorkflowState = 'ERROR'
+            console.log(state.activeWorkflowState)
         }
 
     },
