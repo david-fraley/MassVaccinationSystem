@@ -23,19 +23,10 @@ export default {
   //   postalcode: String
   // }
   searchPatient: (data) => {
-    let config = {
-      params: {
-        family: data.lastName,
-        given: data.firstName,
-        birthdate: data.birthDate,
-      },
-    };
-    if (data.postalCode) config.params["address-postalcode"] = data.postalCode;
-
     return axios
-      .get(`/broker/Patient`, config)
+      .post(`/broker/SearchPatients`, data)
       .then((response) => {
-        return { data: response.data };
+        return { patients: response.data.patients };
       })
       .catch((e) => {
         return toResponse(e);
@@ -43,37 +34,41 @@ export default {
   },
 
   // Get patient from QR code for patient retrieval
-  // param data:
-  // {
-  //   id: String
-  // }
-  getPatient: (data) => {
-    const patient = {
-      id: data.id,
-      family: "Fraley",
-      given: "David",
-      birthDate: "1950-01-01",
-      gender: "Male",
-      address: {
-        line: "1234 Main Street",
-        city: "Waukesha",
-        state: "WI",
-        postalCode: "53072",
-      },
-      language: "English",
-    };
+  getPatientFromQrCode: (qrCode) => {
+    
+    // If we didn't get a Qr Code, return David's patient data
+    if(!qrCode) {
+      const patient = {
+        id: qrCode,
+        family: "Fraley",
+        given: "David",
+        birthDate: "1950-01-01",
+        gender: "Male",
+        address: {
+          line: "1234 Main Street",
+          city: "Waukesha",
+          state: "WI",
+          postalCode: "53072",
+        },
+        language: "English",
+      };
+      return new Promise((resolve) => {
+        resolve({patient: patient});
+      });
+    }
 
-    return axios
-      .get(`/broker/healthcheck`)
+    // If we got a Qr Code, hit the patient GET endpoint
+    else {
+      return axios
+      .get(`/broker/Patient/${qrCode}`)
       .then((response) => {
-        console.log(response.data);
-
-        response = { data: patient };
-        return { data: response.data };
+        console.log(response);
+        return { patient: response };
       })
       .catch((e) => {
         return toResponse(e);
       });
+    }
   },
 
   // Check-in patient
