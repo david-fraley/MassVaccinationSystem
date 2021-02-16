@@ -307,22 +307,47 @@ export default {
     scanQrCode() {
       this.toggleCamera()
     },
-calculatedAge(givenBirthdate) {
-    
+calculatedAge(patientBirthday) {
+  
+  // reference: https://stackoverflow.com/questions/12251325/javascript-date-to-calculate-age-work-by-the-day-months-years
 
-    var dob = new Date(givenBirthdate)
-    var month_diff = Date.now() - dob.getTime();
-    
-    //convert the calculated difference in date format
-    var age_dt = new Date(month_diff); 
-    
-    //extract year from date    
-    var patientBirthYear = age_dt.getUTCFullYear();
-    
-    //now calculate the age of the user
-    var patientAgeYear = Math.abs(patientBirthYear - 1970);
+  var now = new Date();
+  var yearNow = now.getYear();
+  var monthNow = now.getMonth();
+  var dateNow = now.getDate();
 
-		return patientAgeYear;
+  patientBirthday = new Date(patientBirthday.substring(6,10), patientBirthday.substring(0,2)-1, patientBirthday.substring(3,5));
+
+  var patientYear = patientBirthday.getYear();
+  var patientMonth = patientBirthday.getMonth();
+  var patientDate = patientBirthday.getDate();
+
+  var yearAge = yearNow - patientYear;
+  var monthAge;
+  var dateAge;
+
+  if (monthNow >= patientMonth)
+    monthAge = monthNow - patientMonth;
+  else {
+    yearAge--;
+    monthAge = 12 + monthNow -patientMonth;
+  }
+
+  if (dateNow >= patientDate)
+    dateAge = dateNow - patientDate;
+  else {
+    monthAge--;
+    dateAge = 31 + dateNow - patientDate;
+
+    if (monthAge < 0) {
+      monthAge = 11;
+      yearAge--;
+    }
+  }
+  
+  var ageString = yearAge + " yy " + monthAge + " mm "+ dateAge + " dd"; 
+
+  return ageString;
 	},
     
   },
@@ -370,7 +395,7 @@ calculatedAge(givenBirthdate) {
       patientLookupTable: [
         {
         
-				patientAge: this.calculatedAge(this.birthDate = '10/15/1998'),
+				patientAge: this.calculatedAge(this.birthDate = '10/10/1899'),
 				
 			},	
       ],
