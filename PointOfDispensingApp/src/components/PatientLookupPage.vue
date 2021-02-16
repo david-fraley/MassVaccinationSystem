@@ -206,25 +206,26 @@ export default {
         console.error(error)
       }
     },
-      onDecode (result) {
-        this.result = result
+    onDecode (result) {
+      this.result = result
 
-        //Interim solution:  extract screening responses from QR code (part 1 of 2)
-        var res = this.result.split("|");
-        //end of interim solution (part 1 of 2)
+      //Interim solution:  extract screening responses from QR code (part 1 of 2)
+      var res = this.result.split("|");
+      //end of interim solution (part 1 of 2)
 
-        //the following line of code may need to be updated after removing/changing the interim solution"
-        let qrValue = res[0];
-        let data = { id: qrValue };
-        brokerRequests.getPatient(data).then((response) => {
-          if (response.data) {
-            this.patient = response.data;
-            this.patientRecordRetrieved();
-          } else if (response.error) {
-            alert("Patient not found");
-          }
-        });
-      },
+      //the following line of code may need to be updated after removing/changing the interim solution"
+      let qrValue = res[0];
+
+      // result should be null if we didn't get a qrCode
+      brokerRequests.getPatientFromQrCode(qrValue).then((response) => {
+        if (response.patient) {
+          this.patient = response.patient;
+          this.patientRecordRetrieved();
+        } else if (response.error) {
+          alert("Patient not found");
+        }
+      });
+    },
     searchPatient() {
       // validate form
       this.$refs.form.validate();
@@ -240,10 +241,18 @@ export default {
         postalCode: this.postalCode,
       };
       brokerRequests.searchPatient(data).then((response) => {
-        if (response.data) {
-          this.patientLookupTable = response.data;
-        } else if (response.error) {
-          alert("No patients found");
+        if (response.patients) {
+          this.patientLookupTable = response.patients;
+        }
+
+        // Accomodate form validation errors
+        else if(typeof(response.error) === 'string') {
+          alert(response.error.error);
+        }
+
+        // Accomodate FHIR errors
+        else {
+          alert('No patients found');
         }
         this.loading = false;
       });
@@ -328,9 +337,8 @@ export default {
         (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
       ],
       postalCodeRules: [
-				(v) => !!v || "Zip code is required",
 				(v) =>
-				/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+				!v || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) || 
 				"Zip code format must be ##### or #####-####",
       ],
       date: new Date().toISOString().substr(0, 10),
