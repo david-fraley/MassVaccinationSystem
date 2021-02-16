@@ -113,28 +113,28 @@
     computed:
     {
       isCheckInPageDisabled() {
-        return false//this.$store.getters.isCheckInPageDisabled
+        return this.$store.getters.isCheckInPageDisabled
       },
       isPatientHistoryPageDisabled() {
-        return false//this.$store.getters.isPatientHistoryPageDisabled
+        return this.$store.getters.isPatientHistoryPageDisabled
       },
       isConsentScreeningPageDisabled() {
-        return false//this.$store.getters.isConsentScreeningPageDisabled
+        return this.$store.getters.isConsentScreeningPageDisabled
       },
       isVaccinationEventPageDisabled() {
-        return false//this.$store.getters.isVaccinationEventPageDisabled
+        return this.$store.getters.isVaccinationEventPageDisabled
       },
       isAdverseReactionPageDisabled() {
-        return false//this.$store.getters.isAdverseReactionPageDisabled
+        return this.$store.getters.isAdverseReactionPageDisabled
       },
       isDischargePageDisabled() {
-        return false//this.$store.getters.isDischargePageDisabled
+        return this.$store.getters.isDischargePageDisabled
       },
       isConfigurationPageDisabled() {
-        return false//this.$store.getters.isConfigurationPageDisabled
+        return this.$store.getters.isConfigurationPageDisabled
       },
       workflowState() {
-        return false//this.$store.getters.workflowState
+        return this.$store.getters.workflowState
       }
     },
     components: 
