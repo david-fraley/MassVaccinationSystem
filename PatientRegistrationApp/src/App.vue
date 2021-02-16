@@ -142,6 +142,7 @@
                     <v-card flat
                       ><SinglePatientReviewSubmit
                         ref="singlePatientReviewSubmit"
+                        @singlePatientRegistrationSuccess = "SinglePatientRegistrationSuccessful"
                     /></v-card>
                   </v-stepper-content>
 
@@ -152,7 +153,7 @@
                         >Download your QR code</v-toolbar-title
                       >
                     </v-toolbar>
-                    <v-card flat><SinglePatientFollowUp /></v-card>
+                    <v-card flat><SinglePatientFollowUp ref="singlePatientFollowUp"/></v-card>
                   </v-stepper-content>
                 </template>
 
@@ -471,7 +472,12 @@ export default {
   methods: {
     submitSinglePatientRegistration() {
       this.$refs.singlePatientReviewSubmit.submitPatientInfo();
-      this.goToNextPage();
+    },
+    SinglePatientRegistrationSuccessful(data) {
+      console.log('Single patient registration successful')
+      console.log(data)
+      this.$refs.singlePatientFollowUp.updateQrCodeData(data)
+      this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE)
     },
     submitHouseholdRegistration() {
       this.$refs.householdReviewSubmit.submitPatientInfo();

@@ -268,6 +268,7 @@ export default {
     },
     onSuccess(data) {
       console.log(JSON.stringify(data));
+      this.$emit("singlePatientRegistrationSuccess", JSON.stringify(data));
     },
   },
   mounted() {
