@@ -324,7 +324,6 @@ calculatedAge(patientBirthday) {
 
   var yearAge = yearNow - patientYear;
   var monthAge;
-  var dateAge;
 
   if (monthNow >= patientMonth)
     monthAge = monthNow - patientMonth;
@@ -333,11 +332,8 @@ calculatedAge(patientBirthday) {
     monthAge = 12 + monthNow -patientMonth;
   }
 
-  if (dateNow >= patientDate)
-    dateAge = dateNow - patientDate;
-  else {
+  if (dateNow <= patientDate) {    
     monthAge--;
-    dateAge = 31 + dateNow - patientDate;
 
     if (monthAge < 0) {
       monthAge = 11;
@@ -345,7 +341,7 @@ calculatedAge(patientBirthday) {
     }
   }
   
-  var ageString = yearAge + " yy " + monthAge + " mm "+ dateAge + " dd"; 
+  var ageString = yearAge + " yy " + monthAge + " mm "; 
 
   return ageString;
 	},
@@ -395,7 +391,7 @@ calculatedAge(patientBirthday) {
       patientLookupTable: [
         {
         
-				patientAge: this.calculatedAge(this.birthDate = '10/10/1899'),
+				patientAge: this.calculatedAge(this.birthDate = '10/15/1992'),
 				
 			},	
       ],
