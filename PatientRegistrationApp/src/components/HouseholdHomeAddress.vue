@@ -1,4 +1,5 @@
 <template>
+<v-form ref="form" v-model="valid">
 	<v-container fluid>
 		<v-row align="center" justify="start">
 			<!--Address Type-->
@@ -90,10 +91,11 @@
 			</v-col>
 		</v-row>	
 	</v-container>
+</v-form>
 </template>
 
 <script>
-import EventBus from '../eventBus'
+import EventBus from "../eventBus";
 
   export default {
 	data () {
@@ -130,6 +132,7 @@ import EventBus from '../eventBus'
 			stateAddress: '',
 			countryAddress: 'USA',
 			postalCode: '',
+			valid: false,
 		}
 		
 	},
@@ -193,12 +196,11 @@ import EventBus from '../eventBus'
 				alert(message)
 				return false
 			}
-			
+				this.$refs.form.validate();
+				if (!this.valid) return;
 			this.sendHouseholdHomeAddressInfoToReviewPage();
 			return true;
 		},
 	},
   }
 </script>
-
-

@@ -34,6 +34,11 @@
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.3.0"
   },
+  "resolutions": {
+    "node-notifier": "^8.0.1",
+    "ini": "^1.3.6",
+    "highlight.js": "^10.4.1"
+  },
   "eslintConfig": {
     "root": true,
     "env": {
