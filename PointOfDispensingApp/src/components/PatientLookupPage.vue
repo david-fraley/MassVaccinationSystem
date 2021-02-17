@@ -391,7 +391,7 @@ calculatedAge(patientBirthday) {
       patientLookupTable: [
         {
         
-				patientAge: this.calculatedAge(this.birthDate = '10/15/1992'),
+				patientAge: this.calculatedAge(this.birthDate),
 				
 			},	
       ],
