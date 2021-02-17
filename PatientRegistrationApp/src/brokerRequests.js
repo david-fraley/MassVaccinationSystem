@@ -12,25 +12,18 @@ function toResponse(error) {
   }
 }
 
-// Returns promise to make a call to healthcheck
-function healthcheckPromise() {
-  return axios
-    .get(`/broker/healthcheck`)
-    .then((response) => {
-      console.log(response.data);
-
-      return { data: response.data };
-    })
-    .catch((e) => {
-      return toResponse(e);
-    });
-}
-
 // define functions for API requests here
 export default {
-
-  submitRegistration: () => {
-    return healthcheckPromise();
+  submitRegistration: (data) => {
+    return axios
+      .post(`/broker/Patient`, data)
+      .then((response) => {
+        return {
+          data: response.data,
+        };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
   },
-  
 };

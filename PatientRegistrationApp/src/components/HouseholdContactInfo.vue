@@ -1,4 +1,5 @@
 <template>
+<v-form ref="form" v-model="valid">
 	<v-container fluid>
 		<v-row align="center" justify="start">
 			<v-col cols="12">
@@ -33,7 +34,7 @@
 				<v-text-field
 					v-model="primaryPhoneNumber"
 					:disabled="!permissionCheckBox"
-					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+					:rules="phoneNumberRulesUs"
 					v-mask="'(###)###-####'"
 					prepend-icon="mdi-phone"
 					label="Primary Phone Number">
@@ -54,7 +55,7 @@
 				<v-text-field
 					v-model="secondaryPhoneNumber"
 					:disabled="!primaryPhoneNumber"
-					:rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+					:rules="phoneNumberRulesUs"
 					v-mask="'(###)###-####'"
 					label="Secondary Phone Number"
 					prepend-icon="mdi-phone">
@@ -93,11 +94,12 @@
 			</v-col>
 		</v-row>
 	</v-container>
+</v-form>
 </template>
 
 <script>
-import EventBus from '../eventBus'
-import customerSettings from '../customerSettings'
+import EventBus from "../eventBus";
+import customerSettings from "../customerSettings";
 
   export default {
     name: 'SinglePatientContactInfo',
@@ -106,8 +108,13 @@ import customerSettings from '../customerSettings'
 			phoneTypeOptions:['Home', 'Mobile', 'Work'],
 			emailRules: [
 				(v) =>
-				/^[\s]*$|.+@.+\..+/.test(v) ||
-				"Please provide a valid e-mail address",
+				/^[\s]*$|.+@.+\..+/.test(v) || 'Please provide a valid e-mail address',
+			],
+			phoneNumberRulesUs: [
+				v => {
+				if (v) return v.length == 13 || 'Phone number must be 10 digits';
+				else return true;
+				}
 			],
 			primaryPhoneNumber: '',
 			primaryPhoneNumberType: '',
@@ -120,6 +127,7 @@ import customerSettings from '../customerSettings'
 			disclosureStatement: customerSettings.contactInfoDisclosure,
 			consequenceStatement: customerSettings.contactInfoConsequence,
 			acknowledgementStatement: customerSettings.contactInfoAcknowledgement,
+			valid: false,
 		}
 	},
 	methods: {
@@ -162,11 +170,12 @@ import customerSettings from '../customerSettings'
 				alert (message)
 				return false
 			}
-		
+			this.$refs.form.validate();
+			if (!this.valid) return;
+
 			this.sendHouseholdContactInfoInfoToReviewPage();
 			return true;
 		},
 	},
 }
 </script>
-
