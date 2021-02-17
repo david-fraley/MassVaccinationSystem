@@ -142,7 +142,7 @@ export default {
       // if member is next in line, add to array of members
       if (householdMemberNumber - 1 == this.dataHouseholdPersonalInfo.length) {
         this.dataHouseholdPersonalInfo.push(householdPersonalInfoPayload);
-        this.qrValue.push(this.toQRValue(householdPersonalInfoPayload));
+        //this.qrValue.push(this.toQRValue(householdPersonalInfoPayload));
         // else if member already exists in array, update the member
       } else if (
         householdMemberNumber - 1 <
@@ -156,7 +156,7 @@ export default {
         this.$set(
           this.qrValue,
           householdMemberNumber - 1,
-          this.toQRValue(householdPersonalInfoPayload)
+          //this.toQRValue(householdPersonalInfoPayload)
           //this.updateQrCodeData(data)
         );
       }
@@ -164,7 +164,7 @@ export default {
     getNumberOfHouseholdMembers() {
       return this.numberOfHouseholdMembers;
     },
-    toQRValue(member) {
+    /*toQRValue(member) {
       const value =
         member.familyName +
         ", " +
@@ -174,12 +174,14 @@ export default {
         " " +
         member.suffix;
       return value;
-    },
-    /*updateQrCodeData(data) {
-      this.qrValue = data;
-      console.log("updateQrCodeData")
-      console.log(this.qrValue)
     },*/
+    updateQrCodeData(data) {
+      this.$set(this.qrValue, 0, data[0])
+      this.$set(this.qrValue, 1, data[1])
+      console.log("updateQrCodeData")
+      console.log(this.qrValue[0])
+      console.log(this.qrValue[1])
+    },
   },
   components: {
     VueQrcode,

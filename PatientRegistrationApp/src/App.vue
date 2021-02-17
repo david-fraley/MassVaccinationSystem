@@ -276,6 +276,7 @@
                         v-bind:numberOfHouseholdMembers="
                           getNumberOfHouseholdMembers()
                         "
+                        ref="householdFollowUp"
                     /></v-card>
                   </v-stepper-content>
                 </template>

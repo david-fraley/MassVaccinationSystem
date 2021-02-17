@@ -353,7 +353,7 @@ export default {
     },
     onSuccess(data) {
       console.log(JSON.stringify(data));
-      this.$emit("householdRegistrationSuccess", data.Patient[0]);
+      this.$emit("householdRegistrationSuccess", data.Patient);
     },
   },
   mounted() {
