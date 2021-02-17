@@ -260,6 +260,7 @@
                         v-bind:numberOfHouseholdMembers="
                           getNumberOfHouseholdMembers()
                         "
+                        @householdRegistrationSuccess = "householdRegistrationSuccessful"
                     /></v-card>
                   </v-stepper-content>
 
@@ -478,6 +479,12 @@ export default {
       console.log(data)
       this.$refs.singlePatientFollowUp.updateQrCodeData(data)
       this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE)
+    },
+    householdRegistrationSuccessful(data) {
+      console.log('Household registration successful')
+      console.log("Household Member 1", data)
+      this.$refs.householdFollowUp.updateQrCodeData(data)
+      this.goToPage(config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE)
     },
     submitHouseholdRegistration() {
       this.$refs.householdReviewSubmit.submitPatientInfo();

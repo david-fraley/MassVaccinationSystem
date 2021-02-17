@@ -75,6 +75,7 @@
 import EventBus from "../eventBus";
 import VueQrcode from "vue-qrcode";
 import jsPDF from "jspdf";
+
 export default {
   data() {
     return {
@@ -155,7 +156,8 @@ export default {
         this.$set(
           this.qrValue,
           householdMemberNumber - 1,
-          this.toQrValue(householdPersonalInfoPayload)
+          this.toQRValue(householdPersonalInfoPayload)
+          //this.updateQrCodeData(data)
         );
       }
     },
@@ -173,6 +175,11 @@ export default {
         member.suffix;
       return value;
     },
+    /*updateQrCodeData(data) {
+      this.qrValue = data;
+      console.log("updateQrCodeData")
+      console.log(this.qrValue)
+    },*/
   },
   components: {
     VueQrcode,
