@@ -108,7 +108,7 @@ export default {
         //add the first QR code and label
         const qrcode1 = document.getElementById(i);
         let imageData = this.getBase64Image(qrcode1);
-        let string = this.qrValue[i];
+        let string = this.dataHouseholdPersonalInfo[i].familyName + ", " + this.dataHouseholdPersonalInfo[i].givenName  + " " + this.dataHouseholdPersonalInfo[i].middleName  + " " + this.dataHouseholdPersonalInfo[i].suffix;
         pdfDoc.addImage(imageData, "JPG", 70, 50);
         pdfDoc.text(string, 75, 48);
 
@@ -116,7 +116,7 @@ export default {
         if (i + 1 < this.getNumberOfHouseholdMembers()) {
           const qrcode2 = document.getElementById(i + 1);
           imageData = this.getBase64Image(qrcode2);
-          string = this.qrValue[i + 1];
+          string = this.dataHouseholdPersonalInfo[i + 1].familyName + ", " + this.dataHouseholdPersonalInfo[i + 1].givenName  + " " + this.dataHouseholdPersonalInfo[i + 1].middleName  + " " + this.dataHouseholdPersonalInfo[i + 1].suffix;
           pdfDoc.addImage(imageData, "JPG", 70, 150);
           pdfDoc.text(string, 75, 148);
           if (i + 2 < this.getNumberOfHouseholdMembers()) {
@@ -162,7 +162,6 @@ export default {
       console.log(data.length)
       for(let i=0; i<data.length; i++)
       {
-        //this.$set(this.qrValue, i, data[i])
         this.qrValue.push(data[i])
         console.log(this.qrValue[i])
         console.log(data[i])
