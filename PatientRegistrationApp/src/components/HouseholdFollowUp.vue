@@ -162,9 +162,10 @@ export default {
       console.log(data.length)
       for(let i=0; i<data.length; i++)
       {
-        this.$set(this.qrValue, i, data[i])
-        console.log(data[i])
+        //this.$set(this.qrValue, i, data[i])
+        this.qrValue.push(data[i])
         console.log(this.qrValue[i])
+        console.log(data[i])
       }
     },
   },

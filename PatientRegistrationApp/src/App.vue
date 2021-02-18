@@ -486,9 +486,9 @@ export default {
     },
     householdRegistrationSuccessful(data) {
       console.log('Household registration successful')
-      console.log(data)
+      //console.log(data)
       this.$refs.householdFollowUp.updateQrCodeData(data)
-      this.goToPage(config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE)
+      this.goToPage(config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE + this.getNumberOfHouseholdMembers() - 2)
     },
     goToPage(pageNum) {
       this.page = pageNum;
