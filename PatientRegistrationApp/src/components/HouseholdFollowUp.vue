@@ -142,7 +142,6 @@ export default {
       // if member is next in line, add to array of members
       if (householdMemberNumber - 1 == this.dataHouseholdPersonalInfo.length) {
         this.dataHouseholdPersonalInfo.push(householdPersonalInfoPayload);
-        //this.qrValue.push(this.toQRValue(householdPersonalInfoPayload));
         // else if member already exists in array, update the member
       } else if (
         householdMemberNumber - 1 <
@@ -153,35 +152,17 @@ export default {
           householdMemberNumber - 1,
           householdPersonalInfoPayload
         );
-        //this.$set(
-          //this.qrValue,
-          //householdMemberNumber - 1,
-          //this.toQRValue(householdPersonalInfoPayload)
-          //this.updateQrCodeData(data)
-        //);
       }
     },
     getNumberOfHouseholdMembers() {
       return this.numberOfHouseholdMembers;
     },
-    /*toQRValue(member) {
-      const value =
-        member.familyName +
-        ", " +
-        member.givenName +
-        " " +
-        member.middleName +
-        " " +
-        member.suffix;
-      return value;
-    },*/
     updateQrCodeData(data) {
       console.log("updateQrCodeData")
       console.log(data.length)
       for(let i=0; i<data.length; i++)
       {
-        //this.qrValue.push(data[i])
-        this.$set(this.qrValue, i, data[i])
+        this.$set(this.qrValue, i, data[i] +)
         console.log(data[i])
         console.log(this.qrValue[i])
       }
