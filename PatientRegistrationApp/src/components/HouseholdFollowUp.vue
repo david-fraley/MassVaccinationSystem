@@ -153,12 +153,12 @@ export default {
           householdMemberNumber - 1,
           householdPersonalInfoPayload
         );
-        this.$set(
-          this.qrValue,
-          householdMemberNumber - 1,
+        //this.$set(
+          //this.qrValue,
+          //householdMemberNumber - 1,
           //this.toQRValue(householdPersonalInfoPayload)
           //this.updateQrCodeData(data)
-        );
+        //);
       }
     },
     getNumberOfHouseholdMembers() {
@@ -176,11 +176,15 @@ export default {
       return value;
     },*/
     updateQrCodeData(data) {
-      this.$set(this.qrValue, 0, data[0])
-      this.$set(this.qrValue, 1, data[1])
       console.log("updateQrCodeData")
-      console.log(this.qrValue[0])
-      console.log(this.qrValue[1])
+      console.log(data.length)
+      for(let i=0; i<data.length; i++)
+      {
+        //this.qrValue.push(data[i])
+        this.$set(this.qrValue, i, data[i])
+        console.log(data[i])
+        console.log(this.qrValue[i])
+      }
     },
   },
   components: {
