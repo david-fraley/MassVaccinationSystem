@@ -18,10 +18,9 @@ describe('Appointment', function() {
           if (output.property !== input.property) {
             console.log(property);
             
-            //console.log(`Expected ${input.property}; received ${output.property}`)
+            console.log(`Expected ${input.property}; received ${output.property}`)
             result = false;
-            assert.fail(`Expected ${input.property}; received ${output.property}`);
-            //break;
+            break;
           }
         }
 
