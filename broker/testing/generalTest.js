@@ -1,5 +1,4 @@
 const globals = require("./globals");
-const PatientIdService = require("../services/PatientIdService");
 const Patient = require("../endpoints/Patient");
 
 // Endpoints to test
@@ -12,7 +11,7 @@ const endpoints = [
   "Observation",
   "Organization",
   "Patient",
-  "Practitioner",
+  "Practitioner"
 ];
 
 // List of created resources - for cleanup
@@ -57,10 +56,10 @@ async function cleanup() {
   let url;
   for (url of urls) {
     let promise;
-    // Handle race-condition and incorporation of PatientIdService
+    
     if (url.includes("Patient")) {
-      let patientIdRecord = await PatientIdService.getPatientIdForQrCode(url.split('/')[2]);
-      promise = globals.fhirServer.delete(`/Patient/${Patient.prepend}${patientIdRecord.patient_id}`);
+      let patientIdRecord = await Patient.findByQrCode(url.split('/')[2]);
+      promise = globals.fhirServer.delete(`/Patient/${patientIdRecord.id}`);
       try {
         await promise;
       }

@@ -1,5 +1,4 @@
 const axios = require("../services/axiosInstance.js");
-const PatientIdService = require("../services/PatientIdService");
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
 const {body, validationResult} = require('express-validator');
@@ -184,11 +183,6 @@ async function createPatient(patient, head) {
   let related;
   const promises = [];
 
-  const id = (await PatientIdService.createPatientId()).patient_id;
-  if (!id) return [];
-
-  promises.push(PatientIdService.createQrCodeForPatientId(id));
-
   // If head is not provided, create RelatedPerson resource first
   // and update reference to patient later.
   if (head == null) related = { resourceType: "RelatedPerson" };
@@ -202,14 +196,10 @@ async function createPatient(patient, head) {
   let resource = RelatedPerson.toFHIR(related);
   const relatedID = (await axios.post(`/RelatedPerson`, resource)).data.id;
 
-  // Create Patient resource with ID from PatientIdService
-  // and link to RelatedPerson
-  const patientID = `${prepend}${id}`;
   patient.link = `RelatedPerson/${relatedID}`;
   
   resource = Patient.toFHIR(patient);
-  resource.id = patientID;
-  
+
   // Add QR Code UUID to Patient Identifier list
   if (!resource.hasOwnProperty("identifier")) resource.identifier = [];
   resource.identifier.push({
@@ -222,7 +212,8 @@ async function createPatient(patient, head) {
 	  }
   });
   
-  await axios.put(`/Patient/${patientID}`, resource);
+  const createdPatient = await axios.post(`/Patient`, resource);
+  const patientID = createdPatient.data.id;
 
   // If RelatedPerson was not created with a link to a patient,
   // update the resource to link to the new Patient
@@ -242,9 +233,9 @@ async function createPatient(patient, head) {
       participant: [
           {
               type: "patient",
-              actor: `Patient/${patientID}`,
-          },
-      ],
+              actor: `Patient/${patientID}`
+          }
+      ]
   };
   resource = Appointment.toFHIR(appointment);
   promises.push(axios.post(`/Appointment`, resource));
