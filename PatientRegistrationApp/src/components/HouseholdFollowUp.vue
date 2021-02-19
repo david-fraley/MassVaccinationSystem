@@ -23,14 +23,15 @@
               <div class="font-weight-medium primary--text">
                 Household Member #{{ index }}
               </div>
-              <v-row
-                ><div>
-                  <vue-qrcode
-                    :id="index - 1"
-                    v-bind:value="qrValue[index - 1]"
-                    v-bind:errorCorrectionLevel="correctionLevel"
-                  /></div
-              ></v-row>
+              <v-row>
+                  <v-col cols="12"><div>
+                    <vue-qrcode
+                     :id="index - 1"
+                     v-bind:value="qrValue[index - 1]"
+                     v-bind:errorCorrectionLevel="correctionLevel"
+                    /></div>
+                  </v-col>
+              </v-row>
               <div class="font-weight-medium">
                 Name:
                 <span class="font-weight-regular"
