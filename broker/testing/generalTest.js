@@ -25,7 +25,7 @@ let urls = [];
 async function markPatient(qrCode) {
   urls.push(`/Patient/${qrCode}`);
 
-  let related = (await globals.broker.get(`/Patient/${qrCode}`)).data.link;
+  const related = (await globals.broker.get(`/Patient/${qrCode}`)).data.link;
   urls.push(`/${related}`);
 }
 
@@ -35,7 +35,7 @@ async function markPatient(qrCode) {
  * @param {List of QR codes of patients} qrCodes
  */
 async function markPatients(qrCodes) {
-  let promises = [];
+  const promises = [];
 
   for (let code of qrCodes) {
     promises.push(markPatient(code));
@@ -51,14 +51,14 @@ async function markPatients(qrCodes) {
  * Delete resources created from this test
  */
 async function cleanup() {
-  let promises = [];
+  const promises = [];
 
   let url;
   for (url of urls) {
     let promise;
     
     if (url.includes("Patient")) {
-      let patientIdRecord = await Patient.findByQrCode(url.split('/')[2]);
+      const patientIdRecord = await Patient.findByQrCode(url.split('/')[2]);
       promise = globals.fhirServer.delete(`/Patient/${patientIdRecord.id}`);
       try {
         await promise;
@@ -94,34 +94,34 @@ async function cleanup() {
  * Send GET and POST requests to multiple endpoints
  */
 async function test() {
-  let promises = [];
+  const promises = [];
 
   let endpoint;
   for (endpoint of endpoints) {
-    let url = `/${endpoint}`;
-    let data = JSON.parse(globals.examples[endpoint]);
+    const url = `/${endpoint}`;
+    const data = JSON.parse(globals.examples[endpoint]);
 
     if(endpoint !== 'Patient') {
-      let read = new globals.broker
-        .get(url)
-        .then((response) => globals.config(response))
-        .catch((error) => globals.info(error));
-      promises.push(read);
+        const read = new globals.broker
+            .get(url)
+            .then((response) => globals.config(response))
+            .catch((error) => globals.info(error));
+        promises.push(read);
     }
 
-    let create = globals.broker
-      .post(url, data)
-      .then(async (response) => {
-        if (response.data.id) urls.push(`${url}/${response.data.id}`);
-        else if (response.data.Patient)
-          // wait for references to be added to cleanup list
-          await markPatients(response.data.Patient);
+    const create = globals.broker
+        .post(url, data)
+        .then(async (response) => {
+            if (response.data.id) urls.push(`${url}/${response.data.id}`);
+            else if (response.data.Patient)
+            // wait for references to be added to cleanup list
+                await markPatients(response.data.Patient);
 
-        globals.config(response);
-        console.log(JSON.stringify(response.data));
-        console.log("\n");
-      })
-      .catch((error) => globals.info(error));
+            globals.config(response);
+            console.log(JSON.stringify(response.data));
+            console.log("\n");
+        })
+        .catch((error) => globals.info(error));
     promises.push(create);
   }
 

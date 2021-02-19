@@ -5,15 +5,15 @@ const Encounter = require("./Encounter");
 // a) appointment id from QR code
 // b) patient id from patient lookup
 module.exports = (req, res) => {
-  let response = {};
+    const response = {};
 
-  if (
+    if (
     req.query.hasOwnProperty("patient") ||
     req.query.hasOwnProperty("appointment")
   ) {
     Promise.all([Encounter.checkIn(req), Appointment.checkIn(req)])
       .then((results) => {
-        for (result of results) {
+          for (let result of results) {
           response[result.resourceType] = result;
         }
         res.json(response);

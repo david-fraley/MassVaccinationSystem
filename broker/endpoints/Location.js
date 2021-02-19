@@ -15,8 +15,8 @@ exports.read = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  let loc = req.body.Location;
-  let resource = Location.toFHIR(loc);
+  const loc = req.body.Location;
+  const resource = Location.toFHIR(loc);
 
   axios
     .post(`/Location`, resource)

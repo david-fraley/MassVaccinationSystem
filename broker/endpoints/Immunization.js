@@ -19,8 +19,8 @@ exports.read = (req, res) => {
 // Response:  Immunization resource (200)
 //            or JSON object with error field (400)
 exports.create = (req, res) => {
-  let imm = req.body.Immunization;
-  postImmunization(imm)
+    const imm = req.body.Immunization;
+    postImmunization(imm)
     .then((response) => {
       res.json(response);
     })
@@ -32,14 +32,14 @@ exports.create = (req, res) => {
 };
 
 async function postImmunization(imm) {
-  let Immunization, resource;
-  if (imm.status === "completed") Immunization = ImmunizationCompleted;
-  else if (imm.status === "not-done") Immunization = ImmunizationNotDone;
-  else throw 'Invalid immunization type';
+  let immunization;
+  if (imm.status === "completed") immunization = ImmunizationCompleted;
+  else if (imm.status === "not-done") immunization = ImmunizationNotDone;
+  else throw "Invalid immunization type";
 
-  resource = Immunization.toFHIR(imm);
+  const resource = immunization.toFHIR(imm);
 
   return axios.post(`/Immunization`, resource).then((response) => {
-    return Immunization.toModel(response.data);
+    return immunization.toModel(response.data);
   });
 }

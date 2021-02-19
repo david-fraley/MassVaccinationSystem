@@ -15,8 +15,8 @@ exports.read = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  let appt = req.body.Appointment;
-  let resource = Appointment.toFHIR(appt);
+  const appt = req.body.Appointment;
+  const resource = Appointment.toFHIR(appt);
 
   axios
     .post(`/Appointment`, resource)
@@ -33,24 +33,23 @@ exports.create = (req, res) => {
 // Update status and time.
 exports.checkIn = async (req) => {
   const status = "arrived";
-  let id, patch;
+  let id;
 
   // get id of resource to update
   if (req.query.hasOwnProperty("patient")) {
-    let config = {
-      params: {
-        actor: req.query.patient,
-        status: "booked",
-      },
-    };
-    id = await axios.get("/Appointment", config).then((response) => {
-      let bundle = response.data;
-      let resource;
+      const config = {
+          params: {
+              actor: req.query.patient,
+              status: "booked"
+          }
+      };
+      id = await axios.get("/Appointment", config).then((response) => {
+      const bundle = response.data;
 
       if (!bundle.hasOwnProperty("entry")) {
         console.log("Appointment does not exist");
       }
-      resource = bundle.entry[0].resource;
+      const resource = bundle.entry[0].resource;
       return resource.id;
     });
   } else if (req.query.hasOwnProperty("appointment")) {
@@ -60,12 +59,12 @@ exports.checkIn = async (req) => {
   }
 
   // patch status and start time
-  patch = [
-    {
-      op: "add",
-      path: "/status",
-      value: status,
-    },
+  const patch = [
+      {
+          op: "add",
+          path: "/status",
+          value: status
+      }
   ];
 
   // update the database with new appointment
@@ -76,17 +75,17 @@ exports.checkIn = async (req) => {
 
 exports.discharge = async (req) => {
   const status = "fulfilled";
-  let id = req.query.appointment;
+  const id = req.query.appointment;
 
   if (!id) return;
 
   // patch status and end time
-  let patch = [
-    {
-      op: "add",
-      path: "/status",
-      value: status,
-    },
+  const patch = [
+      {
+          op: "add",
+          path: "/status",
+          value: status
+      }
   ];
 
   // update the database with new appointment
