@@ -316,45 +316,6 @@ export default {
     scanQrCode() {
       this.toggleCamera()
     },
-calculatedAge(patientBirthday) {
-  
-  // reference: https://stackoverflow.com/questions/12251325/javascript-date-to-calculate-age-work-by-the-day-months-years
-
-  var now = new Date();
-  var yearNow = now.getYear();
-  var monthNow = now.getMonth();
-  var dateNow = now.getDate();
-
-  patientBirthday = new Date(patientBirthday.substring(6,10), patientBirthday.substring(0,2)-1, patientBirthday.substring(3,5));
-
-  var patientYear = patientBirthday.getYear();
-  var patientMonth = patientBirthday.getMonth();
-  var patientDate = patientBirthday.getDate();
-
-  var yearAge = yearNow - patientYear;
-  var monthAge;
-
-  if (monthNow >= patientMonth)
-    monthAge = monthNow - patientMonth;
-  else {
-    yearAge--;
-    monthAge = 12 + monthNow -patientMonth;
-  }
-
-  if (dateNow <= patientDate) {    
-    monthAge--;
-
-    if (monthAge < 0) {
-      monthAge = 11;
-      yearAge--;
-    }
-  }
-  
-  var ageString = yearAge + " yy " + monthAge + " mm "; 
-
-  return ageString;
-	},
-    
   },
   components: {
     QrcodeStream
@@ -372,7 +333,6 @@ calculatedAge(patientBirthday) {
       noRearCamera: false,
       noFrontCamera: false,
       result: '',
-      patientAge: '',
       birthdateRules: [
         (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
       ],
@@ -390,19 +350,12 @@ calculatedAge(patientBirthday) {
           value: "family",
         },
         { text: "First Name", value: "given" },
-        { text: "Age", value: "patientAge"},
         { text: "DOB", value: "birthDate" },
         { text: "Address", value: "address.line" },
         { text: "City", value: "address.city" },
         { text: "Zipcode", value: "address.postalCode" },
       ],
-      patientLookupTable: [
-        {
-        
-				patientAge: this.calculatedAge(this.birthDate),
-				
-			},	
-      ],
+      patientLookupTable: [],
     };
   },
 };
