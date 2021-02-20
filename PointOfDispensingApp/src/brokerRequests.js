@@ -63,7 +63,7 @@ export default {
       .get(`/broker/Patient/${qrCode}`)
       .then((response) => {
         console.log(response);
-        return { patient: response };
+        return { patient: response.data };
       })
       .catch((e) => {
         return toResponse(e);
