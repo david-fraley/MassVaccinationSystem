@@ -1,0 +1,15 @@
+{
+  "name": "models",
+  "version": "1.0.0",
+  "description": "Unit tests for models functions",
+  "main": "Appointment.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
+}
