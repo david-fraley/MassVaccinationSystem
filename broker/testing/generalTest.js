@@ -59,11 +59,11 @@ async function cleanup() {
     
     if (url.includes("Patient")) {
       const patientIdRecord = await Patient.findByQrCode(url.split('/')[2]);
-      promise = globals.fhirServer.delete(`/Patient/${patientIdRecord.id}`);
+      promise = globals.fhirServer.delete(`/Patient/${patientIdRecord.data.id}`);
       try {
         await promise;
       }
-      catch(err) {
+      catch(error) {
         console.log("generalTest cleanup failed");
         globals.info(error);
       }
@@ -73,7 +73,7 @@ async function cleanup() {
       try {
         await promise;
       }
-      catch(err) {
+      catch(error) {
         console.log("generalTest cleanup failed");
         globals.info(error);
       }
