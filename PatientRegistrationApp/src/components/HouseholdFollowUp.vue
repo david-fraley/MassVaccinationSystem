@@ -159,13 +159,9 @@ export default {
       return this.numberOfHouseholdMembers;
     },
     updateQrCodeData(data) {
-      console.log("updateQrCodeData")
-      console.log(data.length)
       for(let i=0; i<data.length; i++)
       {
         this.qrValue.push(data[i])
-        console.log(this.qrValue[i])
-        console.log(data[i])
       }
     },
   },

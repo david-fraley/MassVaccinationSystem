@@ -137,7 +137,6 @@ export default {
         "|" +
         this.dataScreeningResponses.screeningQ8 +
         "|";
-      console.log(this.qrValue)
     },
     updateScreeningResponseData(screeningResponsesPayload) {
       this.dataScreeningResponses = screeningResponsesPayload;

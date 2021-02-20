@@ -476,8 +476,6 @@ export default {
       this.$refs.singlePatientReviewSubmit.submitPatientInfo();
     },
     SinglePatientRegistrationSuccessful(data) {
-      console.log('Single patient registration successful')
-      console.log(data)
       this.$refs.singlePatientFollowUp.updateQrCodeData(data)
       this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE)
     },
@@ -485,8 +483,6 @@ export default {
       this.$refs.householdReviewSubmit.submitPatientInfo();
     },
     householdRegistrationSuccessful(data) {
-      console.log('Household registration successful')
-      //console.log(data)
       this.$refs.householdFollowUp.updateQrCodeData(data)
       this.goToPage(config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE + this.getNumberOfHouseholdMembers() - 2)
     },
