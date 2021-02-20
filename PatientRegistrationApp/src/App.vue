@@ -333,7 +333,7 @@
                       Make sure that the information you provided is correct and
                       you want to proceed. 
                       <br> <br>
-                      After submission you will recieve a notification to schedule 
+                      After submission you will receive a notification to schedule 
                       your COVID vaccination appointment if you are not already eligible 
                       to do so based upon CDC and local Phases. Upon receiving your 
                       eligibility notification, you will answer COVID screening questions, 
@@ -398,7 +398,13 @@
                     </v-card-title>
                     <v-card-text class="text-center">
                       Make sure that the information you provided is correct and
-                      you want to proceed.
+                      you want to proceed. 
+                      <br> <br>
+                      After submission you will receive a notification to schedule 
+                      your COVID vaccination appointment if you are not already eligible 
+                      to do so based upon CDC and local Phases. Upon receiving your 
+                      eligibility notification, you will answer COVID screening questions, 
+                      provide consent, and choose your date to receive the COVID-19 vaccine.
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
