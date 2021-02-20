@@ -157,7 +157,7 @@ export default {
         ageMonths = 12 + currentMonth - dobMonth;
       }
       
-      let ageString = ageYears + " yrs. " + ageMonths + " mos.";
+      let ageString = ageYears + " yr(s). " + ageMonths + " mo(s).";
       return ageString;
     },
     patientGender() {
