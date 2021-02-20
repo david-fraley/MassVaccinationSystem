@@ -1,4 +1,4 @@
-const axios = require("../services/axiosInstance.js");
+const axios = require("../services/axiosInstance");
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
 const {body, validationResult} = require('express-validator');
@@ -38,7 +38,7 @@ async function findByQrCode(qrCode) {
         return {};
     }
 
-    const patientSearchResponse = await axios.get(`${process.env.FHIR_URL_BASE}/Patient?identifier=${qrCode}`);
+	const patientSearchResponse = await axios.get(`/Patient?identifier=${qrCode}`);
 
     let patientArray;
     if (patientSearchResponse.data.entry) {
@@ -60,7 +60,7 @@ async function findByQrCode(qrCode) {
         };
     }
 
-    return await axios.get(`${process.env.FHIR_URL_BASE}/Patient/${patientId}`);
+    return await axios.get(`/Patient/${patientId}`);
 }
 
 exports.findByQrCode = findByQrCode;
@@ -158,16 +158,18 @@ async function createPatients(req, res) {
         values.map(([_, newPromises]) => newPromises)
       );
 
+
       // Resolve promises and return list of QR codes
-      Promise.all(promises).then((results) => {
-          const response = {
-              Patient: results.reduce((qrCodes, result) => {
-                  if (result.qr_code) qrCodes.push(result.qr_code);
-                  return qrCodes;
-              }, []),
-          };
-          res.json(response);
-      });
+      Promise.all(promises).then();
+	  
+	  const response = {
+		  Patient: values.reduce((qrCodes, value) => {
+			  if (value[0].qr_code) qrCodes.push(value[0].qr_code);
+			  return qrCodes;
+		  }, [])
+	  };
+	  response.Patient.push(head.qr_code);
+	  res.json(response);
     })
     .catch((e) => res.status(400).json(e));
 }
@@ -200,11 +202,15 @@ async function createPatient(patient, head) {
   patient.link = `RelatedPerson/${relatedID}`;
   
   resource = Patient.toFHIR(patient);
+  
+  let patientID = {
+	  qr_code: uuid.v4()
+  }
 
   // Add QR Code UUID to Patient Identifier list
   if (!resource.hasOwnProperty("identifier")) resource.identifier = [];
   resource.identifier.push({
-	  value: uuid.v4(),
+	  value: patientID.qr_code,
 	  assigner: {
 		  display: "massvaxx"
 	  },
@@ -214,15 +220,15 @@ async function createPatient(patient, head) {
   });
   
   const createdPatient = await axios.post(`/Patient`, resource);
-  const patientID = createdPatient.data.id;
+  patientID.resourceId = createdPatient.data.id;
 
   // If RelatedPerson was not created with a link to a patient,
   // update the resource to link to the new Patient
   if (head == null) {
     head = patientID;
     resource = RelatedPerson.toFHIR({
-      patient: `Patient/${head}`,
-      relationship: patient.relationship,
+      patient: `Patient/${head.resourceId}`,
+      relationship: patient.relationship
     });
     resource.id = relatedID;
     promises.push(axios.put(`/RelatedPerson/${relatedID}`, resource));
@@ -234,7 +240,7 @@ async function createPatient(patient, head) {
       participant: [
           {
               type: "patient",
-              actor: `Patient/${patientID}`
+              actor: `Patient/${patientID.resourceId}`
           }
       ]
   };
