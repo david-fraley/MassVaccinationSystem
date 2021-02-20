@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent" @click="scanBarcode">
+        <v-btn color="accent" @click="scanBarcode" :disabled="isVaccinationEventPageReadOnly">
           Scan vaccine barcode
         </v-btn>
       </v-col>
@@ -22,6 +22,8 @@
               required
               :rules="[(v) => !!v || 'Lot Number field is required']"
               v-model="lotNumber"
+              :filled="isVaccinationEventPageReadOnly"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -36,6 +38,8 @@
               required
               :rules="[(v) => !!v || 'Expiration Date field is required']"
               v-model="expirationDate"
+              :filled="isVaccinationEventPageReadOnly"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -50,6 +54,8 @@
               required
               :rules="[(v) => !!v || 'Manufacturer field is required']"
               v-model="manufacturer"
+              :filled="isVaccinationEventPageReadOnly"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -71,6 +77,8 @@
               required
               :rules="[(v) => !!v || 'Dose Quantity field is required']"
               v-model="doseQuantity"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
           <v-col cols="4">
@@ -86,6 +94,8 @@
               v-model="doseNumber"
               required
               :rules="[(v) => !!v || 'Dose Number field is required']"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
         </v-row>
@@ -113,6 +123,7 @@
               filled 
               readonly
               :value="practitionerName"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -128,6 +139,8 @@
               required
               :rules="[(v) => !!v || 'Site of Vaccination field is required']"
               v-model="site"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
         </v-row>
@@ -146,6 +159,7 @@
               filled
               readonly
               :value="config.route"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -158,6 +172,8 @@
           outlined
           rows="4"
           v-model="note"
+          :filled="isVaccinationEventPageReadOnly"
+          :disabled="isVaccinationEventPageReadOnly"
         ></v-textarea>
       </v-col>
     </v-row>
@@ -167,7 +183,7 @@
           <v-dialog v-model="dialog" width="500">
             <template v-slot:activator="{ on, attrs }">
               <v-col cols="6">
-                <v-btn block color="accent" v-bind="attrs" v-on="on">
+                <v-btn block color="accent" v-bind="attrs" v-on="on" :disabled="isVaccinationEventPageReadOnly">
                   Submit vaccination record
                 </v-btn>
               </v-col>
@@ -185,10 +201,7 @@
                 <v-btn
                   color="primary"
                   text
-                  @click="
-                    submitVaccinationRecord();
-                    endEncounter();
-                  "
+                  @click="submitVaccinationRecord()"
                 >
                   Submit
                 </v-btn>
@@ -232,6 +245,9 @@ export default {
     appointmentID() {
       return this.$store.state.appointmentResource.id;
     },
+    isVaccinationEventPageReadOnly() {
+      return this.$store.getters.isVaccinationEventPageReadOnly
+    },
   },
   methods: {
     scanBarcode() {
@@ -250,6 +266,9 @@ export default {
 
       //Close the dialog
       this.dialog = false;
+
+      //end the encounter
+      this.endEncounter()
     },
     onDischarge(payload) {
       this.$store.dispatch("patientDischarged", payload);

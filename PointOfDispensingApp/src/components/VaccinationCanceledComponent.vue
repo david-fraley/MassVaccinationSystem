@@ -16,6 +16,7 @@
               filled 
               readonly
               :value="practitionerName"
+              :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -29,6 +30,8 @@
               required
               :rules="[v => !!v || 'Reason vaccine was not administered field is required']"
               v-model="reason"
+              :readonly="isVaccinationEventPageReadOnly"
+              :filled="isVaccinationEventPageReadOnly"
             ></v-select>
           </v-col>
         </v-row>
@@ -44,6 +47,8 @@
           outlined
           rows="4"
           v-model="note"
+          :readonly="isVaccinationEventPageReadOnly"
+          :filled="isVaccinationEventPageReadOnly"
         ></v-textarea>
       </v-col>
     </v-row>
@@ -56,7 +61,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-col cols="6">
-                <v-btn block color="accent" v-bind="attrs" v-on="on">
+                <v-btn block color="accent" v-bind="attrs" v-on="on" :disabled="isVaccinationEventPageReadOnly">
                   Submit vaccination record
                 </v-btn>
               </v-col>
@@ -76,10 +81,7 @@
                 <v-btn	
                   color="primary"
                   text
-                  @click="
-                    submitVaccinationRecord(); 
-                    endEncounter();
-                  ">
+                  @click="submitVaccinationRecord()">
                   Submit
                 </v-btn>
               </v-card-actions>
@@ -116,6 +118,9 @@ export default {
     config() {
       return this.$store.state.config;
     },
+    isVaccinationEventPageReadOnly() {
+        return this.$store.getters.isVaccinationEventPageReadOnly
+    },
     encounterID() {
       return this.$store.state.encounterResource.id;
     },
@@ -133,6 +138,9 @@ export default {
 
       //Close the dialog
       this.dialog = false;
+
+      //end the encounter
+      this.endEncounter()
     },
     onDischarge(payload) {
       this.$store.dispatch("patientDischarged", payload);
