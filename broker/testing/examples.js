@@ -134,7 +134,7 @@ module.exports = {
         "email2@site.com"
       ],
       "gender": "male",
-      "birthDate": "2000-01-01",
+      "birthDate": "01/01/2000",
       "race": "",
       "ethnicity": "",
       "address": {
