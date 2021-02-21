@@ -23,14 +23,15 @@
               <div class="font-weight-medium primary--text">
                 Household Member #{{ index }}
               </div>
-              <v-row
-                ><div>
-                  <vue-qrcode
-                    :id="index - 1"
-                    v-bind:value="qrValue[index - 1]"
-                    v-bind:errorCorrectionLevel="correctionLevel"
-                  /></div
-              ></v-row>
+              <v-row>
+                  <v-col cols="12"><div>
+                    <vue-qrcode
+                     :id="index - 1"
+                     v-bind:value="qrValue[index - 1]"
+                     v-bind:errorCorrectionLevel="correctionLevel"
+                    /></div>
+                  </v-col>
+              </v-row>
               <div class="font-weight-medium">
                 Name:
                 <span class="font-weight-regular"
@@ -75,6 +76,7 @@
 import EventBus from "../eventBus";
 import VueQrcode from "vue-qrcode";
 import jsPDF from "jspdf";
+
 export default {
   data() {
     return {
@@ -107,7 +109,7 @@ export default {
         //add the first QR code and label
         const qrcode1 = document.getElementById(i);
         let imageData = this.getBase64Image(qrcode1);
-        let string = this.qrValue[i];
+        let string = this.dataHouseholdPersonalInfo[i].familyName + ", " + this.dataHouseholdPersonalInfo[i].givenName  + " " + this.dataHouseholdPersonalInfo[i].middleName  + " " + this.dataHouseholdPersonalInfo[i].suffix;
         pdfDoc.addImage(imageData, "JPG", 70, 50);
         pdfDoc.text(string, 75, 48);
 
@@ -115,7 +117,7 @@ export default {
         if (i + 1 < this.getNumberOfHouseholdMembers()) {
           const qrcode2 = document.getElementById(i + 1);
           imageData = this.getBase64Image(qrcode2);
-          string = this.qrValue[i + 1];
+          string = this.dataHouseholdPersonalInfo[i + 1].familyName + ", " + this.dataHouseholdPersonalInfo[i + 1].givenName  + " " + this.dataHouseholdPersonalInfo[i + 1].middleName  + " " + this.dataHouseholdPersonalInfo[i + 1].suffix;
           pdfDoc.addImage(imageData, "JPG", 70, 150);
           pdfDoc.text(string, 75, 148);
           if (i + 2 < this.getNumberOfHouseholdMembers()) {
@@ -141,7 +143,6 @@ export default {
       // if member is next in line, add to array of members
       if (householdMemberNumber - 1 == this.dataHouseholdPersonalInfo.length) {
         this.dataHouseholdPersonalInfo.push(householdPersonalInfoPayload);
-        this.qrValue.push(this.toQRValue(householdPersonalInfoPayload));
         // else if member already exists in array, update the member
       } else if (
         householdMemberNumber - 1 <
@@ -152,26 +153,16 @@ export default {
           householdMemberNumber - 1,
           householdPersonalInfoPayload
         );
-        this.$set(
-          this.qrValue,
-          householdMemberNumber - 1,
-          this.toQrValue(householdPersonalInfoPayload)
-        );
       }
     },
     getNumberOfHouseholdMembers() {
       return this.numberOfHouseholdMembers;
     },
-    toQRValue(member) {
-      const value =
-        member.familyName +
-        ", " +
-        member.givenName +
-        " " +
-        member.middleName +
-        " " +
-        member.suffix;
-      return value;
+    updateQrCodeData(data) {
+      for(let i=0; i<data.length; i++)
+      {
+        this.qrValue.push(data[i])
+      }
     },
   },
   components: {

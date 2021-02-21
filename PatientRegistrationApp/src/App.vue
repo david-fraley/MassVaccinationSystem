@@ -142,6 +142,7 @@
                     <v-card flat
                       ><SinglePatientReviewSubmit
                         ref="singlePatientReviewSubmit"
+                        @singlePatientRegistrationSuccess = "SinglePatientRegistrationSuccessful"
                     /></v-card>
                   </v-stepper-content>
 
@@ -152,7 +153,7 @@
                         >Download your QR code</v-toolbar-title
                       >
                     </v-toolbar>
-                    <v-card flat><SinglePatientFollowUp /></v-card>
+                    <v-card flat><SinglePatientFollowUp ref="singlePatientFollowUp"/></v-card>
                   </v-stepper-content>
                 </template>
 
@@ -259,6 +260,7 @@
                         v-bind:numberOfHouseholdMembers="
                           getNumberOfHouseholdMembers()
                         "
+                        @householdRegistrationSuccess = "householdRegistrationSuccessful"
                     /></v-card>
                   </v-stepper-content>
 
@@ -274,6 +276,7 @@
                         v-bind:numberOfHouseholdMembers="
                           getNumberOfHouseholdMembers()
                         "
+                        ref="householdFollowUp"
                     /></v-card>
                   </v-stepper-content>
                 </template>
@@ -483,11 +486,17 @@ export default {
   methods: {
     submitSinglePatientRegistration() {
       this.$refs.singlePatientReviewSubmit.submitPatientInfo();
-      this.goToNextPage();
+    },
+    SinglePatientRegistrationSuccessful(data) {
+      this.$refs.singlePatientFollowUp.updateQrCodeData(data)
+      this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE)
     },
     submitHouseholdRegistration() {
       this.$refs.householdReviewSubmit.submitPatientInfo();
-      this.goToNextPage();
+    },
+    householdRegistrationSuccessful(data) {
+      this.$refs.householdFollowUp.updateQrCodeData(data)
+      this.goToPage(config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE + this.getNumberOfHouseholdMembers() - 2)
     },
     goToPage(pageNum) {
       this.page = pageNum;

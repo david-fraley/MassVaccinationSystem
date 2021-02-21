@@ -109,19 +109,10 @@ export default {
     },
     updatePersonalInfoData(personalInfoPayload) {
       this.dataPersonalInfo = personalInfoPayload;
-      this.qrValue =
-        this.dataPersonalInfo.familyName +
-        ", " +
-        this.dataPersonalInfo.givenName +
-        " " +
-        this.dataPersonalInfo.middleName +
-        " " +
-        this.dataPersonalInfo.suffix;
     },
-    updateScreeningResponseData(screeningResponsesPayload) {
-      this.dataScreeningResponses = screeningResponsesPayload;
-
-      //add the screening responses to the qrValue string
+    updateQrCodeData(data) {
+      this.qrValue = data;
+      //temporary - add the screening responses to the qrValue string:
       this.qrValue +=
         "|" +
         this.dataScreeningResponses.screeningQ1 +
@@ -146,6 +137,9 @@ export default {
         "|" +
         this.dataScreeningResponses.screeningQ8 +
         "|";
+    },
+    updateScreeningResponseData(screeningResponsesPayload) {
+      this.dataScreeningResponses = screeningResponsesPayload;
     },
   },
   components: {
