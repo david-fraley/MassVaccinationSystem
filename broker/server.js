@@ -58,7 +58,7 @@ app.get("/Observation*", Observation.read);
 // Tell Mirth to send an HL7 message
 app.post("/SendHL7Message", SendHL7Message);
 
-app.post("/Encounter", Encounter.create);
+app.post("/Encounter", Encounter.post);
 app.get("/Encounter*", Encounter.read);
 
 app.post("/EpisodeOfCare", EpisodeOfCare.create);
