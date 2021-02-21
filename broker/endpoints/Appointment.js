@@ -30,16 +30,16 @@ exports.create = (req, res) => {
     });
 };
 
-// Update status and time.
+// Update status.
 exports.checkIn = async (req) => {
   const status = "arrived";
   let id, patch;
 
   // get id of resource to update
-  if (req.query.hasOwnProperty("patient")) {
+  if (req.body.hasOwnProperty("patient")) {
     let config = {
       params: {
-        actor: req.query.patient,
+        actor: req.body.patient,
         status: "booked",
       },
     };
@@ -53,8 +53,6 @@ exports.checkIn = async (req) => {
       resource = bundle.entry[0].resource;
       return resource.id;
     });
-  } else if (req.query.hasOwnProperty("appointment")) {
-    id = req.query.appointment;
   } else {
     return {};
   }

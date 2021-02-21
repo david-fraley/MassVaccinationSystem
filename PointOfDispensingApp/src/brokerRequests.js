@@ -72,10 +72,15 @@ export default {
   },
 
   // Check-in patient
-  // patID: patient ID
-  checkIn: (patID) => {
+  // param data:
+  // {
+  //   status: String
+  //   patient: PatientID
+  //   location : LocationID
+  // }
+  checkIn: (data) => {
     return axios
-      .post(`/broker/check-in`, {}, { params: { patient: patID } })
+      .post(`/broker/check-in`, data)
       .then((response) => {
         return {
           data: {

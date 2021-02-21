@@ -1,29 +1,22 @@
 const Appointment = require("./Appointment");
 const Encounter = require("./Encounter");
 
-// Check-in given either
-// a) appointment id from QR code
-// b) patient id from patient lookup
+// Check-in updates Appointment status and creates an Encounter
 module.exports = (req, res) => {
-  let response = {};
-
-  if (
-    req.query.hasOwnProperty("patient") ||
-    req.query.hasOwnProperty("appointment")
-  ) {
-    Promise.all([Encounter.checkIn(req), Appointment.checkIn(req)])
-      .then((results) => {
-        for (result of results) {
-          response[result.resourceType] = result;
-        }
-        res.json(response);
-      })
-      .catch((e) => {
-        response.error = e.response ? e.response.data : e.message;
-        res.status(400).json(response);
+  Appointment.checkIn(req)
+    .then((appointment) => {
+      req.body.appointment = `Appointment/${appointment.id}`;
+      req.body.Encounter = req.body;
+      Encounter.create(req).then((encounter) => {
+        res.json({
+          Encounter: encounter,
+          Appointment: appointment,
+        });
       });
-  } else {
-    response.error = "patient or appointment parameter missing";
-    res.status(400).json(response);
-  }
+    })
+    .catch((e) => {
+      res.status(400).json({
+        error: e.response ? e.response.data : e.message,
+      });
+    });
 };

@@ -2,7 +2,7 @@
 Encounter {
   status : enum (planned, arrived, in-progress, finished, cancelled)
   class : enum (FLD)
-  subject : string "Patient/id"
+  patient : string "Patient/id"
   appointment : string "Appointment/id"
   location : string "Location/id"
 }
@@ -14,18 +14,18 @@ exports.toFHIR = function (encounter) {
     status: encounter.status,
     class: {
       system: CLASS_SYSTEM,
-      code: encounter.class,
-      display: encounter.class,
+      code: "FLD",
+      display: "FLD",
     },
     subject: {
-      reference: encounter.subject,
+      reference: encounter.patient,
     },
     appointment: [
       {
         reference: encounter.appointment,
       },
     ],
-    period: {},
+    period: { start: new Date().toISOString() },
     location: [
       {
         location: {
@@ -47,7 +47,7 @@ exports.toModel = (encounter) => {
     id: encounter.id,
     status: encounter.status,
     class: encounter.class.code,
-    subject: encounter.subject.reference,
+    patient: encounter.subject.reference,
     appointment: encounter.appointment[0].reference,
     location: encounter.location[0].location.reference,
     start: encounter.period.start,

@@ -89,8 +89,13 @@ export default {
       this.$store.dispatch("patientAdmitted", payload);
     },
     checkIn() {
+      let data = {
+        status: "arrived",
+        patient: `Patient/${this.patientId}`,
+        location: `Location/${this.locationId}`
+      }
       // make request
-      brokerRequests.checkIn(this.patientId).then((response) => {
+      brokerRequests.checkIn(data).then((response) => {
         if (response.data) {
           this.onSuccess(response.data);
         } else if (response.error) {
