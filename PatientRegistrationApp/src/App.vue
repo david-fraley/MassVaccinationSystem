@@ -142,6 +142,7 @@
                     <v-card flat
                       ><SinglePatientReviewSubmit
                         ref="singlePatientReviewSubmit"
+                        @singlePatientRegistrationSuccess = "SinglePatientRegistrationSuccessful"
                     /></v-card>
                   </v-stepper-content>
 
@@ -152,7 +153,7 @@
                         >Download your QR code</v-toolbar-title
                       >
                     </v-toolbar>
-                    <v-card flat><SinglePatientFollowUp /></v-card>
+                    <v-card flat><SinglePatientFollowUp ref="singlePatientFollowUp"/></v-card>
                   </v-stepper-content>
                 </template>
 
@@ -259,6 +260,7 @@
                         v-bind:numberOfHouseholdMembers="
                           getNumberOfHouseholdMembers()
                         "
+                        @householdRegistrationSuccess = "householdRegistrationSuccessful"
                     /></v-card>
                   </v-stepper-content>
 
@@ -274,6 +276,7 @@
                         v-bind:numberOfHouseholdMembers="
                           getNumberOfHouseholdMembers()
                         "
+                        ref="householdFollowUp"
                     /></v-card>
                   </v-stepper-content>
                 </template>
@@ -331,7 +334,13 @@
                     </v-card-title>
                     <v-card-text class="text-center">
                       Make sure that the information you provided is correct and
-                      you want to proceed.
+                      you want to proceed. 
+                      <br> <br>
+                      After submission you will receive a notification to schedule 
+                      your COVID vaccination appointment if you are not already eligible 
+                      to do so based upon CDC and local Phases. Upon receiving your 
+                      eligibility notification, you will answer COVID screening questions, 
+                      provide consent, and choose your date to receive the COVID-19 vaccine.  
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
@@ -392,7 +401,13 @@
                     </v-card-title>
                     <v-card-text class="text-center">
                       Make sure that the information you provided is correct and
-                      you want to proceed.
+                      you want to proceed. 
+                      <br> <br>
+                      After submission you will receive a notification to schedule 
+                      your COVID vaccination appointment if you are not already eligible 
+                      to do so based upon CDC and local Phases. Upon receiving your 
+                      eligibility notification, you will answer COVID screening questions, 
+                      provide consent, and choose your date to receive the COVID-19 vaccine.
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
@@ -471,11 +486,17 @@ export default {
   methods: {
     submitSinglePatientRegistration() {
       this.$refs.singlePatientReviewSubmit.submitPatientInfo();
-      this.goToNextPage();
+    },
+    SinglePatientRegistrationSuccessful(data) {
+      this.$refs.singlePatientFollowUp.updateQrCodeData(data)
+      this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE)
     },
     submitHouseholdRegistration() {
       this.$refs.householdReviewSubmit.submitPatientInfo();
-      this.goToNextPage();
+    },
+    householdRegistrationSuccessful(data) {
+      this.$refs.householdFollowUp.updateQrCodeData(data)
+      this.goToPage(config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE + this.getNumberOfHouseholdMembers() - 2)
     },
     goToPage(pageNum) {
       this.page = pageNum;

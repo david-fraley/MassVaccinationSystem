@@ -51,7 +51,6 @@ exports.toFHIR = function (appt) {
       }
     });
   }
-
   return resource;
 };
 

@@ -30,7 +30,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Update status and time.
+// Update status.
 exports.checkIn = async (req) => {
   const status = "arrived";
   let id;
@@ -52,8 +52,6 @@ exports.checkIn = async (req) => {
       const resource = bundle.entry[0].resource;
       return resource.id;
     });
-  } else if (req.query.hasOwnProperty("appointment")) {
-    id = req.query.appointment;
   } else {
     return {};
   }
