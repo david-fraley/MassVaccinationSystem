@@ -9,37 +9,20 @@ Encounter {
 */
 const CLASS_SYSTEM = "http://terminology.hl7.org/CodeSystem/v3-ActCode";
 exports.toFHIR = function (encounter) {
-  const resource = {
-    resourceType: "Encounter",
-    status: encounter.status,
-    class: {
-      system: CLASS_SYSTEM,
-      code: "FLD",
-      display: "FLD"
-    },
-    subject: {
-      reference: encounter.patient
-    },
-    appointment: [
-      {
-        reference: encounter.appointment
-      }
-    ],
-    period: { start: new Date().toISOString() },
-    location: [
-      {
-        location: {
-          reference: encounter.location
-        },
-        subject: {
-            reference: encounter.subject
+    const resource = {
+        resourceType: "Encounter",
+        status: encounter.status,
+        class: {
+            system: CLASS_SYSTEM,
+            code: "FLD",
+            display: "FLD"
         },
         appointment: [
             {
                 reference: encounter.appointment
             }
         ],
-        period: {},
+        period: { start: new Date().toISOString() },
         location: [
             {
                 location: {
@@ -47,6 +30,9 @@ exports.toFHIR = function (encounter) {
                 }
             }
         ],
+        subject: {
+            reference: encounter.subject ?? encounter.patient
+        },
         serviceProvider: {
             reference: encounter.serviceProvider
         }

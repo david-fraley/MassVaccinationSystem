@@ -9,7 +9,7 @@ exports.read = (req, res) => {
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message,
+        error: e.response ? e.response.data : e.message
       });
     });
 };
@@ -25,7 +25,7 @@ exports.create = (req, res) => {
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message,
+        error: e.response ? e.response.data : e.message
       });
     });
 };
@@ -36,10 +36,10 @@ exports.checkIn = async (req) => {
   let id;
 
   // get id of resource to update
-  if (req.query.hasOwnProperty("patient")) {
+  if (req.body.hasOwnProperty("patient")) {
       const config = {
           params: {
-              actor: req.query.patient,
+              actor: req.body.patient,
               status: "booked"
           }
       };
