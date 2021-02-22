@@ -274,8 +274,15 @@ export default {
     patientRecordRetrieved() {
       //send data to Vuex
       this.$store.dispatch("patientRecordRetrieved", this.patient);
-      //Advance to the Check In page
-      this.$router.push("CheckIn");
+
+      if(this.$store.state.encounterResource.status == 'arrived') {
+        //Advance to the Consent and Screening page
+        this.$router.push("ConsentScreening");
+      }
+      else {
+        //Advance to the Check In page
+        this.$router.push("CheckIn");
+      }
 
       //Interim solution:  extract screening responses from QR code (part 2 of 2)
       var res = this.result.split("|");

@@ -93,46 +93,58 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        resetPatientData(state) {
+            console.log('resetPatientData')
+            //reset patient-specific data
+            state.encounterResource = {};
+            state.appointmentResource = {};
+            state.immunizationResource.lotNumber = '',
+            state.immunizationResource.expirationDate = '',
+            state.immunizationResource.manufacturer = '',
+            state.immunizationResource.doseQuantity = '',
+            state.immunizationResource.doseNumber = '',
+            state.immunizationResource.immunizationStatus = '',
+            state.immunizationResource.immunizationTimeStamp = '',
+            state.immunizationResource.healthcarePractitioner = 'White, Betty',
+            state.immunizationResource.site = '',
+            state.immunizationResource.route = 'Injection',
+            state.immunizationResource.notes = '',
+            state.immunizationResource.notAdministeredReason = ''
+            state.screeningResponses.vaccinationDecision = '',
+            state.screeningResponses.screeningQ1 = '',
+            state.screeningResponses.screeningQ2 = '',
+            state.screeningResponses.screeningQ2b = '',
+            state.screeningResponses.screeningQ3a = '',
+            state.screeningResponses.screeningQ3b = '',
+            state.screeningResponses.screeningQ3c = '',
+            state.screeningResponses.screeningQ4 = '',
+            state.screeningResponses.screeningQ5 = '',
+            state.screeningResponses.screeningQ6 = '',
+            state.screeningResponses.screeningQ7 = '',
+            state.screeningResponses.screeningQ8 = '',
+            state.screeningResponses.screeningComplete = false
+        },
         patientRecordRetrieved(state, patientResourcePayload) {
-            state.patientResource = patientResourcePayload;
             console.log('patient record retrieved')
-            console.log(state.activeWorkflowState)
+            state.patientResource = patientResourcePayload;
+            console.log(state.encounterResource.status)
             
-            //TO DO:  retrieve encounter resource, immunization resource, and appointment resource 'status' fields to determine the workflow state
-            if((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
-            {
-                state.activeWorkflowState = 'RECORD_RETRIEVED'
-
-                //reset patient-specific data
-                state.encounterResource = {};
-                state.appointmentResource = {};
-                state.immunizationResource.lotNumber = '',
-                state.immunizationResource.expirationDate = '',
-                state.immunizationResource.manufacturer = '',
-                state.immunizationResource.doseQuantity = '',
-                state.immunizationResource.doseNumber = '',
-                state.immunizationResource.immunizationStatus = '',
-                state.immunizationResource.immunizationTimeStamp = '',
-                state.immunizationResource.healthcarePractitioner = 'White, Betty',
-                state.immunizationResource.site = '',
-                state.immunizationResource.route = 'Injection',
-                state.immunizationResource.notes = '',
-                state.immunizationResource.notAdministeredReason = ''
-                state.screeningResponses.vaccinationDecision = '',
-                console.log('Reset screening question responses')
-                state.screeningResponses.screeningQ1 = '',
-                state.screeningResponses.screeningQ2 = '',
-                state.screeningResponses.screeningQ2b = '',
-                state.screeningResponses.screeningQ3a = '',
-                state.screeningResponses.screeningQ3b = '',
-                state.screeningResponses.screeningQ3c = '',
-                state.screeningResponses.screeningQ4 = '',
-                state.screeningResponses.screeningQ5 = '',
-                state.screeningResponses.screeningQ6 = '',
-                state.screeningResponses.screeningQ7 = '',
-                state.screeningResponses.screeningQ8 = '',
-                state.screeningResponses.screeningComplete = false
+            //Retrieve encounter resource 'status' field to determine the workflow state
+            if(state.encounterResource.status) {
+                if (state.encounterResource.status == 'arrived') {
+                    state.activeWorkflowState = 'ADMITTED'
+                }
+                else if (state.encounterResource.status == 'finished') {
+                    state.activeWorkflowState = 'DISCHARGED'
+                }
+                else {
+                    console.log(state.encounterResource.status)
+                }
             }
+            else {
+                state.activeWorkflowState = 'RECORD_RETRIEVED'
+            }
+            console.log(state.activeWorkflowState)
         },
         patientAdmitted(state, payload) {
             state.activeWorkflowState = 'ADMITTED'
@@ -180,6 +192,7 @@ export default new Vuex.Store({
 
     actions: {
         patientRecordRetrieved(context, patientResourcePayload) {
+            context.commit('resetPatientData')
             context.commit('patientRecordRetrieved', patientResourcePayload)
         },
         patientAdmitted(context, payload) {
