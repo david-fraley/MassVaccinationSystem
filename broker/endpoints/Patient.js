@@ -4,7 +4,6 @@ const RelatedPerson = require("../models/RelatedPerson");
 const {body, validationResult} = require('express-validator');
 const Appointment = require("../models/Appointment");
 const uuid = require('uuid');
-const config = require("../config/server");
 
 const prepend = "x";
 
@@ -87,7 +86,7 @@ exports.search = [
       return res.status(400).json({error: errorString.slice(0, -2)});
     }
 
-    let endpoint = config.fhirUrlBase + '/Patient?' +
+    let endpoint = '/Patient?' +
       'given=' + req.body.firstName +
       '&family=' + req.body.lastName +
       '&birthdate=' + new Date(req.body.birthDate).toISOString().split('T')[0];
