@@ -94,12 +94,7 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        patientRecordRetrieved(state, payload) {
-            state.patientResource = payload.Patient;
-            state.patientHistory = payload.Immunization;
-            state.encounterResource = payload.Encounter;
-            state.appointmentResource = payload.Appointment;
-            
+        patientRecordRetrieved(state, payload) {            
             console.log('patient record retrieved')
             console.log(state.activeWorkflowState)
             
@@ -138,6 +133,12 @@ export default new Vuex.Store({
                 state.screeningResponses.screeningQ8 = '',
                 state.screeningResponses.screeningComplete = false
             }
+
+            state.patientResource = payload.Patient;
+            state.patientHistory = payload.Immunization;
+            state.encounterResource = payload.Encounter;
+            state.appointmentResource = payload.Appointment;
+
         },
         patientAdmitted(state, payload) {
             state.activeWorkflowState = 'ADMITTED'
