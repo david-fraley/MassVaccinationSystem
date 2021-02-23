@@ -16,6 +16,7 @@ export default new Vuex.Store({
         encounterResource: {},
         appointmentResource: {},
         immunizationResource: {},
+        patientHistory: [],
         practitionerResource: {
             id: "example",
             family: "White",
@@ -124,9 +125,12 @@ export default new Vuex.Store({
             state.screeningResponses.screeningQ8 = '',
             state.screeningResponses.screeningComplete = false
         },
-        patientRecordRetrieved(state, patientResourcePayload) {
+        patientRecordRetrieved(state, payload) {
+            state.patientResource = payload.Patient;
+            state.patientHistory = payload.Immunization;
+            state.encounterResource = payload.Encounter;
+            
             console.log('patient record retrieved')
-            state.patientResource = patientResourcePayload;
             console.log(state.encounterResource.status)
             
             //Retrieve encounter resource 'status' field to determine the workflow state
@@ -186,14 +190,17 @@ export default new Vuex.Store({
         unknownErrorCondition(state) {
             state.activeWorkflowState = 'ERROR'
             console.log(state.activeWorkflowState)
+        },
+        patientHistory(state, payload){
+            state.patientHistory = payload;
         }
 
     },
 
     actions: {
-        patientRecordRetrieved(context, patientResourcePayload) {
-            context.commit('resetPatientData')
-            context.commit('patientRecordRetrieved', patientResourcePayload)
+        patientRecordRetrieved(context, payload) {
+            ntext.commit('resetPatientData')
+            context.commit('patientRecordRetrieved', payload)
         },
         patientAdmitted(context, payload) {
             context.commit('patientAdmitted', payload)
@@ -212,6 +219,9 @@ export default new Vuex.Store({
         },
         unknownErrorCondition(context) {
             context.commit('unknownErrorCondition')
+        },
+        patientHistory(context, payload){
+            context.commit('patientHistory', payload)
         }
     },
     activeWorkflowStateEnum:

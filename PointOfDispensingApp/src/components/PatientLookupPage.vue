@@ -271,18 +271,57 @@ export default {
         alert("Select a patient");
       }
     },
-    patientRecordRetrieved() {
-      //send data to Vuex
-      this.$store.dispatch("patientRecordRetrieved", this.patient);
+    async getPayload() {
+      let payload = { Patient: this.patient };
 
-      if(this.$store.state.encounterResource.status == 'arrived') {
-        //Advance to the Consent and Screening page
-        this.$router.push("ConsentScreening");
-      }
-      else {
-        //Advance to the Check In page
-        this.$router.push("CheckIn");
-      }
+      // Get Encounter & Immunization
+      let immunizationPromise = brokerRequests
+        .getImmunization(this.patient.id)
+        .then((response) => {
+          if (response.data) {
+            payload.Immunization = response.data;
+          } else if (response.error) {
+            console.log(response.error);
+            alert("Failed to load history");
+          }
+        });
+
+      let encounterPromise = brokerRequests
+        .getEncounter(this.patient.id)
+        .then((response) => {
+          if (response.data) {
+            payload.Encounter = response.data;
+          } else if (response.error) {
+            console.log(response.error);
+            alert("Failed to get Encounter");
+          }
+        });
+
+      await Promise.all([immunizationPromise, encounterPromise]).catch(
+        (error) => {
+          console.log(error);
+          console.log("PatientLookupPage patientRecordRetrieved error");
+        }
+      );
+
+      return payload;
+    },
+    patientRecordRetrieved() {
+      this.getPayload().then((payload) => {
+        console.log(payload);
+        //send data to Vuex
+        this.$store.dispatch("patientRecordRetrieved", payload);
+        
+        
+        if(this.$store.state.encounterResource.status == 'arrived') {
+          //Advance to the Consent and Screening page
+          this.$router.push("ConsentScreening");
+        }
+        else {
+          //Advance to the Check In page
+          this.$router.push("CheckIn");
+        }
+      });
 
       //Interim solution:  extract screening responses from QR code (part 2 of 2)
       var res = this.result.split("|");
