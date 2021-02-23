@@ -137,6 +137,9 @@ export default new Vuex.Store({
             if(payload.Encounter) {
                 state.encounterResource = payload.Encounter;
             }
+            if(payload.Appointment) {
+                state.appointmentResource = payload.Appointment;
+            }
             
             console.log('patient record retrieved')
             console.log(state.encounterResource.status)

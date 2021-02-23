@@ -274,7 +274,7 @@ export default {
     async getPayload() {
       let payload = { Patient: this.patient };
 
-      // Get Encounter & Immunization
+      // Get Appointment, Encounter, Immunization
       let immunizationPromise = brokerRequests
         .getImmunization(this.patient.id)
         .then((response) => {
@@ -297,7 +297,18 @@ export default {
           }
         });
 
-      await Promise.all([immunizationPromise, encounterPromise]).catch(
+      let appointmentPromise = brokerRequests
+        .getAppointment(this.patient.id)
+        .then((response) => {
+          if (response.data) {
+            payload.Appointment = response.data;
+          } else if (response.error) {
+            console.log(response.error);
+            alert("Failed to get Appointment");
+          }
+        });
+
+      await Promise.all([immunizationPromise, encounterPromise, appointmentPromise]).catch(
         (error) => {
           console.log(error);
           console.log("PatientLookupPage patientRecordRetrieved error");
@@ -308,7 +319,6 @@ export default {
     },
     patientRecordRetrieved() {
       this.getPayload().then((payload) => {
-        console.log(payload);
         //send data to Vuex
         this.$store.dispatch("patientRecordRetrieved", payload);
 
