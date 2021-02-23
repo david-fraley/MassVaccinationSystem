@@ -71,6 +71,21 @@ export default {
     }
   },
 
+  getEncounter: (patID) => {
+    return axios
+      .get("/broker/Encounter", { params: { subject: patID, _sort: "-date" } })
+      .then((response) => {
+        try {
+          return { data: response.data[0] };
+        } catch (e) {
+          return { data: {} };
+        }
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
+  },
+
   getImmunization:(patID) => {
     return axios
     .get('/broker/Immunization', {params: { patient: patID}})

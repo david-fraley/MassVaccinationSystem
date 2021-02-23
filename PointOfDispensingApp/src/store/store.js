@@ -94,8 +94,11 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        patientRecordRetrieved(state, patientResourcePayload) {
-            state.patientResource = patientResourcePayload;
+        patientRecordRetrieved(state, payload) {
+            state.patientResource = payload.Patient;
+            state.patientHistory = payload.Immunization;
+            state.encounterResource = payload.Encounter;
+            
             console.log('patient record retrieved')
             console.log(state.activeWorkflowState)
             
@@ -183,8 +186,8 @@ export default new Vuex.Store({
     },
 
     actions: {
-        patientRecordRetrieved(context, patientResourcePayload) {
-            context.commit('patientRecordRetrieved', patientResourcePayload)
+        patientRecordRetrieved(context, payload) {
+            context.commit('patientRecordRetrieved', payload)
         },
         patientAdmitted(context, payload) {
             context.commit('patientAdmitted', payload)

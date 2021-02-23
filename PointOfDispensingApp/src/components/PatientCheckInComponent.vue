@@ -107,15 +107,6 @@ export default {
   components: {},
   data() {
     return {};
-  },
-  mounted() {
-    brokerRequests.getImmunization(this.patientId).then((response) => {
-      if(response.data){
-        this.$store.dispatch("patientHistory", response.data);
-      } else if (response.error){
-        alert('Failed to load history\n${response.error}')
-      }
-    });
   }
 };
 </script>
