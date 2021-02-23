@@ -98,7 +98,6 @@ export default new Vuex.Store({
 
     mutations: {
         resetPatientData(state) {
-            console.log('resetPatientData')
             //reset patient-specific data
             state.encounterResource = {};
             state.appointmentResource = {};
@@ -141,9 +140,6 @@ export default new Vuex.Store({
                 state.appointmentResource = payload.Appointment;
             }
             
-            console.log('patient record retrieved')
-            console.log(state.encounterResource.status)
-            
             //Retrieve encounter resource 'status' field to determine the workflow state
             if(state.encounterResource.status) {
                 if (state.encounterResource.status == 'arrived') {
@@ -151,17 +147,6 @@ export default new Vuex.Store({
                 }
                 else if (state.encounterResource.status == 'finished') {
                     state.activeWorkflowState = 'DISCHARGED'
-                    //TO DO:  Remove once screening responses are retrieved from a FHIR resource
-                    //For now, we have to assume screening questions were completed prior to discharge
-                    state.screeningResponses.screeningComplete = true
-                    //...and determine whether or not vaccination was done
-                    console.log(state.immunizationResource.immunizationStatus)
-                    if(state.immunizationResource.immunizationStatus == 'completed') {
-                        state.screeningResponses.vaccinationDecision = 'yes'
-                    }
-                    else if(state.immunizationResource.immunizationStatus == 'not-done') {
-                        state.screeningResponses.vaccinationDecision = 'no'
-                    }
                 }
                 else {
                     console.log(state.encounterResource.status)
@@ -170,11 +155,9 @@ export default new Vuex.Store({
             else {
                 state.activeWorkflowState = 'RECORD_RETRIEVED'
             }
-            console.log(state.activeWorkflowState)
         },
         patientAdmitted(state, payload) {
             state.activeWorkflowState = 'ADMITTED'
-            console.log(state.activeWorkflowState)
             state.encounterResource = payload.Encounter
             state.appointmentResource = payload.Appointment
         },
@@ -195,28 +178,23 @@ export default new Vuex.Store({
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
             state.activeWorkflowState = 'VACCINATION_COMPLETE'
-            console.log(state.activeWorkflowState)
             state.immunizationResource = vaccinationCompletePlayload
         },
         vaccinationCanceled(state, vaccinationCanceledPlayload) {
             state.activeWorkflowState = 'VACCINATION_CANCELED'
-            console.log(state.activeWorkflowState)
             state.immunizationResource = vaccinationCanceledPlayload
         },
         patientDischarged(state, payload) {
             state.activeWorkflowState = 'DISCHARGED'
-            console.log(state.activeWorkflowState)
             state.encounterResource = payload.Encounter;
             state.appointmentResource = payload.Appointment;
         },
         unknownErrorCondition(state) {
             state.activeWorkflowState = 'ERROR'
-            console.log(state.activeWorkflowState)
         },
         patientHistory(state, payload){
             state.patientHistory = payload;
         }
-
     },
 
     actions: {
