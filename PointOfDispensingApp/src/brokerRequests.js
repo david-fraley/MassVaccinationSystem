@@ -71,6 +71,47 @@ export default {
     }
   },
 
+  getAppointment: (patID) => {
+    return axios
+      .get("/broker/Appointment", { params: { actor: patID } })
+      .then((response) => {
+        try {
+          return { data: response.data[0] };
+        } catch (e) {
+          return { data: {} };
+        }
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
+  },
+
+  getEncounter: (patID) => {
+    return axios
+      .get("/broker/Encounter", { params: { subject: patID, _sort: "-date" } })
+      .then((response) => {
+        try {
+          return { data: response.data[0] };
+        } catch (e) {
+          return { data: {} };
+        }
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
+  },
+
+  getImmunization:(patID) => {
+    return axios
+    .get('/broker/Immunization', {params: { patient: patID}})
+    .then((response) => {
+      return {data: response.data};
+    })
+    .catch((e) => {
+      return toResponse(e);
+    });
+  },
+
   // Check-in patient
   // param data:
   // {

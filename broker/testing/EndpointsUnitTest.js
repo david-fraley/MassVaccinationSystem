@@ -12,6 +12,7 @@
 const globals = require("./globals");
 const generalTest = require("./generalTest");
 const checkInDischargeTest = require("./checkInDischargeTest");
+const patientHistoryTest = require("./patientHistoryTest");
 
 /**
  * Setup for all tests.
@@ -57,6 +58,7 @@ async function main() {
   // Run tests
   generalTest().then();
   checkInDischargeTest().then();
+  patientHistoryTest().then();
 }
 
 main().then(console.log()).catch(console.error);
