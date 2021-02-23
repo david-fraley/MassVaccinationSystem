@@ -91,6 +91,9 @@ export default new Vuex.Store({
             //(in other words, a user cannot go to the Configuration page while a patient record is actively in use)
             return ((state.activeWorkflowState != 'NO_PATIENT_LOADED') && (state.activeWorkflowState != 'DISCHARGED'))
         },
+        hasPatientBeenCheckedIn: state => {
+            return (state.encounterResource.status == 'arrived')
+        }
     },
 
     mutations: {

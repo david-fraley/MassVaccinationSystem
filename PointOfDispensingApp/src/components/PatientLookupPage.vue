@@ -337,7 +337,7 @@ export default {
         //end of interim solution (part 2 of 2)
 
         
-        if(this.$store.state.encounterResource.status == 'arrived') {
+        if(this.$store.getters.hasPatientBeenCheckedIn) {
           //Advance to the Consent and Screening page
           this.$router.push("ConsentScreening");
         }
