@@ -51,12 +51,12 @@ export default new Vuex.Store({
             return state.activeWorkflowState
         },
         isCheckInPageDisabled: state => {
-            //Check-In page is not accessible before the patient record has been loaded or after the patient has been discharged
+            //Check-In page is not accessible before the patient record has been loaded
             return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
         },
         isCheckInPageReadOnly: state => {
-            //Check-In page is "read only" unless the patient record has just been retrieved
-            return (state.activeWorkflowState != 'RECORD_RETRIEVED')
+            //Check-In page is "read only" unless the patient record has just been retrieved or the patient has been previously discharged
+            return !((state.activeWorkflowState == 'RECORD_RETRIEVED') || (state.activeWorkflowState == 'DISCHARGED'))
         },
         isPatientHistoryPageDisabled: state => {
             //Patient History page is not accessible before the patient record has been loaded 
@@ -109,7 +109,7 @@ export default new Vuex.Store({
             state.immunizationResource.healthcarePractitioner = 'White, Betty',
             state.immunizationResource.site = '',
             state.immunizationResource.route = 'Injection',
-            state.immunizationResource.notes = '',
+            state.immunizationResource.note = '',
             state.immunizationResource.notAdministeredReason = ''
             state.screeningResponses.vaccinationDecision = '',
             state.screeningResponses.screeningQ1 = '',
@@ -127,8 +127,13 @@ export default new Vuex.Store({
         },
         patientRecordRetrieved(state, payload) {
             state.patientResource = payload.Patient;
-            state.patientHistory = payload.Immunization;
-            state.encounterResource = payload.Encounter;
+            if(state.patientHistory) {
+                state.patientHistory = payload.Immunization;
+                //TO DO:  We will also need to retrieve and populate the immunizationResource
+            } 
+            if(payload.Encounter) {
+                state.encounterResource = payload.Encounter;
+            }
             
             console.log('patient record retrieved')
             console.log(state.encounterResource.status)
@@ -140,6 +145,17 @@ export default new Vuex.Store({
                 }
                 else if (state.encounterResource.status == 'finished') {
                     state.activeWorkflowState = 'DISCHARGED'
+                    //TO DO:  Remove once screening responses are retrieved from a FHIR resource
+                    //For now, we have to assume screening questions were completed prior to discharge
+                    state.screeningResponses.screeningComplete = true
+                    //...and determine whether or not vaccination was done
+                    console.log(state.immunizationResource.immunizationStatus)
+                    if(state.immunizationResource.immunizationStatus == 'completed') {
+                        state.screeningResponses.vaccinationDecision = 'yes'
+                    }
+                    else if(state.immunizationResource.immunizationStatus == 'not-done') {
+                        state.screeningResponses.vaccinationDecision = 'no'
+                    }
                 }
                 else {
                     console.log(state.encounterResource.status)
@@ -199,7 +215,7 @@ export default new Vuex.Store({
 
     actions: {
         patientRecordRetrieved(context, payload) {
-            ntext.commit('resetPatientData')
+            context.commit('resetPatientData')
             context.commit('patientRecordRetrieved', payload)
         },
         patientAdmitted(context, payload) {

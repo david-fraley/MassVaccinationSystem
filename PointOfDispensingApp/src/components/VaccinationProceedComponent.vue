@@ -304,7 +304,7 @@ export default {
     },
     endEncounter() {
       let data = {
-        apptID: this.appointmentID,
+        apptID: 'example',//this.appointmentID,
         encounterID: this.encounterID,
       };
       brokerRequests.discharge(data).then((response) => {
