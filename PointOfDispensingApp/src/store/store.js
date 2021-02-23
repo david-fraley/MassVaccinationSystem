@@ -98,6 +98,7 @@ export default new Vuex.Store({
             state.patientResource = payload.Patient;
             state.patientHistory = payload.Immunization;
             state.encounterResource = payload.Encounter;
+            state.appointmentResource = payload.Appointment;
             
             console.log('patient record retrieved')
             console.log(state.activeWorkflowState)

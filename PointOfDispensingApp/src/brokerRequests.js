@@ -71,6 +71,21 @@ export default {
     }
   },
 
+  getAppointment: (patID) => {
+    return axios
+      .get("/broker/Appointment", { params: { actor: patID } })
+      .then((response) => {
+        try {
+          return { data: response.data[0] };
+        } catch (e) {
+          return { data: {} };
+        }
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
+  },
+
   getEncounter: (patID) => {
     return axios
       .get("/broker/Encounter", { params: { subject: patID, _sort: "-date" } })
