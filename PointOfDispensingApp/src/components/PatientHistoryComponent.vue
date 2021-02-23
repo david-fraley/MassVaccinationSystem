@@ -8,7 +8,7 @@
       item-key="id"
       single-select
 			:headers="headers"
-			:items="patientHistoryTable"
+			:items="immunizations"
 			class="elevation-1"
 			:footer-props="{
 				'items-per-page-options':[4]
@@ -52,13 +52,7 @@
     },
     data () {
       return {
-		doseNum: '',
-		tradeName: '',
-		doseQty: '',
-		timeAdministered: '',
 		numDaysSinceLastVaccination: '',
-		practitionerName: '',
-		adverseEffects: '',
 		selectedId: -1,
 		daysSinceDose: '',
 		
@@ -67,16 +61,15 @@
             text: 'Dose Num',
             align: 'start',
             sortable: false,
-            value: 'doseNum',
+            value: 'doseNumber',
           },
-			{ text: 'Trade Name', value: 'tradeName' },
-			{ text: 'Dose Qty.', value: 'doseQty' },
-			{ text: 'Time Administered', value: 'timeAdministered' },
+			{ text: 'Trade Name', value: 'manufacturer' },
+			{ text: 'Dose Qty.', value: 'doseQuantity' },
+			{ text: 'Time Administered', value: 'occurrence' },
 			{ text: 'Days Since Last Vaccination', value: 'numDaysSinceLastVaccination' },
-			{ text: 'Practitioner', value: 'practitionerName' },
-			{ text: 'Adverse Effects', value: 'adverseEffects' },
+			{ text: 'Practitioner', value: 'performer' },
+			{ text: 'Adverse Effects', value: '' },
 			],
-		patientHistoryTable: this.immunizations,
       }
     },
   }

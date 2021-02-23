@@ -101,14 +101,13 @@ export default {
     return {};
   },
   mounted() {
-    var Immunization = brokerRequests.getImmunization(this.patientId).then((response) => {
+    brokerRequests.getImmunization(this.patientId).then((response) => {
       if(response.data){
-        this.onSuccess(response.data);
+        this.$store.dispatch("patientHistory", response.data);
       } else if (response.error){
         alert('Failed to load history\n${response.error}')
       }
     });
-    this.$store.dispatch("patientHistory", Immunization);
   }
 };
 </script>

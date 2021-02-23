@@ -16,6 +16,7 @@ export default new Vuex.Store({
         encounterResource: {},
         appointmentResource: {},
         immunizationResource: {},
+        patientHistory: [],
         practitionerResource: {
             id: "example",
             family: "White",
