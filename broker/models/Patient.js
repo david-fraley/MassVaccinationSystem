@@ -34,22 +34,27 @@ Patient {
 }
 */
 
-let genderEnums = {
+exports.genderEnums = {
   Male: "male",
   Female: "female",
   Other: "other",
   "Decline to answer": "unknown",
 };
 
-let addressUseEnums = {
+exports.addressUseEnums = {
   Home: "home",
   Temporary: "temp",
 };
 
-let phoneUseEnums = {
+exports.phoneUseEnums = {
   Home: "home",
   Mobile: "mobile",
   Work: "work",
+};
+
+exports.languageEnums = {
+  English: "English",
+  Spanish: "Spanish"
 };
 
 /**
@@ -93,11 +98,11 @@ exports.toFHIR = function (patient) {
     telecom: [
       // add later
     ],
-    gender: genderEnums[patient.gender],
+    gender: exports.genderEnums[patient.gender],
     birthDate: parseDate(patient.birthDate),
     address: [
       {
-        use: addressUseEnums[patient.address.use],
+        use: exports.addressUseEnums[patient.address.use],
         line: [patient.address.line],
         city: patient.address.city,
         state: patient.address.state,
@@ -132,7 +137,7 @@ exports.toFHIR = function (patient) {
           {
             system: "phone",
             value: patient.contact.phone.value,
-            use: phoneUseEnums[patient.contact.phone.use],
+            use: exports.phoneUseEnums[patient.contact.phone.use],
           },
         ],
       },
@@ -166,7 +171,7 @@ exports.toFHIR = function (patient) {
     resource.telecom.push({
       system: "phone",
       value: patient.phone[idx].value,
-      use: phoneUseEnums[patient.phone[idx].use],
+      use: exports.phoneUseEnums[patient.phone[idx].use],
       rank: `${idx}`,
     });
   }
