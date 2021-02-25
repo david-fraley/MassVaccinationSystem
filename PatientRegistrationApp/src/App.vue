@@ -54,7 +54,7 @@
               </v-stepper-header>
 
               <!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
-              <v-stepper-items>
+              <v-stepper-items class="mb-3">
                 <!-- Greeting Page -->
                 <v-stepper-content step="1">
                   <v-card flat>

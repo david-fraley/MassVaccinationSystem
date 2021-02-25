@@ -92,7 +92,7 @@ export default {
 	name: "GreetingPage",
 	data: () => ({
 		preferredLanguageOptions: ['English','Spanish'],
-		preferredLanguage: '',
+		preferredLanguage: 'English',
 		isSingleRegistration: false,
 		isHouseholdRegistration: false,
 		householdDefinition: customerSettings.householdDefinition,
