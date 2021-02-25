@@ -5,7 +5,6 @@ const Encounter = require("./Encounter");
 module.exports = (req, res) => {
   Appointment.checkIn(req)
     .then((appointment) => {
-      req.body.appointment = `Appointment/${appointment.id}`;
       req.body.Encounter = req.body;
       Encounter.create(req).then((encounter) => {
         res.json({

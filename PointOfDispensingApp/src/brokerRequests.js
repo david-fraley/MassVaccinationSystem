@@ -114,6 +114,7 @@ export default {
   // param data:
   // {
   //   status: String
+  //   appointment: AppointmentID
   //   patient: PatientID
   //   location : LocationID
   // }

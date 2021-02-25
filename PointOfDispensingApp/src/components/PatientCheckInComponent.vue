@@ -64,6 +64,9 @@ import brokerRequests from "../brokerRequests";
 export default {
   name: "PatientCheckInComponent",
   computed: {
+    appointmentId() {
+      return this.$store.state.appointmentResource.id;
+    },
     patientId() {
       return this.$store.state.patientResource.id;
     },
@@ -91,6 +94,7 @@ export default {
     checkIn() {
       let data = {
         status: "arrived",
+        appointment: `Appointment/${this.appointmentId}`,
         patient: `Patient/${this.patientId}`,
         location: `Location/${this.locationId}`
       }
@@ -99,7 +103,8 @@ export default {
         if (response.data) {
           this.onSuccess(response.data);
         } else if (response.error) {
-          alert(`Patient not checked-in\n${response.error}`);
+          console.log(response.error);
+          alert(`Patient not checked-in`);
         }
       });
     },

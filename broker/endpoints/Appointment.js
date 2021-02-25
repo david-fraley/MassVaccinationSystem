@@ -42,29 +42,9 @@ exports.create = (req, res) => {
 // Update status.
 exports.checkIn = async (req) => {
   const status = "arrived";
-  let id, patch;
+  let endpoint, patch;
 
-  // get id of resource to update
-  if (req.body.hasOwnProperty("patient")) {
-    let config = {
-      params: {
-        actor: req.body.patient,
-        status: "booked",
-      },
-    };
-    id = await axios.get("/Appointment", config).then((response) => {
-      let bundle = response.data;
-      let resource;
-
-      if (!bundle.hasOwnProperty("entry")) {
-        console.log("Appointment does not exist");
-      }
-      resource = bundle.entry[0].resource;
-      return resource.id;
-    });
-  } else {
-    return {};
-  }
+  if (req.body.hasOwnProperty("appointment")) endpoint = req.body.appointment;
 
   // patch status and start time
   patch = [
@@ -76,7 +56,7 @@ exports.checkIn = async (req) => {
   ];
 
   // update the database with new appointment
-  return axios.patch(`/Appointment/${id}`, patch).then((response) => {
+  return axios.patch(endpoint, patch).then((response) => {
     return Appointment.toModel(response.data);
   });
 };
