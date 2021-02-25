@@ -138,6 +138,7 @@ export default new Vuex.Store({
             state.patientHistory = payload.Immunization;
             state.encounterResource = payload.Encounter;
             state.appointmentResource = payload.Appointment;
+            console.log(payload);
 
         },
         patientAdmitted(state, payload) {

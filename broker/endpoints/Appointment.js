@@ -5,11 +5,12 @@ exports.read = (req, res) => {
   axios
     .get(`${req.url}`)
     .then((response) => {
-      let r;
+      let r = [];
       if (response.data.resourceType === "Bundle") {
-        r = response.data.entry.map((entry) =>
-          Appointment.toModel(entry.resource)
-        );
+        if (response.data.entry)
+          r = response.data.entry.map((entry) =>
+            Appointment.toModel(entry.resource)
+          );
       } else {
         r = Appointment.toModel(response.data);
       }
