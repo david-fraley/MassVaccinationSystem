@@ -141,7 +141,11 @@ export default {
     },
     patientAge() {
       let currentDate = new Date();
+
       let dateOfBirthString = this.$store.state.patientResource.birthDate;
+
+      if((dateOfBirthString == "") || (!dateOfBirthString))
+        return " ";
 
       let dobYear = dateOfBirthString.substring(6,10);
       let ageYears = currentDate.getFullYear() - dobYear;

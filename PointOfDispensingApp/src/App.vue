@@ -84,7 +84,7 @@
               <v-list-item-title class="font-weight-medium">Adverse Reaction</v-list-item-title>
             </v-list-item-content>
           </v-list-item-->
-          <!-- Configuration -->
+          <!-- SAVE FOR FUTURE:  Configuration>
           <v-list-item :disabled="isConfigurationPageDisabled" router :to="'/Configuration'">
             <v-list-item-action>
               <v-icon large>mdi-cog</v-icon>
@@ -92,7 +92,7 @@
             <v-list-item-content>
               <v-list-item-title class="font-weight-medium">Configuration</v-list-item-title>
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item-->
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
