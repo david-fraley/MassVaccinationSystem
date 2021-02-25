@@ -24,7 +24,8 @@ module.exports = {
   "Encounter": {
     "status" : "finished",
     "class" : "FLD",
-    "subject" : "Patient/example",
+    "patient" : "Patient/example",
+    "appointment" : "Appointment/example",
     "location" : "Location/example",
     "serviceProvider" : "Organization/example"
   }
@@ -277,25 +278,6 @@ module.exports = {
     },
     "qualificationCode": "CER"
   }
-}`,
-
-  CheckInEncounter: `{
-  "resourceType": "Encounter",
-  "id": "example",
-  "status": "planned",
-  "class": {
-    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-    "code": "FLD",
-    "display": "FLD"
-  },
-  "appointment": [ {
-    "reference": "Appointment/example"
-  } ],
-  "subject": {
-    "reference": "Patient/example"
-  },
-  "location": [{ "location": { "reference": "Location/example" } }],
-  "serviceProvider": { "reference": "Organization/example" }
 }`,
 
   CheckInAppointment: `{

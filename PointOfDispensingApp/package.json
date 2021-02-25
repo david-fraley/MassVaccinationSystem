@@ -31,6 +31,9 @@
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.3.0"
   },
+  "resolution": {
+    "highlight.js": "^10.4.1"
+  },
   "eslintConfig": {
     "root": true,
     "env": {

@@ -2,18 +2,14 @@ const globals = require("./globals");
 
 /**
  * Setup for check-in test.
- * Creates Appointment and Encounter resources to update.
+ * Creates Appointment resource.
  */
 async function setup() {
   let setupAppointment = globals.fhirServer.put(
     "/Appointment/example",
     JSON.parse(globals.examples.CheckInAppointment)
   );
-  let setupEncounter = globals.fhirServer.put(
-    "/Encounter/example",
-    JSON.parse(globals.examples.CheckInEncounter)
-  );
-  await Promise.all([setupAppointment, setupEncounter]).catch((error) => {
+  await Promise.all([setupAppointment]).catch((error) => {
     console.log("Check-in setup failed");
     globals.info(error);
   });
@@ -49,7 +45,11 @@ async function discharge(appointment, encounter) {
  */
 async function checkIn() {
   return await globals.broker
-    .post("/check-in", {}, { params: { patient: "example" } })
+    .post("/check-in", {
+      status: "arrived",
+      patient: "Patient/example",
+      location: "Location/example"
+    })
     .then((response) => {
       globals.config(response);
       console.log(JSON.stringify(response.data));

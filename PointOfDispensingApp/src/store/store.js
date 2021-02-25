@@ -51,8 +51,12 @@ export default new Vuex.Store({
             return state.activeWorkflowState
         },
         isCheckInPageDisabled: state => {
-            //Check-In page is not accessible before the patient record has been loaded or after the patient has been discharged
-            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED'))
+            //Check-In page is not accessible before the patient record has been loaded
+            return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
+        },
+        isCheckInPageReadOnly: state => {
+            //Check-In page is "read only" unless the patient record has just been retrieved or the patient has been previously discharged
+            return !((state.activeWorkflowState == 'RECORD_RETRIEVED') || (state.activeWorkflowState == 'DISCHARGED'))
         },
         isPatientHistoryPageDisabled: state => {
             //Patient History page is not accessible before the patient record has been loaded 
@@ -62,6 +66,10 @@ export default new Vuex.Store({
             //Vaccination Event page is not accessible before the patient has been checked 
             return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
         },
+        isVaccinationEventPageReadOnly: state => {
+            //Vaccination Event page is "read only" after the patient has been discharged
+            return (state.activeWorkflowState == 'DISCHARGED')
+        },
         isAdverseReactionPageDisabled: state => {
             //The Adverse Reaction page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
             return (state.activeWorkflowState != 'DISCHARGED')
@@ -69,6 +77,10 @@ export default new Vuex.Store({
         isConsentScreeningPageDisabled: state => {
             //Consent and Screening page is not accessible before the patient record has been loaded 
             return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
+        },
+        isConsentScreeningPageReadOnly: state => {
+            //Consent and Screening page is "read only" after the patient has been discharged
+            return (state.activeWorkflowState == 'DISCHARGED')
         },
         isDischargePageDisabled: state => {
             //The Discharge page is only accessible after the vaccine has been administered (at which point, the patient is discharged)
@@ -79,48 +91,69 @@ export default new Vuex.Store({
             //(in other words, a user cannot go to the Configuration page while a patient record is actively in use)
             return ((state.activeWorkflowState != 'NO_PATIENT_LOADED') && (state.activeWorkflowState != 'DISCHARGED'))
         },
+        hasPatientBeenCheckedIn: state => {
+            return (state.encounterResource.status == 'arrived')
+        }
     },
 
     mutations: {
-        patientRecordRetrieved(state, patientResourcePayload) {
-            state.patientResource = patientResourcePayload;
-            console.log('patient record retrieved')
-            console.log(state.activeWorkflowState)
+        resetPatientData(state) {
+            //reset patient-specific data
+            state.encounterResource = {};
+            state.appointmentResource = {};
+            state.immunizationResource.lotNumber = '',
+            state.immunizationResource.expirationDate = '',
+            state.immunizationResource.manufacturer = '',
+            state.immunizationResource.doseQuantity = '',
+            state.immunizationResource.doseNumber = '',
+            state.immunizationResource.immunizationStatus = '',
+            state.immunizationResource.immunizationTimeStamp = '',
+            state.immunizationResource.healthcarePractitioner = 'White, Betty',
+            state.immunizationResource.site = '',
+            state.immunizationResource.route = 'Injection',
+            state.immunizationResource.note = '',
+            state.immunizationResource.notAdministeredReason = ''
+            state.screeningResponses.vaccinationDecision = '',
+            state.screeningResponses.screeningQ1 = '',
+            state.screeningResponses.screeningQ2 = '',
+            state.screeningResponses.screeningQ2b = '',
+            state.screeningResponses.screeningQ3a = '',
+            state.screeningResponses.screeningQ3b = '',
+            state.screeningResponses.screeningQ3c = '',
+            state.screeningResponses.screeningQ4 = '',
+            state.screeningResponses.screeningQ5 = '',
+            state.screeningResponses.screeningQ6 = '',
+            state.screeningResponses.screeningQ7 = '',
+            state.screeningResponses.screeningQ8 = '',
+            state.screeningResponses.screeningComplete = false
+        },
+        patientRecordRetrieved(state, payload) {
+            state.patientResource = payload.Patient;
+            if(state.patientHistory) {
+                state.patientHistory = payload.Immunization;
+                //TO DO:  We will also need to retrieve and populate the immunizationResource
+            } 
+            if(payload.Encounter) {
+                state.encounterResource = payload.Encounter;
+            }
+            if(payload.Appointment) {
+                state.appointmentResource = payload.Appointment;
+            }
             
-            //TO DO:  retrieve encounter resource, immunization resource, and appointment resource 'status' fields to determine the workflow state
-            if((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'DISCHARGED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
-            {
+            //Retrieve encounter resource 'status' field to determine the workflow state
+            if(state.encounterResource.status) {
+                if (state.encounterResource.status == 'arrived') {
+                    state.activeWorkflowState = 'ADMITTED'
+                }
+                else if (state.encounterResource.status == 'finished') {
+                    state.activeWorkflowState = 'DISCHARGED'
+                }
+                else {
+                    console.log(state.encounterResource.status)
+                }
+            }
+            else {
                 state.activeWorkflowState = 'RECORD_RETRIEVED'
-
-                //reset patient-specific data
-                state.encounterResource = {};
-                state.appointmentResource = {};
-                state.immunizationResource.lotNumber = '',
-                state.immunizationResource.expirationDate = '',
-                state.immunizationResource.manufacturer = '',
-                state.immunizationResource.doseQuantity = '',
-                state.immunizationResource.doseNumber = '',
-                state.immunizationResource.immunizationStatus = '',
-                state.immunizationResource.immunizationTimeStamp = '',
-                state.immunizationResource.healthcarePractitioner = 'White, Betty',
-                state.immunizationResource.site = '',
-                state.immunizationResource.route = 'Injection',
-                state.immunizationResource.notes = '',
-                state.immunizationResource.notAdministeredReason = ''
-                state.screeningResponses.vaccinationDecision = '',
-                console.log('Reset screening question responses')
-                state.screeningResponses.screeningQ1 = '',
-                state.screeningResponses.screeningQ2 = '',
-                state.screeningResponses.screeningQ2b = '',
-                state.screeningResponses.screeningQ3a = '',
-                state.screeningResponses.screeningQ3b = '',
-                state.screeningResponses.screeningQ3c = '',
-                state.screeningResponses.screeningQ4 = '',
-                state.screeningResponses.screeningQ5 = '',
-                state.screeningResponses.screeningQ6 = '',
-                state.screeningResponses.screeningQ7 = '',
-                state.screeningResponses.screeningQ8 = '',
-                state.screeningResponses.screeningComplete = false
             }
         },
         patientAdmitted(state, payload) {
@@ -142,17 +175,6 @@ export default new Vuex.Store({
             state.screeningResponses.screeningQ7 = screeningResponsesPayload.screeningQ7
             state.screeningResponses.screeningQ8 = screeningResponsesPayload.screeningQ8
             state.screeningResponses.screeningComplete = screeningResponsesPayload.screeningComplete
-            console.log(state.screeningResponses.screeningQ1)
-            console.log(state.screeningResponses.screeningQ2)
-            console.log(state.screeningResponses.screeningQ2b)
-            console.log(state.screeningResponses.screeningQ3a)
-            console.log(state.screeningResponses.screeningQ3b)
-            console.log(state.screeningResponses.screeningQ3c)
-            console.log(state.screeningResponses.screeningQ4)
-            console.log(state.screeningResponses.screeningQ5)
-            console.log(state.screeningResponses.screeningQ6)
-            console.log(state.screeningResponses.screeningQ7)
-            console.log(state.screeningResponses.screeningQ8)
         },
         vaccinationComplete(state, vaccinationCompletePlayload) {
             state.activeWorkflowState = 'VACCINATION_COMPLETE'
@@ -173,12 +195,12 @@ export default new Vuex.Store({
         patientHistory(state, payload){
             state.patientHistory = payload;
         }
-
     },
 
     actions: {
-        patientRecordRetrieved(context, patientResourcePayload) {
-            context.commit('patientRecordRetrieved', patientResourcePayload)
+        patientRecordRetrieved(context, payload) {
+            context.commit('resetPatientData')
+            context.commit('patientRecordRetrieved', payload)
         },
         patientAdmitted(context, payload) {
             context.commit('patientAdmitted', payload)

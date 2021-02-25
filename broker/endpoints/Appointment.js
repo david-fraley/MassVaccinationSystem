@@ -5,7 +5,15 @@ exports.read = (req, res) => {
   axios
     .get(`${req.url}`)
     .then((response) => {
-      res.json(response.data);
+      let r;
+      if (response.data.resourceType === "Bundle") {
+        r = response.data.entry.map((entry) =>
+          Appointment.toModel(entry.resource)
+        );
+      } else {
+        r = Appointment.toModel(response.data);
+      }
+      res.json(r);
     })
     .catch((e) => {
       res.status(400).json({
@@ -30,16 +38,16 @@ exports.create = (req, res) => {
     });
 };
 
-// Update status and time.
+// Update status.
 exports.checkIn = async (req) => {
   const status = "arrived";
   let id, patch;
 
   // get id of resource to update
-  if (req.query.hasOwnProperty("patient")) {
+  if (req.body.hasOwnProperty("patient")) {
     let config = {
       params: {
-        actor: req.query.patient,
+        actor: req.body.patient,
         status: "booked",
       },
     };
@@ -53,8 +61,6 @@ exports.checkIn = async (req) => {
       resource = bundle.entry[0].resource;
       return resource.id;
     });
-  } else if (req.query.hasOwnProperty("appointment")) {
-    id = req.query.appointment;
   } else {
     return {};
   }

@@ -72,6 +72,21 @@
             ></v-text-field>
           </v-col>
           <v-col cols="2">
+            <div class="font-weight-medium secondary--text">Age</div>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field
+              filled
+              dense
+              readonly
+              outlined
+              :value="patientAge"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="2">
             <div class="font-weight-medium secondary--text">
               Preferred Language
             </div>
@@ -84,9 +99,6 @@
               outlined
               :value="patientPreferredLanguage"
             ></v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <!--empty columns-->
           </v-col>
           <v-col cols="2">
             <div class="font-weight-medium secondary--text">Address</div>
@@ -126,6 +138,31 @@ export default {
     },
     patientDateOfBirth() {
       return this.$store.state.patientResource.birthDate;
+    },
+    patientAge() {
+      let currentDate = new Date();
+
+      let dateOfBirthString = this.$store.state.patientResource.birthDate;
+
+      if((dateOfBirthString == "") || (!dateOfBirthString))
+        return " ";
+
+      let dobYear = dateOfBirthString.substring(6,10);
+      let ageYears = currentDate.getFullYear() - dobYear;
+
+      let dobMonth = dateOfBirthString.substring(0,2);
+      let currentMonth = currentDate.getMonth() + 1;
+      let ageMonths;
+      if(currentMonth >= dobMonth) {
+        ageMonths = currentMonth - dobMonth
+      }
+      else {
+        ageYears--;
+        ageMonths = 12 + currentMonth - dobMonth;
+      }
+      
+      let ageString = ageYears + " yr(s). " + ageMonths + " mo(s).";
+      return ageString;
     },
     patientGender() {
       return this.$store.state.patientResource.gender;

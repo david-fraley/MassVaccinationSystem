@@ -53,77 +53,76 @@
     </v-row>
 
     <v-form ref="form" v-model="valid">
-      <v-row>
-        <v-col cols="5">
-          <v-row no-gutters>
-            <v-col cols="4">
-              <div class="secondary--text">Last Name</div>
-            </v-col>
-            <v-col cols="8">
-              <v-text-field
-                outlined
-                dense
-                v-model="lastName"
-                required
-                :rules="[(v) => !!v || 'Last Name is required']"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <div class="secondary--text">Date of Birth</div>
-            </v-col>
-            <v-col cols="8">
-            <!-- Date of Birth -->
-            <v-menu
-              attach
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  outlined dense 
-                  v-model="dateFormatted"
-                  :rules="birthdateRules"
-                  placeholder="MM/DD/YYYY"
-                  v-mask="'##/##/####'"
-                  prepend-icon="mdi-calendar"
-                  @click:prepend="on.click"
-                  @blur="date = parseDate(dateFormatted)"
-                >
-                </v-text-field>
-              </template>
-              <v-date-picker
-                reactive
-                v-model="date"
-              ></v-date-picker>
-            </v-menu>
-          </v-col>
-          </v-row>
+      <v-row no-gutters>
+        <v-col cols="2">
+          <div class="secondary--text">Last Name</div>
         </v-col>
-        <!--blank column for spacing-->
-        <v-col cols="1"> </v-col>
-        <v-col cols="5">
-          <v-row no-gutters>
-            <v-col cols="4">
-              <div class="secondary--text">First Name</div>
-            </v-col>
-            <v-col cols="8">
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            v-model="lastName"
+            required
+            :rules="[(v) => !!v || 'Last Name is required']"
+          ></v-text-field>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="2">
+          <div class="secondary--text">First Name</div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            v-model="firstName"
+            required
+            :rules="[(v) => !!v || 'First Name is required']"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col cols="2">
+          <div class="secondary--text">Date of Birth</div>
+        </v-col>
+        <v-col cols="3">
+        <!-- Date of Birth -->
+          <v-menu
+            attach
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
               <v-text-field
-                outlined
-                dense
-                v-model="firstName"
-                required
-                :rules="[(v) => !!v || 'First Name is required']"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="4">
-              <div class="secondary--text">Zip Code</div>
-            </v-col>
-            <v-col cols="8">
-              <v-text-field outlined dense v-model="postalCode"></v-text-field>
-            </v-col>
-          </v-row>
+                outlined dense 
+                v-model="dateFormatted"
+                :rules="birthdateRules"
+                placeholder="MM/DD/YYYY"
+                v-mask="'##/##/####'"
+                prepend-icon="mdi-calendar"
+                @click:prepend="on.click"
+                @blur="date = parseDate(dateFormatted)"
+              >
+              </v-text-field>
+            </template>
+            <v-date-picker
+              reactive
+              v-model="date"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="2">
+          <div class="secondary--text">Zip Code (optional)</div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field 
+            outlined 
+            dense 
+            :rules="postalCodeRules"
+            v-model="postalCode">
+          </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -207,25 +206,26 @@ export default {
         console.error(error)
       }
     },
-      onDecode (result) {
-        this.result = result
+    onDecode (result) {
+      this.result = result
 
-        //Interim solution:  extract screening responses from QR code (part 1 of 2)
-        var res = this.result.split("|");
-        //end of interim solution (part 1 of 2)
+      //Interim solution:  extract screening responses from QR code (part 1 of 2)
+      var res = this.result.split("|");
+      //end of interim solution (part 1 of 2)
 
-        //the following line of code may need to be updated after removing/changing the interim solution"
-        let qrValue = res[0];
-        let data = { id: qrValue };
-        brokerRequests.getPatient(data).then((response) => {
-          if (response.data) {
-            this.patient = response.data;
-            this.patientRecordRetrieved();
-          } else if (response.error) {
-            alert("Patient not found");
-          }
-        });
-      },
+      //the following line of code may need to be updated after removing/changing the interim solution"
+      let qrValue = res[0];
+
+      // result should be null if we didn't get a qrCode
+      brokerRequests.getPatientFromQrCode(qrValue).then((response) => {
+        if (response.patient) {
+          this.patient = response.patient;
+          this.patientRecordRetrieved();
+        } else if (response.error) {
+          alert("Patient not found");
+        }
+      });
+    },
     searchPatient() {
       // validate form
       this.$refs.form.validate();
@@ -241,10 +241,18 @@ export default {
         postalCode: this.postalCode,
       };
       brokerRequests.searchPatient(data).then((response) => {
-        if (response.data) {
-          this.patientLookupTable = response.data;
-        } else if (response.error) {
-          alert("No patients found");
+        if (response.patients) {
+          this.patientLookupTable = response.patients;
+        }
+
+        // Accomodate form validation errors
+        else if(typeof(response.error) === 'string') {
+          alert(response.error.error);
+        }
+
+        // Accomodate FHIR errors
+        else {
+          alert('No patients found');
         }
         this.loading = false;
       });
@@ -263,35 +271,91 @@ export default {
         alert("Select a patient");
       }
     },
-    patientRecordRetrieved() {
-      //send data to Vuex
-      this.$store.dispatch("patientRecordRetrieved", this.patient);
-      //Advance to the Check In page
-      this.$router.push("CheckIn");
+    async getPayload() {
+      let payload = { Patient: this.patient };
 
-      //Interim solution:  extract screening responses from QR code (part 2 of 2)
-      var res = this.result.split("|");
-      if(res.length > 1)
-      {
-        const screeningResponsesPayload = {
-        vaccinationDecision: '',
-        screeningQ1: res[1],
-        screeningQ2: res[2],
-        screeningQ2b: res[3],
-        screeningQ3a: res[4],
-        screeningQ3b: res[5],
-        screeningQ3c: res[6],
-        screeningQ4: res[7],
-        screeningQ5: res[8],
-        screeningQ6: res[9],
-        screeningQ7: res[10],
-        screeningQ8: res[11],
-        screeningComplete: 'true'
+      // Get Appointment, Encounter, Immunization
+      let immunizationPromise = brokerRequests
+        .getImmunization(this.patient.id)
+        .then((response) => {
+          if (response.data) {
+            payload.Immunization = response.data;
+          } else if (response.error) {
+            console.log(response.error);
+            console.log("Failed to load history");
+          }
+        });
+
+      let encounterPromise = brokerRequests
+        .getEncounter(this.patient.id)
+        .then((response) => {
+          if (response.data) {
+            payload.Encounter = response.data;
+          } else if (response.error) {
+            console.log(response.error);
+            console.log("Failed to get Encounter");
+          }
+        });
+
+      let appointmentPromise = brokerRequests
+        .getAppointment(this.patient.id)
+        .then((response) => {
+          if (response.data) {
+            payload.Appointment = response.data;
+          } else if (response.error) {
+            console.log(response.error);
+            alert("Failed to get Appointment");
+          }
+        });
+
+      await Promise.all([immunizationPromise, encounterPromise, appointmentPromise]).catch(
+        (error) => {
+          console.log(error);
+          console.log("PatientLookupPage patientRecordRetrieved error");
         }
+      );
+
+      return payload;
+    },
+    patientRecordRetrieved() {
+      this.getPayload().then((payload) => {
         //send data to Vuex
-        this.$store.dispatch('vaccinationScreeningUpdate', screeningResponsesPayload)
-      }
-      //end of interim solution (part 2 of 2)
+        this.$store.dispatch("patientRecordRetrieved", payload);
+
+        //Interim solution:  extract screening responses from QR code (part 2 of 2)
+        var res = this.result.split("|");
+        if(res.length > 1)
+        {
+          const screeningResponsesPayload = {
+          vaccinationDecision: '',
+          screeningQ1: res[1],
+          screeningQ2: res[2],
+          screeningQ2b: res[3],
+          screeningQ3a: res[4],
+          screeningQ3b: res[5],
+          screeningQ3c: res[6],
+          screeningQ4: res[7],
+          screeningQ5: res[8],
+          screeningQ6: res[9],
+          screeningQ7: res[10],
+          screeningQ8: res[11],
+          screeningComplete: 'true'
+          }
+          //send data to Vuex
+          this.$store.dispatch('vaccinationScreeningUpdate', screeningResponsesPayload)
+        }
+        //end of interim solution (part 2 of 2)
+
+        
+        if(this.$store.getters.hasPatientBeenCheckedIn) {
+          //Advance to the Consent and Screening page
+          this.$router.push("ConsentScreening");
+        }
+        else {
+          //Advance to the Check In page
+          this.$router.push("CheckIn");
+        }
+      });
     },
     formatDate (date) {
       if (!date) return null
@@ -328,8 +392,13 @@ export default {
       birthdateRules: [
         (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
       ],
+      postalCodeRules: [
+				(v) =>
+				!v || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) || 
+				"Zip code format must be ##### or #####-####",
+      ],
       date: new Date().toISOString().substr(0, 10),
-      dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
+      dateFormatted: "",
       headers: [
         {
           text: "Last Name",
