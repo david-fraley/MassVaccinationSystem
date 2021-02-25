@@ -117,12 +117,7 @@
         <!-- the "rules" checks that the image size is less than 2 MB -->
         <v-file-input
           accept="image/png, image/jpeg, image/bmp"
-          :rules="[
-            (v) =>
-              (v ? v.size : 0) < 2097152 ||
-              'Image size should be less than 2 MB!',
-          ]"
-          placeholder="Upload a recent photo"
+          :rules="[rules.photoSize]"
           v-model="patientPhoto"
           label="Photo"
           prepend-icon="mdi-camera"
@@ -133,10 +128,12 @@
 </template>
 <script>
 import EventBus from "../eventBus";
+import Rules from "@/utils/commonFormValidation"
 
 export default {
   data() {
     return {
+      rules: Rules,
       suffixOptions: ["II", "III", "IV", "Jr", "Sr"],
       genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
       raceOptions: [
