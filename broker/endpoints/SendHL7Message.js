@@ -8,13 +8,13 @@ const configs = require("../config/server.js");
 const axios = require("axios").default;
 
 module.exports = function (req, res) {
-    let immId = req.query.immunization;
+    const immId = req.query.immunization;
     if (process.env.DEVELOPMENT == 1) {
         console.log("Immunization ID: " + immId);
     }
 
     return axios.get(`${configs.fhirUrlBase}/Immunization?_id=${immId}&_include=Immunization:patient`).then((response) => {
-        let mirthBundle = response.data;
+        const mirthBundle = response.data;
 
         if (process.env.DEVELOPMENT == 1) {
             console.log(response);

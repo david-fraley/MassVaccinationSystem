@@ -7,16 +7,16 @@ EpisodeOfCare {
 */
 
 exports.toFHIR = function (eoc) {
-  let resource = {
-    resourceType: "EpisodeOfCare",
-    status: eoc.status,
-    patient: {
-      reference: eoc.patient,
-    },
-    managingOrganization: {
-      reference: eoc.managingOrganization,
-    },
-  };
+    const resource = {
+        resourceType: "EpisodeOfCare",
+        status: eoc.status,
+        patient: {
+            reference: eoc.patient
+        },
+        managingOrganization: {
+            reference: eoc.managingOrganization
+        }
+    };
   
-  return resource;
+    return resource;
 }

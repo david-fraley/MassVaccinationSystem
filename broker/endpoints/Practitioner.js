@@ -15,8 +15,8 @@ exports.read = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  let prt = req.body.Practitioner;
-  let resource = Practitioner.toFHIR(prt);
+  const prt = req.body.Practitioner;
+  const resource = Practitioner.toFHIR(prt);
 
   axios
     .post(`/Practitioner`, resource)

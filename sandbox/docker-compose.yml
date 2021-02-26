@@ -13,25 +13,6 @@ services:
         networks:
             - front_tier
 
-    # Database service for broker
-    #
-    broker-db:
-        build: ../broker_db
-        environment:
-            # Variables read from local .env file
-            - POSTGRES_DB=${BROKER_DB_NAME}
-            - POSTGRES_USER=${BROKER_DB_USERNAME}
-            - POSTGRES_PASSWORD=${BROKER_DB_PASSWORD}
-        volumes:
-            #- broker_db_config:/etc/postgresql
-            #- broker_db_logs:/var/log/postgresql
-            - broker_db_data:/var/lib/postgresql/data
-        #ports:
-            # Should not be exposed to host
-            #- "5432"
-        networks:
-            - back_tier
-    
     # NextGen Connect Integration Engine (formerly Mirth Connect)
     #
     mirth:
@@ -46,19 +27,11 @@ services:
     #
     broker:
         build: ../broker
-        environment:
-            # Variables read from local .env file
-            - BROKER_DB_NAME=massvaxx
-            - BROKER_DB_DIALECT=postgres
-            - BROKER_DB_HOST=broker-db
-            - BROKER_DB_PORT=5432
-            - BROKER_DB_USERNAME=${BROKER_DB_USERNAME}
-            - BROKER_DB_PASSWORD=${BROKER_DB_PASSWORD}
         #ports:
             # Should not be exposed to host
             #- "3000"
         depends_on:
-            - broker-db
+            - hapi
             - mirth
         networks:
             - front_tier
@@ -130,8 +103,5 @@ networks:
 # Volumes for data that must be preserved if containers stop/re-start.
 #
 volumes:
-    #broker_db_config:
-    #broker_db_logs:
-    broker_db_data:
     hapi_data:
     hapi_db_data:

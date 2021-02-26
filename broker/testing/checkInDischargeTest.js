@@ -5,9 +5,9 @@ const globals = require("./globals");
  * Creates Appointment resource.
  */
 async function setup() {
-  let setupAppointment = globals.fhirServer.put(
-    "/Appointment/example",
-    JSON.parse(globals.examples.CheckInAppointment)
+  const setupAppointment = globals.fhirServer.put(
+      "/Appointment/example",
+      JSON.parse(globals.examples.CheckInAppointment)
   );
   await Promise.all([setupAppointment]).catch((error) => {
     console.log("Check-in setup failed");
@@ -55,8 +55,8 @@ async function checkIn() {
       console.log(JSON.stringify(response.data));
       console.log("\n");
 
-      let appointment = response.data.Appointment.id;
-      let encounter = response.data.Encounter.id;
+      const appointment = response.data.Appointment.id;
+      const encounter = response.data.Encounter.id;
       return { appointment: appointment, encounter: encounter };
     })
     .catch((error) => globals.info(error));
@@ -66,9 +66,9 @@ async function checkIn() {
  * Check-in and then discharge.
  */
 async function test() {
-  let response = await checkIn();
+    const response = await checkIn();
 
-  await discharge(response.appointment, response.encounter);
+    await discharge(response.appointment, response.encounter);
 }
 
 module.exports = async () => {
