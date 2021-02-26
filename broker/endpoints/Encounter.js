@@ -5,7 +5,15 @@ exports.read = (req, res) => {
   axios
     .get(`${req.url}`)
     .then((response) => {
-      res.json(response.data);
+      let r;
+      if (response.data.resourceType === "Bundle") {
+        r = response.data.entry.map((entry) =>
+          Encounter.toModel(entry.resource)
+        );
+      } else {
+        r = Encounter.toModel(response.data);
+      }
+      res.json(r);
     })
     .catch((e) => {
       res.status(400).json({

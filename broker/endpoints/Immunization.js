@@ -1,12 +1,19 @@
 const axios = require("../services/axiosInstance.js");
-const ImmunizationCompleted = require("../models/ImmunizationCompleted");
-const ImmunizationNotDone = require("../models/ImmunizationNotDone");
+const Immunization = require("../models/Immunization");
 
 exports.read = (req, res) => {
   axios
     .get(`${req.url}`)
     .then((response) => {
-      res.json(response.data);
+      let r;
+      if (response.data.resourceType === "Bundle") {
+        r = response.data.entry.map((entry) =>
+          Immunization.toModel(entry.resource)
+        );
+      } else {
+        r = Immunization.toModel(response.data);
+      }
+      res.json(r);
     })
     .catch((e) => {
       res.status(400).json({
@@ -32,12 +39,7 @@ exports.create = (req, res) => {
 };
 
 async function postImmunization(imm) {
-  let immunization;
-  if (imm.status === "completed") immunization = ImmunizationCompleted;
-  else if (imm.status === "not-done") immunization = ImmunizationNotDone;
-  else throw "Invalid immunization type";
-
-  const resource = immunization.toFHIR(imm);
+  const resource = Immunization.toFHIR(imm);
 
   return axios.post(`/Immunization`, resource).then((response) => {
     return immunization.toModel(response.data);
