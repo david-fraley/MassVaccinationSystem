@@ -164,7 +164,7 @@ async function createPatients(req, res) {
 			  return qrCodes;
 		  }, [])
 	  };
-	  response.Patient.push(head.qr_code);
+	  response.Patient.unshift(head.qr_code);
 	  res.json(response);
     })
     .catch((e) => res.status(400).json(e));
