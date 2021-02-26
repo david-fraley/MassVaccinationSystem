@@ -28,18 +28,18 @@ async function setup() {
     "Observation",
     "Organization",
     "Patient",
-    "Practitioner",
+    "Practitioner"
   ];
 
-  let id = "example";
-  let promises = [];
+  const id = "example";
+  const promises = [];
 
   let resource;
   for (resource of resources) {
     let data = { resourceType: resource, id: id };
     if (resource === "Patient") data = globals.examples.ExamplePatient;
 
-    let promise = globals.fhirServer.put(`/${resource}/${id}`, data);
+    const promise = globals.fhirServer.put(`/${resource}/${id}`, data);
     promises.push(promise);
   }
 

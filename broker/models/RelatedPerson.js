@@ -18,28 +18,28 @@ let relationshipEnums = {
   Parent: "PRN",
   Grandparent: "GRPRN",
   Other: "O",
-  Self: "ONESELF",
+  Self: "ONESELF"
 };
 
 exports.toFHIR = function (related) {
   if (!related.relationship) related.relationship = "Self";
 
-  let resource = {
-    resourceType: "RelatedPerson",
-    patient: {
-      reference: related.patient,
-    },
-    relationship: [
-      {
-        coding: [
-          {
-            system: RELATIONSHIP_SYSTEM,
-            code: relationshipEnums[related.relationship],
-            display: related.relationship,
-          },
-        ],
+  const resource = {
+      resourceType: "RelatedPerson",
+      patient: {
+          reference: related.patient
       },
-    ],
+      relationship: [
+          {
+              coding: [
+                  {
+                      system: RELATIONSHIP_SYSTEM,
+                      code: relationshipEnums[related.relationship],
+                      display: related.relationship
+                  }
+              ]
+          }
+      ]
   };
 
   return resource;

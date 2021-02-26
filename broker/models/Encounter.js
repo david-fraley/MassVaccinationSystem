@@ -9,50 +9,53 @@ Encounter {
 */
 const CLASS_SYSTEM = "http://terminology.hl7.org/CodeSystem/v3-ActCode";
 exports.toFHIR = function (encounter) {
-  let resource = {
-    resourceType: "Encounter",
-    status: encounter.status,
-    class: {
-      system: CLASS_SYSTEM,
-      code: "FLD",
-      display: "FLD",
-    },
-    subject: {
-      reference: encounter.patient,
-    },
-    appointment: [
-      {
-        reference: encounter.appointment,
-      },
-    ],
-    period: { start: new Date().toISOString() },
-    location: [
-      {
-        location: {
-          reference: encounter.location,
+    const resource = {
+        resourceType: "Encounter",
+        status: encounter.status,
+        class: {
+            system: CLASS_SYSTEM,
+            code: "FLD",
+            display: "FLD"
         },
-      },
-    ],
-    serviceProvider: {
-      reference: encounter.serviceProvider,
-    },
-  };
+        appointment: [
+            {
+                reference: encounter.appointment
+            }
+        ],
+        period: { start: new Date().toISOString() },
+        location: [
+            {
+                location: {
+                    reference: encounter.location
+                }
+            }
+        ],
+        subject: {
+            reference: encounter.patient
+        },
+        serviceProvider: {
+            reference: encounter.serviceProvider
+        }
+    };
 
-  return resource;
+    return resource;
 };
 
 exports.toModel = (encounter) => {
-  let model = {
-    resourceType: encounter.resourceType,
-    id: encounter.id,
-    status: encounter.status,
-    class: encounter.class.code,
-    patient: encounter.subject.reference,
-    appointment: encounter.appointment[0].reference,
-    location: encounter.location[0].location.reference,
-    start: encounter.period.start,
-    end: encounter.period.end,
-  };
+    const model = {
+        resourceType: encounter.resourceType,
+        id: encounter.id,
+        status: encounter.status
+    };
 
-  return model;
+    if (encounter.class != null) model.class = encounter.class.code;
+    if (encounter.subject != null) model.patient = encounter.subject.reference;
+    if (encounter.appointment != null && encounter.appointment[0] != null) model.appointment = encounter.appointment[0].reference;
+    if (encounter.location != null && encounter.location[0] != null && encounter.location[0].location != null) model.location = encounter.location[0].location.reference;
+    if (encounter.period != null) {
+        model.start = encounter.period.start;
+        model.end = encounter.period.end;
+    }
+
+    return model;
 };

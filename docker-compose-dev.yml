@@ -1,22 +1,6 @@
 version: '3'
 
 services:
-    # Database service for broker
-    #
-    broker-db:
-        build: ./broker_db
-        environment:
-            # Variables read from local .env file
-            - POSTGRES_DB=${BROKER_DB_NAME}
-            - POSTGRES_USER=${BROKER_DB_USERNAME}
-            - POSTGRES_PASSWORD=${BROKER_DB_PASSWORD}
-        volumes:
-            #- broker_db_config:/etc/postgresql
-            #- broker_db_logs:/var/log/postgresql
-            - broker_db_data:/var/lib/postgresql/data
-        ports:
-            - "5432:5432"
-
     # Database for HAPI FHIR service
     #
     hapi-db:
@@ -48,8 +32,5 @@ services:
 # Volumes for data that must be preserved if containers stop/re-start.
 #
 volumes:
-    #broker_db_config:
-    #broker_db_logs:
-    broker_db_data:
     hapi_data:
     hapi_db_data:
