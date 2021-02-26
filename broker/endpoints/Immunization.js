@@ -33,7 +33,7 @@ exports.create = (req, res) => {
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message,
+        error: e.response ? e.response.data : e.message
       });
     });
 };
