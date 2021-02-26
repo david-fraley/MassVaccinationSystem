@@ -31,7 +31,7 @@ exports.toFHIR = function (encounter) {
             }
         ],
         subject: {
-            reference: encounter.subject ?? encounter.patient
+            reference: encounter.patient
         },
         serviceProvider: {
             reference: encounter.serviceProvider
@@ -45,14 +45,17 @@ exports.toModel = (encounter) => {
     const model = {
         resourceType: encounter.resourceType,
         id: encounter.id,
-        status: encounter.status,
-        class: encounter.class.code,
-        subject: encounter.subject.reference,
-        appointment: encounter.appointment[0].reference,
-        location: encounter.location[0].location.reference,
-        start: encounter.period.start,
-        end: encounter.period.end
+        status: encounter.status
     };
+
+    if (encounter.class != null) model.class = encounter.class.code;
+    if (encounter.subject != null) model.patient = encounter.subject.reference;
+    if (encounter.appointment != null && encounter.appointment[0] != null) model.appointment = encounter.appointment[0].reference;
+    if (encounter.location != null && encounter.location[0] != null && encounter.location[0].location != null) model.location = encounter.location[0].location.reference;
+    if (encounter.period != null) {
+        model.start = encounter.period.start;
+        model.end = encounter.period.end;
+    }
 
     return model;
 };

@@ -59,7 +59,7 @@ async function cleanup() {
     
     if (url.includes("Patient")) {
       const patientIdRecord = await Patient.findByQrCode(url.split('/')[2]);
-      promise = globals.fhirServer.delete(`/Patient/${patientIdRecord.data.id}`);
+      promise = globals.fhirServer.delete(`/Patient/${patientIdRecord.id}`);
       try {
         await promise;
       }

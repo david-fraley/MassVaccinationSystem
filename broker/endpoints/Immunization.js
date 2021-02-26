@@ -42,6 +42,6 @@ async function postImmunization(imm) {
   const resource = Immunization.toFHIR(imm);
 
   return axios.post(`/Immunization`, resource).then((response) => {
-    return immunization.toModel(response.data);
+    return Immunization.toModel(response.data);
   });
 }

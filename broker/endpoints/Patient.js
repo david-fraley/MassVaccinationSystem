@@ -5,11 +5,7 @@ const {body, validationResult} = require('express-validator');
 const Appointment = require("../models/Appointment");
 const uuid = require('uuid');
 
-const prepend = "x";
-
-exports.prepend = prepend;
-
-exports.read = async(req, res) => {
+exports.read = async (req, res) => {
 
     if (!req.params.qrCode) {
         return res.status(400).json({
@@ -19,16 +15,16 @@ exports.read = async(req, res) => {
 
     try {
         const patientPayload = await findByQrCode(req.params.qrCode);
-        const patientRecord = Patient.toModel(patientPayload.data);
+        const patientRecord = Patient.toModel(patientPayload);
         return res.json(patientRecord);
     } catch (err) {
         res.status(err.status || 400).json({
-            error: err.response ? err.response.data : err.message,
+            error: err.response ? err.response.data : err.message
         });
     }
     return res.status(400).json({
-            error: "Patient could not be found."
-        });
+        error: "Patient could not be found."
+    });
 };
 
 async function findByQrCode(qrCode) {
@@ -59,7 +55,8 @@ async function findByQrCode(qrCode) {
         };
     }
 
-    return await axios.get(`/Patient/${patientId}`);
+    const patientPayload = await axios.get(`/Patient/${patientId}`);
+    return patientPayload.data;
 }
 
 exports.findByQrCode = findByQrCode;
@@ -190,8 +187,8 @@ async function createPatient(patient, head) {
   if (head == null) related = { resourceType: "RelatedPerson" };
   else
     related = {
-      patient: `Patient/${head}`,
-      relationship: patient.relationship,
+      patient: `Patient/${head.resourceId}`,
+      relationship: patient.relationship
     };
 
   // Create RelatedPerson resource
@@ -202,9 +199,9 @@ async function createPatient(patient, head) {
   
   resource = Patient.toFHIR(patient);
   
-  let patientID = {
-	  qr_code: uuid.v4()
-  }
+  const patientID = {
+      qr_code: uuid.v4()
+  };
 
   // Add QR Code UUID to Patient Identifier list
   if (!resource.hasOwnProperty("identifier")) resource.identifier = [];
