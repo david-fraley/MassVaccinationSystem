@@ -2,34 +2,11 @@
   <v-app id="Patient-registration">
     <v-main>
       <v-container fill-height fluid>
+        <Header />
         <v-layout justify-center align-center>
           <v-card flat height="101%" width="100%">
+            <!-- TODO: move stepper to new page, one for each flow? (or combine flows?) -->
             <v-stepper v-model="page" class="elevation-0">
-              <v-toolbar flat height="80em" color="primary" dark>
-                <!--font size for xs & sm screens-->
-                <div class="d-sm-none">
-                  <v-toolbar-title
-                    style="font-size:1.4rem"
-                    class="font-weight-bold text-wrap"
-                    >{{ title }}</v-toolbar-title
-                  >
-                </div>
-                <!--font size for screens larger than sm-->
-                <div class="d-none d-sm-block">
-                  <v-toolbar-title
-                    style="font-size:2rem"
-                    class="font-weight-bold text-wrap"
-                    >{{ title }}</v-toolbar-title
-                  >
-                </div>
-
-                <v-spacer></v-spacer>
-                <v-img
-                  max-height="5em"
-                  max-width="5em"
-                  src="./assets/Logo.png"
-                ></v-img>
-              </v-toolbar>
               <v-stepper-header class="elevation-0">
                 <template
                   v-if="
@@ -142,7 +119,9 @@
                     <v-card flat
                       ><SinglePatientReviewSubmit
                         ref="singlePatientReviewSubmit"
-                        @singlePatientRegistrationSuccess = "SinglePatientRegistrationSuccessful"
+                        @singlePatientRegistrationSuccess="
+                          SinglePatientRegistrationSuccessful
+                        "
                     /></v-card>
                   </v-stepper-content>
 
@@ -153,7 +132,9 @@
                         >Download your QR code</v-toolbar-title
                       >
                     </v-toolbar>
-                    <v-card flat><SinglePatientFollowUp ref="singlePatientFollowUp"/></v-card>
+                    <v-card flat
+                      ><SinglePatientFollowUp ref="singlePatientFollowUp"
+                    /></v-card>
                   </v-stepper-content>
                 </template>
 
@@ -260,7 +241,9 @@
                         v-bind:numberOfHouseholdMembers="
                           getNumberOfHouseholdMembers()
                         "
-                        @householdRegistrationSuccess = "householdRegistrationSuccessful"
+                        @householdRegistrationSuccess="
+                          householdRegistrationSuccessful
+                        "
                     /></v-card>
                   </v-stepper-content>
 
@@ -334,13 +317,15 @@
                     </v-card-title>
                     <v-card-text class="text-center">
                       Make sure that the information you provided is correct and
-                      you want to proceed. 
-                      <br> <br>
-                      After submission you will receive a notification to schedule 
-                      your COVID vaccination appointment if you are not already eligible 
-                      to do so based upon CDC and local Phases. Upon receiving your 
-                      eligibility notification, you will answer COVID screening questions, 
-                      provide consent, and choose your date to receive the COVID-19 vaccine.  
+                      you want to proceed.
+                      <br />
+                      <br />
+                      After submission you will receive a notification to
+                      schedule your COVID vaccination appointment if you are not
+                      already eligible to do so based upon CDC and local Phases.
+                      Upon receiving your eligibility notification, you will
+                      answer COVID screening questions, provide consent, and
+                      choose your date to receive the COVID-19 vaccine.
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
@@ -401,13 +386,15 @@
                     </v-card-title>
                     <v-card-text class="text-center">
                       Make sure that the information you provided is correct and
-                      you want to proceed. 
-                      <br> <br>
-                      After submission you will receive a notification to schedule 
-                      your COVID vaccination appointment if you are not already eligible 
-                      to do so based upon CDC and local Phases. Upon receiving your 
-                      eligibility notification, you will answer COVID screening questions, 
-                      provide consent, and choose your date to receive the COVID-19 vaccine.
+                      you want to proceed.
+                      <br />
+                      <br />
+                      After submission you will receive a notification to
+                      schedule your COVID vaccination appointment if you are not
+                      already eligible to do so based upon CDC and local Phases.
+                      Upon receiving your eligibility notification, you will
+                      answer COVID screening questions, provide consent, and
+                      choose your date to receive the COVID-19 vaccine.
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
@@ -481,6 +468,7 @@ import HouseholdFollowUp from "./components/HouseholdFollowUp";
 import ScreeningQuestions from "./components/ScreeningQuestions";
 import config from "./config.js";
 import EventBus from "./eventBus";
+import Header from "@/pages/application/partials/Header"
 export default {
   name: "App",
   methods: {
@@ -488,15 +476,19 @@ export default {
       this.$refs.singlePatientReviewSubmit.submitPatientInfo();
     },
     SinglePatientRegistrationSuccessful(data) {
-      this.$refs.singlePatientFollowUp.updateQrCodeData(data)
-      this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE)
+      this.$refs.singlePatientFollowUp.updateQrCodeData(data);
+      this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE);
     },
     submitHouseholdRegistration() {
       this.$refs.householdReviewSubmit.submitPatientInfo();
     },
     householdRegistrationSuccessful(data) {
-      this.$refs.householdFollowUp.updateQrCodeData(data)
-      this.goToPage(config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE + this.getNumberOfHouseholdMembers() - 2)
+      this.$refs.householdFollowUp.updateQrCodeData(data);
+      this.goToPage(
+        config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE +
+          this.getNumberOfHouseholdMembers() -
+          2
+      );
     },
     goToPage(pageNum) {
       this.page = pageNum;
@@ -814,6 +806,7 @@ export default {
     HouseholdReviewSubmit,
     HouseholdFollowUp,
     ScreeningQuestions,
+    Header,
   },
   computed: {
     titleFontSize() {
@@ -829,7 +822,6 @@ export default {
     return {
       dialog: false,
       page: config.registrationPages.GREETING_PAGE,
-      title: "COVID-19 Vaccination Registration",
       registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
       numberOfHouseholdMembers: 2,
       familyName: "",
@@ -844,8 +836,5 @@ export default {
 }
 .v-stepper__step {
   padding: 16px;
-}
-.v-toolbar__title {
-  font-size: 1.3rem;
 }
 </style>
