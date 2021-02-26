@@ -4,7 +4,7 @@
       <v-container fill-height fluid>
         <Header />
         <v-layout justify-center align-center>
-          <v-card flat height="101%" width="100%">
+          <v-card flat height="100%" width="100%">
             <!-- TODO: move stepper to new page, one for each flow? (or combine flows?) -->
             <v-stepper v-model="page" class="elevation-0">
               <v-stepper-header class="elevation-0">
