@@ -128,7 +128,7 @@ exports.create = (req, res) => {
 async function createPatients(req, res) {
   const patients = req.body.Patient;
   let patient = patients.shift();
-  const createPromises = [];
+  const promises = [];
 
   if (!patient) {
     res.status(400).json({ error: "at least one patient should be provided" });
@@ -136,34 +136,22 @@ async function createPatients(req, res) {
   }
 
   // Create head of household to be referenced by other members
-  let [head, promises] = await createPatient(patient);
+  let head = await createPatient(patient);
   if (!head) {
     res.status(500).json({ error: "create patient failed" });
     return;
   }
 
   for (patient of patients) {
-    createPromises.push(createPatient(patient, head));
+    promises.push(createPatient(patient, head));
   }
 
-  // Resolve promises and add new promises
-  Promise.all(createPromises)
+  // Resolve promises and send qr_codes as response
+  Promise.all(promises)
     .then((values) => {
-      promises = [].concat.apply(
-        promises,
-        values.map(([_, newPromises]) => newPromises)
-      );
-
-
-      // Resolve promises and return list of QR codes
-      Promise.all(promises).then();
-	  
-	  const response = {
-		  Patient: values.reduce((qrCodes, value) => {
-			  if (value[0].qr_code) qrCodes.push(value[0].qr_code);
-			  return qrCodes;
-		  }, [])
-	  };
+      const response = {
+		    Patient: values.map(value => value.qr_code)
+	    };
 	  response.Patient.unshift(head.qr_code);
 	  res.json(response);
     })
@@ -171,16 +159,14 @@ async function createPatients(req, res) {
 }
 
 /**
- * Create FHIR Patient resource and return a list
- * containing the ID of the new resource and a list
- * of promises that need to be resolved.
+ * Create FHIR Patient resource and return an object
+ * containing resourceId and qr_code
  *
  * @param {Patient information} patient
- * @param {ID of head of household} head
+ * @param {IDs of head of household} head
  */
 async function createPatient(patient, head) {
   let related;
-  const promises = [];
 
   // If head is not provided, create RelatedPerson resource first
   // and update reference to patient later.
@@ -227,7 +213,7 @@ async function createPatient(patient, head) {
       relationship: patient.relationship
     });
     resource.id = relatedID;
-    promises.push(axios.put(`/RelatedPerson/${relatedID}`, resource));
+    axios.put(`/RelatedPerson/${relatedID}`, resource);
   }
 
   // Mock Appointment resource
@@ -241,7 +227,7 @@ async function createPatient(patient, head) {
       ]
   };
   resource = Appointment.toFHIR(appointment);
-  promises.push(axios.post(`/Appointment`, resource));
+  axios.post(`/Appointment`, resource);
 
-  return [patientID, promises];
+  return patientID;
 }
