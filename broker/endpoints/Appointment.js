@@ -18,14 +18,14 @@ exports.read = (req, res) => {
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message,
+        error: e.response ? e.response.data : e.message
       });
     });
 };
 
 exports.create = (req, res) => {
-  let appt = req.body.Appointment;
-  let resource = Appointment.toFHIR(appt);
+  const appt = req.body.Appointment;
+  const resource = Appointment.toFHIR(appt);
 
   axios
     .post(`/Appointment`, resource)
@@ -34,7 +34,7 @@ exports.create = (req, res) => {
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message,
+        error: e.response ? e.response.data : e.message
       });
     });
 };
@@ -47,12 +47,12 @@ exports.checkIn = async (req) => {
   if (req.body.hasOwnProperty("appointment")) endpoint = req.body.appointment;
 
   // patch status and start time
-  patch = [
-    {
-      op: "add",
-      path: "/status",
-      value: status,
-    },
+  const patch = [
+      {
+          op: "add",
+          path: "/status",
+          value: status
+      }
   ];
 
   // update the database with new appointment
@@ -63,17 +63,17 @@ exports.checkIn = async (req) => {
 
 exports.discharge = async (req) => {
   const status = "fulfilled";
-  let id = req.query.appointment;
+  const id = req.query.appointment;
 
   if (!id) return;
 
   // patch status and end time
-  let patch = [
-    {
-      op: "add",
-      path: "/status",
-      value: status,
-    },
+  const patch = [
+      {
+          op: "add",
+          path: "/status",
+          value: status
+      }
   ];
 
   // update the database with new appointment

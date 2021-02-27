@@ -15,8 +15,8 @@ exports.read = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  let org = req.body.Organization;
-  let resource = Organization.toFHIR(org);
+  const org = req.body.Organization;
+  const resource = Organization.toFHIR(org);
 
   axios
     .post(`/Organization`, resource)

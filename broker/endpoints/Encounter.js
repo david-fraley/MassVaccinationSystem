@@ -36,32 +36,32 @@ exports.post = (req, res) => {
 };
 
 exports.create = (req) => {
-  let encounter = req.body.Encounter;
-  let resource = Encounter.toFHIR(encounter);
-
+  const encounter = req.body.Encounter;
+  const resource = Encounter.toFHIR(encounter);
+  
   return axios.post(`/Encounter`, resource).then((response) => {
-    return Encounter.toModel(response.data);
+  return Encounter.toModel(response.data);
   });
 };
 
 exports.discharge = async (req) => {
   const status = "finished";
-  let id = req.query.encounter;
+  const id = req.query.encounter;
 
   if (!id) return;
 
   // patch status and end time
-  let patch = [
-    {
-      op: "add",
-      path: "/status",
-      value: status,
-    },
-    {
-      op: "add",
-      path: "/period/end",
-      value: new Date().toISOString(),
-    },
+  const patch = [
+      {
+          op: "add",
+          path: "/status",
+          value: status
+      },
+      {
+          op: "add",
+          path: "/period/end",
+          value: new Date().toISOString()
+      }
   ];
 
   // update the database with new encounter

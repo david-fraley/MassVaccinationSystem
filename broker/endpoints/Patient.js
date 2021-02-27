@@ -1,43 +1,65 @@
-const axios = require("../services/axiosInstance.js");
-const PatientIdService = require("../services/PatientIdService");
+const axios = require("../services/axiosInstance");
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
 const {body, validationResult} = require('express-validator');
 const Appointment = require("../models/Appointment");
+const uuid = require('uuid');
 
-const prepend = "x";
+exports.read = async (req, res) => {
 
-exports.prepend = prepend;
-
-exports.read = (req, res) => {
-  
-  if(!req.params.qrCode) {
-    return res.status(400).json({
-      error: "No QR Code provided for patient lookup"
-    })
-  }
-
-  PatientIdService.getPatientIdForQrCode(req.params.qrCode)
-  .then((patientIdRecord) => {
-    const patientId = patientIdRecord.patient_id;
-    if(!patientId) {
-      throw {
-        status: 404,
-        message: "No patient found with that QR Code"
-      }
+    if (!req.params.qrCode) {
+        return res.status(400).json({
+            error: "No QR Code provided for patient lookup"
+        });
     }
-    return axios.get(`/Patient/${prepend}${patientId}`);
-  })
-  .then((patientPayload) => {
-    const patientRecord = Patient.toModel(patientPayload.data);
-    return res.json(patientRecord);
-  })
-  .catch((err) => {
-    res.status(err.status || 400).json({
-      error: err.response ? err.response.data : err.message,
+
+    try {
+        const patientPayload = await findByQrCode(req.params.qrCode);
+        const patientRecord = Patient.toModel(patientPayload);
+        return res.json(patientRecord);
+    } catch (err) {
+        res.status(err.status || 400).json({
+            error: err.response ? err.response.data : err.message
+        });
+    }
+    return res.status(400).json({
+        error: "Patient could not be found."
     });
-  });
 };
+
+async function findByQrCode(qrCode) {
+    if (!qrCode) {
+        console.log("Error: no QR code to look up.");
+        return {};
+    }
+
+	const patientSearchResponse = await axios.get(`/Patient?identifier=${qrCode}`);
+
+    let patientArray;
+    if (patientSearchResponse.data.entry) {
+        patientArray = patientSearchResponse.data.entry.map((entry) => {
+            return Patient.toModel(entry.resource);
+        });
+    }
+    if (!patientArray || patientArray.length !== 1) {
+        throw {
+            status: 404,
+            message: "No patient found with that QR Code."
+        };
+    }
+    const patientId = patientArray[0].id;
+    if (!patientId) {
+        throw {
+            status: 404,
+            message: "No patient found with that QR Code."
+        };
+    }
+
+    const patientPayload = await axios.get(`/Patient/${patientId}`);
+    return patientPayload.data;
+}
+
+exports.findByQrCode = findByQrCode;
 
 exports.search = [
 
@@ -83,7 +105,7 @@ exports.search = [
         throw {
           status: 404,
           message: "We couldn't find any patients with that information"
-        }
+        };
       }
       return res.json({patients: patientArray});
     })
@@ -91,9 +113,9 @@ exports.search = [
       res.status(err.status || 400).json({
         error: err.response ? err.response.data: err.message,
       });
-    })
+    });
   } 
-]
+];
 
 exports.create = (req, res) => {
   createPatients(req, res).catch((e) =>
@@ -104,9 +126,9 @@ exports.create = (req, res) => {
 };
 
 async function createPatients(req, res) {
-  let patients = req.body.Patient;
+  const patients = req.body.Patient;
   let patient = patients.shift();
-  let createPromises = [];
+  const promises = [];
 
   if (!patient) {
     res.status(400).json({ error: "at least one patient should be provided" });
@@ -114,100 +136,98 @@ async function createPatients(req, res) {
   }
 
   // Create head of household to be referenced by other members
-  let [head, promises] = await createPatient(patient);
+  let head = await createPatient(patient);
   if (!head) {
     res.status(500).json({ error: "create patient failed" });
     return;
   }
 
   for (patient of patients) {
-    createPromises.push(createPatient(patient, head));
+    promises.push(createPatient(patient, head));
   }
 
-  // Resolve promises and add new promises
-  Promise.all(createPromises)
+  // Resolve promises and send qr_codes as response
+  Promise.all(promises)
     .then((values) => {
-      promises = [].concat.apply(
-        promises,
-        values.map(([_, newPromises]) => newPromises)
-      );
-
-      // Resolve promises and return list of QR codes
-      Promise.all(promises).then((results) => {
-        let response = {
-          Patient: results.reduce((qrCodes, result) => {
-            if (result.qr_code) qrCodes.push(result.qr_code);
-            return qrCodes;
-          }, []),
-        };
-        res.json(response);
-      });
+      const response = {
+		    Patient: values.map(value => value.qr_code)
+	    };
+	  response.Patient.unshift(head.qr_code);
+	  res.json(response);
     })
     .catch((e) => res.status(400).json(e));
 }
 
 /**
- * Create FHIR Patient resource and return a list
- * containing the ID of the new resource and a list
- * of promises that need to be resolved.
+ * Create FHIR Patient resource and return an object
+ * containing resourceId and qr_code
  *
  * @param {Patient information} patient
- * @param {ID of head of household} head
+ * @param {IDs of head of household} head
  */
 async function createPatient(patient, head) {
   let related;
-  let promises = [];
-
-  let id = (await PatientIdService.createPatientId()).patient_id;
-  if (!id) return [];
-
-  promises.push(PatientIdService.createQrCodeForPatientId(id));
 
   // If head is not provided, create RelatedPerson resource first
   // and update reference to patient later.
   if (head == null) related = { resourceType: "RelatedPerson" };
   else
     related = {
-      patient: `Patient/${head}`,
-      relationship: patient.relationship,
+      patient: `Patient/${head.resourceId}`,
+      relationship: patient.relationship
     };
 
   // Create RelatedPerson resource
   let resource = RelatedPerson.toFHIR(related);
-  let relatedID = (await axios.post(`/RelatedPerson`, resource)).data.id;
+  const relatedID = (await axios.post(`/RelatedPerson`, resource)).data.id;
 
-  // Create Patient resource with ID from PatientIdService
-  // and link to RelatedPerson
-  let patientID = `${prepend}${id}`;
   patient.link = `RelatedPerson/${relatedID}`;
+  
   resource = Patient.toFHIR(patient);
-  resource.id = patientID;
-  await axios.put(`/Patient/${patientID}`, resource);
+  
+  const patientID = {
+      qr_code: uuid.v4()
+  };
+
+  // Add QR Code UUID to Patient Identifier list
+  if (!resource.hasOwnProperty("identifier")) resource.identifier = [];
+  resource.identifier.push({
+	  value: patientID.qr_code,
+	  assigner: {
+		  display: "massvaxx"
+	  },
+	  period: {
+		  start: new Date().toISOString()
+	  }
+  });
+  
+  const createdPatient = await axios.post(`/Patient`, resource);
+  patientID.resourceId = createdPatient.data.id;
 
   // If RelatedPerson was not created with a link to a patient,
   // update the resource to link to the new Patient
   if (head == null) {
     head = patientID;
     resource = RelatedPerson.toFHIR({
-      patient: `Patient/${head}`,
-      relationship: patient.relationship,
+      patient: `Patient/${head.resourceId}`,
+      relationship: patient.relationship
     });
     resource.id = relatedID;
-    promises.push(axios.put(`/RelatedPerson/${relatedID}`, resource));
+    axios.put(`/RelatedPerson/${relatedID}`, resource);
   }
 
   // Mock Appointment resource
-  let appointment = {
-    status: "booked",
-    participant: [
-      {
-        type: "patient",
-        actor: `Patient/${patientID}`,
-      },
-    ],
+  const appointment = {
+      status: "booked",
+      participant: [
+          {
+              type: "patient",
+              actor: `Patient/${patientID.resourceId}`
+          }
+      ]
   };
   resource = Appointment.toFHIR(appointment);
-  promises.push(axios.post(`/Appointment`, resource));
+  axios.post(`/Appointment`, resource);
 
-  return [patientID, promises];
+  return patientID;
 }

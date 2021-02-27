@@ -9,13 +9,13 @@ module.exports = (req, res) => {
       Encounter.create(req).then((encounter) => {
         res.json({
           Encounter: encounter,
-          Appointment: appointment,
+          Appointment: appointment
         });
       });
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message,
+        error: e.response ? e.response.data : e.message
       });
     });
 };

@@ -15,8 +15,8 @@ exports.read = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  let eoc = req.body.EpisodeOfCare;
-  let resource = EpisodeOfCare.toFHIR(eoc);
+  const eoc = req.body.EpisodeOfCare;
+  const resource = EpisodeOfCare.toFHIR(eoc);
 
   axios
     .post(`/EpisodeOfCare`, resource)
