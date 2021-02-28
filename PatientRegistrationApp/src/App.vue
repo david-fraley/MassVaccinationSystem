@@ -1,10 +1,11 @@
 <template>
   <v-app id="Patient-registration">
     <v-main>
-      <v-container fill-height fluid>
-        <Header />
-        <v-layout justify-center align-center>
-          <v-card flat height="100%" width="100%">
+      <v-container fill-height fluid> 
+        <v-layout>
+          <v-row>
+            <v-col cols="12">
+              <Header />
             <!-- TODO: move stepper to new page, one for each flow? (or combine flows?) -->
             <v-stepper v-model="page" class="elevation-0">
               <v-stepper-header class="elevation-0">
@@ -31,7 +32,7 @@
               </v-stepper-header>
 
               <!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
-              <v-stepper-items class="mb-5">
+              <v-stepper-items>
                 <!-- Greeting Page -->
                 <v-stepper-content step="1">
                   <v-card flat>
@@ -265,7 +266,8 @@
                 </template>
               </v-stepper-items>
             </v-stepper>
-
+            </v-col>
+<v-col cols="12">
             <!--navigation footer along the bottom of the page -->
             <v-footer absolute color="white">
               <template v-if="isGreetingPage()">
@@ -442,7 +444,8 @@
                 </v-btn>
               </template>
             </v-footer>
-          </v-card>
+            </v-col>
+          </v-row>
         </v-layout>
       </v-container>
     </v-main>
