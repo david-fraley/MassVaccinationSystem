@@ -1,449 +1,456 @@
 <template>
   <v-app id="Patient-registration">
     <v-main>
-      <v-container fill-height fluid> 
+      <v-container fill-height fluid>
         <v-layout>
           <v-row>
             <v-col cols="12">
               <Header />
-            <!-- TODO: move stepper to new page, one for each flow? (or combine flows?) -->
-            <v-stepper v-model="page" class="elevation-0">
-              <v-stepper-header class="elevation-0">
-                <template
-                  v-if="
-                    isSinglePatientRegistration() || isHouseholdRegistration()
-                  "
-                >
-                  <template v-for="n in getNumberOfSteps()">
-                    <v-stepper-step
-                      :key="`${n}-step`"
-                      :complete="page > n"
-                      color="accent"
-                      :step="n"
-                    >
-                    </v-stepper-step>
+              <!-- TODO: move stepper to new page, one for each flow? (or combine flows?) -->
+              <v-stepper v-model="page" class="elevation-0">
+                <v-stepper-header class="elevation-0">
+                  <template
+                    v-if="
+                      isSinglePatientRegistration() || isHouseholdRegistration()
+                    "
+                  >
+                    <template v-for="n in getNumberOfSteps()">
+                      <v-stepper-step
+                        :key="`${n}-step`"
+                        :complete="page > n"
+                        color="accent"
+                        :step="n"
+                      >
+                      </v-stepper-step>
 
-                    <v-divider
-                      v-if="n !== getNumberOfSteps()"
-                      :key="n"
-                    ></v-divider>
+                      <v-divider
+                        v-if="n !== getNumberOfSteps()"
+                        :key="n"
+                      ></v-divider>
+                    </template>
                   </template>
-                </template>
-              </v-stepper-header>
+                </v-stepper-header>
 
-              <!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
-              <v-stepper-items>
-                <!-- Greeting Page -->
-                <v-stepper-content step="1">
-                  <v-card flat>
-                    <GreetingPage
-                      @singleRegistration="setSinglePatientRegistration()"
-                      @householdRegistration="setHouseholdRegistration()"
-                      ref="greetingpage"
-                    />
-                  </v-card>
-                </v-stepper-content>
-
-                <!--Logic to check for the "single patient" registration path-->
-                <template v-if="isSinglePatientRegistration()">
-                  <!-- Single Patient: Home Address -->
-                  <v-stepper-content step="2">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Enter your address</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><SinglePatientHomeAddress ref="singlepatienthomeaddress"
-                    /></v-card>
+                <!--The v-stepper-items holds all of the "page" content we will swap in an out based on the navigation-->
+                <v-stepper-items>
+                  <!-- Greeting Page -->
+                  <v-stepper-content step="1">
+                    <v-card flat>
+                      <GreetingPage
+                        @singleRegistration="setSinglePatientRegistration()"
+                        @householdRegistration="setHouseholdRegistration()"
+                        ref="greetingpage"
+                      />
+                    </v-card>
                   </v-stepper-content>
 
-                  <!-- Single Patient: Contact Info -->
-                  <v-stepper-content step="3">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Enter your contact information</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><SinglePatientContactInfo ref="singlepatientcontactinfo"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Single Patient: Personal Info -->
-                  <v-stepper-content step="4">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Enter your personal information</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><SinglePatientPersonalInfo
-                        ref="singlepatientpersonalinfo"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Single Patient: Screening Questions -->
-                  <v-stepper-content step="5">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Please complete these screening
-                        questions</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><ScreeningQuestions ref="singlepatientscreeningquestions"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Single Patient: Emergency Contact -->
-                  <v-stepper-content step="6">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap">
-                        Specify an emergency contact</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><SinglePatientEmergencyContact
-                        ref="singlepatientemergencycontact"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Single Patient: Review and Submit -->
-                  <v-stepper-content step="7">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Please ensure your information is
-                        correct</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><SinglePatientReviewSubmit
-                        ref="singlePatientReviewSubmit"
-                        @singlePatientRegistrationSuccess="
-                          SinglePatientRegistrationSuccessful
-                        "
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Single Patient: Follow up -->
-                  <v-stepper-content step="8">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Download your QR code</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><SinglePatientFollowUp ref="singlePatientFollowUp"
-                    /></v-card>
-                  </v-stepper-content>
-                </template>
-
-                <!--Logic to check for the "household" registration path-->
-                <template v-if="isHouseholdRegistration()">
-                  <!-- Household: Register Number of People -->
-                  <v-stepper-content step="2">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Register your household</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><HouseholdRegisterNumber ref="householdregisternumber"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Household: Address -->
-                  <v-stepper-content step="3">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Enter your household address</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><HouseholdHomeAddress ref="householdhomeaddress"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Household: Contact Info -->
-                  <v-stepper-content step="4">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Enter your household contact
-                        information</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><HouseholdContactInfo ref="householdcontactinfo"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Household: Personal Info -->
-                  <v-stepper-content step="5">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Enter your personal information</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Household: Emergency Contact -->
-                  <v-stepper-content step="6">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Specify your emergency contact</v-toolbar-title
-                      ></v-toolbar
-                    >
-                    <v-toolbar flat>
-                      <v-subheader
-                        >Note: You will be specified as the emergency contact
-                        for the rest of your household.</v-subheader
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><HouseholdEmergencyContact
-                        ref="householdemergencycontact"
-                    /></v-card>
-                  </v-stepper-content>
-
-                  <!-- Household: Personal Info #n -->
-                  <template v-for="n in getNumberOfHouseholdMembers() - 1">
-                    <v-stepper-content :key="`${n + 1}-member`" :step="n + 6">
+                  <!--Logic to check for the "single patient" registration path-->
+                  <template v-if="isSinglePatientRegistration()">
+                    <!-- Single Patient: Home Address -->
+                    <v-stepper-content step="2">
                       <v-toolbar flat>
                         <v-toolbar-title class="text-wrap"
-                          >Enter personal information for household member #{{
-                            n + 1
-                          }}</v-toolbar-title
+                          >Enter your address</v-toolbar-title
                         >
                       </v-toolbar>
                       <v-card flat
-                        ><HouseholdPersonalInfo_n
-                          ref="householdPersonalInfo"
-                          v-bind:householdMemberNumber="n + 1"
-                        ></HouseholdPersonalInfo_n
-                      ></v-card>
+                        ><SinglePatientHomeAddress
+                          ref="singlepatienthomeaddress"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Single Patient: Contact Info -->
+                    <v-stepper-content step="3">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Enter your contact information</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><SinglePatientContactInfo
+                          ref="singlepatientcontactinfo"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Single Patient: Personal Info -->
+                    <v-stepper-content step="4">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Enter your personal information</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><SinglePatientPersonalInfo
+                          ref="singlepatientpersonalinfo"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Single Patient: Screening Questions -->
+                    <v-stepper-content step="5">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Please complete these screening
+                          questions</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><ScreeningQuestions
+                          ref="singlepatientscreeningquestions"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Single Patient: Emergency Contact -->
+                    <v-stepper-content step="6">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap">
+                          Specify an emergency contact</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><SinglePatientEmergencyContact
+                          ref="singlepatientemergencycontact"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Single Patient: Review and Submit -->
+                    <v-stepper-content step="7">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Please ensure your information is
+                          correct</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><SinglePatientReviewSubmit
+                          ref="singlePatientReviewSubmit"
+                          @singlePatientRegistrationSuccess="
+                            SinglePatientRegistrationSuccessful
+                          "
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Single Patient: Follow up -->
+                    <v-stepper-content step="8">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Download your QR code</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><SinglePatientFollowUp ref="singlePatientFollowUp"
+                      /></v-card>
                     </v-stepper-content>
                   </template>
 
-                  <!-- Household: Review and submit -->
-                  <v-stepper-content :step="getNumberOfSteps() - 1">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Please ensure your information is
-                        correct</v-toolbar-title
-                      >
-                    </v-toolbar>
-                    <v-card flat
-                      ><HouseholdReviewSubmit
-                        ref="householdReviewSubmit"
-                        v-bind:numberOfHouseholdMembers="
-                          getNumberOfHouseholdMembers()
-                        "
-                        @householdRegistrationSuccess="
-                          householdRegistrationSuccessful
-                        "
-                    /></v-card>
-                  </v-stepper-content>
+                  <!--Logic to check for the "household" registration path-->
+                  <template v-if="isHouseholdRegistration()">
+                    <!-- Household: Register Number of People -->
+                    <v-stepper-content step="2">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Register your household</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><HouseholdRegisterNumber ref="householdregisternumber"
+                      /></v-card>
+                    </v-stepper-content>
 
-                  <!-- Household: Follow up -->
-                  <v-stepper-content :step="getNumberOfSteps()">
-                    <v-toolbar flat>
-                      <v-toolbar-title class="text-wrap"
-                        >Download your QR code</v-toolbar-title
+                    <!-- Household: Address -->
+                    <v-stepper-content step="3">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Enter your household address</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><HouseholdHomeAddress ref="householdhomeaddress"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Household: Contact Info -->
+                    <v-stepper-content step="4">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Enter your household contact
+                          information</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><HouseholdContactInfo ref="householdcontactinfo"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Household: Personal Info -->
+                    <v-stepper-content step="5">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Enter your personal information</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><HouseholdPersonalInfo_1 ref="householdPersonalInfo_1"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Household: Emergency Contact -->
+                    <v-stepper-content step="6">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Specify your emergency contact</v-toolbar-title
+                        ></v-toolbar
                       >
-                    </v-toolbar>
-                    <v-card flat
-                      ><HouseholdFollowUp
-                        v-bind:numberOfHouseholdMembers="
-                          getNumberOfHouseholdMembers()
-                        "
-                        ref="householdFollowUp"
-                    /></v-card>
-                  </v-stepper-content>
-                </template>
-              </v-stepper-items>
-            </v-stepper>
+                      <v-toolbar flat>
+                        <v-subheader
+                          >Note: You will be specified as the emergency contact
+                          for the rest of your household.</v-subheader
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><HouseholdEmergencyContact
+                          ref="householdemergencycontact"
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Household: Personal Info #n -->
+                    <template v-for="n in getNumberOfHouseholdMembers() - 1">
+                      <v-stepper-content :key="`${n + 1}-member`" :step="n + 6">
+                        <v-toolbar flat>
+                          <v-toolbar-title class="text-wrap"
+                            >Enter personal information for household member #{{
+                              n + 1
+                            }}</v-toolbar-title
+                          >
+                        </v-toolbar>
+                        <v-card flat
+                          ><HouseholdPersonalInfo_n
+                            ref="householdPersonalInfo"
+                            v-bind:householdMemberNumber="n + 1"
+                          ></HouseholdPersonalInfo_n
+                        ></v-card>
+                      </v-stepper-content>
+                    </template>
+
+                    <!-- Household: Review and submit -->
+                    <v-stepper-content :step="getNumberOfSteps() - 1">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Please ensure your information is
+                          correct</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><HouseholdReviewSubmit
+                          ref="householdReviewSubmit"
+                          v-bind:numberOfHouseholdMembers="
+                            getNumberOfHouseholdMembers()
+                          "
+                          @householdRegistrationSuccess="
+                            householdRegistrationSuccessful
+                          "
+                      /></v-card>
+                    </v-stepper-content>
+
+                    <!-- Household: Follow up -->
+                    <v-stepper-content :step="getNumberOfSteps()">
+                      <v-toolbar flat>
+                        <v-toolbar-title class="text-wrap"
+                          >Download your QR code</v-toolbar-title
+                        >
+                      </v-toolbar>
+                      <v-card flat
+                        ><HouseholdFollowUp
+                          v-bind:numberOfHouseholdMembers="
+                            getNumberOfHouseholdMembers()
+                          "
+                          ref="householdFollowUp"
+                      /></v-card>
+                    </v-stepper-content>
+                  </template>
+                </v-stepper-items>
+              </v-stepper>
             </v-col>
-<v-col cols="12">
-            <!--navigation footer along the bottom of the page -->
-            <v-footer absolute color="white">
-              <template v-if="isGreetingPage()">
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="secondary"
-                  class="ma-2 white--text"
-                  @click="goToNextPage()"
+            <v-col cols="12">
+              <!--navigation footer along the bottom of the page -->
+              <v-footer absolute color="white">
+                <template v-if="isGreetingPage()">
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="secondary"
+                    class="ma-2 white--text"
+                    @click="goToNextPage()"
+                  >
+                    Continue
+                    <v-icon right large color="white">
+                      mdi-chevron-right
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <template
+                  v-else-if="
+                    isSinglePatientReviewSubmit() &&
+                      isSinglePatientRegistration()
+                  "
                 >
-                  Continue
-                  <v-icon right large color="white">
-                    mdi-chevron-right
-                  </v-icon>
-                </v-btn>
-              </template>
-              <template
-                v-else-if="
-                  isSinglePatientReviewSubmit() && isSinglePatientRegistration()
-                "
-              >
-                <v-btn
-                  color="secondary"
-                  class="ma-2 white--text"
-                  @click="goToPreviousPage()"
-                >
-                  <v-icon left large color="white">
-                    mdi-chevron-left
-                  </v-icon>
-                  Back
-                </v-btn>
+                  <v-btn
+                    color="secondary"
+                    class="ma-2 white--text"
+                    @click="goToPreviousPage()"
+                  >
+                    <v-icon left large color="white">
+                      mdi-chevron-left
+                    </v-icon>
+                    Back
+                  </v-btn>
 
-                <v-spacer></v-spacer>
-                <v-dialog v-model="dialog" width="40rem">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      color="secondary"
-                      class="ma-2 white--text"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      Submit
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title
-                      class="headline grey lighten-2 justify-center"
-                    >
-                      Are you sure you want to submit?
-                    </v-card-title>
-                    <v-card-text class="text-center">
-                      Make sure that the information you provided is correct and
-                      you want to proceed.
-                      <br />
-                      <br />
-                      After submission you will receive a notification to
-                      schedule your COVID vaccination appointment if you are not
-                      already eligible to do so based upon CDC and local Phases.
-                      Upon receiving your eligibility notification, you will
-                      answer COVID screening questions, provide consent, and
-                      choose your date to receive the COVID-19 vaccine.
-                    </v-card-text>
-                    <v-divider></v-divider>
-                    <v-card-actions>
-                      <v-btn color="primary" text @click="dialog = false">
-                        No
-                      </v-btn>
-                      <v-spacer></v-spacer>
+                  <v-spacer></v-spacer>
+                  <v-dialog v-model="dialog" width="40rem">
+                    <template v-slot:activator="{ on, attrs }">
                       <v-btn
-                        color="primary"
-                        text
-                        @click="submitSinglePatientRegistration()"
+                        color="secondary"
+                        class="ma-2 white--text"
+                        v-bind="attrs"
+                        v-on="on"
                       >
-                        Yes
+                        Submit
                       </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </template>
-              <template
-                v-else-if="
-                  isSinglePatientFollowUp() && isSinglePatientRegistration()
-                "
-              >
-                <!--display no buttons-->
-              </template>
-              <template
-                v-else-if="
-                  isHouseholdPatientReviewSubmit() && isHouseholdRegistration()
-                "
-              >
-                <v-btn
-                  color="secondary"
-                  class="ma-2 white--text"
-                  @click="goToPreviousPage()"
+                    </template>
+                    <v-card>
+                      <v-card-title
+                        class="headline grey lighten-2 justify-center"
+                      >
+                        Are you sure you want to submit?
+                      </v-card-title>
+                      <v-card-text class="text-center">
+                        Make sure that the information you provided is correct
+                        and you want to proceed.
+                        <br />
+                        <br />
+                        After submission you will receive a notification to
+                        schedule your COVID vaccination appointment if you are
+                        not already eligible to do so based upon CDC and local
+                        Phases. Upon receiving your eligibility notification,
+                        you will answer COVID screening questions, provide
+                        consent, and choose your date to receive the COVID-19
+                        vaccine.
+                      </v-card-text>
+                      <v-divider></v-divider>
+                      <v-card-actions>
+                        <v-btn color="primary" text @click="dialog = false">
+                          No
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="primary"
+                          text
+                          @click="submitSinglePatientRegistration()"
+                        >
+                          Yes
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </template>
+                <template
+                  v-else-if="
+                    isSinglePatientFollowUp() && isSinglePatientRegistration()
+                  "
                 >
-                  <v-icon left large color="white">
-                    mdi-chevron-left
-                  </v-icon>
-                  Back
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-dialog v-model="dialog" width="40rem">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      color="secondary"
-                      class="ma-2 white--text"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      Submit
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title
-                      class="headline grey lighten-2 justify-center"
-                    >
-                      Are you sure you want to submit?
-                    </v-card-title>
-                    <v-card-text class="text-center">
-                      Make sure that the information you provided is correct and
-                      you want to proceed.
-                      <br />
-                      <br />
-                      After submission you will receive a notification to
-                      schedule your COVID vaccination appointment if you are not
-                      already eligible to do so based upon CDC and local Phases.
-                      Upon receiving your eligibility notification, you will
-                      answer COVID screening questions, provide consent, and
-                      choose your date to receive the COVID-19 vaccine.
-                    </v-card-text>
-                    <v-divider></v-divider>
-                    <v-card-actions>
-                      <v-btn color="primary" text @click="dialog = false">
-                        No
-                      </v-btn>
-                      <v-spacer></v-spacer>
+                  <!--display no buttons-->
+                </template>
+                <template
+                  v-else-if="
+                    isHouseholdPatientReviewSubmit() &&
+                      isHouseholdRegistration()
+                  "
+                >
+                  <v-btn
+                    color="secondary"
+                    class="ma-2 white--text"
+                    @click="goToPreviousPage()"
+                  >
+                    <v-icon left large color="white">
+                      mdi-chevron-left
+                    </v-icon>
+                    Back
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-dialog v-model="dialog" width="40rem">
+                    <template v-slot:activator="{ on, attrs }">
                       <v-btn
-                        color="primary"
-                        text
-                        @click="submitHouseholdRegistration()"
+                        color="secondary"
+                        class="ma-2 white--text"
+                        v-bind="attrs"
+                        v-on="on"
                       >
-                        Yes
+                        Submit
                       </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </template>
-              <template
-                v-else-if="isHouseholdFollowUp() && isHouseholdRegistration()"
-              >
-                <!--display no buttons-->
-              </template>
-              <template v-else>
-                <v-btn
-                  color="secondary"
-                  class="ma-2 white--text"
-                  @click="goToPreviousPage()"
+                    </template>
+                    <v-card>
+                      <v-card-title
+                        class="headline grey lighten-2 justify-center"
+                      >
+                        Are you sure you want to submit?
+                      </v-card-title>
+                      <v-card-text class="text-center">
+                        Make sure that the information you provided is correct
+                        and you want to proceed.
+                        <br />
+                        <br />
+                        After submission you will receive a notification to
+                        schedule your COVID vaccination appointment if you are
+                        not already eligible to do so based upon CDC and local
+                        Phases. Upon receiving your eligibility notification,
+                        you will answer COVID screening questions, provide
+                        consent, and choose your date to receive the COVID-19
+                        vaccine.
+                      </v-card-text>
+                      <v-divider></v-divider>
+                      <v-card-actions>
+                        <v-btn color="primary" text @click="dialog = false">
+                          No
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="primary"
+                          text
+                          @click="submitHouseholdRegistration()"
+                        >
+                          Yes
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </template>
+                <template
+                  v-else-if="isHouseholdFollowUp() && isHouseholdRegistration()"
                 >
-                  <v-icon left large color="white">
-                    mdi-chevron-left
-                  </v-icon>
-                  Back
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="secondary"
-                  class="ma-2 white--text"
-                  @click="goToNextPage()"
-                >
-                  Continue
-                  <v-icon right large color="white">
-                    mdi-chevron-right
-                  </v-icon>
-                </v-btn>
-              </template>
-            </v-footer>
+                  <!--display no buttons-->
+                </template>
+                <template v-else>
+                  <v-btn
+                    color="secondary"
+                    class="ma-2 white--text"
+                    @click="goToPreviousPage()"
+                  >
+                    <v-icon left large color="white">
+                      mdi-chevron-left
+                    </v-icon>
+                    Back
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="secondary"
+                    class="ma-2 white--text"
+                    @click="goToNextPage()"
+                  >
+                    Continue
+                    <v-icon right large color="white">
+                      mdi-chevron-right
+                    </v-icon>
+                  </v-btn>
+                </template>
+              </v-footer>
             </v-col>
           </v-row>
         </v-layout>
@@ -471,7 +478,7 @@ import HouseholdFollowUp from "./components/HouseholdFollowUp";
 import ScreeningQuestions from "./components/ScreeningQuestions";
 import config from "./config.js";
 import EventBus from "./eventBus";
-import Header from "@/pages/application/partials/Header"
+import Header from "@/pages/application/partials/Header";
 export default {
   name: "App",
   methods: {
