@@ -58,7 +58,7 @@
 						</v-btn>
 					</v-card>
 					<v-card class="pa-2" flat>
-						<v-tooltip bottom max-width="20%">
+						<v-tooltip top max-width="30%">
 							<template v-slot:activator="{on, attrs}">
 								<v-btn 
 									:outlined="!isHouseholdRegistration" 
@@ -92,7 +92,7 @@ export default {
 	name: "GreetingPage",
 	data: () => ({
 		preferredLanguageOptions: ['English','Spanish'],
-		preferredLanguage: '',
+		preferredLanguage: 'English',
 		isSingleRegistration: false,
 		isHouseholdRegistration: false,
 		householdDefinition: customerSettings.householdDefinition,

@@ -23,7 +23,8 @@
 					required
 					:rules="[v => !!v || 'Address field is required']"
 					v-model="lineAddress1"
-					prepend-icon="mdi-blank">
+					prepend-icon="mdi-blank"
+					autocomplete="address-line1">
 					<template #label>
 						<span class="red--text"><strong>* </strong></span>Address Line 1
 					</template>
@@ -34,7 +35,8 @@
 				<v-text-field
 					v-model="lineAddress2"
 					prepend-icon="mdi-blank"
-					label="Address Line 2">
+					label="Address Line 2"
+					autocomplete="address-line2">
 				</v-text-field>
 			</v-col>
 		</v-row>
@@ -45,7 +47,8 @@
 					required
 					:rules="[v => !!v || 'City field is required']"
 					v-model="cityAddress"
-					prepend-icon="mdi-blank">
+					prepend-icon="mdi-blank"
+					autocomplete="address-level2">
 					<template #label>
 						<span class="red--text"><strong>* </strong></span>City
 					</template>
@@ -58,7 +61,8 @@
 					:rules="[v => !!v || 'State field is required']"
 					v-model="stateAddress"
 					:items="stateOptions"
-					prepend-icon="mdi-blank">
+					prepend-icon="mdi-blank"
+					autocomplete="address-level1">
 					<template #label>
 						<span class="red--text"><strong>* </strong></span>State
 					</template>
@@ -71,7 +75,8 @@
 					:rules="[v => !!v || 'Country field is required']"
 					v-model="countryAddress"
 					:items="countryOptions"
-					prepend-icon="mdi-blank">
+					prepend-icon="mdi-blank"
+					autocomplete="country">
 					<template #label>
 						<span class="red--text"><strong>* </strong></span>Country
 					</template>
@@ -83,7 +88,8 @@
 					required
 					:rules="postalCodeRules"
 					v-model="postalCode"
-					prepend-icon="mdi-blank">
+					prepend-icon="mdi-blank"
+					autocomplete="postal-code">
 					<template #label>
 						<span class="red--text"><strong>* </strong></span>Zip Code
 					</template>
