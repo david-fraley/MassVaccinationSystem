@@ -1,5 +1,14 @@
 <template>
   <v-app>
+    <v-system-bar
+      app
+      dark
+      color="red"
+      height="40 rem">
+      
+      <v-icon color="white" large>mdi-alert-circle-outline</v-icon>
+      <span class="white--text"><strong>TEST WEBSITE - NOT LIVE</strong></span>
+    </v-system-bar>
     
     <v-app-bar app clipped-right flat height="69" color="primary">
       <h1 class="font-weight-medium white--text">Point of Dispensing Application</h1>
@@ -158,5 +167,8 @@
   }
   .v-list-item--active {
     background: #1565C0;
+  }
+  .v-system-bar {
+    font-size: 2rem;
   }
 </style>

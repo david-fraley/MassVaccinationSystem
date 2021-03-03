@@ -1,6 +1,14 @@
 <template>
   <v-app id="Patient-registration">
     <v-main>
+      <v-system-bar
+        dark
+        color="red"
+        height="40 rem">
+        
+        <v-icon color="white" large>mdi-alert-circle-outline</v-icon>
+        <span class="white--text"><strong>TEST WEBSITE - NOT LIVE</strong></span>
+      </v-system-bar>
       <v-container fill-height fluid>
         <v-layout>
           <v-row>
@@ -846,5 +854,8 @@ export default {
 }
 .v-stepper__step {
   padding: 16px;
+}
+.v-system-bar {
+  font-size: 2rem;
 }
 </style>
