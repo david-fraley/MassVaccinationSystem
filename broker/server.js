@@ -33,7 +33,7 @@ app.all("/broker/*", (req, res) => {
 });
 
 //Health check endpoint
-app.get("/healthcheck", (req, res) => {
+app.get('/healthcheck', (req, res) => {
   res.send("Success!");
 });
 
