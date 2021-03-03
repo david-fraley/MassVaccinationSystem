@@ -2,8 +2,6 @@ name: Format (prettier)
 
 # Controls when the action will run.
 on:
-  push:
-    branches: [Development]
   pull_request_target:
     paths:
       - "**.css"
