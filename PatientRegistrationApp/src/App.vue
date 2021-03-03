@@ -1,14 +1,7 @@
 <template>
   <v-app id="Patient-registration">
     <v-main>
-      <v-system-bar
-        dark
-        color="red"
-        height="40 rem">
-        
-        <v-icon color="white" large>mdi-alert-circle-outline</v-icon>
-        <span class="white--text"><strong>TEST WEBSITE - NOT LIVE</strong></span>
-      </v-system-bar>
+      <SystemBar />
       <v-container fill-height fluid>
         <v-layout>
           <v-row>
@@ -487,6 +480,7 @@ import ScreeningQuestions from "./components/ScreeningQuestions";
 import config from "./config.js";
 import EventBus from "./eventBus";
 import Header from "@/pages/application/partials/Header";
+import SystemBar from "@/pages/application/partials/SystemBar";
 export default {
   name: "App",
   methods: {
@@ -825,6 +819,7 @@ export default {
     HouseholdFollowUp,
     ScreeningQuestions,
     Header,
+    SystemBar,
   },
   computed: {
     titleFontSize() {
