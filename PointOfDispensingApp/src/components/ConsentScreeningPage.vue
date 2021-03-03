@@ -16,22 +16,18 @@
 </template>
 
 <script>
-import PatientInfoComponent from './PatientInfoComponent';
-import VaccinationScreeningComponent from './VaccinationScreeningComponent';
+import PatientInfoComponent from "./PatientInfoComponent";
+import VaccinationScreeningComponent from "./VaccinationScreeningComponent";
 
-  export default {
-    name: 'ConsentScreeningPage',
-    methods: 
-    {
-    },
-    components: 
-    {
-      PatientInfoComponent,
-      VaccinationScreeningComponent
-    },
-    data () {
-      return {
-      }
-    }
-  }
+export default {
+  name: "ConsentScreeningPage",
+  methods: {},
+  components: {
+    PatientInfoComponent,
+    VaccinationScreeningComponent,
+  },
+  data() {
+    return {};
+  },
+};
 </script>

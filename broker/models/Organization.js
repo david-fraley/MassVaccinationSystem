@@ -7,22 +7,22 @@ Organization {
 */
 const TYPE_SYSTEM = "http://hl7.org/fhir/ValueSet/organization-type";
 exports.toFHIR = function (org) {
-    const resource = {
-        resourceType: "Organization",
-        active: org.active,
-        type: [
-            {
-                coding: [
-                    {
-                        system: TYPE_SYSTEM,
-                        code: org.type,
-                        display: org.type
-                    }
-                ]
-            }
+  const resource = {
+    resourceType: "Organization",
+    active: org.active,
+    type: [
+      {
+        coding: [
+          {
+            system: TYPE_SYSTEM,
+            code: org.type,
+            display: org.type,
+          },
         ],
-        name: org.name
-    };
+      },
+    ],
+    name: org.name,
+  };
 
-    return resource;
-}
+  return resource;
+};

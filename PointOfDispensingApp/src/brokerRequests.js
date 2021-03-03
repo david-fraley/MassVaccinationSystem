@@ -35,9 +35,8 @@ export default {
 
   // Get patient from QR code for patient retrieval
   getPatientFromQrCode: (qrCode) => {
-    
     // If we didn't get a Qr Code, return David's patient data
-    if(!qrCode) {
+    if (!qrCode) {
       const patient = {
         id: qrCode,
         family: "Fraley",
@@ -53,21 +52,21 @@ export default {
         language: "English",
       };
       return new Promise((resolve) => {
-        resolve({patient: patient});
+        resolve({ patient: patient });
       });
     }
 
     // If we got a Qr Code, hit the patient GET endpoint
     else {
       return axios
-      .get(`/broker/Patient/${qrCode}`)
-      .then((response) => {
-        console.log(response);
-        return { patient: response.data };
-      })
-      .catch((e) => {
-        return toResponse(e);
-      });
+        .get(`/broker/Patient/${qrCode}`)
+        .then((response) => {
+          console.log(response);
+          return { patient: response.data };
+        })
+        .catch((e) => {
+          return toResponse(e);
+        });
     }
   },
 
@@ -101,15 +100,15 @@ export default {
       });
   },
 
-  getImmunization:(patID) => {
+  getImmunization: (patID) => {
     return axios
-    .get('/broker/Immunization', {params: { patient: patID}})
-    .then((response) => {
-      return {data: response.data};
-    })
-    .catch((e) => {
-      return toResponse(e);
-    });
+      .get("/broker/Immunization", { params: { patient: patID } })
+      .then((response) => {
+        return { data: response.data };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
   },
 
   // Check-in patient

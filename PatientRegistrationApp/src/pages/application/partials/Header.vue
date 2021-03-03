@@ -3,7 +3,7 @@
     <div>
       <v-toolbar-title
         class="font-weight-bold text-wrap"
-        :class="[$vuetify.breakpoint.xs?'font-xs':'font-sm']"
+        :class="[$vuetify.breakpoint.xs ? 'font-xs' : 'font-sm']"
         >{{ title }}</v-toolbar-title
       >
     </div>
@@ -23,9 +23,9 @@ export default {
 </script>
 <style lang="css" scoped>
 .font-sm {
-  font-size: 2rem
+  font-size: 2rem;
 }
 .font-xs {
-  font-size: 1rem
+  font-size: 1rem;
 }
 </style>

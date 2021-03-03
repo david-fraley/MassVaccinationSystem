@@ -6,9 +6,9 @@ module.exports = {
   publicPath: "./",
   devServer: {
     proxy: {
-      '^/broker': {
-        target: 'http://localhost:3000/broker',
-      }
-    }
-  }
+      "^/broker": {
+        target: "http://localhost:3000/broker",
+      },
+    },
+  },
 };

@@ -1,72 +1,75 @@
 <template>
-<v-form ref="form" v-model="valid">
-  <v-container fluid>
-    <v-row align="center" justify="start">
-      <!-- Last name -->
-      <v-col cols="12" sm="6" md="6" lg="4">
-        <v-text-field
-          required
-          :rules="[(v) => !!v || 'Last name field is required']"
-          v-model="emergencyContactFamilyName"
-          prepend-icon="mdi-blank"
-        >
-          <template #label>
-            <span class="red--text"><strong>* </strong></span>Last Name
-          </template>
-        </v-text-field>
-      </v-col>
-      <!-- First name -->
-      <v-col cols="12" sm="6" md="6" lg="4">
-        <v-text-field
-          required
-          :rules="[(v) => !!v || 'First name field is required']"
-          v-model="emergencyContactGivenName"
-          prepend-icon="mdi-blank"
-        >
-          <template #label>
-            <span class="red--text"><strong>* </strong></span>First Name
-          </template>
-        </v-text-field>
-      </v-col>
-    </v-row>
-    <v-row align="center" justify="start">
-      <!-- Phone Number -->
-      <v-col cols="12" sm="6" md="6" lg="4">
-        <v-text-field
-          required
-          :rules="[(v) => v.length === 13 || 'Phone number must be 10 digits']"
-          v-mask="'(###)###-####'"
-          v-model="emergencyContactPhoneNumber"
-          prepend-icon="mdi-phone"
-        >
-          <template #label>
-            <span class="red--text"><strong>* </strong></span>Phone Number
-          </template>
-        </v-text-field>
-      </v-col>
-      <!-- Phone Number Type -->
-      <v-col cols="12" sm="6" md="6" lg="4">
-        <v-select
-          v-model="emergencyContactPhoneNumberType"
-          :items="phoneTypeOptions"
-          label="Phone Type"
-          prepend-icon="mdi-blank"
-        ></v-select>
-      </v-col>
-    </v-row>
-    <v-row align="center" justify="start">
-			<!-- Relationship Type -->
-			<v-col cols="12" sm="6" md="6" lg="4">
-				<v-select
-					v-model="emergencyContactRelationship"
-					:items="relationshipOptions"
-					label="Relationship: this person is your"
-					prepend-icon="mdi-blank">
-				</v-select>
-			</v-col>
-		</v-row>
-	</v-container>
-</v-form>
+  <v-form ref="form" v-model="valid">
+    <v-container fluid>
+      <v-row align="center" justify="start">
+        <!-- Last name -->
+        <v-col cols="12" sm="6" md="6" lg="4">
+          <v-text-field
+            required
+            :rules="[(v) => !!v || 'Last name field is required']"
+            v-model="emergencyContactFamilyName"
+            prepend-icon="mdi-blank"
+          >
+            <template #label>
+              <span class="red--text"><strong>* </strong></span>Last Name
+            </template>
+          </v-text-field>
+        </v-col>
+        <!-- First name -->
+        <v-col cols="12" sm="6" md="6" lg="4">
+          <v-text-field
+            required
+            :rules="[(v) => !!v || 'First name field is required']"
+            v-model="emergencyContactGivenName"
+            prepend-icon="mdi-blank"
+          >
+            <template #label>
+              <span class="red--text"><strong>* </strong></span>First Name
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row align="center" justify="start">
+        <!-- Phone Number -->
+        <v-col cols="12" sm="6" md="6" lg="4">
+          <v-text-field
+            required
+            :rules="[
+              (v) => v.length === 13 || 'Phone number must be 10 digits',
+            ]"
+            v-mask="'(###)###-####'"
+            v-model="emergencyContactPhoneNumber"
+            prepend-icon="mdi-phone"
+          >
+            <template #label>
+              <span class="red--text"><strong>* </strong></span>Phone Number
+            </template>
+          </v-text-field>
+        </v-col>
+        <!-- Phone Number Type -->
+        <v-col cols="12" sm="6" md="6" lg="4">
+          <v-select
+            v-model="emergencyContactPhoneNumberType"
+            :items="phoneTypeOptions"
+            label="Phone Type"
+            prepend-icon="mdi-blank"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row align="center" justify="start">
+        <!-- Relationship Type -->
+        <v-col cols="12" sm="6" md="6" lg="4">
+          <v-select
+            v-model="emergencyContactRelationship"
+            :items="relationshipOptions"
+            label="Relationship: this person is your"
+            prepend-icon="mdi-blank"
+          >
+          </v-select>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-form>
 </template>
 
 <script>
@@ -76,12 +79,23 @@ export default {
   data() {
     return {
       phoneTypeOptions: ["Home", "Mobile", "Work"],
-      relationshipOptions: ["Spouse", "Parent", "Guardian", "Care Giver", "Sibling", "Grandparent", "Child", "Foster Child", "Stepchild", "Other"],
-      emergencyContactFamilyName: '',
-      emergencyContactGivenName: '',
-      emergencyContactPhoneNumber: '',
-      emergencyContactPhoneNumberType: '',
-      emergencyContactRelationship: '',
+      relationshipOptions: [
+        "Spouse",
+        "Parent",
+        "Guardian",
+        "Care Giver",
+        "Sibling",
+        "Grandparent",
+        "Child",
+        "Foster Child",
+        "Stepchild",
+        "Other",
+      ],
+      emergencyContactFamilyName: "",
+      emergencyContactGivenName: "",
+      emergencyContactPhoneNumber: "",
+      emergencyContactPhoneNumberType: "",
+      emergencyContactRelationship: "",
       valid: false,
     };
   },
@@ -125,8 +139,8 @@ export default {
         alert(message);
         return false;
       }
-        this.$refs.form.validate();
-        if (!this.valid) return;
+      this.$refs.form.validate();
+      if (!this.valid) return;
       this.sendHouseholdEmergencyContactInfoToReviewPage();
       return true;
     },

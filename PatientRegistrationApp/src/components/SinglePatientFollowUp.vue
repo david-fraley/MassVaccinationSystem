@@ -47,9 +47,7 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-btn color="secondary" class="ma-2 white--text">
-        Send
-      </v-btn>
+      <v-btn color="secondary" class="ma-2 white--text"> Send </v-btn>
     </v-row>
   </v-container>
 </template>

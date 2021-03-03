@@ -8,13 +8,13 @@
     </v-row>
     <v-row>
       <v-col
-        style="flex-grow:0"
+        style="flex-grow: 0"
         v-bind:class="{
           hidden: dataPersonalInfo ? !dataPersonalInfo.patientPhotoSrc : true,
         }"
       >
         <v-img
-          style="float:left"
+          style="float: left"
           contain
           max-height="300"
           max-width="300"

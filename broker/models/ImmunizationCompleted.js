@@ -28,7 +28,7 @@ const DOSE_QUANTITY_SYSTEM = "http://unitsofmeasure.org";
 
 const siteEnums = {
   "Left arm": "LA",
-  "Right arm": "RA"
+  "Right arm": "RA",
 };
 
 const routeEnums = {
@@ -38,90 +38,90 @@ const routeEnums = {
   "Intravenous injection": "IVINJ",
   "Oral swallow": "PO",
   "Subcutaneous injection": "SQ",
-  Transdermal: "TRNSDERM"
+  Transdermal: "TRNSDERM",
 };
 
 exports.toFHIR = function (imm) {
   const resource = {
-      resourceType: "Immunization",
-      vaccineCode: {
-          coding: [
-              {
-                  system: VACC_SYSTEM,
-                  code: imm.vaccine,
-                  display: imm.vaccine
-              }
-          ]
-      },
-      manufacturer: {
-          reference: imm.manufacturer
-      },
-      lotNumber: imm.lotNumber,
-      expirationDate: imm.expirationDate,
-      patient: {
-          reference: imm.patient
-      },
-      encounter: {
-          reference: imm.encounter
-      },
-      status: imm.status,
-      occurrenceDateTime: new Date().toISOString(),
-      primarySource: imm.primarySource,
-      location: {
-          reference: imm.location
-      },
-      site: {
-          coding: [
-              {
-                  system: SITE_SYSTEM,
-                  code: siteEnums[imm.site],
-                  display: imm.site
-              }
-          ]
-      },
-      route: {
-          coding: [
-              {
-                  system: ROUTE_SYSTEM,
-                  code: routeEnums[imm.route],
-                  display: imm.route
-              }
-          ]
-      },
-      doseQuantity: {
-          value: imm.doseQuantity.split(" ")[0],
-          system: DOSE_QUANTITY_SYSTEM,
-          code: imm.doseQuantity.split(" ")[1]
-      },
-      performer: [
-          {
-              actor: {
-                  reference: imm.performer
-              }
-          }
+    resourceType: "Immunization",
+    vaccineCode: {
+      coding: [
+        {
+          system: VACC_SYSTEM,
+          code: imm.vaccine,
+          display: imm.vaccine,
+        },
       ],
-      note: [
-          {
-              text: imm.note
-          }
+    },
+    manufacturer: {
+      reference: imm.manufacturer,
+    },
+    lotNumber: imm.lotNumber,
+    expirationDate: imm.expirationDate,
+    patient: {
+      reference: imm.patient,
+    },
+    encounter: {
+      reference: imm.encounter,
+    },
+    status: imm.status,
+    occurrenceDateTime: new Date().toISOString(),
+    primarySource: imm.primarySource,
+    location: {
+      reference: imm.location,
+    },
+    site: {
+      coding: [
+        {
+          system: SITE_SYSTEM,
+          code: siteEnums[imm.site],
+          display: imm.site,
+        },
       ],
-      education: [
-          // add later
+    },
+    route: {
+      coding: [
+        {
+          system: ROUTE_SYSTEM,
+          code: routeEnums[imm.route],
+          display: imm.route,
+        },
       ],
-      protocolApplied: [
-          {
-              series: imm.series,
-              doseNumberPositiveInt: imm.doseNumber,
-              seriesDosesPositiveInt: imm.seriesDoses
-          }
-      ]
+    },
+    doseQuantity: {
+      value: imm.doseQuantity.split(" ")[0],
+      system: DOSE_QUANTITY_SYSTEM,
+      code: imm.doseQuantity.split(" ")[1],
+    },
+    performer: [
+      {
+        actor: {
+          reference: imm.performer,
+        },
+      },
+    ],
+    note: [
+      {
+        text: imm.note,
+      },
+    ],
+    education: [
+      // add later
+    ],
+    protocolApplied: [
+      {
+        series: imm.series,
+        doseNumberPositiveInt: imm.doseNumber,
+        seriesDosesPositiveInt: imm.seriesDoses,
+      },
+    ],
   };
 
   // add education
   let education;
   for (education of imm.education) {
     resource.education.push({
-      reference: education
+      reference: education,
     });
   }
 
@@ -151,7 +151,7 @@ exports.toModel = (immunization) => {
       education: [immunization.education[0].reference],
       series: immunization.protocolApplied[0].series,
       doseNumber: immunization.protocolApplied[0].doseNumberPositiveInt,
-      seriesDoses: immunization.protocolApplied[0].seriesDosesPositiveInt
+      seriesDoses: immunization.protocolApplied[0].seriesDosesPositiveInt,
     };
   } catch (e) {
     model = immunization;

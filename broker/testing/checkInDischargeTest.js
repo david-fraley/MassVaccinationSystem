@@ -6,8 +6,8 @@ const globals = require("./globals");
  */
 async function setup() {
   const setupAppointment = globals.fhirServer.put(
-      "/Appointment/example",
-      JSON.parse(globals.examples.CheckInAppointment)
+    "/Appointment/example",
+    JSON.parse(globals.examples.CheckInAppointment)
   );
   await Promise.all([setupAppointment]).catch((error) => {
     console.log("Check-in setup failed");
@@ -48,7 +48,7 @@ async function checkIn() {
     .post("/check-in", {
       status: "arrived",
       patient: "Patient/example",
-      location: "Location/example"
+      location: "Location/example",
     })
     .then((response) => {
       globals.config(response);
@@ -66,9 +66,9 @@ async function checkIn() {
  * Check-in and then discharge.
  */
 async function test() {
-    const response = await checkIn();
+  const response = await checkIn();
 
-    await discharge(response.appointment, response.encounter);
+  await discharge(response.appointment, response.encounter);
 }
 
 module.exports = async () => {

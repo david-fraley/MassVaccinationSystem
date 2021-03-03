@@ -8,36 +8,49 @@
         <v-divider></v-divider>
       </v-col>
     </v-row>
-    <v-row> 
-        <v-col cols="12">
-          <div class="font-weight-medium secondary--text">Retrieve the patient's record by scanning their QR code.</div>
-        </v-col>
+    <v-row>
+      <v-col cols="12">
+        <div class="font-weight-medium secondary--text">
+          Retrieve the patient's record by scanning their QR code.
+        </div>
+      </v-col>
     </v-row>
-    
-  <template>
-  <v-row><div>
-    <p class="error" v-if="isCameraOn && noFrontCamera">
-      You don't seem to have a front camera on your device
-    </p>
 
-    <p class="error" v-if="isCameraOn && noRearCamera">
-      You don't seem to have a rear camera on your device
-    </p></div></v-row>
-  <v-row>
-    <v-col cols="6">
-    <v-btn @click="scanQrCode()" color="accent"> Scan QR Code </v-btn>
-    </v-col>
-    <v-col cols="6">
-    <div v-if="isCameraOn && !noFrontCamera && !noRearCamera">
-      <v-btn @click="switchCamera" color="accent"> Switch Camera </v-btn>
-    </div>
-    </v-col>
-  </v-row>
-  <div v-if="isCameraOn"><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
-    </qrcode-stream></v-col></v-row>
-    <v-row><p class="decode-result"> Result: <b>{{result}}</b></p></v-row>
-  </div>
-  </template>
+    <template>
+      <v-row
+        ><div>
+          <p class="error" v-if="isCameraOn && noFrontCamera">
+            You don't seem to have a front camera on your device
+          </p>
+
+          <p class="error" v-if="isCameraOn && noRearCamera">
+            You don't seem to have a rear camera on your device
+          </p>
+        </div></v-row
+      >
+      <v-row>
+        <v-col cols="6">
+          <v-btn @click="scanQrCode()" color="accent"> Scan QR Code </v-btn>
+        </v-col>
+        <v-col cols="6">
+          <div v-if="isCameraOn && !noFrontCamera && !noRearCamera">
+            <v-btn @click="switchCamera" color="accent"> Switch Camera </v-btn>
+          </div>
+        </v-col>
+      </v-row>
+      <div v-if="isCameraOn">
+        <v-row
+          ><v-col cols="6"
+            ><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
+            </qrcode-stream></v-col
+        ></v-row>
+        <v-row
+          ><p class="decode-result">
+            Result: <b>{{ result }}</b>
+          </p></v-row
+        >
+      </div>
+    </template>
     <v-row>
       <v-col cols="12">
         <v-divider></v-divider>
@@ -85,7 +98,7 @@
           <div class="secondary--text">Date of Birth</div>
         </v-col>
         <v-col cols="3">
-        <!-- Date of Birth -->
+          <!-- Date of Birth -->
           <v-menu
             attach
             :close-on-content-click="false"
@@ -95,7 +108,8 @@
           >
             <template v-slot:activator="{ on }">
               <v-text-field
-                outlined dense 
+                outlined
+                dense
                 v-model="dateFormatted"
                 :rules="birthdateRules"
                 placeholder="MM/DD/YYYY"
@@ -106,10 +120,7 @@
               >
               </v-text-field>
             </template>
-            <v-date-picker
-              reactive
-              v-model="date"
-            ></v-date-picker>
+            <v-date-picker reactive v-model="date"></v-date-picker>
           </v-menu>
         </v-col>
         <v-spacer></v-spacer>
@@ -117,19 +128,18 @@
           <div class="secondary--text">Zip Code (optional)</div>
         </v-col>
         <v-col cols="3">
-          <v-text-field 
-            outlined 
-            dense 
+          <v-text-field
+            outlined
+            dense
             :rules="postalCodeRules"
-            v-model="postalCode">
+            v-model="postalCode"
+          >
           </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <v-col cols="12">
-          <v-btn color="accent" @click="searchPatient">
-            Search
-          </v-btn>
+          <v-btn color="accent" @click="searchPatient"> Search </v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -166,48 +176,48 @@
 
 <script>
 import brokerRequests from "../brokerRequests";
-import {QrcodeStream} from "vue-qrcode-reader";
+import { QrcodeStream } from "vue-qrcode-reader";
 export default {
   name: "PatientLookupPage",
   watch: {
-      date () {
-        this.dateFormatted = this.formatDate(this.date)
-      },
+    date() {
+      this.dateFormatted = this.formatDate(this.date);
+    },
   },
   methods: {
-    toggleCamera () {
+    toggleCamera() {
       this.isCameraOn = !this.isCameraOn;
     },
-    switchCamera () {
+    switchCamera() {
       switch (this.camera) {
-        case 'front':
-          this.camera = 'rear'
-          break
-        case 'rear':
-          this.camera = 'front'
-          break
+        case "front":
+          this.camera = "rear";
+          break;
+        case "rear":
+          this.camera = "front";
+          break;
       }
     },
-    async onInit (promise) {
+    async onInit(promise) {
       try {
-        await promise
+        await promise;
       } catch (error) {
-        const triedFrontCamera = this.camera === 'front'
-        const triedRearCamera = this.camera === 'rear'
-        const cameraMissingError = error.name === 'OverconstrainedError'
+        const triedFrontCamera = this.camera === "front";
+        const triedRearCamera = this.camera === "rear";
+        const cameraMissingError = error.name === "OverconstrainedError";
         if (triedRearCamera && cameraMissingError) {
-          this.noRearCamera = true
-          this.camera = 'front'
+          this.noRearCamera = true;
+          this.camera = "front";
         }
         if (triedFrontCamera && cameraMissingError) {
-          this.noFrontCamera = true
-          this.camera = 'rear'
+          this.noFrontCamera = true;
+          this.camera = "rear";
         }
-        console.error(error)
+        console.error(error);
       }
     },
-    onDecode (result) {
-      this.result = result
+    onDecode(result) {
+      this.result = result;
 
       //Interim solution:  extract screening responses from QR code (part 1 of 2)
       var res = this.result.split("|");
@@ -246,13 +256,13 @@ export default {
         }
 
         // Accomodate form validation errors
-        else if(typeof(response.error) === 'string') {
+        else if (typeof response.error === "string") {
           alert(response.error.error);
         }
 
         // Accomodate FHIR errors
         else {
-          alert('No patients found');
+          alert("No patients found");
         }
         this.loading = false;
       });
@@ -308,12 +318,14 @@ export default {
           }
         });
 
-      await Promise.all([immunizationPromise, encounterPromise, appointmentPromise]).catch(
-        (error) => {
-          console.log(error);
-          console.log("PatientLookupPage patientRecordRetrieved error");
-        }
-      );
+      await Promise.all([
+        immunizationPromise,
+        encounterPromise,
+        appointmentPromise,
+      ]).catch((error) => {
+        console.log(error);
+        console.log("PatientLookupPage patientRecordRetrieved error");
+      });
 
       return payload;
     },
@@ -324,57 +336,57 @@ export default {
 
         //Interim solution:  extract screening responses from QR code (part 2 of 2)
         var res = this.result.split("|");
-        if(res.length > 1)
-        {
+        if (res.length > 1) {
           const screeningResponsesPayload = {
-          vaccinationDecision: '',
-          screeningQ1: res[1],
-          screeningQ2: res[2],
-          screeningQ2b: res[3],
-          screeningQ3a: res[4],
-          screeningQ3b: res[5],
-          screeningQ3c: res[6],
-          screeningQ4: res[7],
-          screeningQ5: res[8],
-          screeningQ6: res[9],
-          screeningQ7: res[10],
-          screeningQ8: res[11],
-          screeningComplete: 'true'
-          }
+            vaccinationDecision: "",
+            screeningQ1: res[1],
+            screeningQ2: res[2],
+            screeningQ2b: res[3],
+            screeningQ3a: res[4],
+            screeningQ3b: res[5],
+            screeningQ3c: res[6],
+            screeningQ4: res[7],
+            screeningQ5: res[8],
+            screeningQ6: res[9],
+            screeningQ7: res[10],
+            screeningQ8: res[11],
+            screeningComplete: "true",
+          };
           //send data to Vuex
-          this.$store.dispatch('vaccinationScreeningUpdate', screeningResponsesPayload)
+          this.$store.dispatch(
+            "vaccinationScreeningUpdate",
+            screeningResponsesPayload
+          );
         }
         //end of interim solution (part 2 of 2)
 
-        
-        if(this.$store.getters.hasPatientBeenCheckedIn) {
+        if (this.$store.getters.hasPatientBeenCheckedIn) {
           //Advance to the Consent and Screening page
           this.$router.push("ConsentScreening");
-        }
-        else {
+        } else {
           //Advance to the Check In page
           this.$router.push("CheckIn");
         }
       });
     },
-    formatDate (date) {
-      if (!date) return null
+    formatDate(date) {
+      if (!date) return null;
 
-      const [year, month, day] = date.split('-')
-      return `${month}/${day}/${year}`
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
     },
-    parseDate (date) {
-      if (!date) return null
+    parseDate(date) {
+      if (!date) return null;
 
-      const [month, day, year] = date.split('/')
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+      const [month, day, year] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
     scanQrCode() {
-      this.toggleCamera()
+      this.toggleCamera();
     },
   },
   components: {
-    QrcodeStream
+    QrcodeStream,
   },
   data() {
     return {
@@ -384,18 +396,19 @@ export default {
       patient: "",
       loading: false,
       valid: false,
-      camera: 'rear',
+      camera: "rear",
       isCameraOn: false,
       noRearCamera: false,
       noFrontCamera: false,
-      result: '',
+      result: "",
       birthdateRules: [
-        (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
+        (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY",
       ],
       postalCodeRules: [
-				(v) =>
-				!v || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) || 
-				"Zip code format must be ##### or #####-####",
+        (v) =>
+          !v ||
+          /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+          "Zip code format must be ##### or #####-####",
       ],
       date: new Date().toISOString().substr(0, 10),
       dateFormatted: "",
@@ -422,6 +435,6 @@ tr.v-data-table__selected {
   color: #ffffff;
 }
 .error {
-    font-weight: medium;
+  font-weight: medium;
 }
 </style>

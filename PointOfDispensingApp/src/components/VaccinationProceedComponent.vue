@@ -2,7 +2,11 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent" @click="scanBarcode" :disabled="isVaccinationEventPageReadOnly">
+        <v-btn
+          color="accent"
+          @click="scanBarcode"
+          :disabled="isVaccinationEventPageReadOnly"
+        >
           Scan vaccine barcode
         </v-btn>
       </v-col>
@@ -12,7 +16,7 @@
         <v-row no-gutters>
           <v-col cols="4">
             <div class="secondary--text">
-              <span style="color:red">*</span>Lot Number
+              <span style="color: red">*</span>Lot Number
             </div>
           </v-col>
           <v-col cols="8">
@@ -28,7 +32,7 @@
           </v-col>
           <v-col cols="4">
             <div class="secondary--text">
-              <span style="color:red">*</span>Expiration Date
+              <span style="color: red">*</span>Expiration Date
             </div>
           </v-col>
           <v-col cols="8">
@@ -44,7 +48,7 @@
           </v-col>
           <v-col cols="4">
             <div class="secondary--text">
-              <span style="color:red">*</span>Manufacturer
+              <span style="color: red">*</span>Manufacturer
             </div>
           </v-col>
           <v-col cols="8">
@@ -66,7 +70,7 @@
         <v-row no-gutters>
           <v-col cols="4">
             <div class="secondary--text">
-              <span style="color:red">*</span>Dose Quantity
+              <span style="color: red">*</span>Dose Quantity
             </div>
           </v-col>
           <v-col cols="8">
@@ -83,7 +87,7 @@
           </v-col>
           <v-col cols="4">
             <div class="secondary--text">
-              <span style="color:red">*</span>Dose Number
+              <span style="color: red">*</span>Dose Number
             </div>
           </v-col>
           <v-col cols="8">
@@ -117,10 +121,10 @@
             <div class="secondary--text">Healthcare Practitioner</div>
           </v-col>
           <v-col cols="8">
-            <v-text-field 
-              outlined 
-              dense 
-              filled 
+            <v-text-field
+              outlined
+              dense
+              filled
               readonly
               :value="practitionerName"
               :disabled="isVaccinationEventPageReadOnly"
@@ -128,7 +132,7 @@
           </v-col>
           <v-col cols="4">
             <div class="secondary--text">
-              <span style="color:red">*</span>Site of Vaccination
+              <span style="color: red">*</span>Site of Vaccination
             </div>
           </v-col>
           <v-col cols="8">
@@ -183,7 +187,13 @@
           <v-dialog v-model="dialog" width="500">
             <template v-slot:activator="{ on, attrs }">
               <v-col cols="6">
-                <v-btn block color="accent" v-bind="attrs" v-on="on" :disabled="isVaccinationEventPageReadOnly">
+                <v-btn
+                  block
+                  color="accent"
+                  v-bind="attrs"
+                  v-on="on"
+                  :disabled="isVaccinationEventPageReadOnly"
+                >
                   Submit vaccination record
                 </v-btn>
               </v-col>
@@ -198,11 +208,7 @@
                   Back
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn
-                  color="primary"
-                  text
-                  @click="submitVaccinationRecord()"
-                >
+                <v-btn color="primary" text @click="submitVaccinationRecord()">
                   Submit
                 </v-btn>
               </v-card-actions>
@@ -246,7 +252,7 @@ export default {
       return this.$store.state.appointmentResource.id;
     },
     isVaccinationEventPageReadOnly() {
-      return this.$store.getters.isVaccinationEventPageReadOnly
+      return this.$store.getters.isVaccinationEventPageReadOnly;
     },
   },
   methods: {
@@ -268,7 +274,7 @@ export default {
       this.dialog = false;
 
       //end the encounter
-      this.endEncounter()
+      this.endEncounter();
     },
     onDischarge(payload) {
       this.$store.dispatch("patientDischarged", payload);

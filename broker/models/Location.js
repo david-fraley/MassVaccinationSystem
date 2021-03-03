@@ -18,55 +18,53 @@ Location {
 
 const TYPE_SYSTEM = "http://hl7.org/fhir/ValueSet/location-physical-type";
 exports.toFHIR = function (loc) {
-    const resource = {
-        resourceType: "Location",
-        name: loc.name,
-        identifier: [
+  const resource = {
+    resourceType: "Location",
+    name: loc.name,
+    identifier: [
+      {
+        value: loc.wirClientID,
+        type: {
+          coding: [
             {
-                value: loc.wirClientID,
-                type: {
-                    coding: [
-                        {
-                            code: "WIR",
-                            display: "WIR Client ID"
-                        }
-                    ]
-                }
-            }
-        ],
-        status: loc.status,
-        mode: loc.mode,
-        type: [
-            {
-                coding: [
-                    {
-                        code: loc.type,
-                        display: loc.type
-                    }
-                ]
-            }
-        ],
-
-        address: {
-            line: [loc.address.line],
-            city: loc.address.city,
-            state: loc.address.state,
-            postalCode: loc.address.postalCode,
-            country: loc.address.country
+              code: "WIR",
+              display: "WIR Client ID",
+            },
+          ],
         },
+      },
+    ],
+    status: loc.status,
+    mode: loc.mode,
+    type: [
+      {
+        coding: [
+          {
+            code: loc.type,
+            display: loc.type,
+          },
+        ],
+      },
+    ],
 
-        physicalType: {
-            coding: [
-                {
-                    system:"http://hl7.org/fhir/ValueSet/location-physical-type",
-                    code: loc.physicalType,
-                    display: loc.physicalType
-                }
-            ]
-        }
-    };
-  
-    return resource;
-}
-            
+    address: {
+      line: [loc.address.line],
+      city: loc.address.city,
+      state: loc.address.state,
+      postalCode: loc.address.postalCode,
+      country: loc.address.country,
+    },
 
+    physicalType: {
+      coding: [
+        {
+          system: "http://hl7.org/fhir/ValueSet/location-physical-type",
+          code: loc.physicalType,
+          display: loc.physicalType,
+        },
+      ],
+    },
+  };
+
+  return resource;
+};

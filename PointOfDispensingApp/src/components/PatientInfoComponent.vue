@@ -144,23 +144,21 @@ export default {
 
       let dateOfBirthString = this.$store.state.patientResource.birthDate;
 
-      if((dateOfBirthString == "") || (!dateOfBirthString))
-        return " ";
+      if (dateOfBirthString == "" || !dateOfBirthString) return " ";
 
-      let dobYear = dateOfBirthString.substring(6,10);
+      let dobYear = dateOfBirthString.substring(6, 10);
       let ageYears = currentDate.getFullYear() - dobYear;
 
-      let dobMonth = dateOfBirthString.substring(0,2);
+      let dobMonth = dateOfBirthString.substring(0, 2);
       let currentMonth = currentDate.getMonth() + 1;
       let ageMonths;
-      if(currentMonth >= dobMonth) {
-        ageMonths = currentMonth - dobMonth
-      }
-      else {
+      if (currentMonth >= dobMonth) {
+        ageMonths = currentMonth - dobMonth;
+      } else {
         ageYears--;
         ageMonths = 12 + currentMonth - dobMonth;
       }
-      
+
       let ageString = ageYears + " yr(s). " + ageMonths + " mo(s).";
       return ageString;
     },
@@ -170,8 +168,11 @@ export default {
     patientStreetAddress() {
       let address = this.$store.state.patientResource.address;
       let components = ["line", "city", "state", "postalCode"];
-      
-      return components.map(component => address[component]).filter(v => v).join(", ");
+
+      return components
+        .map((component) => address[component])
+        .filter((v) => v)
+        .join(", ");
     },
     patientPreferredLanguage() {
       return this.$store.state.patientResource.language;

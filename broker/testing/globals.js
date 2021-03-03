@@ -7,14 +7,14 @@ const axios = require("axios").default;
 const examples = require("./examples");
 
 const broker = axios.create({
-  baseURL: "http://localhost:3000"
+  baseURL: "http://localhost:3000",
 });
 const fhirServer = axios.create({
   baseURL: "http://localhost:8080/hapi-fhir-jpaserver/fhir",
   headers: {
     post: { "content-type": "application/fhir+json" },
     put: { "content-type": "application/fhir+json" },
-    patch: { "content-type": "application/json-patch+json" }
+    patch: { "content-type": "application/json-patch+json" },
   },
 });
 
@@ -43,5 +43,5 @@ module.exports = {
   broker: broker,
   fhirServer: fhirServer,
   config: config,
-  info: info
+  info: info,
 };

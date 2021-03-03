@@ -17,7 +17,7 @@ exports.read = (req, res) => {
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message
+        error: e.response ? e.response.data : e.message,
       });
     });
 };
@@ -33,7 +33,7 @@ exports.create = (req, res) => {
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message
+        error: e.response ? e.response.data : e.message,
       });
     });
 };
@@ -45,13 +45,13 @@ exports.checkIn = async (req) => {
 
   // get id of resource to update
   if (req.body.hasOwnProperty("patient")) {
-      const config = {
-          params: {
-              actor: req.body.patient,
-              status: "booked"
-          }
-      };
-      id = await axios.get("/Appointment", config).then((response) => {
+    const config = {
+      params: {
+        actor: req.body.patient,
+        status: "booked",
+      },
+    };
+    id = await axios.get("/Appointment", config).then((response) => {
       const bundle = response.data;
 
       if (!bundle.hasOwnProperty("entry")) {
@@ -66,11 +66,11 @@ exports.checkIn = async (req) => {
 
   // patch status and start time
   const patch = [
-      {
-          op: "add",
-          path: "/status",
-          value: status
-      }
+    {
+      op: "add",
+      path: "/status",
+      value: status,
+    },
   ];
 
   // update the database with new appointment
@@ -87,11 +87,11 @@ exports.discharge = async (req) => {
 
   // patch status and end time
   const patch = [
-      {
-          op: "add",
-          path: "/status",
-          value: status
-      }
+    {
+      op: "add",
+      path: "/status",
+      value: status,
+    },
   ];
 
   // update the database with new appointment

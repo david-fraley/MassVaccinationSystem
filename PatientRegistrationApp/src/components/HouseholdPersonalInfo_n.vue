@@ -81,18 +81,18 @@
     <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
         <v-form ref="form" v-model="valid">
-        <!-- Date of Birth -->
-        <v-text-field
-          v-model="dob"
-          :rules="birthdateRules"
-          placeholder="MM/DD/YYYY"
-          v-mask="'##/##/####'"
-          prepend-icon="mdi-blank"
-        >
-          <template #label>
-            <span class="red--text"><strong>* </strong></span>Date of Birth
-          </template>
-        </v-text-field>
+          <!-- Date of Birth -->
+          <v-text-field
+            v-model="dob"
+            :rules="birthdateRules"
+            placeholder="MM/DD/YYYY"
+            v-mask="'##/##/####'"
+            prepend-icon="mdi-blank"
+          >
+            <template #label>
+              <span class="red--text"><strong>* </strong></span>Date of Birth
+            </template>
+          </v-text-field>
         </v-form>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -158,7 +158,7 @@
 
 <script>
 import EventBus from "../eventBus";
-import Rules from "@/utils/commonFormValidation"
+import Rules from "@/utils/commonFormValidation";
 
 export default {
   data() {
@@ -219,7 +219,7 @@ export default {
     householdMemberNumber: Number,
   },
   computed: {
-    maxDateStr: function() {
+    maxDateStr: function () {
       let d = new Date();
       let date = [
         d.getFullYear(),
@@ -343,8 +343,8 @@ export default {
         alert(message);
         return false;
       }
-        this.$refs.form.validate();
-        if (!this.valid) return;
+      this.$refs.form.validate();
+      if (!this.valid) return;
       this.sendHouseholdPersonalInfoDataToReviewPage();
       return true;
     },

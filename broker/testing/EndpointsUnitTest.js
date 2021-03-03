@@ -28,7 +28,7 @@ async function setup() {
     "Observation",
     "Organization",
     "Patient",
-    "Practitioner"
+    "Practitioner",
   ];
 
   const id = "example";

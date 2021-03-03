@@ -70,14 +70,10 @@
     <v-row>
       <v-col cols="2"></v-col>
       <v-col cols="3">
-        <v-btn block color="accent">
-          Print
-        </v-btn>
+        <v-btn block color="accent"> Print </v-btn>
       </v-col>
       <v-col cols="3">
-        <v-btn block color="accent">
-          E-mail
-        </v-btn>
+        <v-btn block color="accent"> E-mail </v-btn>
       </v-col>
       <v-col cols="2"></v-col>
     </v-row>

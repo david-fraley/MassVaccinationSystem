@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <v-row>
-      <p> </p> <!--blank row for spacing-->
+      <p></p>
+      <!--blank row for spacing-->
     </v-row>
     <v-row>
       <v-col cols="6">
@@ -10,17 +11,20 @@
             <div class="secondary--text">Healthcare Practitioner</div>
           </v-col>
           <v-col cols="6">
-            <v-text-field 
-              outlined 
-              dense 
-              filled 
+            <v-text-field
+              outlined
+              dense
+              filled
               readonly
               :value="practitionerName"
               :disabled="isVaccinationEventPageReadOnly"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
-            <div class="secondary--text"><span style="color:red">*</span>Reason vaccine was not administered</div>
+            <div class="secondary--text">
+              <span style="color: red">*</span>Reason vaccine was not
+              administered
+            </div>
           </v-col>
           <v-col cols="6">
             <v-select
@@ -28,7 +32,11 @@
               outlined
               dense
               required
-              :rules="[v => !!v || 'Reason vaccine was not administered field is required']"
+              :rules="[
+                (v) =>
+                  !!v ||
+                  'Reason vaccine was not administered field is required',
+              ]"
               v-model="reason"
               :readonly="isVaccinationEventPageReadOnly"
               :filled="isVaccinationEventPageReadOnly"
@@ -37,8 +45,7 @@
         </v-row>
       </v-col>
       <!--blank column for spacing-->
-      <v-col cols="6">
-      </v-col>
+      <v-col cols="6"> </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
@@ -53,35 +60,32 @@
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
-      <template> 
+      <template>
         <div class="text-center">
-          <v-dialog
-            v-model="dialog"
-            width="500"
-          >
+          <v-dialog v-model="dialog" width="500">
             <template v-slot:activator="{ on, attrs }">
               <v-col cols="6">
-                <v-btn block color="accent" v-bind="attrs" v-on="on" :disabled="isVaccinationEventPageReadOnly">
+                <v-btn
+                  block
+                  color="accent"
+                  v-bind="attrs"
+                  v-on="on"
+                  :disabled="isVaccinationEventPageReadOnly"
+                >
                   Submit vaccination record
                 </v-btn>
               </v-col>
-          </template>
+            </template>
             <v-card>
-              <v-card-title class="headline grey lighten-2 justify-center"> 
+              <v-card-title class="headline grey lighten-2 justify-center">
                 Are you sure you want to submit?
               </v-card-title>
               <v-card-actions>
-                <v-btn	
-                  color="primary"
-                  text
-                  @click="dialog = false">
+                <v-btn color="primary" text @click="dialog = false">
                   Back
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn	
-                  color="primary"
-                  text
-                  @click="submitVaccinationRecord()">
+                <v-btn color="primary" text @click="submitVaccinationRecord()">
                   Submit
                 </v-btn>
               </v-card-actions>
@@ -119,7 +123,7 @@ export default {
       return this.$store.state.config;
     },
     isVaccinationEventPageReadOnly() {
-        return this.$store.getters.isVaccinationEventPageReadOnly
+      return this.$store.getters.isVaccinationEventPageReadOnly;
     },
     encounterID() {
       return this.$store.state.encounterResource.id;
@@ -140,7 +144,7 @@ export default {
       this.dialog = false;
 
       //end the encounter
-      this.endEncounter()
+      this.endEncounter();
     },
     onDischarge(payload) {
       this.$store.dispatch("patientDischarged", payload);

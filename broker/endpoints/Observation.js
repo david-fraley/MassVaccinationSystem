@@ -19,8 +19,8 @@ exports.read = (req, res) => {
 // Response:  Observation resource (200)
 //            or JSON object with error field (400)
 exports.create = (req, res) => {
-    const observation = req.body.Observation;
-    postObservation(observation)
+  const observation = req.body.Observation;
+  postObservation(observation)
     .then((response) => {
       res.json(response.data);
     })
@@ -32,17 +32,17 @@ exports.create = (req, res) => {
 };
 
 async function postObservation(observation) {
-    const resource = Observation.toFHIR(observation);
+  const resource = Observation.toFHIR(observation);
 
-    return axios.post(`/Observation`, resource).then((response) => {
+  return axios.post(`/Observation`, resource).then((response) => {
     const ref = observation.partOf;
     // request body for PATCH
     const patch = [
-        {
-            op: "add",
-            path: "/reaction",
-            value: [{ detail: { reference: `Observation/${response.data.id}` } }],
-        },
+      {
+        op: "add",
+        path: "/reaction",
+        value: [{ detail: { reference: `Observation/${response.data.id}` } }],
+      },
     ];
 
     axios.patch(`/${ref}`, patch).catch((e) => {

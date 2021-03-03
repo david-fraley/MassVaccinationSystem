@@ -289,7 +289,7 @@
                 <template
                   v-else-if="
                     isSinglePatientReviewSubmit() &&
-                      isSinglePatientRegistration()
+                    isSinglePatientRegistration()
                   "
                 >
                   <v-btn
@@ -297,9 +297,7 @@
                     class="ma-2 white--text"
                     @click="goToPreviousPage()"
                   >
-                    <v-icon left large color="white">
-                      mdi-chevron-left
-                    </v-icon>
+                    <v-icon left large color="white"> mdi-chevron-left </v-icon>
                     Back
                   </v-btn>
 
@@ -361,7 +359,7 @@
                 <template
                   v-else-if="
                     isHouseholdPatientReviewSubmit() &&
-                      isHouseholdRegistration()
+                    isHouseholdRegistration()
                   "
                 >
                   <v-btn
@@ -369,9 +367,7 @@
                     class="ma-2 white--text"
                     @click="goToPreviousPage()"
                   >
-                    <v-icon left large color="white">
-                      mdi-chevron-left
-                    </v-icon>
+                    <v-icon left large color="white"> mdi-chevron-left </v-icon>
                     Back
                   </v-btn>
                   <v-spacer></v-spacer>
@@ -433,9 +429,7 @@
                     class="ma-2 white--text"
                     @click="goToPreviousPage()"
                   >
-                    <v-icon left large color="white">
-                      mdi-chevron-left
-                    </v-icon>
+                    <v-icon left large color="white"> mdi-chevron-left </v-icon>
                     Back
                   </v-btn>
                   <v-spacer></v-spacer>

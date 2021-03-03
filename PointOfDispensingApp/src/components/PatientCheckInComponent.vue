@@ -50,7 +50,12 @@
     <v-row>
       <v-col cols="2"> </v-col>
       <v-col cols="6">
-        <v-btn block color="accent" @click="checkIn()" :disabled="isCheckInPageReadOnly">
+        <v-btn
+          block
+          color="accent"
+          @click="checkIn()"
+          :disabled="isCheckInPageReadOnly"
+        >
           Patient information verified
         </v-btn>
       </v-col>
@@ -80,7 +85,7 @@ export default {
       return this.$store.state.encounterResource.start;
     },
     isCheckInPageReadOnly() {
-      return this.$store.getters.isCheckInPageReadOnly
+      return this.$store.getters.isCheckInPageReadOnly;
     },
   },
   methods: {
@@ -92,8 +97,8 @@ export default {
       let data = {
         status: "arrived",
         patient: `Patient/${this.patientId}`,
-        location: `Location/${this.locationId}`
-      }
+        location: `Location/${this.locationId}`,
+      };
       // make request
       brokerRequests.checkIn(data).then((response) => {
         if (response.data) {
@@ -107,6 +112,6 @@ export default {
   components: {},
   data() {
     return {};
-  }
+  },
 };
 </script>

@@ -38,18 +38,18 @@ let genderEnums = {
   Male: "male",
   Female: "female",
   Other: "other",
-  "Decline to answer": "unknown"
+  "Decline to answer": "unknown",
 };
 
 let addressUseEnums = {
   Home: "home",
-  Temporary: "temp"
+  Temporary: "temp",
 };
 
 let phoneUseEnums = {
   Home: "home",
   Mobile: "mobile",
-  Work: "work"
+  Work: "work",
 };
 
 /**
@@ -82,76 +82,76 @@ function prettyDate(date) {
 
 exports.toFHIR = function (patient) {
   const resource = {
-      resourceType: "Patient",
-      name: [
+    resourceType: "Patient",
+    name: [
+      {
+        family: patient.family,
+        given: [patient.given],
+        // middle and suffix are optional
+      },
+    ],
+    telecom: [
+      // add later
+    ],
+    gender: genderEnums[patient.gender],
+    birthDate: parseDate(patient.birthDate),
+    address: [
+      {
+        use: addressUseEnums[patient.address.use],
+        line: [patient.address.line],
+        city: patient.address.city,
+        state: patient.address.state,
+        postalCode: patient.address.postalCode,
+        country: patient.address.country,
+      },
+    ],
+    photo: [
+      {
+        url: "", // add later
+        title: "Photo of user",
+      },
+    ],
+    contact: [
+      {
+        relationship: [
           {
-              family: patient.family,
-              given: [patient.given]
-              // middle and suffix are optional
-          }
-      ],
-      telecom: [
-          // add later
-      ],
-      gender: genderEnums[patient.gender],
-      birthDate: parseDate(patient.birthDate),
-      address: [
-          {
-              use: addressUseEnums[patient.address.use],
-              line: [patient.address.line],
-              city: patient.address.city,
-              state: patient.address.state,
-              postalCode: patient.address.postalCode,
-              country: patient.address.country
-          }
-      ],
-      photo: [
-          {
-              url: "", // add later
-              title: "Photo of user"
-          }
-      ],
-      contact: [
-          {
-              relationship: [
-                  {
-                      coding: [
-                          {
-                              system: "http://terminology.hl7.org/CodeSystem/v2-0131",
-                              code: "C",
-                              display: "Emergency Contact"
-                          }
-                      ]
-                  }
-              ],
-              name: {
-                  family: patient.contact.family,
-                  given: [patient.contact.given]
+            coding: [
+              {
+                system: "http://terminology.hl7.org/CodeSystem/v2-0131",
+                code: "C",
+                display: "Emergency Contact",
               },
-              telecom: [
-                  {
-                      system: "phone",
-                      value: patient.contact.phone.value,
-                      use: phoneUseEnums[patient.contact.phone.use]
-                  }
-              ]
-          }
-      ],
-      communication: [
+            ],
+          },
+        ],
+        name: {
+          family: patient.contact.family,
+          given: [patient.contact.given],
+        },
+        telecom: [
           {
-              language: {
-                  text: patient.language
-              },
-              preferred: true
-          }
-      ],
-      link: [
-          {
-              other: {
-                  reference: patient.link
-              }
-          }
-      ]
+            system: "phone",
+            value: patient.contact.phone.value,
+            use: phoneUseEnums[patient.contact.phone.use],
+          },
+        ],
+      },
+    ],
+    communication: [
+      {
+        language: {
+          text: patient.language,
+        },
+        preferred: true,
+      },
+    ],
+    link: [
+      {
+        other: {
+          reference: patient.link,
+        },
+      },
+    ],
   };
 
   // optional
@@ -167,14 +167,14 @@ exports.toFHIR = function (patient) {
       system: "phone",
       value: patient.phone[idx].value,
       use: phoneUseEnums[patient.phone[idx].use],
-      rank: `${idx}`
+      rank: `${idx}`,
     });
   }
   for (let idx in patient.email) {
     resource.telecom.push({
       system: "email",
       value: patient.email[idx],
-      rank: `${idx}`
+      rank: `${idx}`,
     });
   }
 
@@ -182,45 +182,45 @@ exports.toFHIR = function (patient) {
 };
 
 exports.toModel = function (patient) {
-    const model = {
-        resourceType: patient.resourceType,
-        id: patient.id,
-        family: patient.name ? patient.name[0].family : "",
-        given: patient.name
-            ? patient.name[0].given
-            ? patient.name[0].given[0]
-            : ""
-            : "",
-        middle: patient.name
-            ? patient.name[0].given
-            ? patient.name[0].given[1]
-            : ""
-            : "",
-        suffix: patient.name
-            ? patient.name[0].suffix
-            ? patient.name[0].suffix[0]
-            : ""
-            : "",
-        gender: patient.gender,
-        birthDate: prettyDate(patient.birthDate),
-        address: {
-            line: patient.address
-                ? patient.address[0].line
-                ? patient.address[0].line[0]
-                : ""
-                : "",
-            city: patient.address ? patient.address[0].city : "",
-            state: patient.address ? patient.address[0].state : "",
-            postalCode: patient.address ? patient.address[0].postalCode : "",
-            country: patient.address ? patient.address[0].country : ""
-        },
-        language: patient.communication
-            ? patient.communication[0].language
-            ? patient.communication[0].language.text
-            : ""
-            : "",
-        link: patient.link ? patient.link[0].other.reference : null
-    };
+  const model = {
+    resourceType: patient.resourceType,
+    id: patient.id,
+    family: patient.name ? patient.name[0].family : "",
+    given: patient.name
+      ? patient.name[0].given
+        ? patient.name[0].given[0]
+        : ""
+      : "",
+    middle: patient.name
+      ? patient.name[0].given
+        ? patient.name[0].given[1]
+        : ""
+      : "",
+    suffix: patient.name
+      ? patient.name[0].suffix
+        ? patient.name[0].suffix[0]
+        : ""
+      : "",
+    gender: patient.gender,
+    birthDate: prettyDate(patient.birthDate),
+    address: {
+      line: patient.address
+        ? patient.address[0].line
+          ? patient.address[0].line[0]
+          : ""
+        : "",
+      city: patient.address ? patient.address[0].city : "",
+      state: patient.address ? patient.address[0].state : "",
+      postalCode: patient.address ? patient.address[0].postalCode : "",
+      country: patient.address ? patient.address[0].country : "",
+    },
+    language: patient.communication
+      ? patient.communication[0].language
+        ? patient.communication[0].language.text
+        : ""
+      : "",
+    link: patient.link ? patient.link[0].other.reference : null,
+  };
 
-    return model;
+  return model;
 };

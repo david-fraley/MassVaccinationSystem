@@ -11,7 +11,7 @@ const endpoints = [
   "Observation",
   "Organization",
   "Patient",
-  "Practitioner"
+  "Practitioner",
 ];
 
 // List of created resources - for cleanup
@@ -56,29 +56,25 @@ async function cleanup() {
   let url;
   for (url of urls) {
     let promise;
-    
+
     if (url.includes("Patient")) {
-      const patientIdRecord = await Patient.findByQrCode(url.split('/')[2]);
+      const patientIdRecord = await Patient.findByQrCode(url.split("/")[2]);
       promise = globals.fhirServer.delete(`/Patient/${patientIdRecord.id}`);
       try {
         await promise;
-      }
-      catch(error) {
+      } catch (error) {
         console.log("generalTest cleanup failed");
         globals.info(error);
       }
-    }
-    else if(url.includes("RelatedPerson")) {
+    } else if (url.includes("RelatedPerson")) {
       promise = globals.fhirServer.delete(`${url}`);
       try {
         await promise;
-      }
-      catch(error) {
+      } catch (error) {
         console.log("generalTest cleanup failed");
         globals.info(error);
       }
-    }
-    else {
+    } else {
       promise = globals.fhirServer.delete(`${url}`);
       promises.push(promise);
     }
@@ -101,27 +97,26 @@ async function test() {
     const url = `/${endpoint}`;
     const data = JSON.parse(globals.examples[endpoint]);
 
-    if(endpoint !== 'Patient') {
-        const read = new globals.broker
-            .get(url)
-            .then((response) => globals.config(response))
-            .catch((error) => globals.info(error));
-        promises.push(read);
+    if (endpoint !== "Patient") {
+      const read = new globals.broker.get(url)
+        .then((response) => globals.config(response))
+        .catch((error) => globals.info(error));
+      promises.push(read);
     }
 
     const create = globals.broker
-        .post(url, data)
-        .then(async (response) => {
-            if (response.data.id) urls.push(`${url}/${response.data.id}`);
-            else if (response.data.Patient)
-            // wait for references to be added to cleanup list
-                await markPatients(response.data.Patient);
+      .post(url, data)
+      .then(async (response) => {
+        if (response.data.id) urls.push(`${url}/${response.data.id}`);
+        else if (response.data.Patient)
+          // wait for references to be added to cleanup list
+          await markPatients(response.data.Patient);
 
-            globals.config(response);
-            console.log(JSON.stringify(response.data));
-            console.log("\n");
-        })
-        .catch((error) => globals.info(error));
+        globals.config(response);
+        console.log(JSON.stringify(response.data));
+        console.log("\n");
+      })
+      .catch((error) => globals.info(error));
     promises.push(create);
   }
 

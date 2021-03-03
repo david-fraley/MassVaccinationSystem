@@ -3,15 +3,12 @@ const Encounter = require("./Encounter");
 
 // Discharge given appt id
 module.exports = (req, res) => {
-    const response = {};
+  const response = {};
 
-    if (req.query.appointment && req.query.encounter) {
-    Promise.all([
-      Encounter.discharge(req),
-      Appointment.discharge(req)
-    ])
+  if (req.query.appointment && req.query.encounter) {
+    Promise.all([Encounter.discharge(req), Appointment.discharge(req)])
       .then((results) => {
-          for (let result of results) {
+        for (let result of results) {
           response[result.resourceType] = result;
         }
         res.json(response);

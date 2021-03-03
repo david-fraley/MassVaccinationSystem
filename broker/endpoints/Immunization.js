@@ -26,14 +26,14 @@ exports.read = (req, res) => {
 // Response:  Immunization resource (200)
 //            or JSON object with error field (400)
 exports.create = (req, res) => {
-    const imm = req.body.Immunization;
-    postImmunization(imm)
+  const imm = req.body.Immunization;
+  postImmunization(imm)
     .then((response) => {
       res.json(response);
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message
+        error: e.response ? e.response.data : e.message,
       });
     });
 };

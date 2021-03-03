@@ -18,57 +18,57 @@ const reasonEnums = {
   Immunity: "IMMUNE",
   "Medical Precaution": "MEDPREC",
   "Out of Stock": "OSTOCK",
-  "Patient Objection": "PATOBJ"
+  "Patient Objection": "PATOBJ",
 };
 
 exports.toFHIR = (imm) => {
-    const resource = {
-        resourceType: "Immunization",
-        vaccineCode: {
-            coding: [
-                {
-                    system: VACC_SYSTEM,
-                    code: imm.vaccine,
-                    display: imm.vaccine
-                }
-            ]
+  const resource = {
+    resourceType: "Immunization",
+    vaccineCode: {
+      coding: [
+        {
+          system: VACC_SYSTEM,
+          code: imm.vaccine,
+          display: imm.vaccine,
         },
-        patient: {
-            reference: imm.patient
+      ],
+    },
+    patient: {
+      reference: imm.patient,
+    },
+    encounter: {
+      reference: imm.encounter,
+    },
+    status: imm.status,
+    statusReason: {
+      coding: [
+        {
+          system: STAT_REASON_SYSTEM,
+          code: reasonEnums[imm.reason],
+          display: imm.reason,
         },
-        encounter: {
-            reference: imm.encounter
+      ],
+    },
+    occurrenceDateTime: new Date().toISOString(),
+    primarySource: imm.primarySource,
+    location: {
+      reference: imm.location,
+    },
+    performer: [
+      {
+        actor: {
+          reference: imm.performer,
         },
-        status: imm.status,
-        statusReason: {
-            coding: [
-                {
-                    system: STAT_REASON_SYSTEM,
-                    code: reasonEnums[imm.reason],
-                    display: imm.reason
-                },
-            ],
-        },
-        occurrenceDateTime: new Date().toISOString(),
-        primarySource: imm.primarySource,
-        location: {
-            reference: imm.location
-        },
-        performer: [
-            {
-                actor: {
-                    reference: imm.performer
-                }
-            }
-        ],
-        note: [
-            {
-                text: imm.note
-            }
-        ]
-    };
+      },
+    ],
+    note: [
+      {
+        text: imm.note,
+      },
+    ],
+  };
 
-    return resource;
+  return resource;
 };
 
 exports.toModel = (immunization) => {
@@ -84,7 +84,7 @@ exports.toModel = (immunization) => {
       occurrence: immunization.occurrenceDateTime,
       location: immunization.location.reference,
       performer: [immunization.performer[0].actor.reference],
-      note: immunization.note ? immunization.note[0].text : immunization.note
+      note: immunization.note ? immunization.note[0].text : immunization.note,
     };
   } catch (e) {
     model = immunization;

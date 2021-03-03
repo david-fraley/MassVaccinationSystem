@@ -11,46 +11,45 @@
     <v-row>
       <PatientInfoComponent />
       <template v-if="wasDecisionMadeToProceed()">
-      <VaccinationProceedComponent />
+        <VaccinationProceedComponent />
       </template>
       <template v-else-if="wasDecisionMadeToCancel()">
-      <VaccinationCanceledComponent />
+        <VaccinationCanceledComponent />
       </template>
       <template v-else>
-        <div class="font-weight-medium secondary--text">Please review and complete the screening questions.</div>
+        <div class="font-weight-medium secondary--text">
+          Please review and complete the screening questions.
+        </div>
       </template>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import PatientInfoComponent from './PatientInfoComponent';
-import VaccinationProceedComponent from './VaccinationProceedComponent';
-import VaccinationCanceledComponent from './VaccinationCanceledComponent';
+import PatientInfoComponent from "./PatientInfoComponent";
+import VaccinationProceedComponent from "./VaccinationProceedComponent";
+import VaccinationCanceledComponent from "./VaccinationCanceledComponent";
 
-  export default {
-    name: 'VaccinationEventPage',
-    methods: 
-    {
-      wasDecisionMadeToProceed()
-      {
-        return (this.vaccinationProceedDecision=='Yes')
-      },
-      wasDecisionMadeToCancel()
-      {
-        return (this.vaccinationProceedDecision=='No')
-      }
+export default {
+  name: "VaccinationEventPage",
+  methods: {
+    wasDecisionMadeToProceed() {
+      return this.vaccinationProceedDecision == "Yes";
     },
-    components: 
-    {
-      PatientInfoComponent,
-      VaccinationProceedComponent,
-      VaccinationCanceledComponent,
+    wasDecisionMadeToCancel() {
+      return this.vaccinationProceedDecision == "No";
     },
-    data () {
-      return {
-        vaccinationProceedDecision: this.$store.state.screeningResponses.vaccinationDecision
-      }
-    }
-  }
+  },
+  components: {
+    PatientInfoComponent,
+    VaccinationProceedComponent,
+    VaccinationCanceledComponent,
+  },
+  data() {
+    return {
+      vaccinationProceedDecision: this.$store.state.screeningResponses
+        .vaccinationDecision,
+    };
+  },
+};
 </script>
