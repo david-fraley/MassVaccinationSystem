@@ -1,5 +1,6 @@
 <template>
-  <v-container fluid>
+<v-form ref="form" v-model="valid">
+	<v-container fluid>
     <v-row align="center" justify="start">
       <v-col cols="12">
         <div>{{ disclosureStatement }}</div>
@@ -44,7 +45,7 @@
         <v-text-field
           v-model="patientPhoneNumber"
           :disabled="!permissionCheckBox"
-          :rules="[(v) => v.length === 13 || 'Phone number must be 10 digits']"
+          :rules="phoneNumberRulesUs"
           v-mask="'(###)###-####'"
           prepend-icon="mdi-phone"
           label="Phone Number"
@@ -74,6 +75,7 @@
       </v-col>
     </v-row>
   </v-container>
+</v-form>
 </template>
 
 <script>
@@ -87,17 +89,23 @@ export default {
       phoneTypeOptions: ["Home", "Mobile", "Work"],
       emailRules: [
         (v) =>
-          /^[\s]*$|.+@.+\..+/.test(v) ||
-          "Please provide a valid e-mail address",
+          /^[\s]*$|.+@.+\..+/.test(v) || 'Please provide a valid e-mail address',
+        ],
+      phoneNumberRulesUs: [
+        v => {
+          if (v) return v.length == 13 || 'Phone number must be 10 digits';
+          else return true;
+        }
       ],
-      patientPhoneNumber: "",
-      patientPhoneNumberType: "",
-      patientEmail: "",
+      patientPhoneNumber: '',
+      patientPhoneNumberType: '',
+      patientEmail: '',
       acknowledgementCheckBox: false,
       permissionCheckBox: false,
       disclosureStatement: customerSettings.contactInfoDisclosure,
       consequenceStatement: customerSettings.contactInfoConsequence,
       acknowledgementStatement: customerSettings.contactInfoAcknowledgement,
+      valid: false,
     };
   },
   methods: {
@@ -110,24 +118,27 @@ export default {
       EventBus.$emit("DATA_CONTACT_INFO_PUBLISHED", contactInfoPayload);
     },
     verifyFormContents() {
-      var valid = true;
-      var message;
 
-      if (this.acknowledgementCheckBox) {
-        if (this.permissionCheckBox) {
-          if (this.patientPhoneNumber == "" && this.patientEmail == "") {
-            message = "Please provide an e-mail address and/or phone number.";
-            valid = false;
-          }
+      var valid = true
+      var message
+	
+      if(this.acknowledgementCheckBox) {	
+        if(this.permissionCheckBox) {
+          if((this.patientPhoneNumber == "") && (this.patientEmail == "")) {
+              message = "Please provide an e-mail address and/or phone number."
+              valid = false
+            }
         }
       } else {
         message = "Acknowledgement is required.";
         valid = false;
       }
-      if (valid == false) {
-        alert(message);
-        return false;
-      }
+			if (valid == false) {
+				alert (message)
+				return false
+			}
+      this.$refs.form.validate();
+      if (!this.valid) return;	
 
       this.sendContactInfoInfoToReviewPage();
       return true;

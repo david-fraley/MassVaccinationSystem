@@ -75,7 +75,7 @@
               <v-list-item-title class="font-weight-medium">Discharge</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <!-- Adverse Reaction -->
+          <!-- SAVE FOR FUTURE:  Adverse Reaction>
           <v-list-item :disabled="isAdverseReactionPageDisabled" router :to="'/AdverseReaction'">
             <v-list-item-action>
               <v-icon large>mdi-alert</v-icon>
@@ -83,8 +83,8 @@
             <v-list-item-content>
               <v-list-item-title class="font-weight-medium">Adverse Reaction</v-list-item-title>
             </v-list-item-content>
-          </v-list-item>
-          <!-- Configuration -->
+          </v-list-item-->
+          <!-- SAVE FOR FUTURE:  Configuration>
           <v-list-item :disabled="isConfigurationPageDisabled" router :to="'/Configuration'">
             <v-list-item-action>
               <v-icon large>mdi-cog</v-icon>
@@ -92,7 +92,7 @@
             <v-list-item-content>
               <v-list-item-title class="font-weight-medium">Configuration</v-list-item-title>
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item-->
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

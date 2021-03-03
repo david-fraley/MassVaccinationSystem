@@ -38,7 +38,10 @@ app.get("/healthcheck", (req, res) => {
 });
 
 app.post("/Patient", Patient.create);
-app.get("/Patient*", Patient.read);
+app.get("/Patient/:qrCode", Patient.read);
+
+// POST request since client is sending PHI
+app.post("/SearchPatients", Patient.search);
 
 app.post("/Immunization", Immunization.create);
 app.get("/Immunization*", Immunization.read);
@@ -55,7 +58,7 @@ app.get("/Observation*", Observation.read);
 // Tell Mirth to send an HL7 message
 app.post("/SendHL7Message", SendHL7Message);
 
-app.post("/Encounter", Encounter.create);
+app.post("/Encounter", Encounter.post);
 app.get("/Encounter*", Encounter.read);
 
 app.post("/EpisodeOfCare", EpisodeOfCare.create);

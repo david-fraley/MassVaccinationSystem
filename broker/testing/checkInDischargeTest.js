@@ -2,18 +2,14 @@ const globals = require("./globals");
 
 /**
  * Setup for check-in test.
- * Creates Appointment and Encounter resources to update.
+ * Creates Appointment resource.
  */
 async function setup() {
-  let setupAppointment = globals.fhirServer.put(
-    "/Appointment/example",
-    JSON.parse(globals.examples.CheckInAppointment)
+  const setupAppointment = globals.fhirServer.put(
+      "/Appointment/example",
+      JSON.parse(globals.examples.CheckInAppointment)
   );
-  let setupEncounter = globals.fhirServer.put(
-    "/Encounter/example",
-    JSON.parse(globals.examples.CheckInEncounter)
-  );
-  await Promise.all([setupAppointment, setupEncounter]).catch((error) => {
+  await Promise.all([setupAppointment]).catch((error) => {
     console.log("Check-in setup failed");
     globals.info(error);
   });
@@ -49,14 +45,18 @@ async function discharge(appointment, encounter) {
  */
 async function checkIn() {
   return await globals.broker
-    .post("/check-in", {}, { params: { patient: "example" } })
+    .post("/check-in", {
+      status: "arrived",
+      patient: "Patient/example",
+      location: "Location/example"
+    })
     .then((response) => {
       globals.config(response);
       console.log(JSON.stringify(response.data));
       console.log("\n");
 
-      let appointment = response.data.Appointment.id;
-      let encounter = response.data.Encounter.id;
+      const appointment = response.data.Appointment.id;
+      const encounter = response.data.Encounter.id;
       return { appointment: appointment, encounter: encounter };
     })
     .catch((error) => globals.info(error));
@@ -66,9 +66,9 @@ async function checkIn() {
  * Check-in and then discharge.
  */
 async function test() {
-  let response = await checkIn();
+    const response = await checkIn();
 
-  await discharge(response.appointment, response.encounter);
+    await discharge(response.appointment, response.encounter);
 }
 
 module.exports = async () => {
