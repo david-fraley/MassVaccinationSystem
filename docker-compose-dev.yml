@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+    # Node server for broker service.
+    #
+    broker:
+        build: ./broker
+        volumes:
+            - ./broker:/usr/src/app
+        ports:
+            - "3000:3000"
+        depends_on:
+            - hapi
+
     # Database for HAPI FHIR service
     #
     hapi-db:
