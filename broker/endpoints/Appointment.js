@@ -5,11 +5,12 @@ exports.read = (req, res) => {
   axios
     .get(`${req.url}`)
     .then((response) => {
-      let r;
+      let r = [];
       if (response.data.resourceType === "Bundle") {
-        r = response.data.entry.map((entry) =>
-          Appointment.toModel(entry.resource)
-        );
+        if (response.data.entry)
+          r = response.data.entry.map((entry) =>
+            Appointment.toModel(entry.resource)
+          );
       } else {
         r = Appointment.toModel(response.data);
       }
@@ -41,28 +42,9 @@ exports.create = (req, res) => {
 // Update status.
 exports.checkIn = async (req) => {
   const status = "arrived";
-  let id;
+  let endpoint, patch;
 
-  // get id of resource to update
-  if (req.body.hasOwnProperty("patient")) {
-      const config = {
-          params: {
-              actor: req.body.patient,
-              status: "booked"
-          }
-      };
-      id = await axios.get("/Appointment", config).then((response) => {
-      const bundle = response.data;
-
-      if (!bundle.hasOwnProperty("entry")) {
-        console.log("Appointment does not exist");
-      }
-      const resource = bundle.entry[0].resource;
-      return resource.id;
-    });
-  } else {
-    return {};
-  }
+  if (req.body.hasOwnProperty("appointment")) endpoint = req.body.appointment;
 
   // patch status and start time
   const patch = [
@@ -74,7 +56,7 @@ exports.checkIn = async (req) => {
   ];
 
   // update the database with new appointment
-  return axios.patch(`/Appointment/${id}`, patch).then((response) => {
+  return axios.patch(endpoint, patch).then((response) => {
     return Appointment.toModel(response.data);
   });
 };
