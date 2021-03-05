@@ -223,14 +223,14 @@ export default {
       };
 
       patient.phone = [];
-      if (this.dataContactInfo.primaryPhoneNumber)
+      if (this.dataContactInfo.patientPhoneNumber)
         patient.phone.push({
-          value: this.dataContactInfo.primaryPhoneNumber,
-          use: this.dataContactInfo.primaryPhoneNumberType,
+          value: this.dataContactInfo.patientPhoneNumber,
+          use: this.dataContactInfo.patientPhoneNumberType,
         });
       patient.email = [];
-      if (this.dataContactInfo.primaryEmail)
-        patient.email.push(this.dataContactInfo.primaryEmail);
+      if (this.dataContactInfo.patientEmail)
+        patient.email.push(this.dataContactInfo.patientEmail);
 
       patient.contact = {
         family: this.dataEmergencyContact.emergencyContactFamilyName,

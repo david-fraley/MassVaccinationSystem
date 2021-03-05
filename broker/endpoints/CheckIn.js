@@ -5,18 +5,17 @@ const Encounter = require("./Encounter");
 module.exports = (req, res) => {
   Appointment.checkIn(req)
     .then((appointment) => {
-      req.body.appointment = `Appointment/${appointment.id}`;
       req.body.Encounter = req.body;
       Encounter.create(req).then((encounter) => {
         res.json({
           Encounter: encounter,
-          Appointment: appointment,
+          Appointment: appointment
         });
       });
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message,
+        error: e.response ? e.response.data : e.message
       });
     });
 };

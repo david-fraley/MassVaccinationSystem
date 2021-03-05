@@ -19,17 +19,17 @@ Appointment {
 }
 */
 exports.toFHIR = function (appt) {
-  let resource = {
-    resourceType: "Appointment",
-    status: appt.status,
-    slot: [
-      {
-        reference: appt.slot,
-      },
-    ],
-    participant: [
-      // add later
-    ],
+  const resource = {
+      resourceType: "Appointment",
+      status: appt.status,
+      slot: [
+          {
+              reference: appt.slot
+          }
+      ],
+      participant: [
+          // add later
+      ]
   };
   // add participants
   let participant;
@@ -41,30 +41,30 @@ exports.toFHIR = function (appt) {
             {
               system: "",
               code: participant.type,
-              display: participant.type,
-            },
-          ],
-        },
+              display: participant.type
+            }
+          ]
+        }
       ],
       actor: {
-        reference: participant.actor,
-      },
+        reference: participant.actor
+      }
     });
   }
   return resource;
 };
 
 exports.toModel = (appointment) => {
-  let model = {
-    resourceType: appointment.resourceType,
-    id: appointment.id,
-    status: appointment.status,
-    participant: appointment.participant.map((x) => {
-      return {
-        actor: x.actor.reference,
-      };
-    }),
-  };
+    const model = {
+        resourceType: appointment.resourceType,
+        id: appointment.id,
+        status: appointment.status,
+        participant: appointment.participant.map((x) => {
+            return {
+                actor: x.actor.reference
+            };
+        })
+    };
 
-  return model;
+    return model;
 };

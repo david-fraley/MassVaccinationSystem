@@ -5,11 +5,12 @@ exports.read = (req, res) => {
   axios
     .get(`${req.url}`)
     .then((response) => {
-      let r;
+      let r = [];
       if (response.data.resourceType === "Bundle") {
-        r = response.data.entry.map((entry) =>
-          Immunization.toModel(entry.resource)
-        );
+        if (response.data.entry)
+          r = response.data.entry.map((entry) =>
+            Immunization.toModel(entry.resource)
+          );
       } else {
         r = Immunization.toModel(response.data);
       }
@@ -26,20 +27,20 @@ exports.read = (req, res) => {
 // Response:  Immunization resource (200)
 //            or JSON object with error field (400)
 exports.create = (req, res) => {
-  let imm = req.body.Immunization;
-  postImmunization(imm)
+    const imm = req.body.Immunization;
+    postImmunization(imm)
     .then((response) => {
       res.json(response);
     })
     .catch((e) => {
       res.status(400).json({
-        error: e.response ? e.response.data : e.message,
+        error: e.response ? e.response.data : e.message
       });
     });
 };
 
 async function postImmunization(imm) {
-  let resource = Immunization.toFHIR(imm);
+  const resource = Immunization.toFHIR(imm);
 
   return axios.post(`/Immunization`, resource).then((response) => {
     return Immunization.toModel(response.data);
