@@ -13,9 +13,9 @@
     <v-row no-gutters>
       <v-divider></v-divider>
     </v-row>
-    <v-row align="center" justify="start">
+    <v-row align="center" justify="center">
         <!-- County  -->
-      <v-col cols="12" sm="6" md="6" lg="4">
+      <v-col cols="12" sm="12" md="6" lg="6">
         <v-text-field
           required
           :rules="[(v) => !!v || 'County field is required']"
@@ -26,22 +26,6 @@
             <span class="red--text"><strong>* </strong></span>County
           </template>
         </v-text-field>
-      </v-col>
-      <v-col cols="12" sm="6" md="6" lg="4">
-        <v-form ref="form" v-model="valid">
-        <!-- Date of Birth -->
-        <v-text-field
-          v-model="dob"
-          :rules="birthdateRules"
-          placeholder="MM/DD/YYYY"
-          v-mask="'##/##/####'"
-          prepend-icon="mdi-blank"
-        >
-          <template #label>
-            <span class="red--text"><strong>* </strong></span>Date of Birth
-          </template>
-        </v-text-field>
-        </v-form>
       </v-col>
     </v-row>
     <v-row no-gutters>
@@ -63,11 +47,11 @@
         <v-row>
           <v-col cols="12" sm="12" md="12" lg="12">
             <v-row no-gutters align="center" justify="left">
-              <v-radio-group v-model="eligibilityQ4" row required>
-                <v-radio label="Nursing home / long-term care" value="nursingHome"></v-radio>
-                <v-radio label="Shelter or other congregate care" value="shelter"></v-radio>
-                <v-radio label="My own home with in-home care" value="inHomeCare"></v-radio>
-                <v-radio label="Other (own home, apartment, etc.)" value="Other"></v-radio>
+              <v-radio-group v-model="eligibilityQ3" row required>
+                <v-col cols= 12 sm="12" md="6" lg="6"><v-radio label="Nursing home / long-term care" value="nursingHome"></v-radio></v-col>
+                <v-col cols= 12 sm="12" md="6" lg="6"><v-radio label="Shelter or other congregate care" value="shelter"></v-radio></v-col>
+                <v-col cols= 12 sm="12" md="6" lg="6"><v-radio label="My own home with in-home care" value="inHomeCare"></v-radio></v-col>
+                <v-col cols= 12 sm="12" md="6" lg="6"><v-radio label="Other (own home, apartment, etc.)" value="Other"></v-radio></v-col>
               </v-radio-group>
             </v-row>
           </v-col>
@@ -90,8 +74,8 @@
           <v-col cols="12" sm="12" md="12" lg="12">
             <v-row no-gutters align="center" justify="left">
               <v-radio-group v-model="eligibilityQ4" row required>
-                <v-radio label="Yes, I work in health care" value="Yes"></v-radio>
-                <v-radio label="No, I do not work in health care" value="No"></v-radio>
+                <v-col cols= 12 sm="12" md="6" lg="6"><v-radio label="Yes, I work in health care" value="Yes"></v-radio></v-col>
+                <v-col cols= 12 sm="12" md="6" lg="6"><v-radio label="No, I do not work in health care" value="No"></v-radio></v-col>
               </v-radio-group>
             </v-row>
           </v-col>
@@ -114,8 +98,8 @@
           <v-col cols="12" sm="12" md="12" lg="12">
             <v-row no-gutters align="center" justify="left">
               <v-radio-group v-model="eligibilityQ5" row required>
-                <v-radio label="Yes" value="Yes"></v-radio>
-                <v-radio label="No" value="No"></v-radio>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Yes" value="Yes"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="No" value="No"></v-radio></v-col>
               </v-radio-group>
             </v-row>
           </v-col>
@@ -138,37 +122,37 @@
           <v-col cols="12" sm="12" md="12" lg="12">
             <v-row no-gutters align="center" justify="left">
               <v-radio-group v-model="eligibilityQ6" row required>
-                <v-radio label="Adult day facility worker" value="workPosition1"></v-radio>
-                <v-radio label="Adult or older adult protective services" value="workPosition2"></v-radio>
-                <v-radio label="Child care and early childhood program workers" value="workPosition3"></v-radio>
-                <v-radio label="Child protective services" value="workPosition4"></v-radio>
-                <v-radio label="Clergy and other essential support for houses of worship" value="workPosition5"></v-radio>
-                <v-radio label="Communications" value="workPosition6"></v-radio>
-                <v-radio label="Correctional officers and other workers serving people in congregate care settings not included in Phase 1A such as homeless shelters or rape crisis shelters" value="workPosition7"></v-radio>
-                <v-radio label="Education workers" value="workPosition8"></v-radio>
-                <v-radio label="Energy, including nuclear reactors" value="workPosition9"></v-radio>
-                <v-radio label="Federal, state, county and local government workers, including county election workers, elected officials and members of the judiciary and their staff" value="workPosition10"></v-radio>
-                <v-radio label="Finance, including bank tellers" value="workPosition11"></v-radio>
-                <v-radio label="First responders" value="workPosition12"></v-radio>
-                <v-radio label="Food and agricultural workers" value="workPosition13"></v-radio>
-                <v-radio label="Food service" value="workPosition14"></v-radio>
-                <v-radio label="Grocery store workers" value="workPosition15"></v-radio>
-                <v-radio label="Housing construction" value="workPosition16"></v-radio>
-                <v-radio label="Information technology" value="workPosition17"></v-radio>
-                <v-radio label="Legal services" value="workPosition18"></v-radio>
-                <v-radio label="Long-term care ombudsman" value="workPosition19"></v-radio>
-                <v-radio label="Manufacturing workers" value="workPosition20"></v-radio>
-                <v-radio label="Media" value="workPosition21"></v-radio>
-                <v-radio label="Public health workers" value="workPosition22"></v-radio>
-                <v-radio label="Public safety" value="workPosition23"></v-radio>
-                <v-radio label="Public transit workers" value="workPosition24"></v-radio>
-                <v-radio label="Retired/Not working" value="workPosition25"></v-radio>
-                <v-radio label="Shelter and Housing" value="workPosition26"></v-radio>
-                <v-radio label="Transportation and logistics" value="workPosition27"></v-radio>
-                <v-radio label="Transportation and logistics - air or rail security" value="workPosition28"></v-radio>
-                <v-radio label="U.S. Postal Service workers" value="workPosition29"></v-radio>
-                <v-radio label="Water and wastewater" value="workPosition30"></v-radio>
-                <v-radio label="Other" value="workPosition31"></v-radio>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Adult day facility worker" value="workPosition1"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Adult or older adult protective services" value="workPosition2"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Child care and early childhood program workers" value="workPosition3"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Child protective services" value="workPosition4"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Clergy and other essential support for houses of worship" value="workPosition5"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Communications" value="workPosition6"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Correctional officers and other workers serving people in congregate care settings not included in Phase 1A such as homeless shelters or rape crisis shelters" value="workPosition7"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Education workers" value="workPosition8"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Energy, including nuclear reactors" value="workPosition9"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Federal, state, county and local government workers, including county election workers, elected officials and members of the judiciary and their staff" value="workPosition10"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Finance, including bank tellers" value="workPosition11"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="First responders" value="workPosition12"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Food and agricultural workers" value="workPosition13"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Food service" value="workPosition14"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Grocery store workers" value="workPosition15"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Housing construction" value="workPosition16"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Information technology" value="workPosition17"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Legal services" value="workPosition18"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Long-term care ombudsman" value="workPosition19"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Manufacturing workers" value="workPosition20"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Media" value="workPosition21"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Public health workers" value="workPosition22"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Public safety" value="workPosition23"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Public transit workers" value="workPosition24"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Retired/Not working" value="workPosition25"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Shelter and Housing" value="workPosition26"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Transportation and logistics" value="workPosition27"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Transportation and logistics - air or rail security" value="workPosition28"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="U.S. Postal Service workers" value="workPosition29"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Water and wastewater" value="workPosition30"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Other" value="workPosition31"></v-radio></v-col>
               </v-radio-group>
             </v-row>
           </v-col>
@@ -191,19 +175,19 @@
           <v-col cols="12" sm="12" md="12" lg="12">
             <v-row no-gutters align="center" justify="left">
               <v-radio-group v-model="eligibilityQ7" row required>
-                <v-radio label="Cancer" value="condition1"></v-radio>
-                <v-radio label="Chronic kidney disease" value="condition2"></v-radio>
-                <v-radio label="COPD (chronic obstructive pulmonary disease)" value="condition3"></v-radio>
-                <v-radio label="Down Syndrome" value="condition4"></v-radio>
-                <v-radio label="Heart conditions, such as heart failure, coronary artery disease, or cardiomyopathies" value="condition5"></v-radio>
-                <v-radio label="Immunocompromised state (weakened immune system) from solid organ transplant or from blood or bone marrow transplant, immune deficiencies, HIV, use of corticosteroids, or use of other immune weakening medicines" value="condition6"></v-radio>
-                <v-radio label="Obesity (body mass index [BMI] of 30 kg/m2 or higher but < 40 kg/m2)" value="condition7"></v-radio>
-                <v-radio label="Severe Obesity (BMI ≥ 40 kg/m2)" value="condition8"></v-radio>
-                <v-radio label="Pregnancy" value="condition9"></v-radio>
-                <v-radio label="Sickle cell disease" value="condition10"></v-radio>
-                <v-radio label="Smoking" value="condition11"></v-radio>
-                <v-radio label="Type 2 diabetes mellitus" value="condition12"></v-radio>
-                <v-radio label="None of the above" value="condition13"></v-radio>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Cancer" value="condition1"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Chronic kidney disease" value="condition2"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="COPD (chronic obstructive pulmonary disease)" value="condition3"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Down Syndrome" value="condition4"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Heart conditions, such as heart failure, coronary artery disease, or cardiomyopathies" value="condition5"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Immunocompromised state (weakened immune system) from solid organ transplant or from blood or bone marrow transplant, immune deficiencies, HIV, use of corticosteroids, or use of other immune weakening medicines" value="condition6"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Obesity (body mass index [BMI] of 30 kg/m2 or higher but < 40 kg/m2)" value="condition7"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Severe Obesity (BMI ≥ 40 kg/m2)" value="condition8"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Pregnancy" value="condition9"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Sickle cell disease" value="condition10"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Smoking" value="condition11"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="Type 2 diabetes mellitus" value="condition12"></v-radio></v-col>
+                <v-col cols= "12" sm="12" md="6" lg="6"><v-radio label="None of the above" value="condition13"></v-radio></v-col>
               </v-radio-group>
             </v-row>
           </v-col>
