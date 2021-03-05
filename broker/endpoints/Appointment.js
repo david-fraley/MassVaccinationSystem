@@ -42,7 +42,7 @@ exports.create = (req, res) => {
 // Update status.
 exports.checkIn = async (req) => {
   const status = "arrived";
-  let endpoint, patch;
+  let endpoint;
 
   if (req.body.hasOwnProperty("appointment")) endpoint = req.body.appointment;
 
