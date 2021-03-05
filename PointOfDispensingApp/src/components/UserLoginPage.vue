@@ -35,7 +35,7 @@ export default {
       if (this.formValid) {
         if (
           this.user.toLowerCase() === process.env.VUE_APP_USER.toLowerCase() &&
-          this.pass.toLowerCase() === process.env.VUE_APP_PASS.toLowerCase()
+          this.pass === process.env.VUE_APP_PASS
         ) {
           this.$store.dispatch("loginUser", this.user);
           if (this.$router.currentRoute.query.next) {
