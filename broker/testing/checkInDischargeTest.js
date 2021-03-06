@@ -48,7 +48,8 @@ async function checkIn() {
     .post("/check-in", {
       status: "arrived",
       patient: "Patient/example",
-      location: "Location/example"
+      location: "Location/example",
+      appointment: "Appointment/example"
     })
     .then((response) => {
       globals.config(response);
