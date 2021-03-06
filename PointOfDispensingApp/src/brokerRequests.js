@@ -75,11 +75,10 @@ export default {
     return axios
       .get("/broker/Appointment", { params: { actor: patID } })
       .then((response) => {
-        try {
-          return { data: response.data[0] };
-        } catch (e) {
-          return { data: {} };
-        }
+        let result;
+        if (response.data.length == 0) result = { data: {} };
+        else result = { data: response.data[0] };
+        return result;
       })
       .catch((e) => {
         return toResponse(e);
@@ -90,11 +89,10 @@ export default {
     return axios
       .get("/broker/Encounter", { params: { subject: patID, _sort: "-date" } })
       .then((response) => {
-        try {
-          return { data: response.data[0] };
-        } catch (e) {
-          return { data: {} };
-        }
+        let result;
+        if (response.data.length == 0) result = { data: {} };
+        else result = { data: response.data[0] };
+        return result;
       })
       .catch((e) => {
         return toResponse(e);
@@ -116,6 +114,7 @@ export default {
   // param data:
   // {
   //   status: String
+  //   appointment: AppointmentID
   //   patient: PatientID
   //   location : LocationID
   // }
