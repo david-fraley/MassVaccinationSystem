@@ -221,8 +221,21 @@
                     /></v-card>
                   </v-stepper-content>
 
-                  <!-- Household: Emergency Contact -->
+                  <!-- Household: Eligibility Questions -->
                   <v-stepper-content step="6">
+                    <v-toolbar flat>
+                      <v-toolbar-title class="text-wrap"
+                        >Please complete these eligibility
+                        questions</v-toolbar-title
+                      >
+                    </v-toolbar>
+                    <v-card flat
+                      ><EligibilityQuestions ref="singlepatienteligibilityquestions"
+                    /></v-card>
+                  </v-stepper-content>
+
+                  <!-- Household: Emergency Contact -->
+                  <v-stepper-content step="7">
                     <v-toolbar flat>
                       <v-toolbar-title class="text-wrap"
                         >Specify your emergency contact</v-toolbar-title
@@ -242,7 +255,7 @@
 
                   <!-- Household: Personal Info #n -->
                   <template v-for="n in getNumberOfHouseholdMembers() - 1">
-                    <v-stepper-content :key="`${n + 1}-member`" :step="n + 6">
+                    <v-stepper-content :key="`${n + 1}-member`" :step="n + 7">
                       <v-toolbar flat>
                         <v-toolbar-title class="text-wrap"
                           >Enter personal information for household member #{{
@@ -739,11 +752,22 @@ export default {
             config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE:
             this.$refs.householdPersonalInfo_1.verifyFormContents()
               ? this.goToPage(
-                  config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE
+                  config.registrationPages.HOUSEHOLD_ELIGIBILITY_PAGE
                 )
               : this.goToPage(
                   config.registrationPages
                     .HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE
+                );
+            break;
+            case this.page ==
+            config.registrationPages.HOUSEHOLD_ELIGIBILITY_PAGE:
+            this.$refs.householdeligibilityquestions.verifyFormContents()
+              ? this.goToPage(
+                  config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE
+                )
+              : this.goToPage(
+                  config.registrationPages
+                    .HOUSEHOLD_ELIGIBILITY_PAGE
                 );
             break;
           case this.page ==

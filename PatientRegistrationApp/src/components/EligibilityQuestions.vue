@@ -40,7 +40,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <v-radio-group v-model="eligibilityQ3" row required>
+        <v-radio-group v-model="eligibilityQ2" row required>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Nursing home / long-term care" value="nursingHome"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Shelter or other congregate care" value="shelter"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="My own home with in-home care" value="inHomeCare"></v-radio></v-col>
@@ -60,7 +60,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <v-radio-group v-model="eligibilityQ4" row required>
+        <v-radio-group v-model="eligibilityQ3" row required>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Yes, I work in health care" value="Yes"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="No, I do not work in health care" value="No"></v-radio></v-col>
         </v-radio-group>
@@ -78,7 +78,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <v-radio-group v-model="eligibilityQ5" row required>
+        <v-radio-group v-model="eligibilityQ4" row required>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Yes" value="Yes"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="No" value="No"></v-radio></v-col>
         </v-radio-group>
@@ -96,7 +96,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <v-radio-group v-model="eligibilityQ6" row required>
+        <v-radio-group v-model="eligibilityQ5" row required>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Adult day facility worker" value="workPosition1"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Adult or older adult protective services" value="workPosition2"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Child care and early childhood program workers" value="workPosition3"></v-radio></v-col>
@@ -143,7 +143,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <v-radio-group v-model="eligibilityQ7" row required>
+        <v-radio-group v-model="eligibilityQ6" row required>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Cancer" value="condition1"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Chronic kidney disease" value="condition2"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="COPD (chronic obstructive pulmonary disease)" value="condition3"></v-radio></v-col>
@@ -174,74 +174,38 @@ export default {
   data() {
     return {
         county: '',
-        dob: '',
+		eligibilityQ2: '',
 		eligibilityQ3: '',
 		eligibilityQ4: '',
 		eligibilityQ5: '',
 		eligibilityQ6: '',
-		eligibilityQ7: '',
-        minDateStr: "1900-01-01",
-        birthdateRules: [
-        (v) => !!v || "DOB is required",
-        // check if v exists before seeing if the length is 10
-        (v) =>
-          (!!v && v.length === 10) ||
-          "DOB must be in specified format, MM/DD/YYYY",
-        (v) => this.validBirthdate(v) || "Invalid DOB",
-      ],
       valid: false,
     };
   },
   computed: {
-    maxDateStr: function() {
-      let d = new Date();
-      let date = [
-        d.getFullYear(),
-        ("0" + (d.getMonth() + 1)).slice(-2),
-        ("0" + d.getDate()).slice(-2),
-      ].join("-");
-
-      return date;
-    },
   },
   methods: {
-    validBirthdate(birthdate) {
-      var minDate = Date.parse(this.minDateStr);
-      var maxDate = Date.parse(this.maxDateStr);
-      var formattedDate = this.parseDate(birthdate);
-      var date = Date.parse(formattedDate);
-
-      return !Number.isNaN(date) && minDate <= date && date <= maxDate;
-    },
-    parseDate(date) {
-      if (!date) return null;
-      // Ensure birthdate is fully entered and can be converted into 3 variables before parsing
-      if (date.split("/").length !== 3) return null;
-
-      const [month, day, year] = date.split("/");
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-    },
-    sendeligibilityResponsesToFollowUpPage() { //do we want to send it anywhere?
+    sendeligibilityResponsesToReviewPage() { //do we want to send it anywhere?
       const eligibilityResponsesPayload = {
-        eligibilityQ3: this.eligibilityQ3,
-        eligibilityQ4: this.eligibilityQ4,
-        eligibilityQ5: this.eligibilityQ5,
-        eligibilityQ6: this.eligibilityQ6,
-        eligibilityQ7: this.eligibilityQ7,
+        eligibilityQ3: this.eligibilityQ2,
+        eligibilityQ4: this.eligibilityQ3,
+        eligibilityQ5: this.eligibilityQ4,
+        eligibilityQ6: this.eligibilityQ5,
+        eligibilityQ7: this.eligibilityQ6,
       }
       EventBus.$emit('DATA_eligibility_RESPONSES_PUBLISHED', eligibilityResponsesPayload)
     },
     verifyFormContents() {
 		var message = "Please complete all eligibility questions."
 		
-		if((this.eligibilityQ3 == "") || 
-		(this.eligibilityQ4 == "") || (this.eligibilityQ5 == "") || (this.eligibilityQ6 == "") || 
-		(this.eligibilityQ7 == "")) 
+		if((this.eligibilityQ2 == "") || 
+		(this.eligibilityQ3 == "") || (this.eligibilityQ4 == "") || (this.eligibilityQ5 == "") || 
+		(this.eligibilityQ6 == "")) 
 		{
 			alert(message)
 			return false
 		}
-		this.sendeligibilityResponsesToFollowUpPage();
+		this.sendeligibilityResponsesToReviewPage();
 		return true;
     }
 },
