@@ -230,7 +230,7 @@
                       >
                     </v-toolbar>
                     <v-card flat
-                      ><EligibilityQuestions ref="singlepatienteligibilityquestions"
+                      ><EligibilityQuestions ref="householdeligibilityquestions"
                     /></v-card>
                   </v-stepper-content>
 
@@ -270,8 +270,8 @@
                         ></HouseholdPersonalInfo_n
                       ></v-card>
                     </v-stepper-content>
-                  </template>
-
+                  </template> 
+                  
                   <!-- Household: Review and submit -->
                   <v-stepper-content :step="getNumberOfSteps() - 1">
                     <v-toolbar flat>

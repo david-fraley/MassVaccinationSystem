@@ -34,7 +34,7 @@
     <v-row no-gutters>
       <v-radio-group>
         <template v-slot:label>
-          <div><span class="red--text"><strong>* </strong></span>3. What is you current living status? (choose one)</div>
+          <div><span class="red--text"><strong>* </strong></span>2. What is you current living status? (choose one)</div>
         </template>
       </v-radio-group>
     </v-row>
@@ -54,7 +54,7 @@
     <v-row no-gutters>
       <v-radio-group>
         <template v-slot:label>
-          <div><span class="red--text"><strong>* </strong></span>4. Do you work in health care?</div>
+          <div><span class="red--text"><strong>* </strong></span>3. Do you work in health care?</div>
         </template>
       </v-radio-group> 
     </v-row>
@@ -72,7 +72,7 @@
     <v-row no-gutters>
       <v-radio-group>
         <template v-slot:label>
-          <div><span class="red--text"><strong>* </strong></span>5. Do you provide services for an elderly person or a person with disabilities as a paid or unpaid caregiver? (Please select one option)</div>
+          <div><span class="red--text"><strong>* </strong></span>4. Do you provide services for an elderly person or a person with disabilities as a paid or unpaid caregiver? (Please select one option)</div>
         </template>
       </v-radio-group>
     </v-row>
@@ -90,7 +90,7 @@
     <v-row no-gutters>
       <v-radio-group>
         <template v-slot:label>
-          <div><span class="red--text"><strong>* </strong></span>6. What best describes your work? (Please select one option)</div>
+          <div><span class="red--text"><strong>* </strong></span>5. What best describes your work? (Please select one option)</div>
         </template>
       </v-radio-group>
     </v-row>
@@ -137,27 +137,27 @@
     <v-row no-gutters>
       <v-radio-group>
         <template v-slot:label>
-          <div><span class="red--text"><strong>* </strong></span>7. Do you have any of the following high-risk conditions? (Check all that apply)</div>
+          <div><span class="red--text"><strong>* </strong></span>6. Do you have any of the following high-risk conditions? (Check all that apply)</div>
         </template>
       </v-radio-group>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
         <v-radio-group v-model="eligibilityQ6" row required>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Cancer" value="condition1"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Chronic kidney disease" value="condition2"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="COPD (chronic obstructive pulmonary disease)" value="condition3"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Down Syndrome" value="condition4"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Heart conditions, such as heart failure, coronary artery disease, or cardiomyopathies" value="condition5"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Immunocompromised state (weakened immune system) from solid organ transplant or from blood or bone marrow transplant, immune deficiencies, HIV, use of corticosteroids, or use of other immune weakening medicines" value="condition6"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Obesity (body mass index [BMI] of 30 kg/m2 or higher but < 40 kg/m2)" value="condition7"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Severe Obesity (BMI ≥ 40 kg/m2)" value="condition8"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Pregnancy" value="condition9"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Sickle cell disease" value="condition10"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Smoking" value="condition11"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Type 2 diabetes mellitus" value="condition12"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="None of the above" value="condition13"></v-radio></v-col>
-        </v-radio-group>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Cancer" value="condition1"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Chronic kidney disease" value="condition2"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="COPD (chronic obstructive pulmonary disease)" value="condition3"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Down Syndrome" value="condition4"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Heart conditions, such as heart failure, coronary artery disease, or cardiomyopathies" value="condition5"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Immunocompromised state (weakened immune system) from solid organ transplant or from blood or bone marrow transplant, immune deficiencies, HIV, use of corticosteroids, or use of other immune weakening medicines" value="condition6"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Obesity (body mass index [BMI] of 30 kg/m2 or higher but < 40 kg/m2)" value="condition7"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Severe Obesity (BMI ≥ 40 kg/m2)" value="condition8"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Pregnancy" value="condition9"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Sickle cell disease" value="condition10"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Smoking" value="condition11"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="Type 2 diabetes mellitus" value="condition12"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox label="None of the above" value="condition13"></v-checkbox></v-col>
+        </v-radio-group> 
       </v-col>
     </v-row>
     <v-row no-gutters>
@@ -178,15 +178,21 @@ export default {
 		eligibilityQ3: '',
 		eligibilityQ4: '',
 		eligibilityQ5: '',
-		eligibilityQ6: '',
+		eligibilityQ6: false,
       valid: false,
     };
   },
   computed: {
+      rules() {
+      return [
+        this.selected.length > 0 || "At least one item should be selected"
+      ];
+    }
   },
   methods: {
     sendeligibilityResponsesToReviewPage() { //do we want to send it anywhere?
       const eligibilityResponsesPayload = {
+        county: this.county,
         eligibilityQ3: this.eligibilityQ2,
         eligibilityQ4: this.eligibilityQ3,
         eligibilityQ5: this.eligibilityQ4,
@@ -198,9 +204,9 @@ export default {
     verifyFormContents() {
 		var message = "Please complete all eligibility questions."
 		
-		if((this.eligibilityQ2 == "") || 
+		if((this.county == "" || this.eligibilityQ2 == "") || 
 		(this.eligibilityQ3 == "") || (this.eligibilityQ4 == "") || (this.eligibilityQ5 == "") || 
-		(this.eligibilityQ6 == "")) 
+		(this.eligibilityQ6 == true)) 
 		{
 			alert(message)
 			return false
