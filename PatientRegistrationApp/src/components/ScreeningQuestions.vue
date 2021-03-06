@@ -96,7 +96,7 @@
               <v-radio-group>
                 <template v-slot:label>
                   <div><span class="red--text"><strong>* </strong></span>A component of the COVID-19 vaccine, including polyethylene 
-					glycol (PEG), which is found in some medications, such as laxatives and preparations for colonoscopy proceures.</div>
+					glycol (PEG), which is found in some medications, such as laxatives and preparations for colonoscopy procedures.</div>
                 </template>
               </v-radio-group>
             </v-row>

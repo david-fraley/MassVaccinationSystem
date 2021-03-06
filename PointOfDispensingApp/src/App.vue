@@ -12,10 +12,15 @@
 
     <v-navigation-drawer v-model="drawer" app width="20em" permanent>
       <v-sheet color="white" class="pa-4">
-        <v-btn icon color="accent">
-              <v-icon large>mdi-account-circle</v-icon>
-        </v-btn>
-        Welcome, 
+        <span v-if="isLoggedIn">
+          <v-btn icon color="accent">
+            <v-icon large>mdi-account-circle</v-icon>
+          </v-btn>
+          Hello, {{ currentUserName }} <router-link to="/UserLogout">Log Out</router-link>
+        </span>
+        <span v-else>
+          Welcome to MassVaxx, <router-link to="/UserLogin">Log In</router-link>
+        </span>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -137,7 +142,13 @@
       },
       workflowState() {
         return this.$store.getters.workflowState
-      }
+      },
+      isLoggedIn() {
+        return this.$store.getters.isLoggedIn;
+      },
+      currentUserName() {
+        return this.$store.state.currentUser.name;
+      } 
     },
     components: 
     {    
@@ -146,7 +157,7 @@
     data () {
       return {
         drawer: null,
-        leftMenu: 1
+        leftMenu: 1,
       }
     }
   }

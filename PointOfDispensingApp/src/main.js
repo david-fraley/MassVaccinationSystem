@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import VueRouter from 'vue-router'
-import navRoutes from './navRoutes.js'
+import router from './router/router.js'
 import store from './store/store'
 import VueMask from 'v-mask';
 
@@ -10,10 +10,6 @@ Vue.use(VueMask);
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
-
-const router = new VueRouter({
-  routes: navRoutes,
-});
 
 new Vue({
   vuetify,
