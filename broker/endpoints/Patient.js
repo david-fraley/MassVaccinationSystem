@@ -1,16 +1,19 @@
 const axios = require("../services/axiosInstance");
 const Patient = require("../models/Patient");
 const RelatedPerson = require("../models/RelatedPerson");
-const {body, param, validationResult} = require('express-validator');
+const {body, param, validationResult, sanitizeBody} = require('express-validator');
 const Appointment = require("../models/Appointment");
 const uuid = require('uuid');
 
-exports.read = async (req, res) => {
+exports.read = [
 
-    if (!req.params.qrCode) {
-        return res.status(400).json({
-            error: "No QR Code provided for patient lookup"
-        });
+  param('qrCode', "No QR Code provided for patient lookup").trim().escape().isLength({min: 1}),
+
+  async (req, res) => {
+  
+    let errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      return res.status(400).json({error: errors.array()[0].msg});
     }
 
     try {
@@ -25,7 +28,8 @@ exports.read = async (req, res) => {
     return res.status(400).json({
         error: "Patient could not be found."
     });
-};
+  }
+];
 
 async function findByQrCode(qrCode) {
     if (!qrCode) {
@@ -66,10 +70,13 @@ exports.search = [
   // Demonstrates standard usage of express-validator
   // Note that exports.search is now an array of functions, rather than a single function
   // Docs: https://express-validator.github.io/docs/index.html
-  body('firstName', "Please enter the patient's first name").trim().escape().isLength({ min: 1}),
-  body('lastName', "Please enter the patient's last name").trim().escape().isLength({ min: 1 }),
-  body('birthDate', "Please enter a valid patient birth date").trim().escape().isISO8601({ strict: true}).toDate(),
-  body('postalCode', "Invalid postal code entered").trim().escape().optional({checkFalsy: true}).matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
+
+  sanitizeBody('*').trim().escape(),
+
+  body('firstName', "Please enter the patient's first name").isLength({ min: 1}),
+  body('lastName', "Please enter the patient's last name").isLength({ min: 1 }),
+  body('birthDate', "Please enter a valid patient birth date").isISO8601({ strict: true}).toDate(),
+  body('postalCode', "Invalid postal code entered").optional({checkFalsy: true}).matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
   
   (req, res) => {
 
@@ -121,31 +128,46 @@ exports.create = [
   body('Patient', 'Please provide patient data').custom((patients) => {
     return Array.isArray(patients) && patients.length >=1;
   }),
-  body('Patient.*.family', "Please fill out patient last name").trim().escape().isLength({ min: 1}),
-  body('Patient.*.given', "Please fill out patient first name").trim().escape().isLength({ min: 1}),
-  body('Patient.*.gender', "Please fill out patient gender").trim().escape().custom((genderVal) => {
+  body('Patient.*.family', 'Please fill out patient last name').trim().escape().isLength({ min: 1}),
+  body('Patient.*.given', 'Please fill out patient first name').trim().escape().isLength({ min: 1}),
+  body('Patient.*.gender', 'Please fill out patient gender').trim().escape().custom((genderVal) => {
     return Patient.genderEnums[genderVal];
   }),
   body('Patient.*.birthDate', 'Please fill out patient birth date').trim().isDate({format: 'MM/DD/YYYY'}),
-  body('Patient.*.race', "Please fill out patient race").trim().escape().isLength({min: 1}),
-  body('Patient.*.ethnicity', "Please fill out patient ethnicity").trim().escape().isLength({min: 1}),
-  body('Patient.*.language', "Please specify patient language").trim().escape().custom((languageVal) => {
+  body('Patient.*.race', 'Please fill out patient race').trim().escape().isLength({min: 1}),
+  body('Patient.*.ethnicity', 'Please fill out patient ethnicity').trim().escape().isLength({min: 1}),
+  body('Patient.*.language', 'Please specify patient language').trim().escape().custom((languageVal) => {
     return Patient.languageEnums[languageVal];
   }),
-  body('Patient.*.contact.family', "Please fill out emergency contact last name").trim().escape().isLength({min: 1}),
-  body('Patient.*.contact.given', "Please fill out emergency contact first name").trim().escape().isLength({min: 1}),
-  body('Patient.*.contact.phone.value', "Please fill out emergency contact phone number").trim().escape().custom((phoneString) => {
+  body('Patient.*.contact.family', 'Please fill out emergency contact last name').trim().escape().isLength({min: 1}),
+  body('Patient.*.contact.given', 'Please fill out emergency contact first name').trim().escape().isLength({min: 1}),
+  body('Patient.*.contact.phone.value', 'Please fill out emergency contact phone number').trim().escape().custom((phoneString) => {
     let numericString = phoneString.replace('(', '').replace(')', '').replace('-', '');
-    return Number(numericString);
+    return numericString.length === 10 && Number(numericString);
   }),
-  body('Patient.*.address.use', "Please fill out patient address type").trim().escape().custom((addressType) => {
+  body('Patient.*.address.use', 'Please fill out patient address type').trim().escape().custom((addressType) => {
     return Patient.addressUseEnums[addressType];
   }),
-  body('Patient.*.address.line', "Please fill out patient address line").trim().escape().isLength({min: 1}),
-  body('Patient.*.address.city', "Please fill out patient address city").trim().escape().isLength({min: 1}),
-  body('Patient.*.address.state', "Please fill out patient address state").trim().escape().isLength({min: 1}),
-  body('Patient.*.address.postalCode', "Please fill out patient address zip code").trim().escape().matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
-  body('Patient.*.address.country', "Please fill out patient address country").trim().escape().isLength({min: 1}),
+  body('Patient.*.address.line', 'Please fill out patient address line').trim().escape().isLength({min: 1}),
+  body('Patient.*.address.city', 'Please fill out patient address city').trim().escape().isLength({min: 1}),
+  body('Patient.*.address.state', 'Please fill out patient address state').trim().escape().isLength({min: 1}),
+  body('Patient.*.address.postalCode', 'Please fill out patient address zip code').trim().escape().matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
+  body('Patient.*.address.country', 'Please fill out patient address country').trim().escape().isLength({min: 1}),
+
+  // Optional fields
+  body('Patient.*.middle', '').trim().escape(),
+  body('Patient.*.suffix').trim().escape(),
+  body('Patient.*.email.*', 'Please enter a valid email').trim().escape().optional({checkFalsy: true}).isEmail(),
+  body('Patient.*.phone.*.value', 'Please enter a valid patient phone number').trim().escape().optional({checkFalsy: true}).custom((phoneString) => {
+    let numericString = phoneString.replace('(', '').replace(')', '').replace('-', '');
+    return numericString.length === 10 && Number(numericString);
+  }),
+  body('Patient.*.phone.*.use', 'Please enter a valid patient phone type').trim().escape().optional({checkFalsy: true}).custom((phoneUseVal) => {
+    return Patient.phoneUseEnums[phoneUseVal];
+  }),
+  body('Patient.*.contact.phone.use', 'Please enter a valid emergency contact phone type').trim().escape().optional({checkFalsy: true}).custom((phoneUseVal) => {
+    return Patient.phoneUseEnums[phoneUseVal];
+  }),
 
 
   (req, res) => {
