@@ -82,5 +82,5 @@ describe("PatientTest", function () {
       console.log(e);
       assert(false, "Test failed");
     });
-  }).timeout(10000); // override default timeout of 2s
+  }).timeout(0); // set no timeout
 });
