@@ -52,6 +52,52 @@ let phoneUseEnums = {
   Work: "work"
 };
 
+let raceCodes = {
+  "American Indian or Alaska Native": {
+    system: "urn:oid:2.16.840.1.113883.6.238",
+    code: "1002-5",
+    display: "American Indian or Alaska Native",
+  },
+  Asian: {
+    system: "urn:oid:2.16.840.1.113883.6.238",
+    code: "2028-9",
+    display: "Asian",
+  },
+  "Black or African American": {
+    system: "urn:oid:2.16.840.1.113883.6.238",
+    code: "2054-5",
+    display: "Black or African American",
+  },
+  "Native Hawaiian or other Pacific Islander": {
+    system: "urn:oid:2.16.840.1.113883.6.238",
+    code: "2076-8",
+    display: "Native Hawaiian or Other Pacific Islander",
+  },
+  White: {
+    system: "urn:oid:2.16.840.1.113883.6.238",
+    code: "2106-3",
+    display: "White",
+  },
+  Other: {
+    system: "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+    code: "UNC",
+    display: "un-encoded",
+  },
+};
+
+let ethnicityCodes = {
+  "Hispanic or Latino": {
+    system: "urn:oid:2.16.840.1.113883.6.238",
+    code: "2135-2",
+    display: "Hispanic or Latino",
+  },
+  "Not Hispanic or Latino": {
+    system: "urn:oid:2.16.840.1.113883.6.238",
+    code: "2186-5",
+    display: "Non Hispanic or Latino",
+  },
+};
+
 /**
  * Returns the date in YYYY-MM-DD format.
  *
@@ -83,6 +129,7 @@ function prettyDate(date) {
 exports.toFHIR = function (patient) {
   const resource = {
       resourceType: "Patient",
+      extension: [],
       name: [
           {
               family: patient.family,
@@ -177,6 +224,42 @@ exports.toFHIR = function (patient) {
       rank: `${idx}`
     });
   }
+  // race
+  const race = {
+    url: "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+    extension: [],
+  };
+  // handle unknown race values
+  // if (raceCodes.hasOwnProperty(patient.race))
+    race.extension.push({
+      url: "ombCategory",
+      valueCoding: {
+        system: raceCodes[patient.race].system,
+        code: raceCodes[patient.race].code,
+        display: raceCodes[patient.race].display,
+      },
+    });
+  // handle unknown race values
+  // else race.extension.push({ url: "text", valueString: patient.race });
+
+  resource.extension.push(race);
+  // ethnicity
+  const ethnicity = {
+    url: "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+    extension: [],
+  };
+  if (ethnicityCodes.hasOwnProperty(patient.ethnicity))
+    ethnicity.extension.push({
+      url: "ombCategory",
+      valueCoding: {
+        system: ethnicityCodes[patient.ethnicity].system,
+        code: ethnicityCodes[patient.ethnicity].code,
+        display: ethnicityCodes[patient.ethnicity].display,
+      },
+    });
+  else ethnicity.extension.push({ url: "text", valueString: patient.ethnicity });
+
+  resource.extension.push(ethnicity);
 
   return resource;
 };
