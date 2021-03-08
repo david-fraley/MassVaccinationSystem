@@ -260,6 +260,52 @@ module.exports = {
   ]
 }`,
 
+  PatientTemplate: (addressUse, phoneUse, suffix, gender, race, ethnicity, relationship, language) => `{
+  "Patient": [
+    {
+      "family": "Smith",
+      "given": "John",
+      "suffix": "${suffix}",
+      "phone": [
+        {
+          "value": "(000)000-000",
+          "use": "${phoneUse}"
+        },
+        {
+          "value": "(100)000-000",
+          "use": "${phoneUse}"
+        }
+      ],
+      "email": [
+        "email@site.com",
+        "email2@site.com"
+      ],
+      "gender": "${gender}",
+      "birthDate": "01/01/2000",
+      "race": "${race}",
+      "ethnicity": "${ethnicity}",
+      "address": {
+        "use": "${addressUse}",
+        "line": "90 Walnut St",
+        "city": "New York City",
+        "state": "NY",
+        "postalCode": "14623",
+        "country": "USA"
+      },
+      "contact": {
+        "family": "Smith",
+        "given": "John",
+        "phone": {
+          "value": "(110)000-000",
+          "use": "${phoneUse}"
+        }
+      },
+      "language": "${language}",
+      "relationship": "${relationship}"
+    }
+  ]
+}`,
+
   Practitioner: `{
   "Practitioner": {
     "family" : "George",

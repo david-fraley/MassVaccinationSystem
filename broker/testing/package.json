@@ -1,0 +1,14 @@
+{
+  "name": "UnitTest",
+  "version": "1.0.0",
+  "description": "Unit tests",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
+}
