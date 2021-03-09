@@ -1,9 +1,9 @@
 <channel version="3.10.0">
-  <id>c3a64235-5e93-4322-b299-88f19d52db2a</id>
+  <id>20460a07-78c3-4cfb-95a1-56b401dc7e5c</id>
   <nextMetaDataId>6</nextMetaDataId>
   <name>JSON to HL7v2</name>
   <description>This channel converts a JSON request to an HL7 VXU^V04.</description>
-  <revision>13</revision>
+  <revision>2</revision>
   <sourceConnector version="3.10.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -143,6 +143,8 @@ else{
 
 //PID-10 Race  -- MVS-528
 
+tmp[&apos;PID&apos;][&apos;PID.10&apos;][&apos;PID.10.1&apos;] = patient[&apos;extension&apos;][0][&apos;extension&apos;][0][&apos;valueCoding&apos;][&apos;code&apos;];
+tmp[&apos;PID&apos;][&apos;PID.10&apos;][&apos;PID.10.3&apos;] = &apos;HL70005&apos;;
 
 
 //PID-11 address
@@ -164,7 +166,10 @@ tmp[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.6&apos;] = areaCode;
 tmp[&apos;PID&apos;][&apos;PID.13&apos;][&apos;PID.13.7&apos;] = number; 
 
 
-// PID-22 Ethnic Group -- MVS-528</script>
+// PID-22 Ethnic Group -- MVS-528
+
+tmp[&apos;PID&apos;][&apos;PID.22&apos;][&apos;PID.22.1&apos;] = patient[&apos;extension&apos;][1][&apos;extension&apos;][0][&apos;valueCoding&apos;][&apos;code&apos;];
+tmp[&apos;PID&apos;][&apos;PID.22&apos;][&apos;PID.22.3&apos;] = &apos;CDCREC&apos;;</script>
         </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
         <com.mirth.connect.plugins.javascriptstep.JavaScriptStep version="3.10.0">
           <name>PD1 Segment</name>
@@ -889,7 +894,7 @@ return;</undeployScript>
     <metadata>
       <enabled>true</enabled>
       <lastModified>
-        <time>1611100159506</time>
+        <time>1615326949931</time>
         <timezone>America/New_York</timezone>
       </lastModified>
       <pruningSettings>
