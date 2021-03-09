@@ -156,9 +156,51 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent" @click="retrievePatientRecord">
+        <template>
+          <div class="text-center">
+            <v-dialog
+              v-model="multiVaccinePrompt"
+              width="500"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="accent" @click="retrievePatientRecord"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  Retrieve patient record
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  Multiple Vaccinations
+                </v-card-title>
+
+                <v-card-text>
+                  This patient has had two (2) or more vaccines.
+                  <br> Do you still want to proceed?
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="multiVaccinePrompt = false"
+                  >
+                    Yes
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
+        </template>
+        <!-- <v-btn color="accent" @click="retrievePatientRecord">
           Retrieve patient record
-        </v-btn>
+        </v-btn> -->
       </v-col>
     </v-row>
   </v-container>
@@ -267,6 +309,7 @@ export default {
     retrievePatientRecord() {
       if (this.patient) {
         this.patientRecordRetrieved();
+        console.log(this.$store.state);
       } else {
         alert("Select a patient");
       }
@@ -389,6 +432,7 @@ export default {
       noRearCamera: false,
       noFrontCamera: false,
       result: '',
+      multiVaccinePrompt: false,
       birthdateRules: [
         (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
       ],

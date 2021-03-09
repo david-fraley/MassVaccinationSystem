@@ -118,7 +118,6 @@ export default new Vuex.Store({
             state.screeningResponses.screeningComplete = false
         },
         patientRecordRetrieved(state, payload) {
-            console.log(payload)
             state.patientResource = payload.Patient;
             if(state.patientHistory) {
                 let numberOfDoses = payload.Immunization.length
