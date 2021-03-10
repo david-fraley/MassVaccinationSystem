@@ -135,8 +135,12 @@ exports.create = [
     return Patient.genderEnums[genderVal];
   }),
   body('Patient.*.birthDate', 'Please enter patient birth date').trim().isDate({format: 'MM/DD/YYYY'}),
-  body('Patient.*.race', 'Please enter patient race').trim().escape().isLength({min: 1}),
-  body('Patient.*.ethnicity', 'Please enter patient ethnicity').trim().escape().isLength({min: 1}),
+  body('Patient.*.race', 'Please enter patient race').trim().escape().custom((raceVal) => {
+    return Patient.raceValueSet[raceVal];
+  }),
+  body('Patient.*.ethnicity', 'Please enter patient ethnicity').trim().escape().custom((ethnicityVal) => {
+    return Patient.ethnicityValueSet[ethnicityVal];
+  }),
   body('Patient.*.language', 'Please specify patient language').trim().escape().custom((languageVal) => {
     return Patient.languageEnums[languageVal];
   }),

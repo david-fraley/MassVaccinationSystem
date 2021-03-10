@@ -237,7 +237,7 @@ module.exports = {
       "gender": "Male",
       "birthDate": "01/01/2000",
       "race": "White",
-      "ethnicity": "Not Hispanic",
+      "ethnicity": "Not Hispanic or Latino",
       "address": {
         "use": "Home",
         "line": "90 Walnut St",
