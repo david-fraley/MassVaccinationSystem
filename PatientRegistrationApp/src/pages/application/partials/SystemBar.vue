@@ -1,5 +1,6 @@
 <template>
   <v-system-bar
+    v-if="showTestBuildWarning"
     dark
     color="red"
     height="40 rem">
@@ -12,6 +13,7 @@ export default {
   name: "SystemBar",
   data() {
     return {
+      showTestBuildWarning: process.env.VUE_APP_TEST_BUILD_WARNING,
     };
   },
 };
