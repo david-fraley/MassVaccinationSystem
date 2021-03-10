@@ -87,7 +87,7 @@
         <v-radio-group v-model="eligibilityQ5" row required>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Adult day facility worker" value="workPosition1"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Adult or older adult protective services" value="workPosition2"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Child care and early childhood program workers" value="workPosition3"></v-radio></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Childcare and early childhood program workers" value="workPosition3"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Child protective services" value="workPosition4"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Clergy and other essential support for houses of worship" value="workPosition5"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Communications" value="workPosition6"></v-radio></v-col>
