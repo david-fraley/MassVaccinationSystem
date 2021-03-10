@@ -13,7 +13,7 @@
     <v-row no-gutters>
       <v-divider></v-divider>
     </v-row>
-    <v-row align="center" justify="center">
+    <v-row align="center" justify="left">
         <!-- County  -->
       <v-col cols="12" sm="12" md="6" lg="6">
         <v-text-field
@@ -23,7 +23,7 @@
           prepend-icon="mdi-blank"
         >
           <template #label>
-            <span class="red--text"><strong>* </strong></span>County
+            <span class="red--text"><strong>* </strong></span>1. County
           </template>
         </v-text-field>
       </v-col>
@@ -33,7 +33,7 @@
     </v-row> 
     <!-- Eligibility Question 2 -->
     <v-row no-gutters>
-          <div><span class="red--text"><strong>* </strong></span>2. What is your current living status? (choose one)</div>
+          <div><span class="red--text"><strong>* </strong></span>2. What is your current living status?</div>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
@@ -65,7 +65,7 @@
     </v-row>
     <!-- Eligibility Question 4 -->
     <v-row no-gutters>
-          <div><span class="red--text"><strong>* </strong></span>4. Do you provide services for an elderly person or a person with disabilities as a paid or unpaid caregiver? (Please select one option)</div>
+          <div><span class="red--text"><strong>* </strong></span>4. Do you provide services for an elderly person or a person with disabilities as a paid or unpaid caregiver?</div>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
@@ -80,7 +80,7 @@
     </v-row>
     <!-- Eligibility Question 5 -->
     <v-row no-gutters>
-          <div><span class="red--text"><strong>* </strong></span>5. What best describes your work? (Please select one option)</div>
+          <div><span class="red--text"><strong>* </strong></span>5. What best describes your work?</div>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
@@ -128,19 +128,19 @@
     </v-row>
     <v-row no-gutters>
         <!-- <v-radio-group v-model="eligibilityQ6" row required> -->
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Cancer" value="condition1"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Chronic kidney disease" value="condition2"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="COPD (chronic obstructive pulmonary disease)" value="condition3"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Down Syndrome" value="condition4"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Heart conditions, such as heart failure, coronary artery disease, or cardiomyopathies" value="condition5"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Immunocompromised state (weakened immune system) from solid organ transplant or from blood or bone marrow transplant, immune deficiencies, HIV, use of corticosteroids, or use of other immune weakening medicines" value="condition6"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Obesity (body mass index [BMI] of 30 kg/m2 or higher but < 40 kg/m2)" value="condition7"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Severe Obesity (BMI ≥ 40 kg/m2)" value="condition8"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Pregnancy" value="condition9"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Sickle cell disease" value="condition10"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Smoking" value="condition11"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="Type 2 diabetes mellitus" value="condition12"></v-checkbox></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" label="None of the above" value="condition13"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Cancer" value="condition1"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Chronic kidney disease" value="condition2"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="COPD (chronic obstructive pulmonary disease)" value="condition3"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Down Syndrome" value="condition4"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Heart conditions, such as heart failure, coronary artery disease, or cardiomyopathies" value="condition5"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Immunocompromised state (weakened immune system) from solid organ transplant or from blood or bone marrow transplant, immune deficiencies, HIV, use of corticosteroids, or use of other immune weakening medicines" value="condition6"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Obesity (body mass index [BMI] of 30 kg/m2 or higher but < 40 kg/m2)" value="condition7"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Severe Obesity (BMI ≥ 40 kg/m2)" value="condition8"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Pregnancy" value="condition9"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Sickle cell disease" value="condition10"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Smoking" value="condition11"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="eligibilityQ6" :disabled="enabled" label="Type 2 diabetes mellitus" value="condition12"></v-checkbox></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-checkbox v-model="enabled" label="None of the above" value="condition13"></v-checkbox></v-col>
     </v-row>
     <v-row no-gutters>
       <v-divider></v-divider>
@@ -161,15 +161,11 @@ export default {
 		eligibilityQ4: '',
 		eligibilityQ5: '',
 		eligibilityQ6: [''],
-      valid: false,
+    valid: false,
+    enabled: false,
     };
   },
   computed: {
-      rules() {
-      return [
-        this.selected.length > 0 || "At least one item should be selected"
-      ];
-    }
   },
   methods: {
     sendeligibilityResponsesToReviewPage() { //do we want to send it anywhere?
