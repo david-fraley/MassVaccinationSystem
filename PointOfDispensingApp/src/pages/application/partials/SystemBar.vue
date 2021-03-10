@@ -14,7 +14,7 @@ export default {
   name: "SystemBar",
   data() {
     return {
-      showTestBuildWarning: process.env.VUE_APP_TEST_BUILD_WARNING,
+      showTestBuildWarning: (process.env.VUE_APP_TEST_BUILD_WARNING == 'true'),
     };
   },
 };
