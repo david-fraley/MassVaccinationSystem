@@ -7,7 +7,7 @@ RelatedPerson {
 const RELATIONSHIP_SYSTEM =
   "http://hl7.org/fhir/ValueSet/relatedperson-relationshiptype";
 
-let relationshipEnums = {
+exports.relationshipValueSet = {
   "Care Giver": "CGV",
   Sibling: "SIB",
   Stepchild: "STPCHLD",
@@ -22,8 +22,6 @@ let relationshipEnums = {
 };
 
 exports.toFHIR = function (related) {
-  if (!related.relationship) related.relationship = "Self";
-
   const resource = {
       resourceType: "RelatedPerson",
       patient: {
@@ -34,7 +32,7 @@ exports.toFHIR = function (related) {
               coding: [
                   {
                       system: RELATIONSHIP_SYSTEM,
-                      code: relationshipEnums[related.relationship],
+                      code: exports.relationshipValueSet[related.relationship],
                       display: related.relationship
                   }
               ]

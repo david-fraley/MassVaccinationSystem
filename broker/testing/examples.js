@@ -255,7 +255,7 @@ module.exports = {
         }
       },
       "language": "English",
-      "relationship": "ONESELF"
+      "relationship": "Self"
     }
   ]
 }`,
