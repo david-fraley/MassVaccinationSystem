@@ -33,7 +33,7 @@
     </v-row> 
     <!-- Eligibility Question 2 -->
     <v-row no-gutters>
-          <div><span class="red--text"><strong>* </strong></span>2. What is you current living status? (choose one)</div>
+          <div><span class="red--text"><strong>* </strong></span>2. What is your current living status? (choose one)</div>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
