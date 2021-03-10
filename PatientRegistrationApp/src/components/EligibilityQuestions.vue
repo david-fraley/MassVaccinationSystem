@@ -94,7 +94,7 @@
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Correctional officers and other workers serving people in congregate care settings not included in Phase 1A such as homeless shelters or rape crisis shelters" value="workPosition7"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Education workers" value="workPosition8"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Energy, including nuclear reactors" value="workPosition9"></v-radio></v-col>
-          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Federal, state, county and local government workers, including county election workers, elected officials and members of the judiciary and their staff" value="workPosition10"></v-radio></v-col>
+          <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Federal, state, county, and local government workers, including county election workers, elected officials and members of the judiciary and their staff" value="workPosition10"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Finance, including bank tellers" value="workPosition11"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="First responders" value="workPosition12"></v-radio></v-col>
           <v-col cols="12" sm="12" md="6" lg="6"><v-radio label="Food and agricultural workers" value="workPosition13"></v-radio></v-col>
