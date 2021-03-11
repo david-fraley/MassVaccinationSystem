@@ -34,6 +34,14 @@ Patient {
 }
 */
 
+exports.suffixEnums = {
+  II: "II",
+  III: "III",
+  IV: "IV",
+  Jr: "Jr",
+  Sr: "Sr",
+};
+
 exports.genderEnums = {
   Male: "male",
   Female: "female",

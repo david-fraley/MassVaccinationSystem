@@ -164,7 +164,9 @@ exports.create = [
 
   // Optional fields
   body('Patient.*.middle', '').trim().escape(),
-  body('Patient.*.suffix').trim().escape(),
+  body('Patient.*.suffix', "Please enter a valid suffix").trim().escape().optional({checkFalsy: true}).custom((suffixVal) => {
+    return Patient.suffixEnums[suffixVal];
+  }),
   body('Patient.*.email.*', 'Please enter a valid email').trim().escape().optional({checkFalsy: true}).isEmail(),
   body('Patient.*.phone.*.value', 'Please enter a valid patient phone number').trim().escape().optional({checkFalsy: true}).custom((phoneString) => {
     let numericString = phoneString.replace('(', '').replace(')', '').replace('-', '');
