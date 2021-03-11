@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <SystemBar />
     
     <v-app-bar app clipped-right flat height="69" color="primary">
       <h1 class="font-weight-medium white--text">Point of Dispensing Application</h1>
@@ -110,6 +111,7 @@
 </template>
 
 <script>
+  import SystemBar from "@/pages/application/partials/SystemBar";
   export default {
     name: 'App',
     methods: 
@@ -154,6 +156,7 @@
     },
     components: 
     {    
+      SystemBar,
     },
     data () {
       return {
@@ -173,5 +176,8 @@
   }
   .v-list-item--active {
     background: #1565C0;
+  }
+  .v-system-bar {
+    font-size: 2rem;
   }
 </style>
