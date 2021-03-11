@@ -85,32 +85,15 @@
           <div class="secondary--text">Date of Birth</div>
         </v-col>
         <v-col cols="3">
-        <!-- Date of Birth -->
-          <v-menu
-            attach
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on }">
-              <v-text-field
-                outlined dense 
-                v-model="dateFormatted"
-                :rules="birthdateRules"
-                placeholder="MM/DD/YYYY"
-                v-mask="'##/##/####'"
-                prepend-icon="mdi-calendar"
-                @click:prepend="on.click"
-                @blur="date = parseDate(dateFormatted)"
-              >
-              </v-text-field>
-            </template>
-            <v-date-picker
-              reactive
-              v-model="date"
-            ></v-date-picker>
-          </v-menu>
+        <v-text-field
+            outlined
+            dense
+            v-model="dateFormatted"
+            required
+            :rules="birthdateRules"
+            placeholder="MM/DD/YYYY"
+            v-mask="'##/##/####'"
+        ></v-text-field>        
         </v-col>
         <v-spacer></v-spacer>
         <v-col cols="2">
@@ -168,6 +151,7 @@
 <script>
 import brokerRequests from "../brokerRequests";
 import {QrcodeStream} from "vue-qrcode-reader";
+
 export default {
   name: "PatientLookupPage",
   watch: {
@@ -367,11 +351,21 @@ export default {
       const [year, month, day] = date.split('-')
       return `${month}/${day}/${year}`
     },
-    parseDate (date) {
-      if (!date) return null
+    validBirthdate(birthdate) {
+      var minDate = Date.parse(this.minDateStr);
+      var maxDate = Date.parse(this.maxDateStr);
+      var formattedDate = this.parseDate(birthdate);
+      var date = Date.parse(formattedDate);
 
-      const [month, day, year] = date.split('/')
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+      return !Number.isNaN(date) && minDate <= date && date <= maxDate;
+    },
+    parseDate(date) {
+      if (!date) return null;
+      // Ensure birthdate is fully entered and can be converted into 3 variables before parsing
+      if (date.split("/").length !== 3) return null;
+
+      const [month, day, year] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
     scanQrCode() {
       this.toggleCamera()
@@ -393,8 +387,14 @@ export default {
       noRearCamera: false,
       noFrontCamera: false,
       result: '',
+      minDateStr: "1900-01-01",
       birthdateRules: [
-        (v) => v.length == 10 || "DOB must be in format MM/DD/YYYY"
+        (v) => !!v || "DOB is required",
+        // check if v exists before seeing if the length is 10
+        (v) =>
+          (!!v && v.length === 10) ||
+          "DOB must be in specified format, MM/DD/YYYY",
+        (v) => this.validBirthdate(v) || "Invalid DOB",
       ],
       postalCodeRules: [
 				(v) =>
@@ -417,6 +417,18 @@ export default {
       ],
       patientLookupTable: [],
     };
+  },
+  computed: {
+    maxDateStr: function() {
+      let d = new Date();
+      let date = [
+        d.getFullYear(),
+        ("0" + (d.getMonth() + 1)).slice(-2),
+        ("0" + d.getDate()).slice(-2),
+      ].join("-");
+
+      return date;
+    },
   },
 };
 </script>
