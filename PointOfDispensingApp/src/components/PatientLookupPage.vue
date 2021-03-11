@@ -108,14 +108,15 @@
           </v-text-field>
         </v-col>
       </v-row>
-        <v-card-actions class="justify-space-between">
+        <v-card-actions>
           <v-btn left color="accent" @click="searchPatient">
             Search
           </v-btn>
-          <v-btn right color="accent" @click="clear">
+          <v-btn right color="accent" @click="clear" outlined>
             Clear Info
           </v-btn>
         </v-card-actions>
+        <br/>
     </v-form>
     <v-row>
       <v-col cols="12">
