@@ -13,8 +13,8 @@
     <v-row no-gutters>
       <v-divider></v-divider>
     </v-row>
-    <v-row align="center" justify="left">
-        <!-- County  -->
+    <!--<v-row align="center" justify="left">
+         County  
       <v-col cols="12" sm="12" md="6" lg="6">
         <v-text-field
           required
@@ -27,6 +27,19 @@
           </template>
         </v-text-field>
       </v-col>
+    </v-row> -->
+    <v-row no-gutters>
+      <v-col cols="4">
+          <div><span class="red--text"><strong>* </strong></span>1. County</div></v-col>
+          <v-col cols="4">
+          <v-text-field
+            dense
+            required
+            placeholder="County"
+          :rules="[(v) => !!v || 'County field is required']"
+          v-model="county"
+          prepend-icon="mdi-blank"
+          ></v-text-field></v-col>
     </v-row>
     <v-row no-gutters>
       <v-divider></v-divider>
