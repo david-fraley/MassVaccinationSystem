@@ -125,18 +125,14 @@
           </v-text-field>
         </v-col>
       </v-row>
-      <v-row no-gutters>
-        <v-col cols="6">
-          <v-btn color="accent" @click="searchPatient">
+        <v-card-actions class="justify-space-between">
+          <v-btn left color="accent" @click="searchPatient">
             Search
           </v-btn>
-        </v-col>
-        <v-col cols="6">
-          <v-btn color="accent" @click="clear">
+          <v-btn right color="accent" @click="clear">
             Clear Info
           </v-btn>
-        </v-col>
-      </v-row>
+        </v-card-actions>
     </v-form>
     <v-row>
       <v-col cols="12">
@@ -172,9 +168,7 @@
 <script>
 import brokerRequests from "../brokerRequests";
 import {QrcodeStream} from "vue-qrcode-reader";
-import { validationMixin } from "vuelidate";
 export default {
-  mixins: [validationMixin],
   name: "PatientLookupPage",
   watch: {
       date () {
@@ -183,10 +177,7 @@ export default {
   },
   methods: {
     clear () {
-        this.lastName = ''
-        this.firstName = ''
-        this.date = ''
-        this.postalCode = ''
+        this.$refs.form.reset()
       },
     toggleCamera () {
       this.isCameraOn = !this.isCameraOn;
