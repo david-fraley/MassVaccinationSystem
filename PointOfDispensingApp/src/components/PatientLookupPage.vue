@@ -126,9 +126,14 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col cols="12">
+        <v-col cols="6">
           <v-btn color="accent" @click="searchPatient">
             Search
+          </v-btn>
+        </v-col>
+        <v-col cols="6">
+          <v-btn color="accent" @click="clear">
+            Clear Info
           </v-btn>
         </v-col>
       </v-row>
@@ -167,7 +172,9 @@
 <script>
 import brokerRequests from "../brokerRequests";
 import {QrcodeStream} from "vue-qrcode-reader";
+import { validationMixin } from "vuelidate";
 export default {
+  mixins: [validationMixin],
   name: "PatientLookupPage",
   watch: {
       date () {
@@ -175,6 +182,12 @@ export default {
       },
   },
   methods: {
+    clear () {
+        this.lastName = ''
+        this.firstName = ''
+        this.date = ''
+        this.postalCode = ''
+      },
     toggleCamera () {
       this.isCameraOn = !this.isCameraOn;
     },
