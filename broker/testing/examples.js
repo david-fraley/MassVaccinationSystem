@@ -219,7 +219,7 @@ module.exports = {
     {
       "family": "Smith",
       "given": "John",
-      "suffix": "Jr",
+      "suffix": "Jr.",
       "phone": [
         {
           "value": "(200)000-0000",
