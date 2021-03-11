@@ -10,7 +10,7 @@
         height="100%">
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app width="20em" permanent>
+    <v-navigation-drawer :mini-variant="mini" :mini-variant-width="100" v-model="drawer" app width="20em" permanent>
       <v-sheet color="white" class="pa-4">
         <span v-if="isLoggedIn">
           <v-btn icon color="accent">
@@ -110,6 +110,10 @@
     },
     computed:
     {
+      mini() {
+          return this.$vuetify.breakpoint.mdAndDown;
+        },
+
       isCheckInPageDisabled() {
         return this.$store.getters.isCheckInPageDisabled
       },
