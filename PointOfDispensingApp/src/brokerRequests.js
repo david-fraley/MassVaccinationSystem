@@ -37,28 +37,28 @@ export default {
   getPatientFromQrCode: (qrCode) => {
     
     // If we didn't get a Qr Code, return David's patient data
-    if(!qrCode) {
-      const patient = {
-        id: qrCode,
-        family: "Fraley",
-        given: "David",
-        birthDate: "1950-01-01",
-        gender: "Male",
-        address: {
-          line: "1234 Main Street",
-          city: "Waukesha",
-          state: "WI",
-          postalCode: "53072",
-        },
-        language: "English",
-      };
-      return new Promise((resolve) => {
-        resolve({patient: patient});
-      });
-    }
+    //if(!qrCode) {
+    //  const patient = {
+    //    id: qrCode,
+    //    family: "Fraley",
+    //    given: "David",
+    //    birthDate: "1950-01-01",
+    //    gender: "Male",
+    //    address: {
+    //      line: "1234 Main Street",
+    //      city: "Waukesha",
+    //      state: "WI",
+    //      postalCode: "53072",
+    //    },
+    //    language: "English",
+    //  };
+    //  return new Promise((resolve) => {
+    //    resolve({patient: patient});
+    //  });
+    //}
 
     // If we got a Qr Code, hit the patient GET endpoint
-    else {
+    //else {
       return axios
       .get(`/broker/Patient/${qrCode}`)
       .then((response) => {
@@ -68,7 +68,7 @@ export default {
       .catch((e) => {
         return toResponse(e);
       });
-    }
+    //}
   },
 
   getAppointment: (patID) => {
