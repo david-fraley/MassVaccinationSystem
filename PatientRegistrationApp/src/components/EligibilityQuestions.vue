@@ -182,9 +182,9 @@ export default {
     verifyFormContents() {
 		var message = "Please complete all eligibility questions."
 		
-		if((this.county == "" || this.eligibilityQ2 == "") || 
-		(this.eligibilityQ3 == "") || (this.eligibilityQ4 == "") || (this.eligibilityQ5 == "") || 
-		(this.eligibilityQ6 == "")) 
+		if((this.county === "" || this.eligibilityQ2 === "") || 
+		(this.eligibilityQ3 === "") || (this.eligibilityQ4 === "") || (this.eligibilityQ5 === "") || 
+		(this.eligibilityQ6.length === 0 && !this.enabled)) 
 		{
 			alert(message)
 			return false
