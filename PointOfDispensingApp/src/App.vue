@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <SystemBar />
     
     <v-app-bar app clipped-right flat height="69" color="primary">
       <h1 class="font-weight-medium white--text">Point of Dispensing Application</h1>
@@ -11,10 +12,15 @@
 
     <v-navigation-drawer v-model="drawer" app width="20em" permanent>
       <v-sheet color="white" class="pa-4">
-        <v-btn icon color="accent">
-              <v-icon large>mdi-account-circle</v-icon>
-        </v-btn>
-        Welcome, 
+        <span v-if="isLoggedIn">
+          <v-btn icon color="accent">
+            <v-icon large>mdi-account-circle</v-icon>
+          </v-btn>
+          Hello, {{ currentUserName }} <router-link to="/UserLogout">Log Out</router-link>
+        </span>
+        <span v-else>
+          Welcome to MassVaxx, <router-link to="/UserLogin">Log In</router-link>
+        </span>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -105,6 +111,7 @@
 </template>
 
 <script>
+  import SystemBar from "@/pages/application/partials/SystemBar";
   export default {
     name: 'App',
     methods: 
@@ -135,15 +142,22 @@
       },
       workflowState() {
         return this.$store.getters.workflowState
-      }
+      },
+      isLoggedIn() {
+        return this.$store.getters.isLoggedIn;
+      },
+      currentUserName() {
+        return this.$store.state.currentUser.name;
+      } 
     },
     components: 
     {    
+      SystemBar,
     },
     data () {
       return {
         drawer: null,
-        leftMenu: 1
+        leftMenu: 1,
       }
     }
   }
@@ -158,5 +172,8 @@
   }
   .v-list-item--active {
     background: #1565C0;
+  }
+  .v-system-bar {
+    font-size: 2rem;
   }
 </style>

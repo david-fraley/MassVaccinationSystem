@@ -222,24 +222,24 @@ module.exports = {
       "suffix": "Jr.",
       "phone": [
         {
-          "value": "(000)000-000",
-          "use": "mobile"
+          "value": "(200)000-0000",
+          "use": "Mobile"
         },
         {
-          "value": "(100)000-000",
-          "use": "mobile"
+          "value": "(100)000-0000",
+          "use": "Mobile"
         }
       ],
       "email": [
         "email@site.com",
         "email2@site.com"
       ],
-      "gender": "male",
+      "gender": "Male",
       "birthDate": "01/01/2000",
-      "race": "",
-      "ethnicity": "",
+      "race": "White",
+      "ethnicity": "Not Hispanic or Latino",
       "address": {
-        "use": "home",
+        "use": "Home",
         "line": "90 Walnut St",
         "city": "New York City",
         "state": "NY",
@@ -250,12 +250,12 @@ module.exports = {
         "family": "Smith",
         "given": "John",
         "phone": {
-          "value": "(110)000-000",
-          "use": "mobile"
+          "value": "(110)000-0000",
+          "use": "Mobile"
         }
       },
       "language": "English",
-      "relationship": "ONESELF"
+      "relationship": "Self"
     }
   ]
 }`,

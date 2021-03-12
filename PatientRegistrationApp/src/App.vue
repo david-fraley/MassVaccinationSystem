@@ -1,6 +1,7 @@
 <template>
   <v-app id="Patient-registration">
     <v-main>
+      <SystemBar />
       <v-container fill-height fluid>
         <v-layout>
           <v-row>
@@ -505,6 +506,7 @@ import EligibilityQuestions from "./components/EligibilityQuestions";
 import config from "./config.js";
 import EventBus from "./eventBus";
 import Header from "@/pages/application/partials/Header";
+import SystemBar from "@/pages/application/partials/SystemBar";
 export default {
   name: "App",
   methods: {
@@ -864,6 +866,7 @@ export default {
     ScreeningQuestions,
     EligibilityQuestions,
     Header,
+    SystemBar,
   },
   computed: {
     titleFontSize() {
@@ -893,5 +896,8 @@ export default {
 }
 .v-stepper__step {
   padding: 16px;
+}
+.v-system-bar {
+  font-size: 2rem;
 }
 </style>

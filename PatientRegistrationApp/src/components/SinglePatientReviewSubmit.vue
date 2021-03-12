@@ -220,6 +220,7 @@ export default {
         race: this.dataPersonalInfo.race,
         ethnicity: this.dataPersonalInfo.ethnicity,
         language: this.dataPersonalInfo.preferredLanguage,
+        relationship: this.dataPersonalInfo.relationship
       };
 
       patient.phone = [];
