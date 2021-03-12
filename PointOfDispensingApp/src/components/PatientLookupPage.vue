@@ -108,13 +108,15 @@
           </v-text-field>
         </v-col>
       </v-row>
-      <v-row no-gutters>
-        <v-col cols="12">
-          <v-btn color="accent" @click="searchPatient">
+        <v-card-actions>
+          <v-btn left color="accent" @click="searchPatient">
             Search
           </v-btn>
-        </v-col>
-      </v-row>
+          <v-btn right color="accent" @click="clear" outlined>
+            Clear Info
+          </v-btn>
+        </v-card-actions>
+        <br/>
     </v-form>
     <v-row>
       <v-col cols="12">
@@ -159,6 +161,9 @@ export default {
       },
   },
   methods: {
+    clear () {
+        this.$refs.form.reset()
+      },
     toggleCamera () {
       this.isCameraOn = !this.isCameraOn;
     },
