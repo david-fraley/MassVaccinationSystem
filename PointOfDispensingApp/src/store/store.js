@@ -124,18 +124,20 @@ export default new Vuex.Store({
         patientRecordRetrieved(state, payload) {
             state.patientResource = payload.Patient;
             if(state.patientHistory) {
-                let numberOfDoses = payload.Immunization.length
+                let numberOfDoses = payload.Immunization.length;
 
                 state.patientHistory = payload.Immunization;
                 state.immunizationResource = payload.Immunization[numberOfDoses-1];
                 
-                if(state.immunizationResource.status == 'completed') {
-                    state.screeningResponses.screeningComplete = true
-                    state.screeningResponses.vaccinationDecision = 'Yes'
-                }
-                else if(state.immunizationResource.status == 'not-done') {
-                    state.screeningResponses.screeningComplete = true
-                    state.screeningResponses.vaccinationDecision = 'No'
+                if(state.immunizationResource) {
+                    if(state.immunizationResource.status == 'completed') {
+                        state.screeningResponses.screeningComplete = true;
+                        state.screeningResponses.vaccinationDecision = 'Yes';
+                    }
+                    else if(state.immunizationResource.status == 'not-done') {
+                        state.screeningResponses.screeningComplete = true;
+                        state.screeningResponses.vaccinationDecision = 'No';
+                    }
                 }
             } 
             if(payload.Encounter) {
