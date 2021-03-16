@@ -3,11 +3,12 @@ The files contained here will allow you to run all the required components/servi
 a complete system on one workstation or server using Docker. Use this as a starting point for
 your own installation.
 
-![SandboxContainers](SandboxContainers.jpg)
+![SandboxContainers](readme_files/SandboxContainers.jpg)
 
 ## Prerequisites:
 - [Docker Compose](https://docs.docker.com/compose/install/) and any dependencies are installed.
 - MassVaccinationSystem project source code downloaded.
+- See ![MassVaxxUbuntuDockerDeployment.docx](readme_files/MassVaxxUbuntuDockerDeployment.docx) for using Linux Ubuntu as the Docker host.
 
 ## Steps:
 1. In sandbox directory, generate certificates for https connections (Windows users may need
@@ -17,10 +18,8 @@ to install an OpenSSL binary):
 
 2. In sandbox directory, copy **env.template** to a file named **.env** (note the dot in .env filename).
 3. In sandbox directory, copy **hapi.properties.template** to a file named **hapi.properties**.
-4. (Optional) Edit .env and hapi.properties file to change default database passwords (_BROKER_DB_PASSWORD_ 
-and _HAPI_DB_PASSWORD_). Make sure the passwords match in .env and hapi.properties.
-5. (Optional) Edit .env and hapi.properties file to change default ports (_PROXY_HTTP_PORT_ 
-and _PROXY_HTTPS_PORT_). properties.
+4. (Optional) Edit .env and hapi.properties file to change default database password (_HAPI_DB_PASSWORD_). Make sure the user, database name, and passwords match in .env and hapi.properties.
+5. (Optional) Edit .env to change default keycloak administrator user and password (_KEYCLOAK_USER_ and _KEYCLOAK_PASSWORD_).
 6. Navigate to MassVaccinationSystem sandbox directory with the docker-compose.yml file and run:
 
         docker-compose -p massvaxx up
@@ -53,6 +52,10 @@ recognized certificate if needed.
 
     https://\<your_ip_address_or_host\>/broker/\<endpoint\> (e.g., https://192.168.0.100/broker/healthcheck)
 
+- **Keycloak console** will be at:  
+
+    https://\<your_ip_address_or_host\>/auth (e.g., https://demo.massvaxx.com/auth)
+
 Direct access to the other services is not provided with the default docker-compose.yml.
 To expose the other services, uncomment the ports as neccessary and re-run 'docker-compose up'. You may need to do this to configure some things.
 
@@ -63,9 +66,7 @@ To expose the other services, uncomment the ports as neccessary and re-run 'dock
 
 - To clean up the containers and resources after stopping:
 
-        docker container prune
-        docker network prune
-        docker volume prune
+        docker-compose -p massvaxx down
 
 
 ## Security and Optional Setup Notes
