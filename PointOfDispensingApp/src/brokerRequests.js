@@ -35,7 +35,10 @@ export default {
 
   // Get patient from QR code for patient retrieval
   getPatientFromQrCode: (qrCode) => {
-
+    if(!qrCode) {
+      console.log("A QR Code was not scanned!");
+    }
+    else{
     // If we successfully got a Qr Code, hit the patient GET endpoint
       return axios
       .get(`/broker/Patient/${qrCode}`)
@@ -46,6 +49,7 @@ export default {
       .catch((e) => {
         return toResponse(e);
       });
+    }
   },
 
   getAppointment: (patID) => {
