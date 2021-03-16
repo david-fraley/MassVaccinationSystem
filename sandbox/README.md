@@ -11,10 +11,12 @@ your own installation.
 - See ![MassVaxxUbuntuDockerDeployment.docx](readme_files/MassVaxxUbuntuDockerDeployment.docx) for using Linux Ubuntu as the Docker host.
 
 ## Steps:
-1. In sandbox directory, generate certificates for https connections (Windows users may need
+1. In sandbox directory, generate self-signed certificates for https connections (Windows users may need
 to install an OpenSSL binary):
 
         openssl req -newkey rsa:2048 -nodes -keyout sandbox.key -x509 -days 365 -out sandbox.crt
+
+   If you have a fully-qualified domain name (FQDN) and a DNS A record that directs the FQDN to your Docker host's IP address, see the **Certicate for https** section below for instructions on how to use the Let's Encrypt certificate authority (CA) to generate and use a certificate recognized by browsers.
 
 2. In sandbox directory, copy **env.template** to a file named **.env** (note the dot in .env filename).
 3. In sandbox directory, copy **hapi.properties.template** to a file named **hapi.properties**.
@@ -27,6 +29,8 @@ to install an OpenSSL binary):
     Or, if you want the services to run in the background, use:
 
         docker-compose -p massvaxx up -d
+
+7. Set up realm and accounts as described in **Keycloak** section below.
 
 ## Connecting to sandbox using a web browser
 **NOTE**: Some browsers (e.g. Chrome) will not allow connections to sites using a self-signed certificate.
@@ -58,6 +62,29 @@ recognized certificate if needed.
 
 Direct access to the other services is not provided with the default docker-compose.yml.
 To expose the other services, uncomment the ports as neccessary and re-run 'docker-compose up'. You may need to do this to configure some things.
+
+## Keycloak Configuration
+
+1. Login to Keycloak console at https://\<your_ip_address_or_host\>/auth using the user and password defined in the .env file.
+2. Initially you will be logged into the _Master_ realm. Add a new realm using the _Add Realm_ button found when you click on the drop down in the upper left:
+
+![KeycloakAddReam](readme_files/KeycloakAddRealm.png)
+
+3. On the _Add Realm_ form, set **Name** to _MassVaxx_ and click **Create**. You will then be switched to the MassVaxx realm:
+
+![KeycloakMassVaxxdRealm](readme_files/KeycloakMassVaxxRealm.png)
+
+4. Click the _Login_ tab and set the switches to match the screenshot below and then click **Save**.
+
+![KeycloakMassVaxxdLogin](readme_files/KeycloakMassVaxxLogin.png)
+
+5. Add a new client for MassVaxx applications. Select the **Clients** in the left column and then click the **Create** button on the upper right of the Clients list form. On the _Add Client_ form, set **Client ID** to _massvaxx_ and click **Save**.
+
+6. Users can now register themselves using the account URL found in the list of **Clients**. It will be https://\<your_ip_address_or_host\>/auth/realms/MassVaxx/account/ (e.g., https://massvaxx-keycloak.mooo.com/auth/realms/MassVaxx/account/).
+
+    NOTE: After a successful registration via the link above, an error page may be displayed. Going back to the original URL will allow the new user to access their account settings.
+
+7. Other identity providers can be configured using the functions on the left panel of the Keycloak administrative console.
 
 ## Stopping and cleaning up
 - To stop the containers:
