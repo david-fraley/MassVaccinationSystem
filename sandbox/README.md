@@ -8,7 +8,7 @@ your own installation.
 ## Prerequisites:
 - [Docker Compose](https://docs.docker.com/compose/install/) and any dependencies are installed.
 - MassVaccinationSystem project source code downloaded.
-- See ![MassVaxxUbuntuDockerDeployment.docx](readme_files/MassVaxxUbuntuDockerDeployment.docx) for using Linux Ubuntu as the Docker host.
+- See [MassVaxxUbuntuDockerDeployment.docx](readme_files/MassVaxxUbuntuDockerDeployment.docx) for using Linux Ubuntu as the Docker host.
 
 ## Steps:
 1. In sandbox directory, generate self-signed certificates for https connections (Windows users may need
