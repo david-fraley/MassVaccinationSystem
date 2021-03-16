@@ -10,6 +10,7 @@
     </v-row>
     <v-row>
       <PatientInfoComponent />
+      <PatientHistoryComponent />
       <PatientCheckInComponent />
     </v-row>
   </v-container>
@@ -17,6 +18,7 @@
 
 <script>
 import PatientInfoComponent from './PatientInfoComponent';
+import PatientHistoryComponent from './PatientHistoryComponent';
 import PatientCheckInComponent from './PatientCheckInComponent';
 
   export default {
@@ -27,6 +29,7 @@ import PatientCheckInComponent from './PatientCheckInComponent';
     components: 
     {
       PatientInfoComponent,
+      PatientHistoryComponent,
       PatientCheckInComponent
     },
     data () {
