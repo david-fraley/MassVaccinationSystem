@@ -63,10 +63,6 @@ export default new Vuex.Store({
             //Check-In page is "read only" unless the patient record has just been retrieved or the patient has been previously discharged
             return !((state.activeWorkflowState == 'RECORD_RETRIEVED') || (state.activeWorkflowState == 'DISCHARGED'))
         },
-        isPatientHistoryPageDisabled: state => {
-            //Patient History page is not accessible before the patient record has been loaded 
-            return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
-        },
         isVaccinationEventPageDisabled: state => {
             //Vaccination Event page is not accessible before the patient has been checked 
             return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
