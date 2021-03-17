@@ -36,7 +36,9 @@ export default {
   // Get patient from QR code for patient retrieval
   getPatientFromQrCode: (qrCode) => {
     if(!qrCode) {
-      console.log("A QR Code was not scanned!");
+      return new Promise((resolve) => {
+        resolve({error: "error message"});
+      });
     }
     else{
     // If we successfully got a Qr Code, hit the patient GET endpoint
