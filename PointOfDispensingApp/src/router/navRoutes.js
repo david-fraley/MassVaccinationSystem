@@ -2,7 +2,6 @@ import UserLoginPage from '@/components/UserLoginPage';
 import UserLogoutPage from '@/components/UserLogoutPage';
 import PatientLookupPage from '@/components/PatientLookupPage.vue';
 import PatientCheckInPage from '@/components/PatientCheckInPage.vue';
-import PatientHistoryPage from '@/components/PatientHistoryPage.vue';
 import ConsentScreeningPage from '@/components/ConsentScreeningPage.vue';
 import VaccinationEventPage from '@/components/VaccinationEventPage.vue';
 import AdverseEventsPage from '@/components/AdverseEventsPage.vue';
@@ -33,13 +32,6 @@ export default [
   {
     path: '/CheckIn',
     component: PatientCheckInPage,
-    meta: {
-      requiresAuth: true,
-    }
-  },
-  {
-    path: '/PatientHistory',
-    component: PatientHistoryPage,
     meta: {
       requiresAuth: true,
     }
