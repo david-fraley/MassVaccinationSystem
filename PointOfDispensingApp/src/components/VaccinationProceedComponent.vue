@@ -1,11 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12">
-        <v-btn color="accent" @click="scanBarcode" :disabled="isVaccinationEventPageReadOnly">
-          Scan vaccine barcode
-        </v-btn>
-      </v-col>
+      <p> </p> <!--blank row for spacing-->
     </v-row>
     <v-row>
       <v-col cols="5">
@@ -250,13 +246,6 @@ export default {
     },
   },
   methods: {
-    scanBarcode() {
-      // Placeholder
-      this.lotNumber = "LOT1234";
-      this.expirationDate = "2020-01-01";
-      this.manufacturer = "Organization/example"; // todo
-      this.doseQuantity = "0.1 mL";
-    },
     onVaccination(immunization) {
       //send data to Vuex
       this.$store.dispatch("vaccinationComplete", immunization);
