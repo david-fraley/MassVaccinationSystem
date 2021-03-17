@@ -158,11 +158,6 @@ import {QrcodeStream} from "vue-qrcode-reader";
 
 export default {
   name: "PatientLookupPage",
-  watch: {
-      date () {
-        this.dateFormatted = this.formatDate(this.date)
-      },
-  },
   methods: {
     clear () {
         this.$refs.form.reset()
@@ -229,7 +224,7 @@ export default {
       let data = {
         lastName: this.lastName,
         firstName: this.firstName,
-        birthDate: this.date,
+        birthDate: this.parseDate(this.birthdate),
         postalCode: this.postalCode,
       };
       brokerRequests.searchPatient(data).then((response) => {
@@ -370,12 +365,6 @@ export default {
         }
       });
     },
-    formatDate (date) {
-      if (!date) return null
-
-      const [year, month, day] = date.split('-')
-      return `${month}/${day}/${year}`
-    },
     validBirthdate(birthdate) {
       var minDate = Date.parse(this.minDateStr);
       var maxDate = Date.parse(this.maxDateStr);
@@ -426,8 +415,7 @@ export default {
 				!v || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) || 
 				"Zip code format must be ##### or #####-####",
       ],
-      date: new Date().toISOString().substr(0, 10),
-      dateFormatted: "",
+      birthdate: "",
       headers: [
         {
           text: "Last Name",
