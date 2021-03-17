@@ -2,7 +2,7 @@
   <v-app>
     <SystemBar />
     
-    <v-app-bar app clipped-right flat height="69" color="primary">
+    <v-app-bar app clipped-right flat height="69" color="appTitleColor">
       <h1 class="font-weight-medium white--text">Point of Dispensing Application</h1>
       <v-spacer></v-spacer>
       <img
@@ -13,7 +13,7 @@
     <v-navigation-drawer v-model="drawer" app width="20em" permanent>
       <v-sheet color="white" class="pa-4">
         <span v-if="isLoggedIn">
-          <v-btn icon color="accent">
+          <v-btn icon color="secondary">
             <v-icon large>mdi-account-circle</v-icon>
           </v-btn>
           Hello, {{ currentUserName }} <router-link to="/UserLogout">Log Out</router-link>
@@ -164,14 +164,14 @@
 </script>
 <style scoped>
   .v-list-item:hover{
-    background: #BBDEFB;
+    background: #BDBDBD;
     color: #424242;
   }
   .v-list-item--disabled {
     background: #F5F5F5;
   }
   .v-list-item--active {
-    background: #1565C0;
+    background: #424242;
   }
   .v-system-bar {
     font-size: 2rem;

@@ -101,6 +101,20 @@ export default new Vuex.Store({
         },
         isLoggedIn: state => {
             return !!(state.currentUser.loggedIn && state.currentUser.exp > Date.now());
+        },
+        howManyDosesHasPatientReceived: state => {
+            let numberOfDoses = 0;
+
+            if(state.patientHistory) {
+                let numberOfEntries = state.patientHistory.length;
+
+                for(let i=0; i<numberOfEntries; i++) {
+                    if(state.patientHistory[i].status == 'completed') {
+                        numberOfDoses++;
+                    }
+                }
+            }
+            return numberOfDoses;
         }
     },
 
