@@ -10,7 +10,7 @@ export default new Vuetify({
             primary: '#9E9E9E',
             secondary: '#424242',
             accent: '#9E9E9E',
-            pageColor: 'white',
+            pageColor: '#FFFFFF',
             appTitleColor: '#009688'
           }
         }

@@ -89,7 +89,7 @@
           <v-text-field
               outlined
               dense
-              v-model="dateFormatted"
+              v-model="birthdate"
               required
               :rules="birthdateRules"
               placeholder="MM/DD/YYYY"
@@ -338,15 +338,15 @@ export default {
         
         if(administeredDoses == 0) {
           //blue color scheme
-          this.$vuetify.theme.themes.light.primary = '#1976D2';
-          this.$vuetify.theme.themes.light.accent = '#64B5F6';
-          this.$vuetify.theme.themes.light.pageColor = '#E3F2FD';
+          this.$vuetify.theme.themes.light.primary = '#039BE5';
+          this.$vuetify.theme.themes.light.accent = '#4FC3F7';
+          this.$vuetify.theme.themes.light.pageColor = '#E1F5FE';
         }
         else if(administeredDoses == 1) {
           //orange color scheme
-          this.$vuetify.theme.themes.light.primary = '#F57C00'
-          this.$vuetify.theme.themes.light.accent = '#FFB74D'
-          this.$vuetify.theme.themes.light.pageColor = '#FFF3E0'
+          this.$vuetify.theme.themes.light.primary = '#FF6F00'
+          this.$vuetify.theme.themes.light.accent = '#FFB300'
+          this.$vuetify.theme.themes.light.pageColor = '#FFF8E1'
         }
         else {
           //purple color scheme
