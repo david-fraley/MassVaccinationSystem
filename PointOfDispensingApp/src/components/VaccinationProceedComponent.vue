@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <v-row>
+      <p> </p> <!--blank row for spacing-->
+    </v-row>
+    <v-row>
       <v-col cols="5">
         <v-row no-gutters>
           <v-col cols="4">
