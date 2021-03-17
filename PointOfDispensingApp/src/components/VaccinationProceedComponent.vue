@@ -277,7 +277,7 @@ export default {
     submitVaccinationRecord() {
       let data = {
         vaccine: this.config.vaccine,
-        manufacturer: this.manufacturer,
+        manufacturer: "Organization/example",
         lotNumber: this.lotNumber,
         expirationDate: this.expirationDate,
         patient: this.patient,
