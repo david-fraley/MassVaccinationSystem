@@ -112,7 +112,7 @@ export default new Vuex.Store({
             state.immunizationResource.lotNumber = '',
             state.immunizationResource.expirationDate = '',
             state.immunizationResource.manufacturer = '',
-            state.immunizationResource.doseQuantity = '',
+            state.immunizationResource.doseQuantity = '0.5 mL',
             state.immunizationResource.doseNumber = '',
             state.immunizationResource.immunizationStatus = '',
             state.immunizationResource.immunizationTimeStamp = '',
