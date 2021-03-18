@@ -28,7 +28,13 @@
 	name: 'PatientHistoryComponent',
 	computed: {
 		immunizations(){
-			return this.$store.state.patientHistory
+      const immunizations = this.$store.state.patientHistory;
+
+      for (const record of immunizations) {
+        record.daysSinceDose = this.calculatedDaysSinceDose(record.occurrence);
+      }
+
+      return immunizations;
 		}
 	},
     methods: 
@@ -36,25 +42,18 @@
 	rowClick: function (item, row) {      
         row.select(true);
 		},
-	calculatedDaysSinceDose(firstDoseDateTime) {
-		this.dateFunct = new Date();
+	calculatedDaysSinceDose(doseDateTime) {
+    const now = new Date();
+    const dateTime = new Date(doseDateTime);
 
-		this.now = this.dateFunct;
-		this.firstDose = new Date(firstDoseDateTime);
+    const milliPerDay = 1000*60*60*24;
+    const numDaysSinceLastVaccination = Math.round((now-dateTime) / milliPerDay);
 
-		this.numDaysSinceLastVaccination = Math.ceil((this.now-this.firstDose) / (1000*60*60*24));
-
-		return this.numDaysSinceLastVaccination.toString();
+		return numDaysSinceLastVaccination.toString();
 	},
-    },
-    components: 
-    {
     },
     data () {
       return {
-		numDaysSinceLastVaccination: '',
-		selectedId: -1,
-		daysSinceDose: '',
 		
 		headers: [
 		{
@@ -66,9 +65,8 @@
 			{ text: 'Trade Name', value: 'manufacturer' },
 			{ text: 'Dose Qty.', value: 'doseQuantity' },
 			{ text: 'Time Administered', value: 'occurrence' },
-			{ text: 'Days Since Last Vaccination', value: 'numDaysSinceLastVaccination' },
+			{ text: 'Days Since Last Vaccination', value: 'daysSinceDose' },
 			{ text: 'Practitioner', value: 'performer' },
-			{ text: 'Adverse Effects', value: '' },
 			],
       }
     },
