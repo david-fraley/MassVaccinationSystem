@@ -45,15 +45,6 @@
               <v-list-item-title class="font-weight-medium">Check-In</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <!-- Patient History -->
-          <v-list-item :disabled="isPatientHistoryPageDisabled" router :to="'/PatientHistory'">
-            <v-list-item-action>
-              <v-icon large>mdi-history</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title class="font-weight-medium">Patient History</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
           <!-- Consent and Screening -->
           <v-list-item :disabled="isConsentScreeningPageDisabled" router :to="'/ConsentScreening'">
             <v-list-item-action>
@@ -121,9 +112,6 @@
     {
       isCheckInPageDisabled() {
         return this.$store.getters.isCheckInPageDisabled
-      },
-      isPatientHistoryPageDisabled() {
-        return this.$store.getters.isPatientHistoryPageDisabled
       },
       isConsentScreeningPageDisabled() {
         return this.$store.getters.isConsentScreeningPageDisabled
