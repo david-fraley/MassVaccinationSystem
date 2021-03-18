@@ -65,7 +65,7 @@
 			{ text: 'Trade Name', value: 'manufacturer' },
 			{ text: 'Dose Qty.', value: 'doseQuantity' },
 			{ text: 'Time Administered', value: 'occurrence' },
-			{ text: 'Days Since Last Vaccination', value: 'daysSinceDose' },
+			{ text: 'Days Since Vaccination', value: 'daysSinceDose' },
 			{ text: 'Practitioner', value: 'performer' },
 			],
       }
