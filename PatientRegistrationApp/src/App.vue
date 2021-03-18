@@ -86,35 +86,47 @@
                       /></v-card>
                     </v-stepper-content>
 
-                    <!-- Single Patient: Screening Questions -->
-                    <v-stepper-content step="5">
-                      <v-toolbar flat>
-                        <v-toolbar-title class="text-wrap"
-                          >Please complete these screening
-                          questions</v-toolbar-title
-                        >
-                      </v-toolbar>
-                      <v-card flat
-                        ><ScreeningQuestions
-                          ref="singlepatientscreeningquestions"
-                      /></v-card>
-                    </v-stepper-content>
+                    <!-- Single Patient: Eligibility Questions -->
+                  <v-stepper-content step="5">
+                    <v-toolbar flat>
+                      <v-toolbar-title class="text-wrap"
+                        >Please complete these eligibility
+                        questions</v-toolbar-title
+                      >
+                    </v-toolbar>
+                    <v-card flat
+                      ><EligibilityQuestions ref="singlepatienteligibilityquestions"
+                    /></v-card>
+                  </v-stepper-content>
 
-                    <!-- Single Patient: Emergency Contact -->
-                    <v-stepper-content step="6">
-                      <v-toolbar flat>
-                        <v-toolbar-title class="text-wrap">
-                          Specify an emergency contact</v-toolbar-title
-                        >
-                      </v-toolbar>
-                      <v-card flat
-                        ><SinglePatientEmergencyContact
-                          ref="singlepatientemergencycontact"
-                      /></v-card>
-                    </v-stepper-content>
+                  <!-- Single Patient: Screening Questions -->
+                  <v-stepper-content step="6">
+                    <v-toolbar flat>
+                      <v-toolbar-title class="text-wrap"
+                        >Please complete these screening
+                        questions</v-toolbar-title
+                      >
+                    </v-toolbar>
+                    <v-card flat
+                      ><ScreeningQuestions ref="singlepatientscreeningquestions"
+                    /></v-card>
+                  </v-stepper-content>
+
+                  <!-- Single Patient: Emergency Contact -->
+                  <v-stepper-content step="7">
+                    <v-toolbar flat>
+                      <v-toolbar-title class="text-wrap">
+                        Specify an emergency contact</v-toolbar-title
+                      >
+                    </v-toolbar>
+                    <v-card flat
+                      ><SinglePatientEmergencyContact
+                        ref="singlepatientemergencycontact"
+                    /></v-card>
+                  </v-stepper-content>
 
                     <!-- Single Patient: Review and Submit -->
-                    <v-stepper-content step="7">
+                    <v-stepper-content step="8">
                       <v-toolbar flat>
                         <v-toolbar-title class="text-wrap"
                           >Please ensure your information is
@@ -131,7 +143,7 @@
                     </v-stepper-content>
 
                     <!-- Single Patient: Follow up -->
-                    <v-stepper-content step="8">
+                    <v-stepper-content step="9">
                       <v-toolbar flat>
                         <v-toolbar-title class="text-wrap"
                           >Download your QR code</v-toolbar-title
@@ -194,12 +206,25 @@
                       /></v-card>
                     </v-stepper-content>
 
+                    <!-- Household: Eligibility Questions -->
+                  <v-stepper-content step="6">
+                    <v-toolbar flat>
+                      <v-toolbar-title class="text-wrap"
+                        >Please complete these eligibility
+                        questions</v-toolbar-title
+                      >
+                    </v-toolbar>
+                    <v-card flat
+                      ><EligibilityQuestions ref="householdeligibilityquestions"
+                    /></v-card>
+                  </v-stepper-content>
+
                     <!-- Household: Emergency Contact -->
-                    <v-stepper-content step="6">
-                      <v-toolbar flat>
-                        <v-toolbar-title class="text-wrap"
-                          >Specify your emergency contact</v-toolbar-title
-                        ></v-toolbar
+                  <v-stepper-content step="7">
+                    <v-toolbar flat>
+                      <v-toolbar-title class="text-wrap"
+                        >Specify your emergency contact</v-toolbar-title
+                      ></v-toolbar
                       >
                       <v-toolbar flat>
                         <v-subheader
@@ -215,7 +240,7 @@
 
                     <!-- Household: Personal Info #n -->
                     <template v-for="n in getNumberOfHouseholdMembers() - 1">
-                      <v-stepper-content :key="`${n + 1}-member`" :step="n + 6">
+                      <v-stepper-content :key="`${n + 1}-member`" :step="n + 7">
                         <v-toolbar flat>
                           <v-toolbar-title class="text-wrap"
                             >Enter personal information for household member #{{
@@ -477,6 +502,7 @@ import HouseholdPersonalInfo_n from "./components/HouseholdPersonalInfo_n";
 import HouseholdReviewSubmit from "./components/HouseholdReviewSubmit";
 import HouseholdFollowUp from "./components/HouseholdFollowUp";
 import ScreeningQuestions from "./components/ScreeningQuestions";
+import EligibilityQuestions from "./components/EligibilityQuestions";
 import config from "./config.js";
 import EventBus from "./eventBus";
 import Header from "@/pages/application/partials/Header";
@@ -643,10 +669,19 @@ export default {
           case config.registrationPages.SINGLE_PATIENT_PERSONAL_INFO_PAGE:
             this.$refs.singlepatientpersonalinfo.verifyFormContents()
               ? this.goToPage(
-                  config.registrationPages.SINGLE_PATIENT_SCREENING_PAGE
+                  config.registrationPages.SINGLE_PATIENT_ELIGIBILITY_PAGE
                 )
               : this.goToPage(
                   config.registrationPages.SINGLE_PATIENT_PERSONAL_INFO_PAGE
+                );
+            break;
+          case config.registrationPages.SINGLE_PATIENT_ELIGIBILITY_PAGE:
+            this.$refs.singlepatienteligibilityquestions.verifyFormContents()
+              ? this.goToPage(
+                  config.registrationPages.SINGLE_PATIENT_SCREENING_PAGE
+                )
+              : this.goToPage(
+                  config.registrationPages.SINGLE_PATIENT_ELIGIBILITY_PAGE
                 );
             break;
           case config.registrationPages.SINGLE_PATIENT_SCREENING_PAGE:
@@ -720,11 +755,22 @@ export default {
             config.registrationPages.HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE:
             this.$refs.householdPersonalInfo_1.verifyFormContents()
               ? this.goToPage(
-                  config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE
+                  config.registrationPages.HOUSEHOLD_ELIGIBILITY_PAGE
                 )
               : this.goToPage(
                   config.registrationPages
                     .HOUSEHOLD_PERSONAL_INFO_PATIENT_1_PAGE
+                );
+            break;
+            case this.page ==
+            config.registrationPages.HOUSEHOLD_ELIGIBILITY_PAGE:
+            this.$refs.householdeligibilityquestions.verifyFormContents()
+              ? this.goToPage(
+                  config.registrationPages.HOUSEHOLD_EMERGENCY_CONTACT_PAGE
+                )
+              : this.goToPage(
+                  config.registrationPages
+                    .HOUSEHOLD_ELIGIBILITY_PAGE
                 );
             break;
           case this.page ==
@@ -818,6 +864,7 @@ export default {
     HouseholdReviewSubmit,
     HouseholdFollowUp,
     ScreeningQuestions,
+    EligibilityQuestions,
     Header,
     SystemBar,
   },
