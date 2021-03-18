@@ -44,7 +44,8 @@
             </div>
           </v-col>
           <v-col cols="8">
-            <v-text-field
+            <v-select
+              :items="manufacturerOptions"
               outlined
               dense
               required
@@ -52,7 +53,7 @@
               v-model="manufacturer"
               :filled="isVaccinationEventPageReadOnly"
               :disabled="isVaccinationEventPageReadOnly"
-            ></v-text-field>
+            ></v-select>
           </v-col>
         </v-row>
       </v-col>
@@ -265,7 +266,7 @@ export default {
     submitVaccinationRecord() {
       let data = {
         vaccine: this.config.vaccine,
-        manufacturer: this.manufacturer,
+        manufacturer: "Organization/example",
         lotNumber: this.lotNumber,
         expirationDate: this.expirationDate,
         patient: this.patient,
@@ -313,6 +314,7 @@ export default {
       doseNumberOptions: [1, 2],
       doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
       vaccinationSiteOptions: ["Left arm", "Right arm"],
+      manufacturerOptions: ["Pfizer-BioNTech", "Moderna", "Johnson & Johnson"],
       status: "completed",
       doseQuantity: this.$store.state.immunizationResource.doseQuantity,
       site: this.$store.state.immunizationResource.site,
