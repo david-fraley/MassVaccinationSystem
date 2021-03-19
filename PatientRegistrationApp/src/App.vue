@@ -139,6 +139,7 @@
                           @singlePatientRegistrationSuccess="
                             SinglePatientRegistrationSuccessful
                           "
+                          @singlePatientRegistrationFail="SinglePatientRegistrationFailed"
                       /></v-card>
                     </v-stepper-content>
 
@@ -370,6 +371,7 @@
                           color="primary"
                           text
                           @click="submitSinglePatientRegistration()"
+                          :loading="loading"
                         >
                           Yes
                         </v-btn>
@@ -511,11 +513,16 @@ export default {
   name: "App",
   methods: {
     submitSinglePatientRegistration() {
+      this._data.loading=true;
       this.$refs.singlePatientReviewSubmit.submitPatientInfo();
     },
     SinglePatientRegistrationSuccessful(data) {
+      this._data.loading=false;
       this.$refs.singlePatientFollowUp.updateQrCodeData(data);
       this.goToPage(config.registrationPages.SINGLE_PATIENT_FOLLOWUP_PAGE);
+    },
+    SinglePatientRegistrationFailed() {
+      this._data.loading=false;
     },
     submitHouseholdRegistration() {
       this.$refs.householdReviewSubmit.submitPatientInfo();
@@ -885,6 +892,7 @@ export default {
       registrationPath: config.selectedRegistrationPath.NO_PATH_SELECTED,
       numberOfHouseholdMembers: 2,
       familyName: "",
+      loading: false
     };
   },
 };

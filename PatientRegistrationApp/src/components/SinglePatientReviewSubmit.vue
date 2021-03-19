@@ -264,6 +264,7 @@ export default {
         } else if (response.error) {
           console.log(response.error);
           alert("Registration not successful");
+          this.$emit("singlePatientRegistrationFail");
         }
       });
     },
