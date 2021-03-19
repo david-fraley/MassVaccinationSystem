@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <v-form ref="form" v-model="valid">
     <v-row>
       <p> </p> <!--blank row for spacing-->
     </v-row>
@@ -174,6 +175,7 @@
         ></v-textarea>
       </v-col>
     </v-row>
+    </v-form>
     <v-row align="center" justify="center">
       <template>
         <div class="text-center">
@@ -264,6 +266,12 @@ export default {
       this.$store.dispatch("patientDischarged", payload);
     },
     submitVaccinationRecord() {
+      this.$refs.form.validate();
+      if (!this.valid) {
+        this.dialog = false;
+        return;
+      }
+
       let data = {
         vaccine: this.config.vaccine,
         manufacturer: "Organization/example",
@@ -310,6 +318,7 @@ export default {
   components: {},
   data() {
     return {
+      valid: false,
       dialog: false,
       doseNumberOptions: [1, 2],
       doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
