@@ -139,7 +139,9 @@
                           @singlePatientRegistrationSuccess="
                             SinglePatientRegistrationSuccessful
                           "
-                          @singlePatientRegistrationFail="SinglePatientRegistrationFailed"
+                          @singlePatientRegistrationFail="
+                          SinglePatientRegistrationFailed
+                          "
                       /></v-card>
                     </v-stepper-content>
 
@@ -274,6 +276,9 @@
                           "
                           @householdRegistrationSuccess="
                             householdRegistrationSuccessful
+                          "
+                          @householdRegistrationFail="
+                            householdRegistrationFailed
                           "
                       /></v-card>
                     </v-stepper-content>
@@ -443,6 +448,7 @@
                           color="primary"
                           text
                           @click="submitHouseholdRegistration()"
+                          :loading="loading"
                         >
                           Yes
                         </v-btn>
@@ -525,15 +531,20 @@ export default {
       this._data.loading=false;
     },
     submitHouseholdRegistration() {
+      this._data.loading=true;
       this.$refs.householdReviewSubmit.submitPatientInfo();
     },
     householdRegistrationSuccessful(data) {
+      this._data.loading=false;
       this.$refs.householdFollowUp.updateQrCodeData(data);
       this.goToPage(
         config.registrationPages.HOUSEHOLD_FOLLOWUP_PAGE +
           this.getNumberOfHouseholdMembers() -
           2
       );
+    },
+    householdRegistrationFailed(){
+      this._data.loading=false;
     },
     goToPage(pageNum) {
       this.page = pageNum;
