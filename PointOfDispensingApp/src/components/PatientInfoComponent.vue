@@ -23,7 +23,9 @@
               dense
               :readonly="!edit"
               outlined
-              :value="patientLastName"
+              required
+              :rules="rules.nameRules"
+              v-model="patient.family"
             ></v-text-field>
           </v-col>
           <v-col cols="1">
@@ -38,7 +40,9 @@
               dense
               :readonly="!edit"
               outlined
-              :value="patientFirstName"
+              required
+              :rules="rules.nameRules"
+              v-model="patient.given"
             ></v-text-field>
           </v-col>
           <v-col cols="1">
@@ -53,7 +57,8 @@
               dense
               :readonly="!edit"
               outlined
-              v-model="birthdate"
+              v-model="patient.birthDate"
+              required
               :rules="rules.birthdateRules"
               placeholder="MM/DD/YYYY"
               v-mask="'##/##/####'"
@@ -122,7 +127,7 @@
       <v-btn v-if="!edit" color="accent" @click="edit = true">
         Edit
       </v-btn>
-      <v-btn v-else color="accent" outlined @click="edit = false">
+      <v-btn v-else color="accent" outlined @click="editPatientInfo">
         Save
       </v-btn>
       <v-col cols="12">
@@ -141,17 +146,12 @@ export default {
     patientId() {
       return this.$store.state.patientResource.id;
     },
-    patientLastName() {
-      return this.$store.state.patientResource.family;
-    },
-    patientFirstName() {
-      return this.$store.state.patientResource.given;
-    },
     patientAge() {
-      if(!this.birthdate || this.birthdate.length !== 10)
+      const birthdate = this.patient.birthDate;
+      if(!birthdate || birthdate.length !== 10)
         return null;
 
-      const [dobMonth, , dobYear] = this.birthdate.split("/");
+      const [dobMonth, , dobYear] = birthdate.split("/");
       let ageYears = this.currentDate.getFullYear() - dobYear;
 
       let currentMonth = this.currentDate.getMonth() + 1;
@@ -180,12 +180,19 @@ export default {
       return this.$store.state.patientResource.language;
     },
   },
-  methods: {},
+  methods: {
+    editPatientInfo() {
+      this.edit = false;
+      // update store
+      this.$store.state.patientResource = this.patient;
+    }
+  },
   data() {
     return {
       rules: Rules,
       edit: false,
-      birthdate: this.$store.state.patientResource.birthDate,
+      // pass obj by value
+      patient: JSON.parse(JSON.stringify(this.$store.state.patientResource)),
       currentDate: new Date()
     };
   },

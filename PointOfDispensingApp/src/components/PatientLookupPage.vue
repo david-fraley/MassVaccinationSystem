@@ -63,7 +63,7 @@
             dense
             v-model="lastName"
             required
-            :rules="[(v) => !!v || 'Last Name is required']"
+            :rules="rules.nameRules"
           ></v-text-field>
         </v-col>
         <v-spacer></v-spacer>
@@ -76,7 +76,7 @@
             dense
             v-model="firstName"
             required
-            :rules="[(v) => !!v || 'First Name is required']"
+            :rules="rules.nameRules"
           ></v-text-field>
         </v-col>
       </v-row>

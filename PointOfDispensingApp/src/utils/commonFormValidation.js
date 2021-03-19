@@ -29,12 +29,12 @@ function parseDate(date) {
   return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 }
 
+const required = (v) => !!v || "Field is required";
+const dateFormat = (v) =>
+  (!!v && v.length === 10) || "Date must be in format, MM/DD/YYYY";
+const birthdate = (v) => validBirthdate(v) || "Invalid DOB";
+
 export default {
-  birthdateRules: [
-    (v) => !!v || "DOB is required",
-    // check if v exists before seeing if the length is 10
-    (v) =>
-      (!!v && v.length === 10) || "DOB must be in specified format, MM/DD/YYYY",
-    (v) => validBirthdate(v) || "Invalid DOB",
-  ],
+  nameRules: [required],
+  birthdateRules: [required, dateFormat, birthdate],
 };
