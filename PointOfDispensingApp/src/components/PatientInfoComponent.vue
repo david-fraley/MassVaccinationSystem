@@ -19,9 +19,9 @@
           </v-col>
           <v-col cols="3">
             <v-text-field
-              filled
+              :filled="!edit"
               dense
-              readonly
+              :readonly="!edit"
               outlined
               :value="patientLastName"
             ></v-text-field>
@@ -34,9 +34,9 @@
           </v-col>
           <v-col cols="3">
             <v-text-field
-              filled
+              :filled="!edit"
               dense
-              readonly
+              :readonly="!edit"
               outlined
               :value="patientFirstName"
             ></v-text-field>
@@ -49,11 +49,14 @@
           </v-col>
           <v-col cols="3">
             <v-text-field
-              filled
+              :filled="!edit"
               dense
-              readonly
+              :readonly="!edit"
               outlined
-              :value="patientDateOfBirth"
+              v-model="birthdate"
+              :rules="rules.birthdateRules"
+              placeholder="MM/DD/YYYY"
+              v-mask="'##/##/####'"
             ></v-text-field>
           </v-col>
           <v-col cols="1">
@@ -116,6 +119,12 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-btn v-if="!edit" color="accent" @click="edit = true">
+        Edit
+      </v-btn>
+      <v-btn v-else color="accent" outlined @click="edit = false">
+        Save
+      </v-btn>
       <v-col cols="12">
         <v-divider></v-divider>
       </v-col>
@@ -124,6 +133,8 @@
 </template>
 
 <script>
+import Rules from "@/utils/commonFormValidation"
+
 export default {
   name: "PatientInfoComponent",
   computed: {
@@ -136,22 +147,14 @@ export default {
     patientFirstName() {
       return this.$store.state.patientResource.given;
     },
-    patientDateOfBirth() {
-      return this.$store.state.patientResource.birthDate;
-    },
     patientAge() {
-      let currentDate = new Date();
+      if(!this.birthdate || this.birthdate.length !== 10)
+        return null;
 
-      let dateOfBirthString = this.$store.state.patientResource.birthDate;
+      const [dobMonth, , dobYear] = this.birthdate.split("/");
+      let ageYears = this.currentDate.getFullYear() - dobYear;
 
-      if((dateOfBirthString == "") || (!dateOfBirthString))
-        return " ";
-
-      let dobYear = dateOfBirthString.substring(6,10);
-      let ageYears = currentDate.getFullYear() - dobYear;
-
-      let dobMonth = dateOfBirthString.substring(0,2);
-      let currentMonth = currentDate.getMonth() + 1;
+      let currentMonth = this.currentDate.getMonth() + 1;
       let ageMonths;
       if(currentMonth >= dobMonth) {
         ageMonths = currentMonth - dobMonth
@@ -179,7 +182,12 @@ export default {
   },
   methods: {},
   data() {
-    return {};
+    return {
+      rules: Rules,
+      edit: false,
+      birthdate: this.$store.state.patientResource.birthDate,
+      currentDate: new Date()
+    };
   },
 };
 </script>
