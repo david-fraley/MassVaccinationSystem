@@ -114,6 +114,7 @@
           return this.$vuetify.breakpoint.mdAndDown;
         },
       
+
       isCheckInPageDisabled() {
         return this.$store.getters.isCheckInPageDisabled
       },
