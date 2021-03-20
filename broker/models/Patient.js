@@ -38,7 +38,11 @@ exports.genderEnums = {
   Male: "male",
   Female: "female",
   Other: "other",
-  "Decline to answer": "unknown"
+  "Decline to answer": "unknown",
+  male: "Male",
+  female: "Female",
+  other: "Other",
+  unknown: "Decline to answer"
 };
 
 exports.addressUseEnums = {
@@ -289,7 +293,7 @@ exports.toModel = function (patient) {
             ? patient.name[0].suffix[0]
             : ""
             : "",
-        gender: patient.gender,
+        gender: exports.genderEnums[patient.gender],
         birthDate: prettyDate(patient.birthDate),
         address: {
             line: patient.address

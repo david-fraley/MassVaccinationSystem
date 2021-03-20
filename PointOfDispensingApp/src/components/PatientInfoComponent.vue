@@ -71,13 +71,16 @@
             <div class="font-weight-medium secondary--text">Gender</div>
           </v-col>
           <v-col cols="3">
-            <v-text-field
-              filled
+            <v-select
+              :filled="!edit"
               dense
-              readonly
+              :readonly="!edit"
               outlined
-              :value="patientGender"
-            ></v-text-field>
+              :items="genderIdOptions"
+              required
+              :rules="[(v) => !!v || 'Gender identity field is required']"
+              v-model="patient.gender"
+            ></v-select>
           </v-col>
           <v-col cols="2">
             <div class="font-weight-medium secondary--text">Age</div>
@@ -167,9 +170,6 @@ export default {
       let ageString = ageYears + " yr(s). " + ageMonths + " mo(s).";
       return ageString;
     },
-    patientGender() {
-      return this.$store.state.patientResource.gender;
-    },
     patientStreetAddress() {
       let address = this.$store.state.patientResource.address;
       let components = ["line", "city", "state", "postalCode"];
@@ -193,7 +193,8 @@ export default {
       edit: false,
       // pass obj by value
       patient: JSON.parse(JSON.stringify(this.$store.state.patientResource)),
-      currentDate: new Date()
+      currentDate: new Date(),
+      genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
     };
   },
 };
