@@ -103,13 +103,16 @@
             </div>
           </v-col>
           <v-col cols="3">
-            <v-text-field
-              filled
+            <v-select
+              :filled="!edit"
               dense
-              readonly
+              :readonly="!edit"
               outlined
-              :value="patientPreferredLanguage"
-            ></v-text-field>
+              :items="languageOptions"
+              required
+              :rules="[(v) => !!v || 'Preferred language field is required']"
+              v-model="patient.language"
+            ></v-select>
           </v-col>
           <v-col cols="2">
             <div class="font-weight-medium secondary--text">Address</div>
@@ -176,9 +179,6 @@ export default {
       
       return components.map(component => address[component]).filter(v => v).join(", ");
     },
-    patientPreferredLanguage() {
-      return this.$store.state.patientResource.language;
-    },
   },
   methods: {
     editPatientInfo() {
@@ -195,6 +195,7 @@ export default {
       patient: JSON.parse(JSON.stringify(this.$store.state.patientResource)),
       currentDate: new Date(),
       genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
+      languageOptions: ["English", "Spanish"],
     };
   },
 };
