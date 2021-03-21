@@ -115,15 +115,85 @@
             ></v-select>
           </v-col>
           <v-col cols="2">
-            <div class="font-weight-medium secondary--text">Address</div>
+            <div class="font-weight-medium secondary--text">Address Line 1</div>
           </v-col>
-          <v-col cols="9">
+          <v-col cols="3">
             <v-text-field
-              filled
+              :filled="!edit"
               dense
-              readonly
+              :readonly="!edit"
               outlined
-              :value="patientStreetAddress"
+              required
+              :rules="[(v) => !!v || 'Address Line field is required']"
+              v-model="patient.address.line"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="2">
+            <div class="font-weight-medium secondary--text">Address Line 2</div>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              v-model="patient.address.line2"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="2">
+            <div class="font-weight-medium secondary--text">City</div>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              required
+              :rules="[(v) => !!v || 'City field is required']"
+              v-model="patient.address.city"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="1">
+            <div class="font-weight-medium secondary--text">State</div>
+          </v-col>
+          <v-col cols="1">
+            <v-select
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              required
+              :rules="[v => !!v || 'State field is required']"
+              v-model="patient.address.state"
+              :items="stateOptions">
+            </v-select>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="1">
+            <div class="font-weight-medium secondary--text">Zip Code</div>
+          </v-col>
+          <v-col cols="1">
+            <v-text-field
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              required
+              :rules="rules.postalCodeRules"
+              v-model="patient.address.postalCode"
+              v-mask="postalCodeMask"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -173,12 +243,13 @@ export default {
       let ageString = ageYears + " yr(s). " + ageMonths + " mo(s).";
       return ageString;
     },
-    patientStreetAddress() {
-      let address = this.$store.state.patientResource.address;
-      let components = ["line", "city", "state", "postalCode"];
-      
-      return components.map(component => address[component]).filter(v => v).join(", ");
-    },
+    postalCodeMask() {
+      let mask = '#####';
+      if (this.postalCode && this.postalCode.length >= 6) {
+        mask = '#####-####';
+      }
+      return mask;
+    }
   },
   methods: {
     editPatientInfo() {
@@ -196,6 +267,22 @@ export default {
       currentDate: new Date(),
       genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
       languageOptions: ["English", "Spanish"],
+      stateOptions:[
+				'AL', 'AK', 'AS', 'AZ',
+				'AR', 'CA', 'CO', 'CT',
+				'DE', 'DC', 'FM',
+				'FL', 'GA', 'GU', 'HI', 'ID',
+				'IL', 'IN', 'IA', 'KS', 'KY',
+				'LA', 'ME', 'MH', 'MD',
+				'MA', 'MI', 'MN', 'MS',
+				'MO', 'MT', 'NE', 'NV',
+				'NH', 'NJ', 'NM', 'NY',
+				'NC', 'ND', 'MP', 'OH',
+				'OK', 'OR', 'PW', 'PA', 'PR',
+				'RI', 'SC', 'SD', 'TN',
+				'TX', 'UT', 'VT', 'VI', 'VA',
+				'WA', 'WV', 'WI', 'WY',
+      ],
     };
   },
 };

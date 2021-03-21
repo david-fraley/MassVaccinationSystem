@@ -33,8 +33,12 @@ const required = (v) => !!v || "Field is required";
 const dateFormat = (v) =>
   (!!v && v.length === 10) || "Date must be in format, MM/DD/YYYY";
 const birthdate = (v) => validBirthdate(v) || "Invalid DOB";
+const postalCode = (v) =>
+  /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+  "Zip code format must be ##### or #####-####";
 
 export default {
   nameRules: [required],
   birthdateRules: [required, dateFormat, birthdate],
+  postalCodeRules: [postalCode],
 };

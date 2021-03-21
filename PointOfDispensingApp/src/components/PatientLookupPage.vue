@@ -104,7 +104,8 @@
             outlined 
             dense 
             :rules="postalCodeRules"
-            v-model="postalCode">
+            v-model="postalCode"
+            v-mask="postalCodeMask">
           </v-text-field>
         </v-col>
       </v-row>
@@ -156,6 +157,15 @@ import Rules from "@/utils/commonFormValidation";
 
 export default {
   name: "PatientLookupPage",
+  computed: {
+    postalCodeMask() {
+      let mask = '#####';
+      if (this.postalCode && this.postalCode.length >= 6) {
+        mask = '#####-####';
+      }
+      return mask;
+    }
+  },
   methods: {
     clear () {
         this.$refs.form.reset()
