@@ -1,11 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12">
-        <v-btn color="accent" @click="scanBarcode" :disabled="isVaccinationEventPageReadOnly">
-          Scan vaccine barcode
-        </v-btn>
-      </v-col>
+      <p> </p> <!--blank row for spacing-->
     </v-row>
     <v-row>
       <v-col cols="5">
@@ -48,7 +44,8 @@
             </div>
           </v-col>
           <v-col cols="8">
-            <v-text-field
+            <v-select
+              :items="manufacturerOptions"
               outlined
               dense
               required
@@ -56,7 +53,7 @@
               v-model="manufacturer"
               :filled="isVaccinationEventPageReadOnly"
               :disabled="isVaccinationEventPageReadOnly"
-            ></v-text-field>
+            ></v-select>
           </v-col>
         </v-row>
       </v-col>
@@ -250,13 +247,6 @@ export default {
     },
   },
   methods: {
-    scanBarcode() {
-      // Placeholder
-      this.lotNumber = "LOT1234";
-      this.expirationDate = "2020-01-01";
-      this.manufacturer = "Organization/example"; // todo
-      this.doseQuantity = "0.1 mL";
-    },
     onVaccination(immunization) {
       //send data to Vuex
       this.$store.dispatch("vaccinationComplete", immunization);
@@ -276,7 +266,7 @@ export default {
     submitVaccinationRecord() {
       let data = {
         vaccine: this.config.vaccine,
-        manufacturer: this.manufacturer,
+        manufacturer: "Organization/example",
         lotNumber: this.lotNumber,
         expirationDate: this.expirationDate,
         patient: this.patient,
@@ -324,6 +314,7 @@ export default {
       doseNumberOptions: [1, 2],
       doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],
       vaccinationSiteOptions: ["Left arm", "Right arm"],
+      manufacturerOptions: ["Pfizer-BioNTech", "Moderna", "Johnson & Johnson"],
       status: "completed",
       doseQuantity: this.$store.state.immunizationResource.doseQuantity,
       site: this.$store.state.immunizationResource.site,

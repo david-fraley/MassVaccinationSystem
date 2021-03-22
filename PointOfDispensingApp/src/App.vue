@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <SystemBar />
     
     <v-app-bar app clipped-right flat height="69" color="primary">
       <h1 class="font-weight-medium white--text">Point of Dispensing Application</h1>
@@ -42,15 +43,6 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="font-weight-medium">Check-In</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <!-- Patient History -->
-          <v-list-item :disabled="isPatientHistoryPageDisabled" router :to="'/PatientHistory'">
-            <v-list-item-action>
-              <v-icon large>mdi-history</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title class="font-weight-medium">Patient History</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <!-- Consent and Screening -->
@@ -110,6 +102,7 @@
 </template>
 
 <script>
+  import SystemBar from "@/pages/application/partials/SystemBar";
   export default {
     name: 'App',
     methods: 
@@ -119,9 +112,6 @@
     {
       isCheckInPageDisabled() {
         return this.$store.getters.isCheckInPageDisabled
-      },
-      isPatientHistoryPageDisabled() {
-        return this.$store.getters.isPatientHistoryPageDisabled
       },
       isConsentScreeningPageDisabled() {
         return this.$store.getters.isConsentScreeningPageDisabled
@@ -150,6 +140,7 @@
     },
     components: 
     {    
+      SystemBar,
     },
     data () {
       return {
@@ -169,5 +160,8 @@
   }
   .v-list-item--active {
     background: #1565C0;
+  }
+  .v-system-bar {
+    font-size: 2rem;
   }
 </style>

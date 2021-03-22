@@ -215,6 +215,7 @@ export default {
         race: this.race,
         ethnicity: this.ethnicity,
         preferredLanguage: this.preferredLanguage,
+        relationship: "Self"
       };
       // EventBus.$emit("DATA_PERSONAL_INFO_PUBLISHED", personalInfoPayload);
       this.$store.commit("setPersonalInfo", {

@@ -221,6 +221,7 @@ export default {
         race: this.race,
         ethnicity: this.ethnicity,
         preferredLanguage: this.preferredLanguage,
+        relationship: "Self"
       };
       const householdMemberNumber = 1;
       EventBus.$emit(

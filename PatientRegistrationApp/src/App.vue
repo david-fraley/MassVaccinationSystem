@@ -1,6 +1,7 @@
 <template>
   <v-app id="Patient-registration">
     <v-main>
+      <SystemBar />
       <v-container fill-height fluid>
         <v-layout>
           <v-row>
@@ -25,6 +26,7 @@ export default {
   name: "App",
   components: {
     Header,
+    SystemBar,
   },
   computed: {
     version() {
