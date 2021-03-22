@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import customerSettings from "../customerSettings";
+import customerSettings from "../../customerSettings";
 
 export default {
   name: "SinglePatientContactInfo",

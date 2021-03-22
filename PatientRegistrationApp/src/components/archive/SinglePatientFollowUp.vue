@@ -22,8 +22,8 @@
       <div class="font-weight-medium">
         Name:
         <span class="font-weight-regular"
-          >{{ dataPersonalInfo.familyName }}, {{ dataPersonalInfo.givenName }}
-          {{ dataPersonalInfo.middleName }} {{ dataPersonalInfo.suffix }}</span
+          >{{ patient.family }}, {{ patient.given }}
+          {{ patient.middle }} {{ patient.suffix }}</span
         >
       </div>
     </v-row>
@@ -55,11 +55,11 @@
 </template>
 
 <script>
-import EventBus from "../eventBus";
 import VueQrcode from "vue-qrcode";
 import jsPDF from "jspdf";
 
 export default {
+  name: "SinglePatientFollowUp",
   data() {
     return {
       dataPersonalInfo: [],
@@ -69,19 +69,24 @@ export default {
       dataScreeningResponses: [],
     };
   },
+  computed: {
+    patient() {
+      return this.$store.state.patient.patient;
+    },
+  },
   methods: {
     generatePdf() {
       const qrcode = document.getElementById("qrCodeId");
       let pdfDoc = new jsPDF();
       let imageData = this.getBase64Image(qrcode);
       let string =
-        this.dataPersonalInfo.familyName +
+        this.patient.family +
         ", " +
-        this.dataPersonalInfo.givenName +
+        this.patient.given +
         " " +
-        this.dataPersonalInfo.middleName +
+        this.patient.middle +
         " " +
-        this.dataPersonalInfo.suffix;
+        this.patient.suffix;
       pdfDoc.setFontSize(10);
       pdfDoc.text("COVID-19 Vaccination Registration", 10, 15);
       pdfDoc.text(
@@ -106,9 +111,6 @@ export default {
       ctx.drawImage(img, 0, 0);
       var dataURL = canvas.toDataURL("image/png");
       return dataURL;
-    },
-    updatePersonalInfoData(personalInfoPayload) {
-      this.dataPersonalInfo = personalInfoPayload;
     },
     updateQrCodeData(data) {
       this.qrValue = data;
@@ -138,23 +140,9 @@ export default {
         this.dataScreeningResponses.screeningQ8 +
         "|";
     },
-    updateScreeningResponseData(screeningResponsesPayload) {
-      this.dataScreeningResponses = screeningResponsesPayload;
-    },
   },
   components: {
     VueQrcode,
-  },
-  mounted() {
-    EventBus.$on("DATA_PERSONAL_INFO_PUBLISHED", (personalInfoPayload) => {
-      this.updatePersonalInfoData(personalInfoPayload);
-    }),
-      EventBus.$on(
-        "DATA_SCREENING_RESPONSES_PUBLISHED",
-        (screeningResponsesPayload) => {
-          this.updateScreeningResponseData(screeningResponsesPayload);
-        }
-      );
   },
 };
 </script>

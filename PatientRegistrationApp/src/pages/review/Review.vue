@@ -1,0 +1,209 @@
+<template>
+  <v-container>
+    <v-row align="center" justify="start">
+      <v-col cols="12">
+        <div class="font-weight-medium primary--text">Personal information</div>
+      </v-col>
+      <v-col cols="12">
+        <div class="font-weight-medium">
+          Name:
+          <span class="font-weight-regular"
+            >{{ patient.family }}, {{ patient.given }} {{ patient.middle }}
+            {{ patient.suffix }}</span
+          >
+        </div>
+        <div class="font-weight-medium">
+          Date of Birth:
+          <span class="font-weight-regular">{{ patient.birthDate }}</span>
+        </div>
+        <div class="font-weight-medium">
+          Gender ID:
+          <span class="font-weight-regular">{{ patient.gender }}</span>
+        </div>
+        <div class="font-weight-medium">
+          Race:
+          <span class="font-weight-regular">{{ patient.race }}</span>
+        </div>
+        <div class="font-weight-medium">
+          Ethnicity:
+          <span class="font-weight-regular">{{ patient.ethnicity }}</span>
+        </div>
+        <div class="font-weight-medium">
+          Preferred Language:
+          <span class="font-weight-regular">{{ patient.language }}</span>
+        </div>
+      </v-col>
+      <v-col cols="12">
+        <div class="font-weight-medium primary--text">Address</div>
+      </v-col>
+      <v-col cols="12">
+        <div class="font-weight-medium">
+          Address Type:
+          <span class="font-weight-regular">{{ patient.addressUse }}</span>
+        </div>
+        <div class="font-weight-regular">
+          {{ patient.addressLine }}
+        </div>
+        <template v-if="patient.addressLine2 != ''">
+          <div class="font-weight-regular">
+            {{ patient.addressLine2 }}
+          </div>
+        </template>
+        <div class="font-weight-regular">
+          {{ patient.addressCity }}, {{ patient.addressState }},
+          {{ patient.addressCountry }}, {{ patient.addressPostalCode }}
+        </div>
+      </v-col>
+      <v-col cols="12">
+        <div class="font-weight-medium primary--text">Contact Information</div>
+      </v-col>
+      <v-col cols="12">
+        <div class="font-weight-medium">
+          Phone:
+          <span v-if="patient.phone" class="font-weight-regular"
+            >{{ patient.phone }}
+            <span v-if="patient.phoneType"
+              >({{ patient.phoneType }})</span
+            ></span
+          ><span v-else class="font-weight-regular">Not provided</span>
+        </div>
+        <div class="font-weight-medium">
+          E-mail:
+          <span v-if="patient.email" class="font-weight-regular">{{
+            patient.email
+          }}</span
+          ><span v-else class="font-weight-regular">Not provided</span>
+        </div>
+      </v-col>
+      <v-col cols="12" sm="6" md="3">
+        <div class="font-weight-medium primary--text">Emergency Contact</div>
+      </v-col>
+      <v-col cols="12">
+        <div class="font-weight-medium">
+          Name:
+          <span class="font-weight-regular"
+            >{{ patient.contactFamily }},
+            {{ patient.contactGiven }}
+            <span v-if="patient.contactRelationship"
+              >(Relationship: {{ patient.contactRelationship }})</span
+            >
+          </span>
+        </div>
+        <div class="font-weight-medium">
+          Phone:
+          <span class="font-weight-regular"
+            >{{ patient.contactPhone }}
+            <span v-if="patient.contactPhoneType"
+              >({{ patient.contactPhoneType }})</span
+            ></span
+          >
+        </div>
+      </v-col>
+    </v-row>
+    <!-- SUBMIT BUTTON -->
+    <v-row>
+      <v-col cols="12">
+        <v-btn clear color="secondary" class="ma-2 white--text" @click="back()">
+          <v-icon left large color="white"> mdi-chevron-left </v-icon>
+          Back
+        </v-btn>
+        <v-btn
+          color="primary"
+          class="ma-2 white--text"
+          @click="submitPatientInfo()"
+          :disabled="submittingPatient"
+        >
+          <span>Register</span>
+          <v-icon right large color="white"> mdi-chevron-right </v-icon>
+          <v-progress-circular
+            v-if="submittingPatient"
+            size="16"
+            indeterminate
+            color="white"
+            class="ml-2"
+          ></v-progress-circular>
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+<script>
+import brokerRequests from "@/brokerRequests";
+
+export default {
+  name: "Review",
+  data() {
+    return {
+      submittingPatient: false,
+    };
+  },
+  computed: {
+    patient() {
+      return this.$store.state.patient.patient;
+    },
+  },
+  methods: {
+    back() {
+      this.$router.push("/questions");
+    },
+    submitPatientInfo() {
+      this.submittingPatient = true;
+      let data = this.buildPatientPayload();
+      brokerRequests.submitRegistration(data).then((response) => {
+        if (response.data) {
+          this.$router.push("/followup");
+        } else if (response.error) {
+          this.submittingPatient = false;
+          console.log(response.error);
+          alert("Registration not successful");
+        }
+      });
+    },
+    buildPatientPayload() {
+      let patient = {
+        family: this.patient.family,
+        given: this.patient.given,
+        middle: this.patient.middle,
+        suffix: this.patient.suffix,
+        gender: this.patient.gender,
+        birthDate: this.patient.birthDate,
+        race: this.patient.race,
+        ethnicity: this.patient.ethnicity,
+        language: this.patient.language,
+        email: [],
+        phone: [],
+        address: {
+          use: this.patient.addressUse,
+          line: (
+            this.patient.addressLine +
+            " " +
+            this.patient.addressLine2
+          ).trim(),
+          city: this.patient.addressCity,
+          state: this.patient.addressState,
+          postalCode: this.patient.addressPostalCode,
+          country: this.patient.addressCountry,
+        },
+        contact: {
+          family: this.patient.contactFamily,
+          given: this.patient.contactGiven,
+          phone: {
+            value: this.patient.contactPhone,
+            use: this.patient.contactPhoneType,
+          },
+        },
+      };
+      if (this.patient.email) {
+        patient.email.push(this.patient.email);
+      }
+      if (this.patient.phone) {
+        patient.phone.push({
+          value: this.patient.phone,
+          use: this.patient.phoneType,
+        });
+      }
+      return { Patient: [patient] };
+    },
+  },
+};
+</script>

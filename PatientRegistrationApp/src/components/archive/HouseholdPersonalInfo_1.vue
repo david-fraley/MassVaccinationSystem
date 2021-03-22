@@ -46,22 +46,28 @@
         >
         </v-select>
       </v-col>
+      <v-col cols="12" sm="12" md="12" lg="12">
+        <v-checkbox
+          v-model="checkbox"
+          label="All household members have the same last name"
+        ></v-checkbox>
+      </v-col>
     </v-row>
     <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
         <v-form ref="form" v-model="valid">
-          <!-- Date of Birth -->
-          <v-text-field
-            v-model="dob"
-            :rules="birthdateRules"
-            placeholder="MM/DD/YYYY"
-            v-mask="'##/##/####'"
-            prepend-icon="mdi-blank"
-          >
-            <template #label>
-              <span class="red--text"><strong>* </strong></span>Date of Birth
-            </template>
-          </v-text-field>
+        <!-- Date of Birth -->
+        <v-text-field
+          v-model="dob"
+          :rules="birthdateRules"
+          placeholder="MM/DD/YYYY"
+          v-mask="'##/##/####'"
+          prepend-icon="mdi-blank"
+        >
+          <template #label>
+            <span class="red--text"><strong>* </strong></span>Date of Birth
+          </template>
+        </v-text-field>
         </v-form>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -92,8 +98,7 @@
           <template #label>
             <span class="red--text"><strong>* </strong></span>Race
           </template>
-          ></v-select
-        >
+        </v-select>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
         <!-- Ethnicity -->
@@ -107,8 +112,7 @@
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
           </template>
-          ></v-select
-        >
+        </v-select>
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
@@ -127,8 +131,8 @@
   </v-container>
 </template>
 <script>
-import EventBus from "../eventBus";
-import Rules from "@/utils/commonFormValidation";
+import EventBus from "../../eventBus";
+import Rules from "@/utils/commonFormValidation"
 
 export default {
   data() {
@@ -149,6 +153,7 @@ export default {
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
       ],
+      checkbox: false,
       familyName: "",
       givenName: "",
       middleName: "",
@@ -200,8 +205,8 @@ export default {
       const [month, day, year] = date.split("/");
       return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
-    sendPersonalInfoDataToReviewPage() {
-      const personalInfoPayload = {
+    sendHouseholdPersonalInfoDataToReviewPage() {
+      const householdPersonalInfoPayload = {
         familyName: this.familyName,
         givenName: this.givenName,
         middleName: this.middleName,
@@ -217,11 +222,16 @@ export default {
         ethnicity: this.ethnicity,
         preferredLanguage: this.preferredLanguage,
       };
-      // EventBus.$emit("DATA_PERSONAL_INFO_PUBLISHED", personalInfoPayload);
-      this.$store.commit("setPersonalInfo", {
-        index: 0,
-        data: personalInfoPayload,
-      });
+      const householdMemberNumber = 1;
+      EventBus.$emit(
+        "DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED",
+        householdPersonalInfoPayload,
+        householdMemberNumber
+      );
+      if (this.checkbox) {
+        //all household members have the same last name
+        EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", this.familyName);
+      }
     },
     verifyFormContents() {
       //add logic to check form contents
@@ -253,17 +263,6 @@ export default {
         message += " Gender Identity";
         valid = false;
       }
-      if (this.patientPhoto && this.patientPhoto.size > 2097152) {
-        if (!valid) {
-          message += "\n";
-          message +=
-            "Your selected photo is too large. Please resubmit one under 2MBs.";
-        } else {
-          message =
-            "Your selected photo is too large. Please resubmit one under 2MBs.";
-        }
-        valid = false;
-      }
       if (this.race == "") {
         if (!valid) {
           message += ",";
@@ -278,16 +277,31 @@ export default {
         message += " Ethnicity";
         valid = false;
       }
+      if (this.patientPhoto && this.patientPhoto.size > 2097152) {
+        if (!valid) {
+          message += "\n";
+          message +=
+            "Your selected photo is too large. Please resubmit one under 2MBs.";
+        } else {
+          message =
+            "Your selected photo is too large. Please resubmit one under 2MBs.";
+        }
+        valid = false;
+      }
       if (valid == false) {
         alert(message);
         return false;
       }
-      this.$refs.form.validate();
-      if (!this.valid) return;
-
-      this.sendPersonalInfoDataToReviewPage();
+        this.$refs.form.validate();
+        if (!this.valid) return;
+      this.sendHouseholdPersonalInfoDataToReviewPage();
       return true;
     },
+  },
+  mounted() {
+    EventBus.$on("DATA_LANGUAGE_INFO_PUBLISHED", (preferredLanguage) => {
+      this.preferredLanguage = preferredLanguage;
+    });
   },
 };
 </script>

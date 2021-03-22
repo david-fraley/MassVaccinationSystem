@@ -1,18 +1,32 @@
 import VueRouter from "vue-router";
-import SinglePatientFlow from "@/pages/single/SinglePatientFlow";
-import HouseholdFlow from "@/pages/household/HouseholdFlow";
+import PatientInfoForm from "@/pages/patient/PatientInfoForm";
+import Questionnaire from "@/pages/questionnaire/Questionnaire";
+import Review from "@/pages/review/Review";
+import FollowUp from "@/pages/followup/FollowUp";
 
 let router = new VueRouter({
   mode: "history",
   routes: [
     {
-      path: "/single-patient",
-      component: SinglePatientFlow,
+      path: "/",
+      redirect: "/patient-info"
     },
     {
-      path: "/household",
-      component: HouseholdFlow,
+      path: "/patient-info",
+      component: PatientInfoForm,
     },
+    {
+      path: "/questions",
+      component: Questionnaire,
+    },
+    {
+      path: "/review",
+      component: Review,
+    },
+    {
+      path: "/followup",
+      component: FollowUp,
+    }
   ],
 });
 
