@@ -187,6 +187,7 @@ export default {
         contact: {
           family: this.patient.contactFamily,
           given: this.patient.contactGiven,
+          relationship: this.patient.contactRelationship,
           phone: {
             value: this.patient.contactPhone,
             use: this.patient.contactPhoneType,

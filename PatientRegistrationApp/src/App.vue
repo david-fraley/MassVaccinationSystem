@@ -21,6 +21,7 @@
 
 <script>
 import Header from "@/pages/application/partials/Header";
+import SystemBar from "@/pages/application/partials/SystemBar";
 
 export default {
   name: "App",
