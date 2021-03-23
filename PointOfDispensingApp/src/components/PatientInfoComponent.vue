@@ -243,9 +243,42 @@
               :readonly="!edit"
               outlined
               required
-              :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+              :rules="rules.phoneNumberRules"
               v-mask="'(###)###-####'"
               v-model="patient.contact.phone.value">
+            </v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="2">
+            <div class="font-weight-medium secondary--text">Phone Number</div>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              :rules="phoneNumberRules"
+              v-mask="'(###)###-####'"
+              v-model="patient.phone[0].value">
+            </v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="2">
+            <div class="font-weight-medium secondary--text">Email</div>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              :rules="[(v) => /^[\s]*$|.+@.+\..+/.test(v) || 'Please provide a valid e-mail address']"
+              v-model="patient.email[0]">
             </v-text-field>
           </v-col>
         </v-row>
@@ -335,6 +368,9 @@ export default {
 				'TX', 'UT', 'VT', 'VI', 'VA',
 				'WA', 'WV', 'WI', 'WY',
       ],
+      phoneNumberRules: [
+        (v) => !v || v.length === 13 || "Phone number must be 10 digits"
+      ]
     };
   },
 };
