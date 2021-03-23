@@ -338,21 +338,21 @@ export default {
         
         if(administeredDoses == 0) {
           //blue color scheme
-          this.$vuetify.theme.themes.light.primary = '#039BE5';
-          this.$vuetify.theme.themes.light.accent = '#4FC3F7';
+          this.$vuetify.theme.themes.light.primary = '#1E88E5';
+          this.$vuetify.theme.themes.light.accent = '#42A5F5';
           this.$vuetify.theme.themes.light.pageColor = '#E1F5FE';
         }
         else if(administeredDoses == 1) {
           //orange color scheme
-          this.$vuetify.theme.themes.light.primary = '#FF6F00'
-          this.$vuetify.theme.themes.light.accent = '#FFB300'
+          this.$vuetify.theme.themes.light.primary = '#FF8F00'
+          this.$vuetify.theme.themes.light.accent = '#FFA000'
           this.$vuetify.theme.themes.light.pageColor = '#FFF8E1'
         }
         else {
-          //purple color scheme
-          this.$vuetify.theme.themes.light.primary = '#7C4DFF'
-          this.$vuetify.theme.themes.light.accent = '#B388FF'
-          this.$vuetify.theme.themes.light.pageColor = '#EDE7F6'
+          //magenta color scheme
+          this.$vuetify.theme.themes.light.primary = '#C2185B'
+          this.$vuetify.theme.themes.light.accent = '#D81B60'
+          this.$vuetify.theme.themes.light.pageColor = '#FCE4EC'
         }
         
         if(this.$store.getters.hasPatientBeenCheckedIn) {
