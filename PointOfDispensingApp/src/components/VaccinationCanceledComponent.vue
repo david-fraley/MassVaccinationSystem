@@ -57,17 +57,15 @@
     <v-row align="center" justify="center">
       <template> 
         <div class="text-center">
+          <v-col cols="6">
+            <v-btn block color="accent" :disabled="isVaccinationEventPageReadOnly" @click.stop="openDialog">
+              Submit vaccination record
+            </v-btn>
+          </v-col>
           <v-dialog
             v-model="dialog"
             width="500"
           >
-            <template v-slot:activator="{ on, attrs }">
-              <v-col cols="6">
-                <v-btn block color="accent" v-bind="attrs" v-on="on" :disabled="isVaccinationEventPageReadOnly">
-                  Submit vaccination record
-                </v-btn>
-              </v-col>
-          </template>
             <v-card>
               <v-card-title class="headline grey lighten-2 justify-center"> 
                 Are you sure you want to submit?
@@ -147,13 +145,11 @@ export default {
     onDischarge(payload) {
       this.$store.dispatch("patientDischarged", payload);
     },
-    submitVaccinationRecord() {
+    openDialog() {
       this.$refs.form.validate();
-      if (!this.valid) {
-        this.dialog = false;
-        return;
-      }
-
+      if (this.valid) this.dialog = true;
+    },
+    submitVaccinationRecord() {
       let data = {
         vaccine: this.config.vaccine,
         patient: this.patient,
