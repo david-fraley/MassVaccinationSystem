@@ -105,18 +105,8 @@ export default new Vuex.Store({
             //reset patient-specific data
             state.encounterResource = {};
             state.appointmentResource = {};
-            state.immunizationResource.lotNumber = '',
-            state.immunizationResource.expirationDate = '',
-            state.immunizationResource.manufacturer = '',
-            state.immunizationResource.doseQuantity = '0.5 mL',
-            state.immunizationResource.doseNumber = '',
-            state.immunizationResource.immunizationStatus = '',
-            state.immunizationResource.immunizationTimeStamp = '',
-            state.immunizationResource.healthcarePractitioner = 'White, Betty',
-            state.immunizationResource.site = '',
-            state.immunizationResource.route = 'Injection',
-            state.immunizationResource.note = '',
-            state.immunizationResource.notAdministeredReason = ''
+            state.immunizationResource = {};
+            
             state.screeningResponses.vaccinationDecision = '',
             state.screeningResponses.screeningQ1 = '',
             state.screeningResponses.screeningQ2 = '',
@@ -134,8 +124,19 @@ export default new Vuex.Store({
         patientRecordRetrieved(state, payload) {
             state.patientResource = payload.Patient;
             if(state.patientHistory) {
+                let numberOfDoses = payload.Immunization.length
+
                 state.patientHistory = payload.Immunization;
-                //TO DO:  We will also need to retrieve and populate the immunizationResource
+                state.immunizationResource = payload.Immunization[numberOfDoses-1];
+                
+                if(state.immunizationResource.status == 'completed') {
+                    state.screeningResponses.screeningComplete = true
+                    state.screeningResponses.vaccinationDecision = 'Yes'
+                }
+                else if(state.immunizationResource.status == 'not-done') {
+                    state.screeningResponses.screeningComplete = true
+                    state.screeningResponses.vaccinationDecision = 'No'
+                }
             } 
             if(payload.Encounter) {
                 state.encounterResource = payload.Encounter;
@@ -164,6 +165,11 @@ export default new Vuex.Store({
             state.activeWorkflowState = 'ADMITTED'
             state.encounterResource = payload.Encounter
             state.appointmentResource = payload.Appointment
+
+            //reset the Immunization resource (e.g. for the 2nd dose):
+            state.immunizationResource = {};
+            //reset the screening questions (e.g. for the 2nd dose):
+            state.screeningResponses = {};
         },
         vaccinationScreeningUpdate (state, screeningResponsesPayload) {
             state.screeningResponses.vaccinationDecision = screeningResponsesPayload.vaccinationDecision
