@@ -330,7 +330,7 @@ export default {
     },
     postalCodeMask() {
       let mask = '#####';
-      if (this.postalCode && this.postalCode.length >= 6) {
+      if (this.patient.address.postalCode.length >= 6) {
         mask = '#####-####';
       }
       return mask;
