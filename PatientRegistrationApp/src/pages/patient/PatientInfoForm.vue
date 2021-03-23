@@ -2,7 +2,7 @@
   <v-container>
     <v-form ref="form" v-model="valid">
       <v-row align="center" justify="start">
-        <v-col cols="12" xl="6">
+        <v-col cols="12">
           <v-row align="center" justify="start"
             ><v-col cols="12">
               <v-alert
