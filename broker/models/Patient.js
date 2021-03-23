@@ -295,6 +295,14 @@ exports.toModel = function (patient) {
             : "",
         gender: exports.genderEnums[patient.gender],
         birthDate: prettyDate(patient.birthDate),
+        contact: {
+          given: (()=>{try{return patient.contact[0].name.given[0];}catch(e){return undefined;}})(),
+          family: (()=>{try{return patient.contact[0].name.family;}catch(e){return undefined;}})(),
+          phone: {
+            value: (()=>{try{return patient.contact[0].telecom[0].value;}catch(e){return undefined;}})(),
+            use: (()=>{try{return patient.contact[0].telecom[0].use;}catch(e){return undefined;}})()
+          }
+        },
         address: {
             line: patient.address
                 ? patient.address[0].line

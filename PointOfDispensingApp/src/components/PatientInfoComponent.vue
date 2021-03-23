@@ -196,6 +196,58 @@
               v-mask="postalCodeMask"
             ></v-text-field>
           </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="2">
+            <div class="font-weight-medium secondary--text">Emergency Contact Last Name</div>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              required
+              :rules="rules.nameRules"
+              v-model="patient.contact.family"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="2">
+            <div class="font-weight-medium secondary--text">Emergency Contact First Name</div>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              required
+              :rules="rules.nameRules"
+              v-model="patient.contact.given"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <!--space between columns-->
+          </v-col>
+          <v-col cols="2">
+            <div class="font-weight-medium secondary--text">Emergency Contact Phone Number</div>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field
+              :filled="!edit"
+              dense
+              :readonly="!edit"
+              outlined
+              required
+              :rules="[v => v.length === 13 || 'Phone number must be 10 digits']"
+              v-mask="'(###)###-####'"
+              v-model="patient.contact.phone.value">
+            </v-text-field>
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
