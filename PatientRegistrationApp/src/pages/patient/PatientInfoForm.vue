@@ -269,54 +269,12 @@
           <!-- PHONE AND CONTACT AGREEMENT -->
           <v-row class="py-2">
             <v-col cols="12"><h2>Personal Contact</h2></v-col>
-            <v-col cols="12">
-              <div>{{ disclosureStatement }}</div>
-              <div><br />{{ consequenceStatement }}</div>
-              <div>
-                <strong
-                  >We strongly encourage you to provide your e-mail and/or phone
-                  number as contact information.</strong
-                >
-              </div>
-              <div><br /></div>
-              <v-divider></v-divider>
-              <div>
-                <br />By providing your e-mail and/or phone number as contact
-                information, you agree to the following:
-              </div>
-              <div>
-                <strong>{{ acknowledgementStatement }}</strong>
-              </div>
-            </v-col>
           </v-row>
-          <v-row no-gutters>
-            <v-checkbox
-              :input-value="patient.contactDisclaimerRead"
-              @change="updatePatient('contactDisclaimerRead', $event)"
-            >
-              <template #label>
-                <span class="red--text"
-                  ><strong>* <br /></strong></span
-                >I have read and understood the above.
-              </template>
-            </v-checkbox>
-          </v-row>
-          <v-row no-gutters>
-            <v-checkbox
-              :input-value="patient.allowContact"
-              @change="updatePatient('allowContact', $event)"
-              :disabled="!patient.contactDisclaimerRead"
-              label="I agree to provide and authorize the use of my contact information as outlined above."
-            >
-            </v-checkbox>
-          </v-row>
-          <v-divider></v-divider>
           <v-row>
             <v-col cols="12" sm="6" md="6" lg="4">
               <v-text-field
                 :value="patient.phone"
                 @input="updatePatient('phone', $event)"
-                :disabled="!patient.allowContact"
                 :rules="phoneNumberRulesUs"
                 v-mask="'(###)###-####'"
                 prepend-icon="mdi-phone"
@@ -328,9 +286,9 @@
               <v-select
                 :value="patient.phoneType"
                 @input="updatePatient('phoneType', $event)"
-                :disabled="!patient.allowContact"
                 :items="phoneTypeOptions"
                 label="Phone Type"
+                :rules="[(v) => !!v || 'Required']"
               ></v-select>
             </v-col>
           </v-row>
@@ -339,7 +297,6 @@
               <v-text-field
                 :value="patient.email"
                 @input="updatePatient('email', $event)"
-                :disabled="!patient.allowContact"
                 :rules="emailRules"
                 prepend-icon="mdi-email"
                 label="E-mail Address"
@@ -361,7 +318,8 @@
                 @input="updatePatient('contactGiven', $event)"
               >
                 <template #label>
-                  <span class="red--text"><strong>* </strong></span>First Name
+                  <span class="red--text"><strong>* </strong></span>Contact
+                  First Name
                 </template>
               </v-text-field>
             </v-col>
@@ -374,7 +332,8 @@
                 @input="updatePatient('contactFamily', $event)"
               >
                 <template #label>
-                  <span class="red--text"><strong>* </strong></span>Last Name
+                  <span class="red--text"><strong>* </strong></span>Contact Last
+                  Name
                 </template>
               </v-text-field>
             </v-col>
@@ -384,16 +343,15 @@
             <v-col cols="12" sm="6" md="6" lg="4">
               <v-text-field
                 required
-                :rules="[
-                  (v) => v.length === 13 || 'Phone number must be 10 digits',
-                ]"
+                :rules="phoneNumberRulesUs"
                 v-mask="'(###)###-####'"
                 :value="patient.contactPhone"
                 @input="updatePatient('contactPhone', $event)"
                 prepend-icon="mdi-phone"
               >
                 <template #label>
-                  <span class="red--text"><strong>* </strong></span>Phone Number
+                  <span class="red--text"><strong>* </strong></span>Contact
+                  Phone Number
                 </template>
               </v-text-field>
             </v-col>
@@ -403,7 +361,8 @@
                 :value="patient.contactPhoneType"
                 @input="updatePatient('contactPhoneType', $event)"
                 :items="phoneTypeOptions"
-                label="Phone Type"
+                label="Contact Phone Type"
+                :rules="[(v) => !!v || 'Required']"
               ></v-select>
             </v-col>
           </v-row>
@@ -504,11 +463,11 @@ export default {
         (v) =>
           /^[\s]*$|.+@.+\..+/.test(v) ||
           "Please provide a valid e-mail address",
+        (v) => !!v || "Required",
       ],
       phoneNumberRulesUs: [
         (v) => {
-          if (v) return v.length == 13 || "Phone number must be 10 digits";
-          else return true;
+          return v.length == 13 || "Phone number must be 10 digits";
         },
       ],
       postalCodeRules: [
