@@ -90,6 +90,15 @@
               <v-list-item-title class="font-weight-medium">Configuration</v-list-item-title>
             </v-list-item-content>
           </v-list-item-->
+          <!-- Information -->
+          <v-list-item :disabled="false" router :to="'/Info'">
+            <v-list-item-action>
+              <v-icon large>mdi-information-outline</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium">Information</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
