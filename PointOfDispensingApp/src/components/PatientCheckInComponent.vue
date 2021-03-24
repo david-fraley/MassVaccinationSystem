@@ -4,7 +4,7 @@
       <v-col cols="2">
         <div class="font-weight-medium secondary--text">Location</div>
       </v-col>
-      <v-col cols="3">
+      <v-col cols=4>
         <v-text-field
           filled
           dense
@@ -13,7 +13,7 @@
           :value="locationId"
         ></v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="4">
         <v-text-field
           filled
           dense
@@ -28,7 +28,7 @@
       <v-col cols="2">
         <div class="font-weight-medium secondary--text">Encounter status</div>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="4">
         <v-text-field
           filled
           dense
@@ -37,7 +37,7 @@
           :value="encounterStatus"
         ></v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="4">
         <v-text-field
           filled
           dense
@@ -48,7 +48,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="2"> </v-col>
+      <v-col cols="3"> </v-col>
       <v-col cols="6">
         <v-btn block color="accent" @click="checkIn()" :disabled="isCheckInPageReadOnly">
           Confirm Patient History & Check-in Patient
