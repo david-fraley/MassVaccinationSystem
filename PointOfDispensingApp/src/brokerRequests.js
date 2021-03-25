@@ -54,6 +54,18 @@ export default {
     }
   },
 
+  updatePatient: (data) => {
+    return axios
+      .get("/broker/healthcheck", data)
+      .then((response) => {
+        let result = { data: response.data };
+        return result;
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
+  },
+
   getAppointment: (patID) => {
     return axios
       .get("/broker/Appointment", { params: { actor: patID } })

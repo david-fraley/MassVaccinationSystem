@@ -2,6 +2,7 @@
   <v-container>
     <v-row>
       <PatientInfoComponent />
+      <EditPatientComponent />
       <v-col>
         <h2 class="font-weight-medium primary--text">Vaccination History</h2>
       </v-col>
@@ -19,6 +20,7 @@
 
 <script>
 import PatientInfoComponent from './PatientInfoComponent';
+import EditPatientComponent from './EditPatientComponent';
 import PatientHistoryComponent from './PatientHistoryComponent';
 import PatientCheckInComponent from './PatientCheckInComponent';
 
@@ -30,6 +32,7 @@ import PatientCheckInComponent from './PatientCheckInComponent';
     components: 
     {
       PatientInfoComponent,
+      EditPatientComponent,
       PatientHistoryComponent,
       PatientCheckInComponent
     },
