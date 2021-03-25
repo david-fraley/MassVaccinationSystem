@@ -36,7 +36,8 @@ const birthdate = (v) => validBirthdate(v) || "Invalid DOB";
 const postalCode = (v) =>
   /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
   "Zip code format must be ##### or #####-####";
-const phoneNumber = (v) => v.length === 13 || "Phone number must be 10 digits";
+const phoneNumber = (v) =>
+  (!!v && v.length === 13) || "Phone number must be 10 digits";
 
 export default {
   nameRules: [required],

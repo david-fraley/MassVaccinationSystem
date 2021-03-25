@@ -297,7 +297,7 @@ exports.toModel = function (patient) {
             : ""
             : "",
         phone: (()=>{try{return patient.telecom.filter(obj => obj.system === "phone").map(obj => {return {value: obj.value, use: exports.phoneUseEnums[obj.use]}});}catch(e){return [{}, {}];}})(),
-        email: (()=>{try{return patient.telecom.filter(obj => obj.system === "email").map(obj => obj.value);}catch(e){return ["", ""];}})(),
+        email: (()=>{try{return patient.telecom.filter(obj => obj.system === "email").map(obj => obj.value);}catch(e){return [];}})(),
         gender: exports.genderEnums[patient.gender],
         birthDate: prettyDate(patient.birthDate),
         contact: {

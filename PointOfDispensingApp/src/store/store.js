@@ -13,7 +13,14 @@ export default new Vuex.Store({
             exp: localStorage.getItem("exp"),
         },
         activeWorkflowState: 'NO_PATIENT_LOADED',
-        patientResource: {},
+        patientResource: {
+          address: {},
+          phone: [{},{}],
+          email: [],
+          contact: {
+            phone: {}
+          }
+        },
         locationResource: {
             id: 'example',
             name: 'Western Lakes FD'
