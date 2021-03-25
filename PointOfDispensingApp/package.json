@@ -11,10 +11,12 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "keycloak-js": "^12.0.4",
     "v-mask": "^2.2.3",
     "vue": "^2.6.11",
     "vue-qrcode-reader": "^2.3.16",
     "vue-router": "^3.4.9",
+    "vuejs-logger": "^1.5.5",
     "vuetify": "^2.2.11",
     "vuex": "^3.6.0"
   },

@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     
     state: {
+        keycloak: {},
         currentUser: {
             loggedIn: localStorage.getItem("loggedIn"),
             name: localStorage.getItem("username"),
