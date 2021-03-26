@@ -211,12 +211,19 @@
       </v-row>
     </v-form>
     <v-row>
-      <v-btn v-if="!edit" color="accent" @click="edit = true">
-        Edit
-      </v-btn>
-      <v-btn v-else color="accent" outlined @click="editPatient">
-        Save
-      </v-btn>
+      <v-col cols="12">
+        <v-btn v-if="!edit" color="accent" outlined @click="edit = true" :disabled="false">
+          Edit
+        </v-btn>
+        <template v-else>
+          <v-btn color="accent" @click="editPatient" :disabled="!valid">
+            Save
+          </v-btn>
+          <v-btn color="accent" outlined @click="resetPatient" class="ml-2">
+            Reset
+          </v-btn>
+        </template>
+      </v-col>
       <v-col cols="12">
         <v-divider></v-divider>
       </v-col>
@@ -281,6 +288,9 @@ export default {
           console.log(response.error);
         }
       });
+    },
+    resetPatient() {
+      this.patient = JSON.parse(JSON.stringify(this.$store.state.patientResource));
     }
   },
   data() {
