@@ -25,6 +25,7 @@ const SITE_SYSTEM = "https://www.hl7.org/fhir/v3/ActSite/cs.html";
 const ROUTE_SYSTEM =
   "https://www.hl7.org/fhir/v3/RouteOfAdministration/cs.html";
 const DOSE_QUANTITY_SYSTEM = "http://unitsofmeasure.org";
+const MANUFACTURER_SYSTEM = "";
 
 const siteEnums = {
   "Left arm": "LA",
@@ -41,6 +42,13 @@ const routeEnums = {
   Transdermal: "TRNSDERM"
 };
 
+const manufacturerEnums = {
+  "Pfizer-BioNTech": "org1",
+  "Moderna": "org2",
+  "Johnson & Johnson": "org3",
+
+}
+
 exports.toFHIR = function (imm) {
   const resource = {
       resourceType: "Immunization",
@@ -54,7 +62,13 @@ exports.toFHIR = function (imm) {
           ]
       },
       manufacturer: {
-          reference: imm.manufacturer
+        coding: [
+          {
+              system: MANUFACTURER_SYSTEM,
+              code: manufacturerEnums[imm.manufacturer], 
+              display: imm.manufacturer
+          }
+      ]
       },
       lotNumber: imm.lotNumber,
       expirationDate: imm.expirationDate,
