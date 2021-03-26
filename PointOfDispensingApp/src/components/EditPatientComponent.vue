@@ -216,7 +216,7 @@
           Edit
         </v-btn>
         <template v-else>
-          <v-btn color="accent" @click="editPatient" :disabled="!valid">
+          <v-btn color="accent" @click="editPatient" :disabled="!valid" :loading="loading">
             Save
           </v-btn>
           <v-btn color="accent" outlined @click="resetPatient" class="ml-2">
@@ -275,7 +275,7 @@ export default {
       this.$refs.form.validate();
       if (!this.valid) return;
 
-      this.edit = false;
+      this.loading = true;
 
       if (this.phoneNumber) this.patient.phone = [{value: this.phoneNumber}];
       else this.patient.phone = [];
@@ -290,6 +290,8 @@ export default {
         } else if (response.error) {
           console.log(response.error);
         }
+        this.loading = false;
+        this.edit = false;
       });
     },
     resetPatient() {
@@ -301,6 +303,7 @@ export default {
       rules: Rules,
       edit: false,
       valid: false,
+      loading: false,
       // pass obj by value
       patient: JSON.parse(JSON.stringify(this.$store.state.patientResource)),
       phoneNumber: this.$store.state.patientResource.phone[0] ? this.$store.state.patientResource.phone[0].value : "",
