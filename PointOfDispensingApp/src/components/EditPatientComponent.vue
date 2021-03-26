@@ -281,12 +281,9 @@ export default {
       else this.patient.phone = [];
       if (!this.patient.email[0]) this.patient.email = [];
 
-      // update store
-      this.$store.state.patientResource = this.patient;
-
       brokerRequests.updatePatient(this.patient.id, this.patient).then((response) => {
         if (response.data) {
-          console.log(response.data);
+          this.$store.state.patientResource = response.data;
         } else if (response.error) {
           console.log(response.error);
         }
