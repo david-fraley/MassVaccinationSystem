@@ -51,7 +51,7 @@
       <v-col cols="3"> </v-col>
       <v-col cols="6">
         <v-btn block color="accent" @click="checkIn()" :disabled="isCheckInPageReadOnly">
-          Confirm Patient History & Check-in Patient
+          Confirm Patient & Check-in Patient
         </v-btn>
       </v-col>
     </v-row>

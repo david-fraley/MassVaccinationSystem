@@ -212,7 +212,7 @@
     </v-form>
     <v-row>
       <v-col cols="12">
-        <v-btn v-if="!edit" color="accent" outlined @click="edit = true" :disabled="false">
+        <v-btn v-if="!edit" color="accent" outlined @click="edit = true" :disabled="disabled">
           Edit
         </v-btn>
         <template v-else>
@@ -238,6 +238,9 @@ import brokerRequests from "@/brokerRequests";
 export default {
   name: "EditPatientComponent",
   computed: {
+    disabled() {
+      return !!this.$store.state.encounterResource.status;
+    },
     patientAge() {
       const birthdate = this.patient.birthDate;
       if(!birthdate || birthdate.length !== 10)
