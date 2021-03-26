@@ -54,12 +54,14 @@ export default {
     }
   },
 
-  updatePatient: (data) => {
+  // Update patient
+  // param id: id of resource to update
+  // param data: new patient resource
+  updatePatient: (id, data) => {
     return axios
-      .get("/broker/healthcheck", data)
+      .put(`/broker/Patient/${id}`, data)
       .then((response) => {
-        let result = { data: response.data };
-        return result;
+        return { data: response.data };
       })
       .catch((e) => {
         return toResponse(e);
