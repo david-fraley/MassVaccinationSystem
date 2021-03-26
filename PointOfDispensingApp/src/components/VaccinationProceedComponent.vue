@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <v-form ref="form" v-model="valid">
     <v-row>
       <p> </p> <!--blank row for spacing-->
     </v-row>
@@ -174,17 +175,16 @@
         ></v-textarea>
       </v-col>
     </v-row>
+    </v-form>
     <v-row align="center" justify="center">
       <template>
         <div class="text-center">
+          <v-col cols="6">
+            <v-btn block color="accent" :disabled="isVaccinationEventPageReadOnly" @click.stop="openDialog">
+              Submit vaccination record
+            </v-btn>
+          </v-col>
           <v-dialog v-model="dialog" width="500">
-            <template v-slot:activator="{ on, attrs }">
-              <v-col cols="6">
-                <v-btn block color="accent" v-bind="attrs" v-on="on" :disabled="isVaccinationEventPageReadOnly">
-                  Submit vaccination record
-                </v-btn>
-              </v-col>
-            </template>
             <v-card>
               <v-card-title class="headline grey lighten-2 justify-center">
                 Are you sure you want to submit?
@@ -263,6 +263,10 @@ export default {
     onDischarge(payload) {
       this.$store.dispatch("patientDischarged", payload);
     },
+    openDialog() {
+      this.$refs.form.validate();
+      if (this.valid) this.dialog = true;
+    },
     submitVaccinationRecord() {
       let data = {
         vaccine: this.config.vaccine,
@@ -310,6 +314,7 @@ export default {
   components: {},
   data() {
     return {
+      valid: false,
       dialog: false,
       doseNumberOptions: [1, 2],
       doseQuantityOptions: ["0.1 mL", "0.2 mL", "0.5 mL", "1.0 mL"],

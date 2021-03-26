@@ -84,7 +84,7 @@ export default {
 
   getImmunization:(patID) => {
     return axios
-    .get('/broker/Immunization', {params: { patient: patID}})
+    .get('/broker/Immunization', {params: { patient: patID, status: "completed" }})
     .then((response) => {
       return {data: response.data};
     })
