@@ -41,6 +41,35 @@ const routeEnums = {
   Transdermal: "TRNSDERM"
 };
 
+
+/**
+ * Returns the date in YYYY-MM-DD format.
+ *
+ * @param {Date in MM/DD/YYYY format} date
+ */
+function parseDate(date) {
+  if (!date) return null;
+  // Ensure date can be converted into 3 variables
+  if (date.split("/").length !== 3) return null;
+
+  const [month, day, year] = date.split("/");
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+}
+
+/**
+ * Returns the date in MM/DD/YYYY format.
+ *
+ * @param {Date in YYYY-MM-DD format} date
+ */
+function prettyDate(date) {
+  if (!date) return null;
+  // Ensure date can be converted into 3 variables
+  if (date.split("-").length !== 3) return null;
+
+  const [year, month, day] = date.split("-");
+  return `${month.padStart(2, "0")}/${day.padStart(2, "0")}/${year}`;
+}
+
 exports.toFHIR = function (imm) {
   const resource = {
       resourceType: "Immunization",
@@ -57,7 +86,7 @@ exports.toFHIR = function (imm) {
           reference: imm.manufacturer
       },
       lotNumber: imm.lotNumber,
-      expirationDate: imm.expirationDate,
+      expirationDate: parseDate(imm.expirationDate),
       patient: {
           reference: imm.patient
       },
@@ -136,7 +165,7 @@ exports.toModel = (immunization) => {
       vaccine: immunization.vaccineCode.coding[0].code,
       manufacturer: immunization.manufacturer.reference,
       lotNumber: immunization.lotNumber,
-      expirationDate: immunization.expirationDate,
+      expirationDate: prettyDate(immunization.expirationDate),
       patient: immunization.patient.reference,
       encounter: immunization.encounter.reference,
       status: immunization.status,

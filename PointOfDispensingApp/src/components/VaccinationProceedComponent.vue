@@ -33,10 +33,12 @@
               outlined
               dense
               required
-              :rules="[(v) => !!v || 'Expiration Date field is required']"
+              :rules="rules.expirationRules"
               v-model="expirationDate"
               :filled="isVaccinationEventPageReadOnly"
               :disabled="isVaccinationEventPageReadOnly"
+              placeholder="MM/DD/YYYY"
+              v-mask="'##/##/####'"
             ></v-text-field>
           </v-col>
           <v-col cols="4">
@@ -213,6 +215,7 @@
 
 <script>
 import brokerRequests from "../brokerRequests";
+import Rules from "@/utils/commonFormValidation";
 
 export default {
   name: "VaccinationProceedComponent",
@@ -314,6 +317,7 @@ export default {
   components: {},
   data() {
     return {
+      rules: Rules,
       valid: false,
       dialog: false,
       doseNumberOptions: [1, 2],
