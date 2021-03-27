@@ -63,7 +63,7 @@
             dense
             v-model="lastName"
             required
-            :rules="rules.nameRules"
+            :rules="rules.required"
           ></v-text-field>
         </v-col>
         <v-spacer></v-spacer>
@@ -76,7 +76,7 @@
             dense
             v-model="firstName"
             required
-            :rules="rules.nameRules"
+            :rules="rules.required"
           ></v-text-field>
         </v-col>
       </v-row>

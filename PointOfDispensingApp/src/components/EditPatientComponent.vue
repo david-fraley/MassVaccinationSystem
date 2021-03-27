@@ -13,7 +13,7 @@
             :readonly="!edit"
             outlined
             required
-            :rules="rules.nameRules"
+            :rules="rules.required"
             v-model="patient.given"
           ></v-text-field>
         </v-col>
@@ -25,7 +25,7 @@
             :readonly="!edit"
             outlined
             required
-            :rules="rules.nameRules"
+            :rules="rules.required"
             v-model="patient.family"
           ></v-text-field>
         </v-col>
@@ -38,7 +38,7 @@
             outlined
             :items="genderIdOptions"
             required
-            :rules="[(v) => !!v || 'Gender identity field is required']"
+            :rules="rules.required"
             v-model="patient.gender"
           ></v-select>
         </v-col>
@@ -51,7 +51,7 @@
             outlined
             :items="languageOptions"
             required
-            :rules="[(v) => !!v || 'Preferred language field is required']"
+            :rules="rules.required"
             v-model="patient.language"
           ></v-select>
         </v-col>
@@ -90,7 +90,7 @@
             :readonly="!edit"
             outlined
             required
-            :rules="[(v) => !!v || 'Address Line field is required']"
+            :rules="rules.required"
             v-model="patient.address.line"
           ></v-text-field>
         </v-col>
@@ -112,7 +112,7 @@
             :readonly="!edit"
             outlined
             required
-            :rules="[(v) => !!v || 'City field is required']"
+            :rules="rules.required"
             v-model="patient.address.city"
           ></v-text-field>
         </v-col>
@@ -124,7 +124,7 @@
             :readonly="!edit"
             outlined
             required
-            :rules="[v => !!v || 'State field is required']"
+            :rules="rules.required"
             v-model="patient.address.state"
             :items="stateOptions">
           </v-select>
@@ -179,7 +179,7 @@
             :readonly="!edit"
             outlined
             required
-            :rules="rules.nameRules"
+            :rules="rules.required"
             v-model="patient.contact.given"
           ></v-text-field>
         </v-col>
@@ -191,7 +191,7 @@
             :readonly="!edit"
             outlined
             required
-            :rules="rules.nameRules"
+            :rules="rules.required"
             v-model="patient.contact.family"
           ></v-text-field>
         </v-col>

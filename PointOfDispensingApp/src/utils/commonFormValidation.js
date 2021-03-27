@@ -40,7 +40,7 @@ const phoneNumber = (v) =>
   (!!v && v.length === 13) || "Phone number must be 10 digits";
 
 export default {
-  nameRules: [required],
+  required: [required],
   birthdateRules: [required, dateFormat, birthdate],
   postalCodeRules: [required, postalCode],
   phoneNumberRules: [required, phoneNumber],
