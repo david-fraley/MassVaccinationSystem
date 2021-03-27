@@ -216,7 +216,7 @@
           Edit
         </v-btn>
         <template v-else>
-          <v-btn color="accent" @click="editPatient" :disabled="!valid" :loading="loading">
+          <v-btn color="accent" @click="editPatient" :disabled="!valid || loading" :loading="loading">
             Save
           </v-btn>
           <v-btn color="accent" outlined @click="resetPatient" class="ml-2">
