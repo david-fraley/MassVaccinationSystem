@@ -72,14 +72,13 @@
             <div class="font-weight-medium secondary--text">Gender</div>
           </v-col>
           <v-col cols="3">
-            <v-select
+            <v-text-field
               filled
               dense
               readonly
               outlined
-              :items="genderIdOptions"
               :value="patient.gender"
-            ></v-select>
+            ></v-text-field>
           </v-col>
           <v-col cols="1">
             <!--space between columns-->
@@ -90,14 +89,13 @@
             </div>
           </v-col>
           <v-col cols="3">
-            <v-select
+            <v-text-field
               filled
               dense
               readonly
               outlined
-              :items="languageOptions"
               :value="patient.language"
-            ></v-select>
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-col>
@@ -141,9 +139,7 @@ export default {
   },
   data() {
     return {
-      currentDate: new Date(),
-      genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
-      languageOptions: ["English", "Spanish"]
+      currentDate: new Date()
     };
   },
 };
