@@ -3,7 +3,7 @@ Immunization {
   vaccine: string
   manufacturer: string "Organization/id"
   lotNumber: string
-  expirationDate: string "YYYY, YYYY-MM, or YYYY-MM-DD"
+  expirationDate: string "MM/YYYY, or MM/DD/YYYY"
   patient: string "Patient/id"
   encounter: string "Encounter/id"
   status: enum (completed, entered-in-error, not-done)
@@ -41,33 +41,44 @@ const routeEnums = {
   Transdermal: "TRNSDERM"
 };
 
-
 /**
- * Returns the date in YYYY-MM-DD format.
+ * Returns the date in YYYY-MM-DD or YYYY-MM format.
  *
- * @param {Date in MM/DD/YYYY format} date
+ * @param {Date in MM/DD/YYYY or MM/YYYY format} date
  */
 function parseDate(date) {
   if (!date) return null;
-  // Ensure date can be converted into 3 variables
-  if (date.split("/").length !== 3) return null;
 
-  const [month, day, year] = date.split("/");
-  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  // Ensure birthdate is fully entered and can be converted into 3 variables before parsing
+  let [month, day, year] = [];
+  const parts = date.split("/");
+  if (date.length === 7 && parts.length === 2) [month, year] = parts;
+  else if (parts.length === 3) [month, day, year] = parts;
+  else return null;
+
+  return `${year}-${month.padStart(2, "0")}${
+    day ? `-${day.padStart(2, "0")}` : ""
+  }`;
 }
 
 /**
- * Returns the date in MM/DD/YYYY format.
+ * Returns the date in MM/DD/YYYY or MM/YYYY format.
  *
- * @param {Date in YYYY-MM-DD format} date
+ * @param {Date in YYYY-MM-DD or YYYY-MM format} date
  */
 function prettyDate(date) {
   if (!date) return null;
-  // Ensure date can be converted into 3 variables
-  if (date.split("-").length !== 3) return null;
 
-  const [year, month, day] = date.split("-");
-  return `${month.padStart(2, "0")}/${day.padStart(2, "0")}/${year}`;
+  // Preliminary checks on input
+  let [month, day, year] = [];
+  const parts = date.split("-");
+  if (date.length === 7 && parts.length === 2) [year, month] = parts;
+  else if (parts.length === 3) [year, month, day] = parts;
+  else return null;
+
+  return `${month.padStart(2, "0")}${
+    day ? `/${day.padStart(2, "0")}` : ""
+  }/${year}`;
 }
 
 exports.toFHIR = function (imm) {
