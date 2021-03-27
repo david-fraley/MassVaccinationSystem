@@ -23,8 +23,6 @@
               dense
               readonly
               outlined
-              required
-              :rules="rules.nameRules"
               :value="patient.given"
             ></v-text-field>
           </v-col>
@@ -40,8 +38,6 @@
               dense
               readonly
               outlined
-              required
-              :rules="rules.nameRules"
               :value="patient.family"
             ></v-text-field>
           </v-col>
@@ -55,10 +51,6 @@
               readonly
               outlined
               :value="patient.birthDate"
-              required
-              :rules="rules.birthdateRules"
-              placeholder="MM/DD/YYYY"
-              v-mask="'##/##/####'"
             ></v-text-field>
           </v-col>
           <v-col cols="1">
@@ -86,8 +78,6 @@
               readonly
               outlined
               :items="genderIdOptions"
-              required
-              :rules="[(v) => !!v || 'Gender identity field is required']"
               :value="patient.gender"
             ></v-select>
           </v-col>
@@ -106,8 +96,6 @@
               readonly
               outlined
               :items="languageOptions"
-              required
-              :rules="[(v) => !!v || 'Preferred language field is required']"
               :value="patient.language"
             ></v-select>
           </v-col>
@@ -123,8 +111,6 @@
 </template>
 
 <script>
-import Rules from "@/utils/commonFormValidation"
-
 export default {
   name: "PatientInfoComponent",
   computed: {
@@ -155,7 +141,6 @@ export default {
   },
   data() {
     return {
-      rules: Rules,
       currentDate: new Date(),
       genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
       languageOptions: ["English", "Spanish"]
