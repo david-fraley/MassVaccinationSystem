@@ -36,18 +36,22 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
     }).$mount("#app");
   }
 
-  setInterval(() => {
-    keycloak.updateToken(70).then((refreshed) => {
-      if (refreshed) {
-        Vue.$log.info('Token refreshed' + refreshed);
-      } else {
-        Vue.$log.warn('Token not refreshed, valid for '
-          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-      }
-    }).catch(() => {
-      Vue.$log.error('Failed to refresh token');
-    });
-  }, 6000)
+  // let token = keycloak.token
+
+
+  // setInterval(() => {
+  //   keycloak.updateToken(70).then((refreshed) => {
+  //     if (refreshed) {
+  //       Vue.$log.info('Token refreshed' + refreshed);
+  //     } else {
+  //       Vue.$log.warn('Token not refreshed, valid for '
+  //         + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
+  //     }
+  //   }).catch(() => {
+  //     Vue.$log.error('Failed to refresh token');
+  //   });
+  // }, 6000)
+
 }).catch(() => {
   Vue.$log.error("Authenticated Failed");
 });
