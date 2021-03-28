@@ -43,10 +43,9 @@ const routeEnums = {
 };
 
 const manufacturerEnums = {
-  "Pfizer-BioNTech": "org1",
-  "Moderna": "org2",
-  "Johnson & Johnson": "org3",
-
+  "Pfizer-BioNTech": "Pfizer-BioNTech",
+  "Moderna": "Moderna",
+  "Johnson & Johnson": "Johnson & Johnson"
 }
 
 exports.toFHIR = function (imm) {
@@ -65,8 +64,7 @@ exports.toFHIR = function (imm) {
         coding: [
           {
               system: MANUFACTURER_SYSTEM,
-              code: manufacturerEnums[imm.manufacturer], 
-              display: imm.manufacturer
+              display: manufacturerEnums[imm.manufacturer]
           }
       ]
       },
@@ -148,7 +146,7 @@ exports.toModel = (immunization) => {
     model = {
       id: immunization.id,
       vaccine: immunization.vaccineCode.coding[0].code,
-      manufacturer: immunization.manufacturer.reference,
+      manufacturer: immunization.manufacturer.display,
       lotNumber: immunization.lotNumber,
       expirationDate: immunization.expirationDate,
       patient: immunization.patient.reference,
