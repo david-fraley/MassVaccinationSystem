@@ -256,9 +256,10 @@ export default new Vuex.Store({
             context.commit("loginUser", {user, exp});
         },
         logoutUser(context) {
-            localStorage.removeItem("loggedIn");
-            localStorage.removeItem("username");
-            localStorage.removeItem("exp");
+            // localStorage.removeItem("loggedIn");
+            // localStorage.removeItem("username");
+            // localStorage.removeItem("exp");
+            localStorage.clear()
             context.commit("logoutUser");
         }
     },

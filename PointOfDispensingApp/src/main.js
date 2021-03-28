@@ -34,10 +34,18 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
       store,
       render: (h) => h(App),
     }).$mount("#app");
+
+    localStorage.setItem("loggedIn", true)
+    store.state.currentUser.loggedIn=localStorage.getItem("loggedIn")
+    
+    localStorage.setItem("username", keycloak.username)
+    store.state.currentUser.name=localStorage.getItem("username")
+
+    let exp=  Date.now() + (1000*60*60*process.env.VUE_APP_EXP_LOGIN_HOURS); // add 24 hours of millis
+
+    localStorage.setItem("exp", exp)
+    store.state.currentUser.exp=localStorage.getItem("exp")
   }
-
-  // let token = keycloak.token
-
 
   // setInterval(() => {
   //   keycloak.updateToken(70).then((refreshed) => {
@@ -51,6 +59,7 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
   //     Vue.$log.error('Failed to refresh token');
   //   });
   // }, 6000)
+  
 
 }).catch(() => {
   Vue.$log.error("Authenticated Failed");
