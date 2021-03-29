@@ -1,164 +1,171 @@
 <template>
-  <v-card color="white" elevation="0" tile>
-    <v-toolbar color="secondary">
-      <v-toolbar-title class="font-weight-medium white--text">Retrieve Patient Record</v-toolbar-title>
-    </v-toolbar>
-    <v-container>
-      <v-row>
-        <v-col cols="12">
-          <v-divider></v-divider>
-        </v-col>
-      </v-row>
-      <v-row> 
+  <v-container>
+    <v-row>
+      <h2 class="font-weight-medium primary--text">Retrieve Patient Record</h2>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-divider></v-divider>
+      </v-col>
+    </v-row>
+    <v-row> 
         <v-col cols="12">
           <div class="font-weight-medium secondary--text">Retrieve the patient's record by scanning their QR code.</div>
         </v-col>
-      </v-row>
-      
-    <template>
-    <v-row><div>
-      <p class="error" v-if="isCameraOn && noFrontCamera">
-        You don't seem to have a front camera on your device
-      </p>
+    </v-row>
+    
+  <template>
+  <v-row><div>
+    <p class="error" v-if="isCameraOn && noFrontCamera">
+      You don't seem to have a front camera on your device
+    </p>
 
-      <p class="error" v-if="isCameraOn && noRearCamera">
-        You don't seem to have a rear camera on your device
-      </p></div></v-row>
+    <p class="error" v-if="isCameraOn && noRearCamera">
+      You don't seem to have a rear camera on your device
+    </p></div></v-row>
+  <v-row>
+    <v-col cols="6">
+    <v-btn @click="scanQrCode()" color="accent"> Scan QR Code </v-btn>
+    </v-col>
+    <v-col cols="6">
+    <div v-if="isCameraOn && !noFrontCamera && !noRearCamera">
+      <v-btn @click="switchCamera" color="accent"> Switch Camera </v-btn>
+    </div>
+    </v-col>
+  </v-row>
+  <div v-if="isCameraOn"><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
+    </qrcode-stream></v-col></v-row>
+    <v-row><p class="decode-result"> Result: <b>{{result}}</b></p></v-row>
+  </div>
+  </template>
     <v-row>
-      <v-col cols="6">
-      <v-btn @click="scanQrCode()" color="secondary"> Scan QR Code </v-btn>
-      </v-col>
-      <v-col cols="6">
-      <div v-if="isCameraOn && !noFrontCamera && !noRearCamera">
-        <v-btn @click="switchCamera" color="secondary"> Switch Camera </v-btn>
-      </div>
+      <v-col cols="12">
+        <v-divider></v-divider>
       </v-col>
     </v-row>
-    <div v-if="isCameraOn"><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
-      </qrcode-stream></v-col></v-row>
-      <v-row><p class="decode-result"> Result: <b>{{result}}</b></p></v-row>
-    </div>
-    </template>
-      <v-row>
-        <v-col cols="12">
-          <v-divider></v-divider>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          <div class="font-weight-medium secondary--text">
-            If the QR code is not available, search for the patient record by name
-            and/or DOB.
-          </div>
-        </v-col>
-      </v-row>
+    <v-row>
+      <v-col cols="12">
+        <div class="font-weight-medium secondary--text">
+          If the QR code is not available, search for the patient record by name
+          and/or DOB.
+        </div>
+      </v-col>
+    </v-row>
 
-      <v-form ref="form" v-model="valid">
-        <v-row no-gutters>
-          <v-col cols="2">
-            <div class="secondary--text">Last Name</div>
-          </v-col>
-          <v-col cols="3">
-            <v-text-field
-              outlined
-              dense
-              v-model="lastName"
-              required
-              :rules="[(v) => !!v || 'Last Name is required']"
-            ></v-text-field>
-          </v-col>
-          <v-spacer></v-spacer>
-          <v-col cols="2">
-            <div class="secondary--text">First Name</div>
-          </v-col>
-          <v-col cols="3">
-            <v-text-field
-              outlined
-              dense
-              v-model="firstName"
-              required
-              :rules="[(v) => !!v || 'First Name is required']"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row no-gutters>
-          <v-col cols="2">
-            <div class="secondary--text">Date of Birth</div>
-          </v-col>
-          <v-col cols="3">
+    <v-form ref="form" v-model="valid">
+      <v-row no-gutters>
+        <v-col cols="2">
+          <div class="secondary--text">Last Name</div>
+        </v-col>
+        <v-col cols="3">
           <v-text-field
-              outlined
-              dense
-              v-model="birthdate"
-              required
-              :rules="birthdateRules"
-              placeholder="MM/DD/YYYY"
-              v-mask="'##/##/####'"
-          ></v-text-field>        
-          </v-col>
-          <v-spacer></v-spacer>
-          <v-col cols="2">
-            <div class="secondary--text">Zip Code (optional)</div>
-          </v-col>
-          <v-col cols="3">
-            <v-text-field 
-              outlined 
-              dense 
-              :rules="postalCodeRules"
-              v-model="postalCode">
-            </v-text-field>
-          </v-col>
-        </v-row>
-          <v-card-actions>
-            <v-btn left color="secondary" @click="searchPatient">
-              Search
-            </v-btn>
-            <v-btn right color="secondary" @click="clear" outlined>
-              Clear Info
-            </v-btn>
-          </v-card-actions>
-          <br/>
-      </v-form>
-      <v-row>
-        <v-col cols="12">
-          <template>
-            <v-data-table
-              @click:row="clickRow"
-              @dblclick:row="dblclickRow"
-              item-key="id"
-              single-select
-              :headers="headers"
-              disable-sort
-              :items="patientLookupTable"
-              class="elevation-1"
-              :loading="loading"
-              :footer-props="{
-                'items-per-page-options': [5],
-              }"
-              :items-per-page="5"
-            ></v-data-table>
-          </template>
+            outlined
+            dense
+            v-model="lastName"
+            required
+            :rules="rules.required"
+          ></v-text-field>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="2">
+          <div class="secondary--text">First Name</div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            v-model="firstName"
+            required
+            :rules="rules.required"
+          ></v-text-field>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="12">
-          <v-btn color="secondary" @click="retrievePatientRecord">
-            Retrieve patient record
+      <v-row no-gutters>
+        <v-col cols="2">
+          <div class="secondary--text">Date of Birth</div>
+        </v-col>
+        <v-col cols="3">
+        <v-text-field
+            outlined
+            dense
+            v-model="birthdate"
+            required
+            :rules="rules.birthdateRules"
+            placeholder="MM/DD/YYYY"
+            v-mask="'##/##/####'"
+        ></v-text-field>        
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="2">
+          <div class="secondary--text">Zip Code (optional)</div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field 
+            outlined 
+            dense 
+            :rules="postalCodeRules"
+            v-model="postalCode"
+            v-mask="postalCodeMask">
+          </v-text-field>
+        </v-col>
+      </v-row>
+        <v-card-actions>
+          <v-btn left color="accent" @click="searchPatient">
+            Search
           </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-card>
- 
+          <v-btn right color="accent" @click="clear" outlined>
+            Clear Info
+          </v-btn>
+        </v-card-actions>
+        <br/>
+    </v-form>
+    <v-row>
+      <v-col cols="12">
+        <template>
+          <v-data-table
+            @click:row="clickRow"
+            @dblclick:row="dblclickRow"
+            item-key="id"
+            single-select
+            :headers="headers"
+            disable-sort
+            :items="patientLookupTable"
+            class="elevation-1"
+            :loading="loading"
+            :footer-props="{
+              'items-per-page-options': [5],
+            }"
+            :items-per-page="5"
+          ></v-data-table>
+        </template>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-btn color="accent" @click="retrievePatientRecord">
+          Retrieve patient record
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import brokerRequests from "../brokerRequests";
 import {QrcodeStream} from "vue-qrcode-reader";
-import colorScheme from "../assets/colorScheme";
+import Rules from "@/utils/commonFormValidation";
 
 export default {
   name: "PatientLookupPage",
+  computed: {
+    postalCodeMask() {
+      let mask = '#####';
+      if (this.postalCode && this.postalCode.length >= 6) {
+        mask = '#####-####';
+      }
+      return mask;
+    }
+  },
   methods: {
     clear () {
         this.$refs.form.reset()
@@ -334,18 +341,6 @@ export default {
         }
         //end of interim solution (part 2 of 2)
 
-        //Determine how many doses the patient has received, and set color scheme accordingly
-        let administeredDoses = this.$store.getters.howManyDosesHasPatientReceived;
-        
-        if(administeredDoses == 0) {
-          this.setZeroDoseColorScheme();
-        }
-        else if(administeredDoses == 1) {
-          this.setOneDoseColorScheme();
-        }
-        else {
-          this.setTwoDoseColorScheme();
-        }
         
         if(this.$store.getters.hasPatientBeenCheckedIn) {
           //Advance to the Consent and Screening page
@@ -356,14 +351,6 @@ export default {
           this.$router.push("CheckIn");
         }
       });
-    },
-    validBirthdate(birthdate) {
-      var minDate = Date.parse(this.minDateStr);
-      var maxDate = Date.parse(this.maxDateStr);
-      var formattedDate = this.parseDate(birthdate);
-      var date = Date.parse(formattedDate);
-
-      return !Number.isNaN(date) && minDate <= date && date <= maxDate;
     },
     parseDate(date) {
       if (!date) return null;
@@ -376,27 +363,13 @@ export default {
     scanQrCode() {
       this.toggleCamera()
     },
-    setZeroDoseColorScheme() {
-      this.$vuetify.theme.themes.light.primary = colorScheme.zeroDosePrimary;
-      this.$vuetify.theme.themes.light.accent = colorScheme.zeroDoseAccent;
-      this.$vuetify.theme.themes.light.pageColor = colorScheme.zeroDosePage;
-    },
-    setOneDoseColorScheme() {
-      this.$vuetify.theme.themes.light.primary = colorScheme.oneDosePrimary;
-      this.$vuetify.theme.themes.light.accent = colorScheme.oneDoseAccent;
-      this.$vuetify.theme.themes.light.pageColor = colorScheme.oneDosePage
-    },
-    setTwoDoseColorScheme() {
-      this.$vuetify.theme.themes.light.primary = colorScheme.twoDosePrimary;
-      this.$vuetify.theme.themes.light.accent = colorScheme.twoDoseAccent;
-      this.$vuetify.theme.themes.light.pageColor = colorScheme.twoDosePage;
-    },
   },
   components: {
     QrcodeStream
   },
   data() {
     return {
+      rules: Rules,
       firstName: "",
       lastName: "",
       postalCode: "",
@@ -408,15 +381,6 @@ export default {
       noRearCamera: false,
       noFrontCamera: false,
       result: '',
-      minDateStr: "1900-01-01",
-      birthdateRules: [
-        (v) => !!v || "DOB is required",
-        // check if v exists before seeing if the length is 10
-        (v) =>
-          (!!v && v.length === 10) ||
-          "DOB must be in specified format, MM/DD/YYYY",
-        (v) => this.validBirthdate(v) || "Invalid DOB",
-      ],
       postalCodeRules: [
 				(v) =>
 				!v || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) || 
@@ -438,18 +402,6 @@ export default {
       patientLookupTable: [],
     };
   },
-  computed: {
-    maxDateStr: function() {
-      let d = new Date();
-      let date = [
-        d.getFullYear(),
-        ("0" + (d.getMonth() + 1)).slice(-2),
-        ("0" + d.getDate()).slice(-2),
-      ].join("-");
-
-      return date;
-    },
-  },
 };
 </script>
 <style>
@@ -460,5 +412,4 @@ tr.v-data-table__selected {
 .error {
     font-weight: medium;
 }
-
 </style>

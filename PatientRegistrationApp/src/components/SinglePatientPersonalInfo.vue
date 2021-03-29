@@ -141,7 +141,7 @@ export default {
         "White",
         "Asian",
         "American Indian or Alaska Native",
-        "Native Hawaiian or other Pacific Islander",
+        "Native Hawaiian or Other Pacific Islander",
         "Other",
       ],
       ethnicityOptions: [
