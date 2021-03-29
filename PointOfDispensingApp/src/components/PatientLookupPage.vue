@@ -155,6 +155,7 @@
 <script>
 import brokerRequests from "../brokerRequests";
 import {QrcodeStream} from "vue-qrcode-reader";
+import colorScheme from "../assets/colorScheme";
 
 export default {
   name: "PatientLookupPage",
@@ -337,22 +338,13 @@ export default {
         let administeredDoses = this.$store.getters.howManyDosesHasPatientReceived;
         
         if(administeredDoses == 0) {
-          //blue color scheme
-          this.$vuetify.theme.themes.light.primary = '#1E88E5';
-          this.$vuetify.theme.themes.light.accent = '#42A5F5';
-          this.$vuetify.theme.themes.light.pageColor = '#E1F5FE';
+          this.setZeroDoseColorScheme();
         }
         else if(administeredDoses == 1) {
-          //orange color scheme
-          this.$vuetify.theme.themes.light.primary = '#FF8F00'
-          this.$vuetify.theme.themes.light.accent = '#FFA000'
-          this.$vuetify.theme.themes.light.pageColor = '#FFF8E1'
+          this.setOneDoseColorScheme();
         }
         else {
-          //magenta color scheme
-          this.$vuetify.theme.themes.light.primary = '#C2185B'
-          this.$vuetify.theme.themes.light.accent = '#D81B60'
-          this.$vuetify.theme.themes.light.pageColor = '#FCE4EC'
+          this.setTwoDoseColorScheme();
         }
         
         if(this.$store.getters.hasPatientBeenCheckedIn) {
@@ -383,6 +375,21 @@ export default {
     },
     scanQrCode() {
       this.toggleCamera()
+    },
+    setZeroDoseColorScheme() {
+      this.$vuetify.theme.themes.light.primary = colorScheme.zeroDosePrimary;
+      this.$vuetify.theme.themes.light.accent = colorScheme.zeroDoseAccent;
+      this.$vuetify.theme.themes.light.pageColor = colorScheme.zeroDosePage;
+    },
+    setOneDoseColorScheme() {
+      this.$vuetify.theme.themes.light.primary = colorScheme.oneDosePrimary;
+      this.$vuetify.theme.themes.light.accent = colorScheme.oneDoseAccent;
+      this.$vuetify.theme.themes.light.pageColor = colorScheme.oneDosePage
+    },
+    setTwoDoseColorScheme() {
+      this.$vuetify.theme.themes.light.primary = colorScheme.twoDosePrimary;
+      this.$vuetify.theme.themes.light.accent = colorScheme.twoDoseAccent;
+      this.$vuetify.theme.themes.light.pageColor = colorScheme.twoDosePage;
     },
   },
   components: {
