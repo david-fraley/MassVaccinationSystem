@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <PatientInfoComponent />
+      <PatientInfoComponent v-if="!editable"/>
       <EditPatientComponent v-if="editable"/>
       <v-col>
         <h2 class="font-weight-medium primary--text">Vaccination History</h2>
