@@ -38,18 +38,27 @@ exports.genderEnums = {
   Male: "male",
   Female: "female",
   Other: "other",
-  "Decline to answer": "unknown"
+  "Decline to answer": "unknown",
+  male: "Male",
+  female: "Female",
+  other: "Other",
+  unknown: "Decline to answer"
 };
 
 exports.addressUseEnums = {
   Home: "home",
-  Temporary: "temp"
+  Temporary: "temp",
+  home: "Home",
+  temp: "Temporary"
 };
 
 exports.phoneUseEnums = {
   Home: "home",
   Mobile: "mobile",
-  Work: "work"
+  Work: "work",
+  home: "Home",
+  mobile: "Mobile",
+  work: "Work"
 };
 
 exports.languageEnums = {
@@ -73,7 +82,7 @@ exports.raceValueSet = {
     code: "2054-5",
     display: "Black or African American",
   },
-  "Native Hawaiian or other Pacific Islander": {
+  "Native Hawaiian or Other Pacific Islander": {
     system: "urn:oid:2.16.840.1.113883.6.238",
     code: "2076-8",
     display: "Native Hawaiian or Other Pacific Islander",
@@ -123,9 +132,9 @@ function parseDate(date) {
  * @param {Date in YYYY-MM-DD format} date
  */
 function prettyDate(date) {
-  if (!date) return null;
+  if (!date) return undefined;
   // Ensure date can be converted into 3 variables
-  if (date.split("-").length !== 3) return null;
+  if (date.split("-").length !== 3) return undefined;
 
   const [year, month, day] = date.split("-");
   return `${month.padStart(2, "0")}/${day.padStart(2, "0")}/${year}`;
@@ -134,6 +143,8 @@ function prettyDate(date) {
 exports.toFHIR = function (patient) {
   const resource = {
       resourceType: "Patient",
+      id: patient.id,
+      identifier: patient.identifier,
       extension: [],
       name: [
           {
@@ -213,6 +224,7 @@ exports.toFHIR = function (patient) {
   if (patient.hasOwnProperty("suffix")) {
     resource.name[0].suffix = [patient.suffix];
   }
+  if (patient.address.line2) resource.address[0].line.push(patient.address.line2);
   // add in telecom
   for (let idx in patient.phone) {
     resource.telecom.push({
@@ -273,41 +285,36 @@ exports.toModel = function (patient) {
     const model = {
         resourceType: patient.resourceType,
         id: patient.id,
-        family: patient.name ? patient.name[0].family : "",
-        given: patient.name
-            ? patient.name[0].given
-            ? patient.name[0].given[0]
-            : ""
-            : "",
-        middle: patient.name
-            ? patient.name[0].given
-            ? patient.name[0].given[1]
-            : ""
-            : "",
-        suffix: patient.name
-            ? patient.name[0].suffix
-            ? patient.name[0].suffix[0]
-            : ""
-            : "",
-        gender: patient.gender,
+        identifier: patient.identifier,
+        family: (()=>{try{return patient.name[0].family;}catch(e){return undefined;}})(),
+        given: (()=>{try{return patient.name[0].given[0];}catch(e){return undefined;}})(),
+        middle: (()=>{try{return patient.name[0].given[1];}catch(e){return undefined;}})(),
+        suffix: (()=>{try{return patient.name[0].suffix[0];}catch(e){return undefined;}})(),
+        phone: (()=>{try{return patient.telecom.filter(obj => obj.system === "phone").map(obj => {return {value: obj.value, use: exports.phoneUseEnums[obj.use]}});}catch(e){return [];}})(),
+        email: (()=>{try{return patient.telecom.filter(obj => obj.system === "email").map(obj => obj.value);}catch(e){return [];}})(),
+        gender: exports.genderEnums[patient.gender],
         birthDate: prettyDate(patient.birthDate),
-        address: {
-            line: patient.address
-                ? patient.address[0].line
-                ? patient.address[0].line[0]
-                : ""
-                : "",
-            city: patient.address ? patient.address[0].city : "",
-            state: patient.address ? patient.address[0].state : "",
-            postalCode: patient.address ? patient.address[0].postalCode : "",
-            country: patient.address ? patient.address[0].country : ""
+        race: (()=>{try{return patient.extension.filter(obj => obj.url.includes("race")).map(obj => obj.extension[0].valueCoding.display);}catch(e){return undefined;}})(),
+        ethnicity: (()=>{try{return patient.extension.filter(obj => obj.url.includes("ethnicity")).map(obj => (()=>{try{return obj.extension[0].valueCoding.display;}catch(e){return obj.extension[0].valueString;}})());}catch(e){return undefined;}})(),
+        contact: {
+          given: (()=>{try{return patient.contact[0].name.given[0];}catch(e){return undefined;}})(),
+          family: (()=>{try{return patient.contact[0].name.family;}catch(e){return undefined;}})(),
+          phone: {
+            value: (()=>{try{return patient.contact[0].telecom[0].value;}catch(e){return undefined;}})(),
+            use: (()=>{try{return exports.phoneUseEnums[patient.contact[0].telecom[0].use];}catch(e){return undefined;}})()
+          }
         },
-        language: patient.communication
-            ? patient.communication[0].language
-            ? patient.communication[0].language.text
-            : ""
-            : "",
-        link: patient.link ? patient.link[0].other.reference : null
+        address: {
+          use: (()=>{try{return exports.addressUseEnums[patient.address[0].use];}catch(e){return undefined;}})(),
+            line: (()=>{try{return patient.address[0].line[0];}catch(e){return undefined;}})(),
+            line2: (()=>{try{return patient.address[0].line[1];}catch(e){return undefined;}})(),
+            city: (()=>{try{return patient.address[0].city;}catch(e){return undefined;}})(),
+            state: (()=>{try{return patient.address[0].state;}catch(e){return undefined;}})(),
+            postalCode: (()=>{try{return patient.address[0].postalCode;}catch(e){return undefined;}})(),
+            country: (()=>{try{return patient.address[0].country;}catch(e){return undefined;}})(),
+        },
+        language: (()=>{try{return patient.communication[0].language.text;}catch(e){return undefined;}})(),
+        link: (()=>{try{return patient.link[0].other.reference;}catch(e){return undefined;}})(),
     };
 
     return model;
