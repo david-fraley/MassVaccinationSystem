@@ -99,6 +99,24 @@
           >
         </div>
       </v-col>
+      <v-col cols="12">
+        <h3>Attestations</h3>
+        <v-form v-model="formValid" ref="form">
+          <v-checkbox
+            v-model="patient.verifyInfo"
+            :rules="[rules.required('You must verify and authorize')]"
+          >
+            <template #label>
+              I verify that the above information is accurate and authorize its
+              use. <span class="red--text"><strong>* </strong></span>
+            </template>
+          </v-checkbox>
+          <v-checkbox
+            v-model="patient.allowContact"
+            :label="contactInfoAcknowledgement"
+          />
+        </v-form>
+      </v-col>
     </v-row>
     <!-- SUBMIT BUTTON -->
     <v-row>
@@ -111,7 +129,7 @@
           color="primary"
           class="ma-2 white--text"
           @click="submitPatientInfo()"
-          :disabled="submittingPatient"
+          :disabled="!formValid || submittingPatient"
         >
           <span>Register</span>
           <v-icon right large color="white"> mdi-chevron-right </v-icon>
@@ -128,29 +146,46 @@
   </v-container>
 </template>
 <script>
+import customerSettings from "@/customerSettings";
 import brokerRequests from "@/brokerRequests";
+import Rules from "@/utils/commonFormValidation";
 
 export default {
   name: "Review",
   data() {
     return {
+      rules: Rules,
       submittingPatient: false,
+      formValid: false,
+      contactInfoAcknowledgement: customerSettings.contactInfoAcknowledgement,
     };
   },
   computed: {
     patient() {
       return this.$store.state.patient.patient;
     },
+    answers() {
+      return this.$store.state.screeningQuestions.answers;
+    },
   },
   methods: {
     back() {
       this.$router.push("/questions");
     },
+    updatePatient(field, value) {
+      this.$store.commit("patient/updatePatient", { field, value });
+    },
     submitPatientInfo() {
+      // short circuit if they hit back button and tried to submit again
+      if (this.patient.hasSubmitted) {
+        this.$router.push("/followup");
+      }
+
       this.submittingPatient = true;
       let data = this.buildPatientPayload();
       brokerRequests.submitRegistration(data).then((response) => {
         if (response.data) {
+          this.updatePatient("identifier", response.data.Patient[0]);
           this.$router.push("/followup");
         } else if (response.error) {
           this.submittingPatient = false;
@@ -205,6 +240,14 @@ export default {
       }
       return { Patient: [patient] };
     },
+  },
+  mounted() {
+    if (this.patient.hasSubmitted) {
+      this.$router.push("/followup");
+    }
+    if (!this.patient.family || !this.answers.screeningQ1) {
+      this.$router.push("/");
+    }
   },
 };
 </script>

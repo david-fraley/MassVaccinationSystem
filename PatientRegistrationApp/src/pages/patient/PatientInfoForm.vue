@@ -535,6 +535,11 @@ export default {
       this.$router.push("questions");
     },
   },
+  mounted() {
+    if (this.patient.hasSubmitted) {
+      this.$store.commit("patient/resetPatient");
+    }
+  },
 };
 </script>
 

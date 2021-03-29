@@ -22,13 +22,13 @@
       <div class="font-weight-medium">
         Name:
         <span class="font-weight-regular"
-          >{{ patient.family }}, {{ patient.given }}
-          {{ patient.middle }} {{ patient.suffix }}</span
+          >{{ patient.family }}, {{ patient.given }} {{ patient.middle }}
+          {{ patient.suffix }}</span
         >
       </div>
     </v-row>
     <v-row justify="center">
-      <v-btn color="secondary" class="ma-2 white--text" @click="generatePdf">
+      <v-btn color="primary" class="ma-2 white--text" @click="generatePdf">
         Download As PDF
       </v-btn>
     </v-row>
@@ -47,8 +47,11 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-btn color="secondary" class="ma-2 white--text">
+      <v-btn color="primary" class="ma-2 white--text">
         Send
+      </v-btn>
+      <v-btn color="secondary" class="ma-2 white--text" @click="reset">
+        Register another person
       </v-btn>
     </v-row>
   </v-container>
@@ -64,9 +67,9 @@ export default {
     return {
       dataPersonalInfo: [],
       correctionLevel: "H",
-      qrValue: " ",
       sendQr: " ",
       dataScreeningResponses: [],
+      qrValue: this.$store.state.patient.patient.identifier,
     };
   },
   computed: {
@@ -112,37 +115,18 @@ export default {
       var dataURL = canvas.toDataURL("image/png");
       return dataURL;
     },
-    updateQrCodeData(data) {
-      this.qrValue = data;
-      //temporary - add the screening responses to the qrValue string:
-      this.qrValue +=
-        "|" +
-        this.dataScreeningResponses.screeningQ1 +
-        "|" +
-        this.dataScreeningResponses.screeningQ2 +
-        "|" +
-        this.dataScreeningResponses.screeningQ2b +
-        "|" +
-        this.dataScreeningResponses.screeningQ3a +
-        "|" +
-        this.dataScreeningResponses.screeningQ3b +
-        "|" +
-        this.dataScreeningResponses.screeningQ3c +
-        "|" +
-        this.dataScreeningResponses.screeningQ4 +
-        "|" +
-        this.dataScreeningResponses.screeningQ5 +
-        "|" +
-        this.dataScreeningResponses.screeningQ6 +
-        "|" +
-        this.dataScreeningResponses.screeningQ7 +
-        "|" +
-        this.dataScreeningResponses.screeningQ8 +
-        "|";
-    },
+    reset(){
+      this.$store.commit("patient/resetPatient");
+      this.$router.push("/");
+    }
   },
   components: {
     VueQrcode,
+  },
+  mounted() {
+    if (!this.patient.identifier) {
+      this.$router.push("/");
+    }
   },
 };
 </script>

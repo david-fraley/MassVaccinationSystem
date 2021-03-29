@@ -7,11 +7,11 @@ export default {
     contactInfoConsequence: 'By withholding your e-mail and/or phone number, it will not be possible to provide you with the important vaccination information.',
     //contactInfoConsequence: 'This information will allow us to follow up on any details that need to be handled quickly.',
 
-    contactInfoAcknowledgement: 'You understand that we will use the phone number and e-mail that you provide to contact you with vaccination registration and follow-up information.',
+    contactInfoAcknowledgement: 'I give permission to use the phone number and e-mail that I provided to be contacted with vaccination registration and follow-up information.',
 
     welcome: 'Welcome!',
-    introStatement: 'You are about to register as a patient for the COVID-19 vaccine. This form will securely collect your patient information. At the time of vaccination, you may be required to bring proof of employment at a medical facility, etc.',
-    expectationsStatement: 'After registering as a patient, you will receive a notification to schedule your COVID vaccination appointment if you are not already eligible to do so based upon the CDC and local Phases. Upon receiving your eligibility notification, you will answer COVID screening questions, provide consent, and choose your date to receive the COVID-19 vaccine. You will also be provided with a QR code that contains a patient identifier so that when you arrive at the vaccine clinic, staff can easily look up your patient information.',
+    introStatement: 'You are about to register as a patient for the COVID-19 vaccine. This form will securely collect your patient information and register you to recieve a vaccine. At the time of vaccination, you may be required to bring proof of identity or proof of eligibility if relevant.',
+    expectationsStatement: 'After registering as a patient, you will receive a notification to schedule your COVID vaccination appointment if you are not already eligible to do so based upon the CDC and local phases. Upon receiving your eligibility notification, you will answer COVID screening questions, provide consent, and choose your date to receive the COVID-19 vaccine. You will also be provided with a QR code that contains a patient identifier so that when you arrive at the vaccine clinic, staff can easily look up your patient information.',
     finalStatement: 'Thank you for helping to do your part to combat COVID!',
 
 }
