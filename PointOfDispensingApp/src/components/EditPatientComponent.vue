@@ -3,7 +3,7 @@
     <v-form ref="form" v-model="valid">
       <v-row>
         <v-col cols="12">
-          <h2>Personal Info</h2>
+          <h2 class="font-weight-medium primary--text">Personal Info</h2>
         </v-col>
         <v-col cols="12" sm="6" md="6" lg="3">
           <div class="font-weight-medium secondary--text">First Name</div>
@@ -81,7 +81,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12"><h2>Address</h2></v-col>
+        <v-col cols="12"><h2 class="font-weight-medium primary--text">Address</h2></v-col>
         <v-col cols="12" sm="12" md="12" lg="6">
           <div class="font-weight-medium secondary--text">Address Line 1</div>
           <v-text-field
@@ -144,7 +144,7 @@
         </v-col>
       </v-row>
           <v-row>
-        <v-col cols="12"><h2>Personal Contact</h2></v-col>
+        <v-col cols="12"><h2 class="font-weight-medium primary--text">Personal Contact</h2></v-col>
         <v-col cols="12" sm="6" md="6" lg="4">
           <div class="font-weight-medium secondary--text">Phone Number</div>
           <v-text-field
@@ -170,7 +170,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12"><h2>Emergency Contact</h2></v-col>
+        <v-col cols="12"><h2 class="font-weight-medium primary--text">Emergency Contact</h2></v-col>
         <v-col cols="12" sm="6" md="6" lg="4">
           <div class="font-weight-medium secondary--text">First Name</div>
           <v-text-field
