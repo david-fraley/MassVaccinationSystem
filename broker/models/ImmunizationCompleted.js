@@ -3,7 +3,7 @@ Immunization {
   vaccine: string
   manufacturer: string "Organization/id"
   lotNumber: string
-  expirationDate: string "YYYY, YYYY-MM, or YYYY-MM-DD"
+  expirationDate: string "MM/YYYY, or MM/DD/YYYY"
   patient: string "Patient/id"
   encounter: string "Encounter/id"
   status: enum (completed, entered-in-error, not-done)
@@ -45,6 +45,46 @@ const manufacturerEnums = {
   "Pfizer-BioNTech": "Pfizer-BioNTech",
   "Moderna": "Moderna",
   "Johnson & Johnson": "Johnson & Johnson"
+};
+
+/**
+ * Returns the date in YYYY-MM-DD or YYYY-MM format.
+ *
+ * @param {Date in MM/DD/YYYY or MM/YYYY format} date
+ */
+function parseDate(date) {
+  if (!date) return null;
+
+  // Ensure birthdate is fully entered and can be converted into 3 variables before parsing
+  let [month, day, year] = [];
+  const parts = date.split("/");
+  if (date.length === 7 && parts.length === 2) [month, year] = parts;
+  else if (parts.length === 3) [month, day, year] = parts;
+  else return null;
+
+  return `${year}-${month.padStart(2, "0")}${
+    day ? `-${day.padStart(2, "0")}` : ""
+  }`;
+}
+
+/**
+ * Returns the date in MM/DD/YYYY or MM/YYYY format.
+ *
+ * @param {Date in YYYY-MM-DD or YYYY-MM format} date
+ */
+function prettyDate(date) {
+  if (!date) return null;
+
+  // Preliminary checks on input
+  let [month, day, year] = [];
+  const parts = date.split("-");
+  if (date.length === 7 && parts.length === 2) [year, month] = parts;
+  else if (parts.length === 3) [year, month, day] = parts;
+  else return null;
+
+  return `${month.padStart(2, "0")}${
+    day ? `/${day.padStart(2, "0")}` : ""
+  }/${year}`;
 }
 
 exports.toFHIR = function (imm) {
@@ -64,7 +104,7 @@ exports.toFHIR = function (imm) {
                 manufacturerEnums[imm.manufacturer]
       },
       lotNumber: imm.lotNumber,
-      expirationDate: imm.expirationDate,
+      expirationDate: parseDate(imm.expirationDate),
       patient: {
           reference: imm.patient
       },
@@ -143,7 +183,7 @@ exports.toModel = (immunization) => {
       vaccine: immunization.vaccineCode.coding[0].code,
       manufacturer: immunization.manufacturer.display,
       lotNumber: immunization.lotNumber,
-      expirationDate: immunization.expirationDate,
+      expirationDate: prettyDate(immunization.expirationDate),
       patient: immunization.patient.reference,
       encounter: immunization.encounter.reference,
       status: immunization.status,
