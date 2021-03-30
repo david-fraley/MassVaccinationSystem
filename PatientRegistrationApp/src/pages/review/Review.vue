@@ -107,8 +107,8 @@
             :rules="[rules.required('You must verify and authorize')]"
           >
             <template #label>
-              I verify that the above information is accurate and authorize its
-              use. <span class="red--text"><strong>* </strong></span>
+              <span class="red--text"><strong>* </strong></span> I verify that
+              the above information is accurate and authorize its use.
             </template>
           </v-checkbox>
           <v-checkbox
@@ -117,7 +117,8 @@
             :rules="[rules.required('Contact consent required')]"
           >
             <template #label>
-              {{contactInfoAcknowledgement}}<span class="red--text"><strong>* </strong></span>
+              <span class="red--text"><strong>* </strong></span
+              > {{ contactInfoAcknowledgement }}
             </template>
           </v-checkbox>
         </v-form>
