@@ -1,26 +1,28 @@
 <template>
-  <v-container>
-    <v-row>
-      <h2 class="font-weight-medium primary--text">Vaccination Event</h2>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-divider></v-divider>
-      </v-col>
-    </v-row>
-    <v-row>
-      <PatientInfoComponent />
-      <template v-if="wasDecisionMadeToProceed()">
-      <VaccinationProceedComponent />
-      </template>
-      <template v-else-if="wasDecisionMadeToCancel()">
-      <VaccinationCanceledComponent />
-      </template>
-      <template v-else>
-        <div class="font-weight-medium secondary--text">Please review and complete the screening questions.</div>
-      </template>
-    </v-row>
-  </v-container>
+  <v-card color="pageColor" elevation="0" tile>
+    <v-toolbar color="primary">
+      <v-toolbar-title class="font-weight-medium white--text">Vaccination Event</v-toolbar-title>
+    </v-toolbar>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <v-divider></v-divider>
+        </v-col>
+      </v-row>
+      <v-row>
+        <PatientInfoComponent />
+        <template v-if="wasDecisionMadeToProceed()">
+        <VaccinationProceedComponent />
+        </template>
+        <template v-else-if="wasDecisionMadeToCancel()">
+        <VaccinationCanceledComponent />
+        </template>
+        <template v-else>
+          <div class="font-weight-medium secondary--text">Please review and complete the screening questions.</div>
+        </template>
+      </v-row>
+    </v-container>
+  </v-card>
 </template>
 
 <script>
