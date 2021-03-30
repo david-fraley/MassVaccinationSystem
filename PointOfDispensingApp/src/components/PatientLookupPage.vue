@@ -1,35 +1,36 @@
 <template>
-  <v-container>
-    <v-row>
-      <h2 class="font-weight-medium primary--text">Retrieve Patient Record</h2>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-divider></v-divider>
-      </v-col>
-    </v-row>
-    <v-row> 
+  <v-card color="white" elevation="0" tile>
+    <v-toolbar color="secondary">
+      <v-toolbar-title class="font-weight-medium white--text">Retrieve Patient Record</v-toolbar-title>
+    </v-toolbar>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <v-divider></v-divider>
+        </v-col>
+      </v-row>
+      <v-row> 
         <v-col cols="12">
           <div class="font-weight-medium secondary--text">Retrieve the patient's record by scanning their QR code.</div>
         </v-col>
-    </v-row>
+      </v-row>
     
-  <template>
-  <v-row><div>
-    <p class="error" v-if="isCameraOn && noFrontCamera">
-      You don't seem to have a front camera on your device
-    </p>
+    <template>
+    <v-row><div>
+      <p class="error" v-if="isCameraOn && noFrontCamera">
+        You don't seem to have a front camera on your device
+      </p>
 
-    <p class="error" v-if="isCameraOn && noRearCamera">
-      You don't seem to have a rear camera on your device
-    </p></div></v-row>
+      <p class="error" v-if="isCameraOn && noRearCamera">
+        You don't seem to have a rear camera on your device
+      </p></div></v-row>
   <v-row>
     <v-col cols="6">
-    <v-btn @click="scanQrCode()" color="accent"> Scan QR Code </v-btn>
+    <v-btn @click="scanQrCode()" color="secondary"> Scan QR Code </v-btn>
     </v-col>
     <v-col cols="6">
     <div v-if="isCameraOn && !noFrontCamera && !noRearCamera">
-      <v-btn @click="switchCamera" color="accent"> Switch Camera </v-btn>
+      <v-btn @click="switchCamera" color="secondary"> Switch Camera </v-btn>
     </div>
     </v-col>
   </v-row>
@@ -110,10 +111,10 @@
         </v-col>
       </v-row>
         <v-card-actions>
-          <v-btn left color="accent" @click="searchPatient">
+          <v-btn left color="secondary" @click="searchPatient">
             Search
           </v-btn>
-          <v-btn right color="accent" @click="clear" outlined>
+          <v-btn right color="secondary" @click="clear" outlined>
             Clear Info
           </v-btn>
         </v-card-actions>
@@ -142,18 +143,20 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-btn color="accent" @click="retrievePatientRecord">
+        <v-btn color="secondary" @click="retrievePatientRecord">
           Retrieve patient record
         </v-btn>
       </v-col>
     </v-row>
   </v-container>
+  </v-card>
 </template>
 
 <script>
 import brokerRequests from "../brokerRequests";
 import {QrcodeStream} from "vue-qrcode-reader";
 import Rules from "@/utils/commonFormValidation";
+import colorScheme from "../assets/colorScheme";
 
 export default {
   name: "PatientLookupPage",
@@ -341,6 +344,18 @@ export default {
         }
         //end of interim solution (part 2 of 2)
 
+        //Determine how many doses the patient has received, and set color scheme accordingly
+        let administeredDoses = this.$store.getters.howManyDosesHasPatientReceived;
+        
+        if(administeredDoses == 0) {
+          this.setZeroDoseColorScheme();
+        }
+        else if(administeredDoses == 1) {
+          this.setOneDoseColorScheme();
+        }
+        else {
+          this.setTwoDoseColorScheme();
+        }
         
         if(this.$store.getters.hasPatientBeenCheckedIn) {
           //Advance to the Consent and Screening page
@@ -362,6 +377,21 @@ export default {
     },
     scanQrCode() {
       this.toggleCamera()
+    },
+    setZeroDoseColorScheme() {
+      this.$vuetify.theme.themes.light.primary = colorScheme.zeroDosePrimary;
+      this.$vuetify.theme.themes.light.accent = colorScheme.zeroDoseAccent;
+      this.$vuetify.theme.themes.light.pageColor = colorScheme.zeroDosePage;
+    },
+    setOneDoseColorScheme() {
+      this.$vuetify.theme.themes.light.primary = colorScheme.oneDosePrimary;
+      this.$vuetify.theme.themes.light.accent = colorScheme.oneDoseAccent;
+      this.$vuetify.theme.themes.light.pageColor = colorScheme.oneDosePage
+    },
+    setTwoDoseColorScheme() {
+      this.$vuetify.theme.themes.light.primary = colorScheme.twoDosePrimary;
+      this.$vuetify.theme.themes.light.accent = colorScheme.twoDoseAccent;
+      this.$vuetify.theme.themes.light.pageColor = colorScheme.twoDosePage;
     },
   },
   components: {
