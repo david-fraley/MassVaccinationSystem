@@ -114,7 +114,12 @@
           <v-checkbox
             v-model="patient.allowContact"
             :label="contactInfoAcknowledgement"
-          />
+            :rules="[rules.required('Contact consent required')]"
+          >
+            <template #label>
+              {{contactInfoAcknowledgement}}<span class="red--text"><strong>* </strong></span>
+            </template>
+          </v-checkbox>
         </v-form>
       </v-col>
     </v-row>

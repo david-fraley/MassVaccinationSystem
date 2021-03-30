@@ -75,21 +75,19 @@
               </v-select>
             </v-col>
             <v-col cols="12" sm="6" md="6" lg="4">
-              <v-form ref="form" v-model="valid">
-                <!-- Date of Birth -->
-                <v-text-field
-                  :value="patient.birthDate"
-                  @input="updatePatient('birthDate', $event)"
-                  :rules="birthdateRules"
-                  placeholder="MM/DD/YYYY"
-                  v-mask="'##/##/####'"
-                >
-                  <template #label>
-                    <span class="red--text"><strong>* </strong></span>Date of
-                    Birth
-                  </template>
-                </v-text-field>
-              </v-form>
+              <!-- Date of Birth -->
+              <v-text-field
+                :value="patient.birthDate"
+                @input="updatePatient('birthDate', $event)"
+                :rules="birthdateRules"
+                placeholder="MM/DD/YYYY"
+                v-mask="'##/##/####'"
+              >
+                <template #label>
+                  <span class="red--text"><strong>* </strong></span>Date of
+                  Birth
+                </template>
+              </v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6" lg="4">
               <!-- Gender identity -->
@@ -266,7 +264,7 @@
               </v-text-field>
             </v-col>
           </v-row>
-          <!-- PHONE AND CONTACT AGREEMENT -->
+          <!-- PHONE -->
           <v-row class="py-2">
             <v-col cols="12"><h2>Personal Contact</h2></v-col>
           </v-row>
@@ -278,8 +276,11 @@
                 :rules="phoneNumberRulesUs"
                 v-mask="'(###)###-####'"
                 prepend-icon="mdi-phone"
-                label="Phone Number"
               >
+                <template #label
+                  ><span class="red--text"><strong>* </strong></span>Phone
+                  Number</template
+                >
               </v-text-field>
             </v-col>
             <v-col cols="11" sm="5" md="5" lg="2">
@@ -287,9 +288,12 @@
                 :value="patient.phoneType"
                 @input="updatePatient('phoneType', $event)"
                 :items="phoneTypeOptions"
-                label="Phone Type"
                 :rules="[(v) => !!v || 'Required']"
-              ></v-select>
+                ><template #label
+                  ><span class="red--text"><strong>* </strong></span>Phone
+                  Type</template
+                ></v-select
+              >
             </v-col>
           </v-row>
           <v-row>
@@ -299,8 +303,11 @@
                 @input="updatePatient('email', $event)"
                 :rules="emailRules"
                 prepend-icon="mdi-email"
-                label="E-mail Address"
               >
+                <template #label
+                  ><span class="red--text"><strong>* </strong></span>E-mail
+                  Address</template
+                >
               </v-text-field>
             </v-col>
           </v-row>
@@ -361,9 +368,12 @@
                 :value="patient.contactPhoneType"
                 @input="updatePatient('contactPhoneType', $event)"
                 :items="phoneTypeOptions"
-                label="Contact Phone Type"
                 :rules="[(v) => !!v || 'Required']"
-              ></v-select>
+                ><template #label
+                  ><span class="red--text"><strong>* </strong></span>Contact
+                  Phone Type</template
+                ></v-select
+              >
             </v-col>
           </v-row>
           <v-row align="center" justify="start">
