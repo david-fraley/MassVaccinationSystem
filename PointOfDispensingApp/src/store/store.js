@@ -127,6 +127,8 @@ export default new Vuex.Store({
             state.encounterResource = {};
             state.appointmentResource = {};
             state.immunizationResource = {};
+            //set the default dose quantity to 0.5 mL
+            state.immunizationResource.doseQuantity = '0.5 mL';
             
             state.screeningResponses.vaccinationDecision = '',
             state.screeningResponses.screeningQ1 = '',
@@ -191,6 +193,8 @@ export default new Vuex.Store({
 
             //reset the Immunization resource (e.g. for the 2nd dose):
             state.immunizationResource = {};
+            //set the default dose quantity to 0.5 mL
+            state.immunizationResource.doseQuantity = '0.5 mL';
             //reset the screening questions (e.g. for the 2nd dose):
             state.screeningResponses = {};
         },

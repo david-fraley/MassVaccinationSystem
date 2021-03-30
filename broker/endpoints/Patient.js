@@ -261,7 +261,7 @@ async function createPatient(patient, head) {
   };
 
   // Add QR Code UUID to Patient Identifier list
-  if (!resource.hasOwnProperty("identifier")) resource.identifier = [];
+  if (!resource.identifier) resource.identifier = [];
   resource.identifier.push({
 	  value: patientID.qr_code,
 	  assigner: {
