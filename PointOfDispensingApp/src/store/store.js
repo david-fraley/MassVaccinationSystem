@@ -256,11 +256,11 @@ export default new Vuex.Store({
             context.commit("loginUser", {user, exp});
         },
         logoutUser(context) {
-            // localStorage.removeItem("loggedIn");
-            // localStorage.removeItem("username");
-            // localStorage.removeItem("exp");
-            localStorage.clear()
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("username");
+            localStorage.removeItem("exp");
             context.commit("logoutUser");
+            // state.keycloak.logout()
         }
     },
     activeWorkflowStateEnum:

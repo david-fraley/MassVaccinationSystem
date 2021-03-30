@@ -27,13 +27,8 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
     window.location.reload();
   } else {
     Vue.$log.info("Authenticated");
+    
     store.state.keycloak= keycloak;
-    new Vue({
-      vuetify,
-      router,
-      store,
-      render: (h) => h(App),
-    }).$mount("#app");
 
     localStorage.setItem("loggedIn", true)
     store.state.currentUser.loggedIn=localStorage.getItem("loggedIn")
@@ -41,10 +36,18 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
     localStorage.setItem("username", keycloak.username)
     store.state.currentUser.name=localStorage.getItem("username")
 
-    let exp=  Date.now() + (1000*60*60*process.env.VUE_APP_EXP_LOGIN_HOURS); // add 24 hours of millis
+    let exp =  Date.now() + (1000*60*60*process.env.VUE_APP_EXP_LOGIN_HOURS); // add 24 hours of millis
 
     localStorage.setItem("exp", exp)
     store.state.currentUser.exp=localStorage.getItem("exp")
+
+    new Vue({
+      vuetify,
+      router,
+      store,
+      render: (h) => h(App),
+    }).$mount("#app");
+
   }
 
   // setInterval(() => {
