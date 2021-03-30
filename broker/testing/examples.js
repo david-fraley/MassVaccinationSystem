@@ -144,7 +144,7 @@ module.exports = {
     "vaccine": "FLUVAX",
     "manufacturer": "Organization/example",
     "lotNumber": "AAJN11K",
-    "expirationDate": "2015-02-15",
+    "expirationDate": "02/15/2015",
     "patient": "Patient/example",
     "encounter": "Encounter/example",
     "status": "completed",

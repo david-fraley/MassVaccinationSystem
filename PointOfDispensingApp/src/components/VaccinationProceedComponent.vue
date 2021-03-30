@@ -1,180 +1,171 @@
 <template>
   <v-container>
     <v-form ref="form" v-model="valid">
-    <v-row>
-      <p> </p> <!--blank row for spacing-->
-    </v-row>
-    <v-row>
-      <v-col cols="5">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">
-              <span style="color:red">*</span>Lot Number
-            </div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              outlined
-              dense
-              required
-              :rules="[(v) => !!v || 'Lot Number field is required']"
-              v-model="lotNumber"
-              :filled="isVaccinationEventPageReadOnly"
-              :disabled="isVaccinationEventPageReadOnly"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">
-              <span style="color:red">*</span>Expiration Date
-            </div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              outlined
-              dense
-              required
-              :rules="[(v) => !!v || 'Expiration Date field is required']"
-              v-model="expirationDate"
-              :filled="isVaccinationEventPageReadOnly"
-              :disabled="isVaccinationEventPageReadOnly"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">
-              <span style="color:red">*</span>Manufacturer
-            </div>
-          </v-col>
-          <v-col cols="8">
-            <v-select
-              :items="manufacturerOptions"
-              outlined
-              dense
-              required
-              :rules="[(v) => !!v || 'Manufacturer field is required']"
-              v-model="manufacturer"
-              :filled="isVaccinationEventPageReadOnly"
-              :disabled="isVaccinationEventPageReadOnly"
-            ></v-select>
-          </v-col>
-        </v-row>
-      </v-col>
-      <!--blank column for spacing-->
-      <v-col cols="1"> </v-col>
-      <v-col cols="5">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">
-              <span style="color:red">*</span>Dose Quantity
-            </div>
-          </v-col>
-          <v-col cols="8">
-            <v-select
-              :items="doseQuantityOptions"
-              outlined
-              dense
-              required
-              :rules="[(v) => !!v || 'Dose Quantity field is required']"
-              v-model="doseQuantity"
-              :readonly="isVaccinationEventPageReadOnly"
-              :filled="isVaccinationEventPageReadOnly"
-            ></v-select>
-          </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">
-              <span style="color:red">*</span>Dose Number
-            </div>
-          </v-col>
-          <v-col cols="8">
-            <v-select
-              :items="doseNumberOptions"
-              outlined
-              dense
-              v-model="doseNumber"
-              required
-              :rules="[(v) => !!v || 'Dose Number field is required']"
-              :readonly="isVaccinationEventPageReadOnly"
-              :filled="isVaccinationEventPageReadOnly"
-            ></v-select>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-divider></v-divider>
-      </v-col>
-    </v-row>
-    <v-row>
-      <p></p>
-      <!--blank row for spacing-->
-    </v-row>
-    <v-row>
-      <v-col cols="5">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">Healthcare Practitioner</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field 
-              outlined 
-              dense 
-              filled 
-              readonly
-              :value="practitionerName"
-              :disabled="isVaccinationEventPageReadOnly"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="4">
-            <div class="secondary--text">
-              <span style="color:red">*</span>Site of Vaccination
-            </div>
-          </v-col>
-          <v-col cols="8">
-            <v-select
-              :items="vaccinationSiteOptions"
-              outlined
-              dense
-              required
-              :rules="[(v) => !!v || 'Site of Vaccination field is required']"
-              v-model="site"
-              :readonly="isVaccinationEventPageReadOnly"
-              :filled="isVaccinationEventPageReadOnly"
-            ></v-select>
-          </v-col>
-        </v-row>
-      </v-col>
-      <!--blank column for spacing-->
-      <v-col cols="1"> </v-col>
-      <v-col cols="5">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <div class="secondary--text">Route</div>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              outlined
-              dense
-              filled
-              readonly
-              :value="config.route"
-              :disabled="isVaccinationEventPageReadOnly"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-textarea
-          placeholder="Notes"
-          outlined
-          rows="4"
-          v-model="note"
-          :filled="isVaccinationEventPageReadOnly"
-          :disabled="isVaccinationEventPageReadOnly"
-        ></v-textarea>
-      </v-col>
-    </v-row>
+      <v-row>
+        <p> </p> <!--blank row for spacing-->
+      </v-row>
+      <v-row>
+        <v-col cols="2">
+          <div class="secondary--text">
+            <span style="color:red">*</span>Lot Number
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            required
+            :rules="[(v) => !!v || 'Lot Number field is required']"
+            v-model="lotNumber"
+            :filled="isVaccinationEventPageReadOnly"
+            :disabled="isVaccinationEventPageReadOnly"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="1"></v-col>
+        <v-col cols="2">
+          <div class="secondary--text">
+            <span style="color:red">*</span>Dose Quantity
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <v-select
+            :items="doseQuantityOptions"
+            outlined
+            dense
+            required
+            :rules="[(v) => !!v || 'Dose Quantity field is required']"
+            v-model="doseQuantity"
+            :readonly="isVaccinationEventPageReadOnly"
+            :filled="isVaccinationEventPageReadOnly"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row class="mt-0">
+        <v-col cols="2">
+          <div class="secondary--text">
+            <span style="color:red">*</span>Manufacturer
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <v-select
+            :items="manufacturerOptions"
+            outlined
+            dense
+            required
+            :rules="[(v) => !!v || 'Manufacturer field is required']"
+            v-model="manufacturer"
+            :filled="isVaccinationEventPageReadOnly"
+            :disabled="isVaccinationEventPageReadOnly"
+          ></v-select>
+        </v-col>
+        <v-col cols="1"></v-col>
+        <v-col cols="2">
+          <div class="secondary--text">
+            <span style="color:red">*</span>Dose Number
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <v-select
+            :items="doseNumberOptions"
+            outlined
+            dense
+            v-model="doseNumber"
+            required
+            :rules="[(v) => !!v || 'Dose Number field is required']"
+            :readonly="isVaccinationEventPageReadOnly"
+            :filled="isVaccinationEventPageReadOnly"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row v-if="manufacturer" class="mt-0">
+        <v-col cols="2">
+          <div class="secondary--text">
+            <span style="color:red">*</span>Expiration Date
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            required
+            :rules="rules.expirationRules"
+            v-model="expirationDate"
+            :filled="isVaccinationEventPageReadOnly"
+            :disabled="isVaccinationEventPageReadOnly"
+            :placeholder="dateFormat"
+            v-mask="dateMask"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-divider></v-divider>
+        </v-col>
+      </v-row>
+      <v-row>
+        <p></p>
+        <!--blank row for spacing-->
+      </v-row>
+      <v-row class="mt-0">
+        <v-col cols="2">
+          <div class="secondary--text">Healthcare Practitioner</div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field 
+            outlined 
+            dense 
+            filled 
+            readonly
+            :value="practitionerName"
+            :disabled="isVaccinationEventPageReadOnly"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="1"></v-col>
+        <v-col cols="2">
+          <div class="secondary--text">Route</div>
+        </v-col>
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            filled
+            readonly
+            :value="config.route"
+            :disabled="isVaccinationEventPageReadOnly"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row class="mt-0">
+        <v-col cols="2">
+          <div class="secondary--text">
+            <span style="color:red">*</span>Site of Vaccination
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <v-select
+            :items="vaccinationSiteOptions"
+            outlined
+            dense
+            required
+            :rules="[(v) => !!v || 'Site of Vaccination field is required']"
+            v-model="site"
+            :readonly="isVaccinationEventPageReadOnly"
+            :filled="isVaccinationEventPageReadOnly"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-textarea
+            placeholder="Notes"
+            outlined
+            rows="4"
+            v-model="note"
+            :filled="isVaccinationEventPageReadOnly"
+            :disabled="isVaccinationEventPageReadOnly"
+          ></v-textarea>
+        </v-col>
+      </v-row>
     </v-form>
     <v-row align="center" justify="center">
       <template>
@@ -213,6 +204,7 @@
 
 <script>
 import brokerRequests from "../brokerRequests";
+import Rules from "@/utils/commonFormValidation";
 
 export default {
   name: "VaccinationProceedComponent",
@@ -245,6 +237,20 @@ export default {
     isVaccinationEventPageReadOnly() {
       return this.$store.getters.isVaccinationEventPageReadOnly
     },
+    dateMask() {
+      let mask = '##/##/####';
+      if (this.manufacturer === "Pfizer-BioNTech") {
+        mask = '##/####'
+      }
+      return mask;
+    },
+    dateFormat() {
+      let format = "MM/DD/YYYY";
+      if (this.manufacturer === "Pfizer-BioNTech") {
+        format = "MM/YYYY";
+      }
+      return format;
+    }
   },
   methods: {
     onVaccination(immunization) {
@@ -314,6 +320,7 @@ export default {
   components: {},
   data() {
     return {
+      rules: Rules,
       valid: false,
       dialog: false,
       doseNumberOptions: [1, 2],
