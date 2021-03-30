@@ -7,6 +7,7 @@ import VaccinationEventPage from '@/components/VaccinationEventPage.vue';
 import AdverseEventsPage from '@/components/AdverseEventsPage.vue';
 import DischargePage from '@/components/DischargePage.vue';
 import CreateLocationResourcePage from '@/components/CreateLocationResourcePage.vue';
+import ApplicationInfoPage from '@/components/ApplicationInfoPage.vue';
 
 export default [
   // Redirects to /route-one as the default route.
@@ -56,8 +57,7 @@ export default [
     meta: {
       requiresAuth: true,
     }
-  }
-  ,
+  },
   {
     path: '/Discharge',
     component: DischargePage,
@@ -68,6 +68,13 @@ export default [
   {
     path: '/Configuration',
     component: CreateLocationResourcePage,
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: '/Info',
+    component: ApplicationInfoPage,
     meta: {
       requiresAuth: true,
     }

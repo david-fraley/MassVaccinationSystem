@@ -13,7 +13,14 @@ export default new Vuex.Store({
             exp: localStorage.getItem("exp"),
         },
         activeWorkflowState: 'NO_PATIENT_LOADED',
-        patientResource: {},
+        patientResource: {
+          address: {},
+          phone: [],
+          email: [],
+          contact: {
+            phone: {}
+          }
+        },
         locationResource: {
             id: 'example',
             name: 'Western Lakes FD'
@@ -97,6 +104,20 @@ export default new Vuex.Store({
         },
         isLoggedIn: state => {
             return !!(state.currentUser.loggedIn && state.currentUser.exp > Date.now());
+        },
+        howManyDosesHasPatientReceived: state => {
+            let numberOfDoses = 0;
+
+            if(state.patientHistory) {
+                let numberOfEntries = state.patientHistory.length;
+
+                for(let i=0; i<numberOfEntries; i++) {
+                    if(state.patientHistory[i].status == 'completed') {
+                        numberOfDoses++;
+                    }
+                }
+            }
+            return numberOfDoses;
         }
     },
 
@@ -106,6 +127,8 @@ export default new Vuex.Store({
             state.encounterResource = {};
             state.appointmentResource = {};
             state.immunizationResource = {};
+            //set the default dose quantity to 0.5 mL
+            state.immunizationResource.doseQuantity = '0.5 mL';
             
             state.screeningResponses.vaccinationDecision = '',
             state.screeningResponses.screeningQ1 = '',
@@ -170,6 +193,8 @@ export default new Vuex.Store({
 
             //reset the Immunization resource (e.g. for the 2nd dose):
             state.immunizationResource = {};
+            //set the default dose quantity to 0.5 mL
+            state.immunizationResource.doseQuantity = '0.5 mL';
             //reset the screening questions (e.g. for the 2nd dose):
             state.screeningResponses = {};
         },
