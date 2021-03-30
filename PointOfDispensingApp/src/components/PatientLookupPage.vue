@@ -63,7 +63,7 @@
             dense
             v-model="lastName"
             required
-            :rules="[(v) => !!v || 'Last Name is required']"
+            :rules="rules.required"
           ></v-text-field>
         </v-col>
         <v-spacer></v-spacer>
@@ -76,7 +76,7 @@
             dense
             v-model="firstName"
             required
-            :rules="[(v) => !!v || 'First Name is required']"
+            :rules="rules.required"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -90,7 +90,7 @@
             dense
             v-model="birthdate"
             required
-            :rules="birthdateRules"
+            :rules="rules.birthdateRules"
             placeholder="MM/DD/YYYY"
             v-mask="'##/##/####'"
         ></v-text-field>        
@@ -104,7 +104,8 @@
             outlined 
             dense 
             :rules="postalCodeRules"
-            v-model="postalCode">
+            v-model="postalCode"
+            v-mask="postalCodeMask">
           </v-text-field>
         </v-col>
       </v-row>
@@ -152,9 +153,19 @@
 <script>
 import brokerRequests from "../brokerRequests";
 import {QrcodeStream} from "vue-qrcode-reader";
+import Rules from "@/utils/commonFormValidation";
 
 export default {
   name: "PatientLookupPage",
+  computed: {
+    postalCodeMask() {
+      let mask = '#####';
+      if (this.postalCode && this.postalCode.length >= 6) {
+        mask = '#####-####';
+      }
+      return mask;
+    }
+  },
   methods: {
     clear () {
         this.$refs.form.reset()
@@ -341,14 +352,6 @@ export default {
         }
       });
     },
-    validBirthdate(birthdate) {
-      var minDate = Date.parse(this.minDateStr);
-      var maxDate = Date.parse(this.maxDateStr);
-      var formattedDate = this.parseDate(birthdate);
-      var date = Date.parse(formattedDate);
-
-      return !Number.isNaN(date) && minDate <= date && date <= maxDate;
-    },
     parseDate(date) {
       if (!date) return null;
       // Ensure birthdate is fully entered and can be converted into 3 variables before parsing
@@ -366,6 +369,7 @@ export default {
   },
   data() {
     return {
+      rules: Rules,
       firstName: "",
       lastName: "",
       postalCode: "",
@@ -377,15 +381,6 @@ export default {
       noRearCamera: false,
       noFrontCamera: false,
       result: '',
-      minDateStr: "1900-01-01",
-      birthdateRules: [
-        (v) => !!v || "DOB is required",
-        // check if v exists before seeing if the length is 10
-        (v) =>
-          (!!v && v.length === 10) ||
-          "DOB must be in specified format, MM/DD/YYYY",
-        (v) => this.validBirthdate(v) || "Invalid DOB",
-      ],
       postalCodeRules: [
 				(v) =>
 				!v || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) || 
@@ -406,18 +401,6 @@ export default {
       ],
       patientLookupTable: [],
     };
-  },
-  computed: {
-    maxDateStr: function() {
-      let d = new Date();
-      let date = [
-        d.getFullYear(),
-        ("0" + (d.getMonth() + 1)).slice(-2),
-        ("0" + d.getDate()).slice(-2),
-      ].join("-");
-
-      return date;
-    },
   },
 };
 </script>

@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <v-row>
-      <PatientInfoComponent />
+      <PatientInfoComponent v-if="!editable"/>
+      <EditPatientComponent v-if="editable"/>
       <v-col>
         <h2 class="font-weight-medium primary--text">Vaccination History</h2>
       </v-col>
@@ -19,6 +20,7 @@
 
 <script>
 import PatientInfoComponent from './PatientInfoComponent';
+import EditPatientComponent from './EditPatientComponent';
 import PatientHistoryComponent from './PatientHistoryComponent';
 import PatientCheckInComponent from './PatientCheckInComponent';
 
@@ -27,9 +29,15 @@ import PatientCheckInComponent from './PatientCheckInComponent';
     methods: 
     {
     },
+    computed: {
+      editable() {
+        return this.$store.state.patientHistory.length === 0;
+      }
+    },
     components: 
     {
       PatientInfoComponent,
+      EditPatientComponent,
       PatientHistoryComponent,
       PatientCheckInComponent
     },
