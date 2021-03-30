@@ -25,7 +25,6 @@ const SITE_SYSTEM = "https://www.hl7.org/fhir/v3/ActSite/cs.html";
 const ROUTE_SYSTEM =
   "https://www.hl7.org/fhir/v3/RouteOfAdministration/cs.html";
 const DOSE_QUANTITY_SYSTEM = "http://unitsofmeasure.org";
-const MANUFACTURER_SYSTEM = "";
 
 const siteEnums = {
   "Left arm": "LA",
@@ -61,12 +60,8 @@ exports.toFHIR = function (imm) {
           ]
       },
       manufacturer: {
-        coding: [
-          {
-              system: MANUFACTURER_SYSTEM,
-              display: manufacturerEnums[imm.manufacturer]
-          }
-      ]
+              display: 
+                manufacturerEnums[imm.manufacturer]
       },
       lotNumber: imm.lotNumber,
       expirationDate: imm.expirationDate,
