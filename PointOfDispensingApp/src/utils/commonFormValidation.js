@@ -67,9 +67,17 @@ const required = (v) => !!v || "Field is required";
 const dateFormat = (v) =>
   /(^\d{2}\/\d{2}\/\d{4}$)|(^\d{2}\/\d{4}$)/.test(v) || "Date must be in proper format";
 const birthdate = (v) => validBirthdate(v) || "Invalid DOB";
+const postalCode = (v) =>
+  /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
+  "Zip code format must be ##### or #####-####";
+const phoneNumber = (v) =>
+  (!!v && v.length === 13) || "Phone number must be 10 digits";
 const expiration = (v) => validExpiration(v) || "Invalid expiration date";
 
 export default {
+  required: [required],
   birthdateRules: [required, dateFormat, birthdate],
-  expirationRules: [required, dateFormat, expiration],
+  postalCodeRules: [required, postalCode],
+  phoneNumberRules: [required, phoneNumber],
+  expirationRules: [required, dateFormat, expiration]
 };

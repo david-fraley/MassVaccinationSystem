@@ -302,3 +302,16 @@ async function createPatient(patient, head) {
 
   return patientID;
 }
+
+exports.update = (req, res) => {
+  const patient = Patient.toFHIR(req.body);
+  axios
+    .put(req.url, patient)
+    .then((response) => {
+      res.send(Patient.toModel(response.data));
+    })
+    .catch((e) => {
+      console.log(e.response ? e.response.data : e.message);
+      res.status(500).send("Failed to update patient");
+    });
+};
