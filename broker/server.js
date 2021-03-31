@@ -15,6 +15,30 @@ const SendHL7Message = require("./endpoints/SendHL7Message");
 const CheckIn = require("./endpoints/CheckIn");
 const Discharge = require("./endpoints/Discharge");
 
+
+var kcConfig = {
+  ​clientId: 'massvaxx',
+  ​bearerOnly: true,
+  ​serverUrl: 'https://massvaxx-keycloak.mooo.com/auth/',
+  ​realm: 'massVaxx'
+​};
+
+var session = require('express-session');
+var Keycloak = require('keycloak-connect');
+var memoryStore = new session.MemoryStore();
+
+app.use(session({
+  secret: 'some secret',
+  resave: false,
+  saveUninitialized: true,
+  store: memoryStore
+}));
+
+
+var keycloak = new Keycloak({
+  store: memoryStore
+}, kcConfig);
+
 const app = express();
 app.use(express.json());
 app.set("json spaces", 2);
