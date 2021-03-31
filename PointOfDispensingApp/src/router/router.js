@@ -16,13 +16,13 @@ router.beforeEach((to, from, next) => {
       });
     }
     console.log(store.state.currentUser.exp);
-    // if(Date.now() > store.state.currentUser.exp || 0){
-    //   store.dispatch("logoutUser");
-    //   next({
-    //     path: '/UserLogin',
-    //     params: { next: to.fullPath }
-    //   });
-    // }
+    if(Date.now() > store.state.currentUser.exp || 0){
+      store.dispatch("logoutUser");
+      next({
+        path: '/UserLogin',
+        params: { next: to.fullPath }
+      });
+    }
   }
   next();
 });
