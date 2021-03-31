@@ -15,13 +15,16 @@ const SendHL7Message = require("./endpoints/SendHL7Message");
 const CheckIn = require("./endpoints/CheckIn");
 const Discharge = require("./endpoints/Discharge");
 
+const app = express();
+app.use(express.json());
+app.set("json spaces", 2);
 
-var kcConfig = {
-  ​clientId: 'massvaxx',
-  ​bearerOnly: true,
-  ​serverUrl: 'https://massvaxx-keycloak.mooo.com/auth/',
-  ​realm: 'massVaxx'
-​};
+let kcConfig = {
+  clientId: 'massvaxx',
+  bearerOnly: true,
+  serverUrl: 'https://massvaxx-keycloak.mooo.com/auth/',
+  realm: 'massVaxx'
+};
 
 var session = require('express-session');
 var Keycloak = require('keycloak-connect');
@@ -34,14 +37,9 @@ app.use(session({
   store: memoryStore
 }));
 
-
 var keycloak = new Keycloak({
   store: memoryStore
 }, kcConfig);
-
-const app = express();
-app.use(express.json());
-app.set("json spaces", 2);
 
 if (process.env.DEVELOPMENT == 1) {
   const reg_path = __dirname + "/PatientRegistrationViews/";
