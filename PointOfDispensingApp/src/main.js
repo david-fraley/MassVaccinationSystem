@@ -48,6 +48,8 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
 
   }
 
+  console.log(keycloak)
+
   // setInterval(() => {
   //   keycloak.updateToken(70).then((refreshed) => {
   //     if (refreshed) {
