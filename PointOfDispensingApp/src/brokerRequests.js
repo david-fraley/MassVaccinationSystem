@@ -1,14 +1,28 @@
 import axios from "axios";
+import store from './store/store';
 
 // Return an object with error property containing data
 // from Axios error object
 function toResponse(error) {
+  console.log(store);
   if (error.response) {
     return { error: error.response.data };
   } else if (error.request) {
     return { error: error.request.data };
   } else {
     return { error: error.message ? error.message : error };
+  }
+}
+
+function getKeycloakToken() {
+  return store.state.keycloak.token;
+}
+
+function getHeaders() {
+  return {
+    headers: {
+      'bearer': getKeycloakToken()
+    }
   }
 }
 
@@ -24,7 +38,7 @@ export default {
   // }
   searchPatient: (data) => {
     return axios
-      .post(`/broker/SearchPatients`, data)
+      .post(`/broker/SearchPatients`, data, getHeaders())
       .then((response) => {
         return { patients: response.data.patients };
       })
@@ -43,7 +57,7 @@ export default {
     else{
     // If we successfully got a Qr Code, hit the patient GET endpoint
       return axios
-      .get(`/broker/Patient/${qrCode}`)
+      .get(`/broker/Patient/${qrCode}`, getHeaders())
       .then((response) => {
         console.log(response);
         return { patient: response.data };
@@ -56,7 +70,7 @@ export default {
 
   getAppointment: (patID) => {
     return axios
-      .get("/broker/Appointment", { params: { actor: patID } })
+      .get("/broker/Appointment", { params: { actor: patID } }, getHeaders())
       .then((response) => {
         let result;
         if (response.data.length == 0) result = { data: {} };
@@ -70,7 +84,7 @@ export default {
 
   getEncounter: (patID) => {
     return axios
-      .get("/broker/Encounter", { params: { subject: patID, _sort: "-date" } })
+      .get("/broker/Encounter", { params: { subject: patID, _sort: "-date" } }, getHeaders())
       .then((response) => {
         let result;
         if (response.data.length == 0) result = { data: {} };
@@ -84,7 +98,7 @@ export default {
 
   getImmunization:(patID) => {
     return axios
-    .get('/broker/Immunization', {params: { patient: patID, status: "completed" }})
+    .get('/broker/Immunization', {params: { patient: patID, status: "completed" }}, getHeaders())
     .then((response) => {
       return {data: response.data};
     })
@@ -103,7 +117,7 @@ export default {
   // }
   checkIn: (data) => {
     return axios
-      .post(`/broker/check-in`, data)
+      .post(`/broker/check-in`, data, getHeaders())
       .then((response) => {
         return {
           data: {
@@ -120,7 +134,7 @@ export default {
   // Submit vaccination
   submitVaccination: (data) => {
     return axios
-      .post("/broker/Immunization", { Immunization: data })
+      .post("/broker/Immunization", { Immunization: data }, getHeaders())
       .then((response) => {
         console.log(`/Immunization/${response.data.id}`);
         return { data: response.data };
@@ -141,7 +155,8 @@ export default {
       .post(
         `/broker/discharge`,
         {},
-        { params: { appointment: data.apptID, encounter: data.encounterID } }
+        { params: { appointment: data.apptID, encounter: data.encounterID } },
+        getHeaders()
       )
       .then((response) => {
         return {
