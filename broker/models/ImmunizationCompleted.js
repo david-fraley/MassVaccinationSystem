@@ -41,6 +41,12 @@ const routeEnums = {
   Transdermal: "TRNSDERM"
 };
 
+const manufacturerEnums = {
+  "Pfizer-BioNTech": "Pfizer-BioNTech",
+  "Moderna": "Moderna",
+  "Johnson & Johnson": "Johnson & Johnson"
+};
+
 /**
  * Returns the date in YYYY-MM-DD or YYYY-MM format.
  *
@@ -94,7 +100,8 @@ exports.toFHIR = function (imm) {
           ]
       },
       manufacturer: {
-          reference: imm.manufacturer
+              display: 
+                manufacturerEnums[imm.manufacturer]
       },
       lotNumber: imm.lotNumber,
       expirationDate: parseDate(imm.expirationDate),
@@ -174,7 +181,7 @@ exports.toModel = (immunization) => {
     model = {
       id: immunization.id,
       vaccine: immunization.vaccineCode.coding[0].code,
-      manufacturer: immunization.manufacturer.reference,
+      manufacturer: immunization.manufacturer.display,
       lotNumber: immunization.lotNumber,
       expirationDate: prettyDate(immunization.expirationDate),
       patient: immunization.patient.reference,

@@ -61,7 +61,7 @@ module.exports = {
     "reference": "Location/example"
   },
   "manufacturer": {
-    "reference": "Organization/example"
+    "display": "Pfizer-BioNTech"
   },
   "lotNumber": "AAJN11K",
   "expirationDate": "2015-02-15",
@@ -142,7 +142,7 @@ module.exports = {
   Immunization: `{
   "Immunization": {
     "vaccine": "FLUVAX",
-    "manufacturer": "Organization/example",
+    "manufacturer": "Pfizer-BioNTech",
     "lotNumber": "AAJN11K",
     "expirationDate": "02/15/2015",
     "patient": "Patient/example",
