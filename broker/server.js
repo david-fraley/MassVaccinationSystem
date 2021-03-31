@@ -16,16 +16,24 @@ const CheckIn = require("./endpoints/CheckIn");
 const Discharge = require("./endpoints/Discharge");
 
 
-var kcConfig = {
-  ​clientId: 'massvaxx',
-  ​bearerOnly: true,
-  ​serverUrl: 'https://massvaxx-keycloak.mooo.com/auth/',
-  ​realm: 'massVaxx'
-​};
+// var bodyParser = require('body-parser');
+// var cors = require('cors');
+// app.use(bodyParser.json());
+// // Enable CORS support
+// app.use(cors());
 
 var session = require('express-session');
 var Keycloak = require('keycloak-connect');
 var memoryStore = new session.MemoryStore();
+
+const app = express();
+app.use(express.json());
+app.set("json spaces", 2);
+
+var kcConfig = {clientId: "massvaxx", 
+bearerOnly: true, 
+serverUrl: "https://massvaxx-keycloak.mooo.com/auth/", 
+realm: "massVaxx"};
 
 app.use(session({
   secret: 'some secret',
@@ -34,14 +42,36 @@ app.use(session({
   store: memoryStore
 }));
 
-
 var keycloak = new Keycloak({
   store: memoryStore
 }, kcConfig);
 
-const app = express();
-app.use(express.json());
-app.set("json spaces", 2);
+//look over and update below, the next commented out section is from the example
+
+// app.use(keycloak.middleware({
+//   logout: '/logout',
+//   admin: '/'
+// }));
+
+// app.get('/service/public', function (req, res) {
+//   res.json({message: 'public'});
+// });
+
+// app.get('/service/secured', keycloak.protect('realm:user'), function (req, res) {
+//   res.json({message: 'secured'});
+// });
+
+// app.get('/service/admin', keycloak.protect('realm:admin'), function (req, res) {
+//   res.json({message: 'admin'});
+// });
+
+// app.use('*', function (req, res) {
+//   res.send('Not found!');
+// });
+
+// app.listen(3000, function () {
+//   console.log('Started at port 3000');
+// });
 
 if (process.env.DEVELOPMENT == 1) {
   const reg_path = __dirname + "/PatientRegistrationViews/";
