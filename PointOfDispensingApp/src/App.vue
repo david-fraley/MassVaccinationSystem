@@ -21,9 +21,6 @@
             Log out
           </v-btn>
         </span>
-        <span>
-          Welcome to MassVaxx, <router-link to="/UserLogin">Log In</router-link>
-        </span>
       </v-sheet>
 
       <v-divider></v-divider>
