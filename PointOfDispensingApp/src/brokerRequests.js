@@ -21,7 +21,7 @@ function getKeycloakToken() {
 function getHeaders() {
   return {
     headers: {
-      'bearer': getKeycloakToken()
+      'Authorization': 'bearer ' + getKeycloakToken()
     }
   }
 }
