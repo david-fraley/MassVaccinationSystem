@@ -27,27 +27,41 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
     window.location.reload();
   } else {
     Vue.$log.info("Authenticated");
+    
     store.state.keycloak= keycloak;
+
+    localStorage.setItem("loggedIn", auth)
+    store.state.currentUser.loggedIn=localStorage.getItem("loggedIn")
+    
+    localStorage.setItem("username", keycloak.tokenParsed.preferred_username)
+    store.state.currentUser.name=localStorage.getItem("username")
+
+    localStorage.setItem("exp", keycloak.tokenParsed.exp);
+    store.state.currentUser.exp=localStorage.getItem("exp")
+
     new Vue({
       vuetify,
       router,
       store,
       render: (h) => h(App),
     }).$mount("#app");
+
   }
 
-  setInterval(() => {
-    keycloak.updateToken(70).then((refreshed) => {
-      if (refreshed) {
-        Vue.$log.info('Token refreshed' + refreshed);
-      } else {
-        Vue.$log.warn('Token not refreshed, valid for '
-          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-      }
-    }).catch(() => {
-      Vue.$log.error('Failed to refresh token');
-    });
-  }, 6000)
+  // setInterval(() => {
+  //   keycloak.updateToken(70).then((refreshed) => {
+  //     if (refreshed) {
+  //       Vue.$log.info('Token refreshed' + refreshed);
+  //     } else {
+  //       Vue.$log.warn('Token not refreshed, valid for '
+  //         + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
+  //     }
+  //   }).catch(() => {
+  //     Vue.$log.error('Failed to refresh token');
+  //   });
+  // }, 6000)
+  
+
 }).catch(() => {
   Vue.$log.error("Authenticated Failed");
 });
