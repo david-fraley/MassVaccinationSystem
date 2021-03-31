@@ -1,5 +1,4 @@
 import UserLoginPage from '@/components/UserLoginPage';
-import UserLogoutPage from '@/components/UserLogoutPage';
 import PatientLookupPage from '@/components/PatientLookupPage.vue';
 import PatientCheckInPage from '@/components/PatientCheckInPage.vue';
 import ConsentScreeningPage from '@/components/ConsentScreeningPage.vue';
@@ -17,10 +16,6 @@ export default [
   {
     path: '/UserLogin',
     component: UserLoginPage,
-  },
-  {
-    path: '/UserLogout',
-    component: UserLogoutPage,
   },
   {
     path: '/RetrievePatientRecord',

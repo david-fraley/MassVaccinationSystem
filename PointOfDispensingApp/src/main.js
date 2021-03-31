@@ -30,15 +30,13 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
     
     store.state.keycloak= keycloak;
 
-    localStorage.setItem("loggedIn", true)
+    localStorage.setItem("loggedIn", auth)
     store.state.currentUser.loggedIn=localStorage.getItem("loggedIn")
     
-    localStorage.setItem("username", keycloak.username)
+    localStorage.setItem("username", keycloak.tokenParsed.preferred_username)
     store.state.currentUser.name=localStorage.getItem("username")
 
-    let exp =  Date.now() + (1000*60*60*process.env.VUE_APP_EXP_LOGIN_HOURS); // add 24 hours of millis
-
-    localStorage.setItem("exp", exp)
+    localStorage.setItem("exp", keycloak.tokenParsed.exp);
     store.state.currentUser.exp=localStorage.getItem("exp")
 
     new Vue({

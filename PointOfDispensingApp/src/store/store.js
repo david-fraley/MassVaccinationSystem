@@ -218,6 +218,11 @@ export default new Vuex.Store({
             state.currentUser.loggedIn = false;
             state.currentUser.name = "";
             state.currentUser.exp = null;
+            state.keycloak.logout();
+            localStorage.clear();
+            // localStorage.removeItem('loggedIn');
+            // localStorage.removeItem()
+            
         }
     },
 
