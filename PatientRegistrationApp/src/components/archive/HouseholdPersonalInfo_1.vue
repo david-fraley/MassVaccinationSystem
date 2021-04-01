@@ -46,36 +46,11 @@
         >
         </v-select>
       </v-col>
-    </v-row>
-    <v-row align="center" justify="start">
-      <v-col cols="12" sm="6" md="6" lg="4">
-        <!-- Language -->
-        <v-select
-          :items="languageOptions"
-          required
-          :rules="[(v) => !!v || 'Preferred language field is required']"
-          v-model="preferredLanguage"
-          prepend-icon="mdi-blank"
-        >
-          <template #label>
-            <span class="red--text"><strong>* </strong></span>Preferred Language
-          </template>
-        </v-select>
-      </v-col>
-      <v-col cols="12" sm="6" md="6" lg="4">
-        <!-- Relationship -->
-        <v-select
-          :items="relationshipOptions"
-          required
-          :rules="[(v) => !!v || 'Relationship field is required']"
-          v-model="relationship"
-          prepend-icon="mdi-blank"
-        >
-          <template #label>
-            <span class="red--text"><strong>* </strong></span>Relationship: you
-            are this person's
-          </template>
-        </v-select>
+      <v-col cols="12" sm="12" md="12" lg="12">
+        <v-checkbox
+          v-model="checkbox"
+          label="All household members have the same last name"
+        ></v-checkbox>
       </v-col>
     </v-row>
     <v-row align="center" justify="start">
@@ -116,9 +91,9 @@
         <v-select
           v-model="race"
           :items="raceOptions"
-          prepend-icon="mdi-blank"
           required
           :rules="[(v) => !!v || 'Race is required']"
+          prepend-icon="mdi-blank"
         >
           <template #label>
             <span class="red--text"><strong>* </strong></span>Race
@@ -130,9 +105,9 @@
         <v-select
           v-model="ethnicity"
           :items="ethnicityOptions"
-          prepend-icon="mdi-blank"
           required
           :rules="[(v) => !!v || 'Ethnicity is required']"
+          prepend-icon="mdi-blank"
         >
           <template #label>
             <span class="red--text"><strong>* </strong></span>Ethnicity
@@ -155,9 +130,8 @@
     </v-row>
   </v-container>
 </template>
-
 <script>
-import EventBus from "../eventBus";
+import EventBus from "../../eventBus";
 import Rules from "@/utils/commonFormValidation"
 
 export default {
@@ -179,19 +153,7 @@ export default {
         "Not Hispanic or Latino",
         "Unknown or prefer not to answer",
       ],
-      languageOptions: ["English", "Spanish"],
-      relationshipOptions: [
-        "Spouse",
-        "Parent",
-        "Guardian",
-        "Care Giver",
-        "Sibling",
-        "Grandparent",
-        "Child",
-        "Foster Child",
-        "Stepchild",
-        "Other",
-      ],
+      checkbox: false,
       familyName: "",
       givenName: "",
       middleName: "",
@@ -202,7 +164,6 @@ export default {
       race: "",
       ethnicity: "",
       preferredLanguage: "",
-      relationship: "",
       minDateStr: "1900-01-01",
       birthdateRules: [
         (v) => !!v || "DOB is required",
@@ -214,9 +175,6 @@ export default {
       ],
       valid: false,
     };
-  },
-  props: {
-    householdMemberNumber: Number,
   },
   computed: {
     maxDateStr: function() {
@@ -249,7 +207,6 @@ export default {
     },
     sendHouseholdPersonalInfoDataToReviewPage() {
       const householdPersonalInfoPayload = {
-        preferredLanguage: this.preferredLanguage,
         familyName: this.familyName,
         givenName: this.givenName,
         middleName: this.middleName,
@@ -263,26 +220,26 @@ export default {
             : undefined,
         race: this.race,
         ethnicity: this.ethnicity,
-        relationship: this.relationship,
+        preferredLanguage: this.preferredLanguage,
+        relationship: "Self"
       };
+      const householdMemberNumber = 1;
       EventBus.$emit(
         "DATA_HOUSEHOLD_PERSONAL_INFO_PUBLISHED",
         householdPersonalInfoPayload,
-        this.householdMemberNumber
+        householdMemberNumber
       );
+      if (this.checkbox) {
+        //all household members have the same last name
+        EventBus.$emit("DATA_HOUSEHOLD_FAMILY_NAME", this.familyName);
+      }
     },
     verifyFormContents() {
+      //add logic to check form contents
       var valid = true;
       var message = "Woops! You need to enter the following field(s):";
 
-      if (this.preferredLanguage == "") {
-        message += " Preferred Language";
-        valid = false;
-      }
       if (this.familyName == "") {
-        if (!valid) {
-          message += ",";
-        }
         message += " Last Name";
         valid = false;
       }
@@ -305,13 +262,6 @@ export default {
           message += ",";
         }
         message += " Gender Identity";
-        valid = false;
-      }
-      if (this.relationship == "") {
-        if (!valid) {
-          message += ",";
-        }
-        message += " Relationship";
         valid = false;
       }
       if (this.race == "") {
@@ -348,9 +298,11 @@ export default {
       this.sendHouseholdPersonalInfoDataToReviewPage();
       return true;
     },
-    setHouseholdFamilyName(familyName) {
-      this.familyName = familyName;
-    },
+  },
+  mounted() {
+    EventBus.$on("DATA_LANGUAGE_INFO_PUBLISHED", (preferredLanguage) => {
+      this.preferredLanguage = preferredLanguage;
+    });
   },
 };
 </script>

@@ -158,7 +158,7 @@ exports.create = [
   body('Patient.*.address.state', 'Please enter patient address state').trim().escape().isLength({min: 1}),
   body('Patient.*.address.postalCode', 'Please enter patient address zip code').trim().escape().matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
   body('Patient.*.address.country', 'Please enter patient address country').trim().escape().isLength({min: 1}),
-  body('Patient.*.relationship', 'Please specify patient relationship').trim().escape().custom((relationshipVal) => {
+  body('Patient.*.contact.relationship', 'Please specify patient contact relationship').trim().escape().optional({checkFalsy: true}).custom((relationshipVal) => {
     return RelatedPerson.relationshipValueSet[relationshipVal];
   }),
 

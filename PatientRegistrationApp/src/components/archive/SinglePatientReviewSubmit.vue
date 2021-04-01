@@ -159,8 +159,8 @@
 </template>
 
 <script>
-import EventBus from "../eventBus";
-import brokerRequests from "../brokerRequests";
+import EventBus from "../../eventBus";
+import brokerRequests from "../../brokerRequests";
 
 export default {
   data() {

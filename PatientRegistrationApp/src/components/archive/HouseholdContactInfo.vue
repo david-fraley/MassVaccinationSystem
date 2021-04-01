@@ -98,8 +98,8 @@
 </template>
 
 <script>
-import EventBus from "../eventBus";
-import customerSettings from "../customerSettings";
+import EventBus from "../../eventBus";
+import customerSettings from "../../customerSettings";
 
   export default {
     name: 'SinglePatientContactInfo',

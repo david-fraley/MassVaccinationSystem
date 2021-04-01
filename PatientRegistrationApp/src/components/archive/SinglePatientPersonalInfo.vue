@@ -50,18 +50,18 @@
     <v-row align="center" justify="start">
       <v-col cols="12" sm="6" md="6" lg="4">
         <v-form ref="form" v-model="valid">
-        <!-- Date of Birth -->
-        <v-text-field
-          v-model="dob"
-          :rules="birthdateRules"
-          placeholder="MM/DD/YYYY"
-          v-mask="'##/##/####'"
-          prepend-icon="mdi-blank"
-        >
-          <template #label>
-            <span class="red--text"><strong>* </strong></span>Date of Birth
-          </template>
-        </v-text-field>
+          <!-- Date of Birth -->
+          <v-text-field
+            v-model="dob"
+            :rules="birthdateRules"
+            placeholder="MM/DD/YYYY"
+            v-mask="'##/##/####'"
+            prepend-icon="mdi-blank"
+          >
+            <template #label>
+              <span class="red--text"><strong>* </strong></span>Date of Birth
+            </template>
+          </v-text-field>
         </v-form>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="4">
@@ -127,8 +127,7 @@
   </v-container>
 </template>
 <script>
-import EventBus from "../eventBus";
-import Rules from "@/utils/commonFormValidation"
+import Rules from "@/utils/commonFormValidation";
 
 export default {
   data() {
@@ -218,10 +217,13 @@ export default {
         preferredLanguage: this.preferredLanguage,
         relationship: "Self"
       };
-      EventBus.$emit("DATA_PERSONAL_INFO_PUBLISHED", personalInfoPayload);
+      // EventBus.$emit("DATA_PERSONAL_INFO_PUBLISHED", personalInfoPayload);
+      this.$store.commit("setPersonalInfo", {
+        index: 0,
+        data: personalInfoPayload,
+      });
     },
     verifyFormContents() {
-
       //add logic to check form contents
       var valid = true;
       var message = "Woops! You need to enter the following field(s):";
@@ -282,15 +284,10 @@ export default {
       }
       this.$refs.form.validate();
       if (!this.valid) return;
-      
+
       this.sendPersonalInfoDataToReviewPage();
       return true;
     },
-  },
-  mounted() {
-    EventBus.$on("DATA_LANGUAGE_INFO_PUBLISHED", (preferredLanguage) => {
-      this.preferredLanguage = preferredLanguage;
-    });
   },
 };
 </script>
