@@ -65,7 +65,7 @@ app.post("/Patient", Patient.create);
 app.get("/Patient/:qrCode", Patient.read);
 
 // POST request since client is sending PHI
-app.post("/SearchPatients", Patient.search);
+app.post("/SearchPatients", keycloak.protect(), Patient.search);
 
 app.post("/Immunization", Immunization.create);
 app.get("/Immunization*", Immunization.read);
@@ -96,7 +96,7 @@ app.get("/Location*", Location.read);
 
 app.post("/check-in", CheckIn);
 
-app.post("/discharge", Discharge);
+app.post("/discharge",Discharge);
 
 app.listen(configs.port, () =>
   console.log(`Listening on port ${configs.port}`)

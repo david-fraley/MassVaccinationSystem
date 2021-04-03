@@ -4,6 +4,7 @@ const RelatedPerson = require("../models/RelatedPerson");
 const {body, param, validationResult, sanitizeBody} = require('express-validator');
 const Appointment = require("../models/Appointment");
 const uuid = require('uuid');
+const KeycloakConnect = require("keycloak-connect");
 
 exports.read = [
 
@@ -122,6 +123,7 @@ exports.search = [
       });
     });
   } 
+
 ];
 
 exports.create = [

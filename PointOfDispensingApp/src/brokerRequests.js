@@ -4,7 +4,6 @@ import store from './store/store';
 // Return an object with error property containing data
 // from Axios error object
 function toResponse(error) {
-  console.log(store);
   if (error.response) {
     return { error: error.response.data };
   } else if (error.request) {
