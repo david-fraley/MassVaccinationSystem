@@ -4,6 +4,7 @@ const RelatedPerson = require("../models/RelatedPerson");
 const {body, param, validationResult, sanitizeBody} = require('express-validator');
 const Appointment = require("../models/Appointment");
 const uuid = require('uuid');
+const tt_service = require('../services/timetapService');
 
 exports.read = [
 
@@ -274,6 +275,9 @@ async function createPatient(patient, head) {
   
   const createdPatient = await axios.post(`/Patient`, resource);
   patientID.resourceId = createdPatient.data.id;
+
+  // Create the new Patient/Client record in TimeTap
+  tt_service.createTimetapClient(createdPatient.data);
 
   // If RelatedPerson was not created with a link to a patient,
   // update the resource to link to the new Patient
