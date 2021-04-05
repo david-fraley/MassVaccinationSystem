@@ -3,7 +3,7 @@
   <nextMetaDataId>6</nextMetaDataId>
   <name>JSON to HL7v2</name>
   <description>This channel converts a JSON request to an HL7 VXU^V04.</description>
-  <revision>10</revision>
+  <revision>11</revision>
   <sourceConnector version="3.10.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -347,15 +347,14 @@ tmp[&apos;RXA&apos;][&apos;RXA.9&apos;] = 00;
 //RXA-10 Administering Provider 
 try{
 	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.1&apos;] = actor[&apos;identifier&apos;][0][&apos;value&apos;];
+	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.2&apos;] = actor[&apos;name&apos;][0][&apos;family&apos;];
+	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.3&apos;] = actor[&apos;name&apos;][0][&apos;given&apos;][0];
+	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.7&apos;] = &apos;L&apos;;
 } catch (e) {
-	//TypeError means the Practitioner resource has no non-FHIR identifiers
+	//TypeError means the Practitioner resource does not have enough information
 	if (!(e instanceof TypeError)) throw e;
 	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.1&apos;] = actor[&apos;id&apos;];
 }
-
-tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.2&apos;] = actor[&apos;name&apos;][0][&apos;family&apos;];
-tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.3&apos;] = actor[&apos;name&apos;][0][&apos;given&apos;][0];
-tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.7&apos;] = &apos;L&apos;;
 
 
 //RXA-15 Substance Lot Number
@@ -769,7 +768,7 @@ tmp[&apos;PID&apos;][&apos;PID.11&apos;] = patObj[&apos;id&apos;];
       </filter>
       <transportName>File Writer</transportName>
       <mode>DESTINATION</mode>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <waitForPrevious>true</waitForPrevious>
     </connector>
     <connector version="3.10.0">
@@ -922,7 +921,7 @@ return;</undeployScript>
     <metadata>
       <enabled>false</enabled>
       <lastModified>
-        <time>1617298925742</time>
+        <time>1617637111393</time>
         <timezone>America/Chicago</timezone>
       </lastModified>
       <pruningSettings>
