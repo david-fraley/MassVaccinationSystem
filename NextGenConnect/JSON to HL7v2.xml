@@ -1,9 +1,9 @@
 <channel version="3.10.0">
   <id>904aea2c-90ed-4755-84f5-4bd92208d2cd</id>
   <nextMetaDataId>6</nextMetaDataId>
-  <name>JSON to HL7v2 MVS-528-529</name>
+  <name>JSON to HL7v2</name>
   <description>This channel converts a JSON request to an HL7 VXU^V04.</description>
-  <revision>5</revision>
+  <revision>11</revision>
   <sourceConnector version="3.10.0">
     <metaDataId>0</metaDataId>
     <name>sourceConnector</name>
@@ -231,21 +231,26 @@ tmp[&apos;NK1&apos;][&apos;NK1.3&apos;][&apos;NK1.3.1&apos;] = patient[&apos;con
 tmp[&apos;NK1&apos;][&apos;NK1.3&apos;][&apos;NK1.3.3&apos;] = &apos;HL70063&apos;; 
 
 //NK1-4 Address of responsible person 
+try{
+	var lines = [];
+	for (var i = 0; i &lt; getArrayOrXmlLength(patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;line&apos;]); i++) {
+		var line = [];
+		line[i] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;line&apos;][i];
+		lines.push(line.join(&apos;, &apos;));
+	}
 
-var lines = [];
-for (var i = 0; i &lt; getArrayOrXmlLength(patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;line&apos;]); i++) {
-	var line = [];
-	line[i] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;line&apos;][i];
-	lines.push(line.join(&apos;, &apos;));
+	tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.1&apos;] = lines.join(&apos;&apos;);
+
+	tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.3&apos;] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;city&apos;];
+	tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.4&apos;] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;state&apos;];
+	tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.5&apos;] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;postalCode&apos;];
+	tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.6&apos;] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;country&apos;];
+	tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.7&apos;]= &apos;M&apos; // Mailing address
+} catch (e){
+	//TypeError means the contact doesn&apos;t have enough information to fill out the address
+	if (!(e instanceof TypeError)) throw e;
 }
 
-tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.1&apos;] = lines.join(&apos;&apos;);
-
-tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.3&apos;] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;city&apos;];
-tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.4&apos;] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;state&apos;];
-tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.5&apos;] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;postalCode&apos;];
-tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.6&apos;] = patient[&apos;contact&apos;][0][&apos;address&apos;][&apos;country&apos;];
-tmp[&apos;NK1&apos;][&apos;NK1.4&apos;][&apos;NK1.4.7&apos;]= &apos;M&apos; // Mailing address
 
 //NK1-5 Phone number
 
@@ -293,10 +298,6 @@ var location = msg[&apos;entry&apos;].filter(function (entry){
     return entry[&apos;resource&apos;][&apos;resourceType&apos;] === &quot;Location&quot;;
 })[0][&apos;resource&apos;];
 
-var organization = msg[&apos;entry&apos;].filter(function (entry){
-    return entry[&apos;resource&apos;][&apos;resourceType&apos;] === &quot;Organization&quot;;
-})[0][&apos;resource&apos;];
-
 var actor = msg[&apos;entry&apos;].filter(function (entry){
     return entry[&apos;resource&apos;][&apos;resourceType&apos;] === &quot;Practitioner&quot;;
 })[0][&apos;resource&apos;];
@@ -316,14 +317,18 @@ tmp[&apos;RXA&apos;][&apos;RXA.3&apos;] = occurenceDate.split(&apos;-&apos;).joi
 //RXA-5 Administered Code -- // NDC code?
 
 
-if(organization[&apos;name&apos;] == &apos;Pfizer&apos;){
+if(immunization[&apos;manufacturer&apos;][&apos;display&apos;].includes(&apos;Pfizer&apos;)){
 	tmp[&apos;RXA&apos;][&apos;RXA.5&apos;][&apos;RXA.5.1&apos;]  = &apos;207&apos;;
 	tmp[&apos;RXA&apos;][&apos;RXA.5&apos;][&apos;RXA.5.3&apos;]  = &apos;CVX&apos;;
 }
-else if(organization[&apos;name&apos;] == &apos;Moderna&apos;){
+else if(immunization[&apos;manufacturer&apos;][&apos;display&apos;].includes(&apos;Moderna&apos;)){
 	tmp[&apos;RXA&apos;][&apos;RXA.5&apos;][&apos;RXA.5.1&apos;]  = &apos;208&apos;;
 	tmp[&apos;RXA&apos;][&apos;RXA.5&apos;][&apos;RXA.5.3&apos;]  = &apos;CVX&apos;;
-	}
+}
+else if(immunization[&apos;manufacturer&apos;][&apos;display&apos;].includes(&apos;Johnson&apos;)){
+	tmp[&apos;RXA&apos;][&apos;RXA.5&apos;][&apos;RXA.5.1&apos;]  = &apos;212&apos;;
+	tmp[&apos;RXA&apos;][&apos;RXA.5&apos;][&apos;RXA.5.3&apos;]  = &apos;CVX&apos;;
+}
 	
 
 //RXA-6 Administered Amount
@@ -340,10 +345,16 @@ tmp[&apos;RXA&apos;][&apos;RXA.9&apos;] = 00;
 
 
 //RXA-10 Administering Provider 
-
-tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.1&apos;] = actor[&apos;name&apos;][0][&apos;family&apos;];
-tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.2&apos;] = actor[&apos;name&apos;][0][&apos;given&apos;][0];
-tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.7&apos;] = &apos;L&apos;;
+try{
+	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.1&apos;] = actor[&apos;identifier&apos;][0][&apos;value&apos;];
+	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.2&apos;] = actor[&apos;name&apos;][0][&apos;family&apos;];
+	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.3&apos;] = actor[&apos;name&apos;][0][&apos;given&apos;][0];
+	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.7&apos;] = &apos;L&apos;;
+} catch (e) {
+	//TypeError means the Practitioner resource does not have enough information
+	if (!(e instanceof TypeError)) throw e;
+	tmp[&apos;RXA&apos;][&apos;RXA.10&apos;][&apos;RXA.10.1&apos;] = actor[&apos;id&apos;];
+}
 
 
 //RXA-15 Substance Lot Number
@@ -358,14 +369,21 @@ tmp[&apos;RXA&apos;][&apos;RXA.16&apos;] = expirationDate.split(&apos;-&apos;).j
 
 //RXA-17 Substance Manufacturer Name -- Reference to Organization 
 
-if(organization[&apos;name&apos;] == &apos;Pfizer&apos;){
+if (immunization[&apos;manufacturer&apos;][&apos;display&apos;].includes(&apos;Pfizer&apos;)){
 	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.1&apos;]  = &apos;PFR&apos;;
+	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.2&apos;]  = &apos;Pfizer&apos;;
 	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.3&apos;] = &apos;MVX&apos;;
 }
-else if(organization[&apos;name&apos;] == &apos;Moderna&apos;){
+else if(immunization[&apos;manufacturer&apos;][&apos;display&apos;].includes(&apos;Moderna&apos;)){
 	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.1&apos;]  = &apos;MOD&apos;;
+	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.2&apos;]  = &apos;Moderna&apos;;
 	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.3&apos;] = &apos;MVX&apos;;
-	}
+}
+else if(immunization[&apos;manufacturer&apos;][&apos;display&apos;].includes(&apos;Johnson&apos;)){
+	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.1&apos;]  = &apos;JNJ&apos;;
+	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.2&apos;]  = &apos;Johnson and Johnson&apos;;
+	tmp[&apos;RXA&apos;][&apos;RXA.17&apos;][&apos;RXA.17.3&apos;] = &apos;MVX&apos;;
+}
 	
 
 //RXA-21 Action Code
@@ -750,7 +768,7 @@ tmp[&apos;PID&apos;][&apos;PID.11&apos;] = patObj[&apos;id&apos;];
       </filter>
       <transportName>File Writer</transportName>
       <mode>DESTINATION</mode>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <waitForPrevious>true</waitForPrevious>
     </connector>
     <connector version="3.10.0">
@@ -903,7 +921,7 @@ return;</undeployScript>
     <metadata>
       <enabled>false</enabled>
       <lastModified>
-        <time>1617121364629</time>
+        <time>1617637111393</time>
         <timezone>America/Chicago</timezone>
       </lastModified>
       <pruningSettings>
