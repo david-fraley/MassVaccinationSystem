@@ -15,8 +15,6 @@ export default new Vuex.Store({
         activeWorkflowState: 'NO_PATIENT_LOADED',
         patientResource: {
           address: {},
-          phone: [],
-          email: [],
           contact: {
             phone: {}
           }

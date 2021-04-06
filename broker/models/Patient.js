@@ -208,13 +208,6 @@ exports.toFHIR = function (patient) {
               preferred: true
           }
       ],
-      link: [
-          {
-              other: {
-                  reference: patient.link
-              }
-          }
-      ]
   };
 
   // optional
@@ -226,19 +219,17 @@ exports.toFHIR = function (patient) {
   }
   if (patient.address.line2) resource.address[0].line.push(patient.address.line2);
   // add in telecom
-  for (let idx in patient.phone) {
+  if (patient.phone) {
     resource.telecom.push({
       system: "phone",
-      value: patient.phone[idx].value,
-      use: exports.phoneUseEnums[patient.phone[idx].use],
-      rank: `${idx}`
+      value: patient.phone.value,
+      use: exports.phoneUseEnums[patient.phone.use]
     });
   }
-  for (let idx in patient.email) {
+  if (patient.email) {
     resource.telecom.push({
       system: "email",
-      value: patient.email[idx],
-      rank: `${idx}`
+      value: patient.email,
     });
   }
   // race
@@ -290,8 +281,8 @@ exports.toModel = function (patient) {
         given: (()=>{try{return patient.name[0].given[0];}catch(e){return undefined;}})(),
         middle: (()=>{try{return patient.name[0].given[1];}catch(e){return undefined;}})(),
         suffix: (()=>{try{return patient.name[0].suffix[0];}catch(e){return undefined;}})(),
-        phone: (()=>{try{return patient.telecom.filter(obj => obj.system === "phone").map(obj => {return {value: obj.value, use: exports.phoneUseEnums[obj.use]}});}catch(e){return [];}})(),
-        email: (()=>{try{return patient.telecom.filter(obj => obj.system === "email").map(obj => obj.value);}catch(e){return [];}})(),
+        phone: (()=>{try{return patient.telecom.filter(obj => obj.system === "phone").map(obj => {return {value: obj.value, use: exports.phoneUseEnums[obj.use]}})[0];}catch(e){return undefined;}})(),
+        email: (()=>{try{return patient.telecom.filter(obj => obj.system === "email").map(obj => obj.value)[0];}catch(e){return undefined;}})(),
         gender: exports.genderEnums[patient.gender],
         birthDate: prettyDate(patient.birthDate),
         race: (()=>{try{return patient.extension.filter(obj => obj.url.includes("race")).map(obj => obj.extension[0].valueCoding.display);}catch(e){return undefined;}})(),
@@ -314,7 +305,6 @@ exports.toModel = function (patient) {
             country: (()=>{try{return patient.address[0].country;}catch(e){return undefined;}})(),
         },
         language: (()=>{try{return patient.communication[0].language.text;}catch(e){return undefined;}})(),
-        link: (()=>{try{return patient.link[0].other.reference;}catch(e){return undefined;}})(),
     };
 
     return model;
