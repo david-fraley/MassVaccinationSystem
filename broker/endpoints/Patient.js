@@ -277,7 +277,7 @@ async function createPatient(patient, head) {
   patientID.resourceId = createdPatient.data.id;
 
   // Create the new Patient/Client record in TimeTap
-  tt_service.createTimetapClient(createdPatient.data);
+  await tt_service.createTimetapClient(createdPatient.data);
 
   // If RelatedPerson was not created with a link to a patient,
   // update the resource to link to the new Patient
