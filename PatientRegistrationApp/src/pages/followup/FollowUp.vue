@@ -1,5 +1,25 @@
 <template>
   <v-container fluid>
+    <v-row align="center" justify="start"
+            ><v-col cols="12">
+              <v-alert
+                elevation="2"
+                color="info"
+                outlined
+                :value="showWelcome"
+                transition="scroll-y-transition"
+              >
+                <h2>{{ lastStep }}</h2>
+                <div><br />{{ QRcodeStatement }}</div>
+                <div><br />{{ finalStatement }}</div>
+                <div class="pt-2 float-right">
+                  <v-btn @click="showWelcome = false" color="blue lighten-4"
+                    >Close</v-btn
+                  >
+                </div>
+              </v-alert>
+            </v-col>
+          </v-row>
     <v-row align="center" justify="start">
       <v-col cols="12">
         <div class="font-weight-regular">
@@ -60,6 +80,7 @@
 <script>
 import VueQrcode from "vue-qrcode";
 import jsPDF from "jspdf";
+import customerSettings from "@/customerSettings";
 
 export default {
   name: "SinglePatientFollowUp",
@@ -70,6 +91,9 @@ export default {
       sendQr: " ",
       dataScreeningResponses: [],
       qrValue: this.$store.state.patient.patient.identifier,
+      lastStep: customerSettings.lastStep,
+      QRcodeStatement: customerSettings.QRcodeStatement,
+      finalStatement: customerSettings.finalStatement,
     };
   },
   computed: {
