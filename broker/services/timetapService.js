@@ -68,7 +68,7 @@ exports.createTimetapClient = async (patient) => {
   await timetapAxios
     .post("/clients", data, {
       headers: {
-        Authorization: `Basic ${tt_sessiontoken}`,
+        Authorization: `Bearer ${tt_sessiontoken}`,
       },
     })
     .then((response) => {
