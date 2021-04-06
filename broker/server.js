@@ -19,13 +19,20 @@ const app = express();
 
 var session = require('express-session');
 var Keycloak = require('keycloak-connect');
+
 var memoryStore = new session.MemoryStore();
+app.use(session({
+  secret: 'some secret',
+  resave: false,
+  saveUninitialized: true,
+  store: memoryStore
+}));
 
 let kcConfig = {
   clientId: 'massvaxx',
   bearerOnly: true,
   serverUrl: 'https://massvaxx-keycloak.mooo.com/auth/',
-  realm: 'massVaxx'
+  realm: 'MassVaxx'
 };
 
 var keycloak = new Keycloak({
@@ -36,12 +43,6 @@ app.use(express.json());
 app.set("json spaces", 2);
 app.use(keycloak.middleware());
 
-app.use(session({
-  secret: 'some secret',
-  resave: false,
-  saveUninitialized: true,
-  store: memoryStore
-}));
 
 if (process.env.DEVELOPMENT == 1) {
   const reg_path = __dirname + "/PatientRegistrationViews/";
