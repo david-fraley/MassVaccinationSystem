@@ -81,11 +81,11 @@ exports.createTimetapClient = async (patient) => {
     });
 };
 
-async function refreshTimetapSessionToken(callback, ...args) {
+async function refreshTimetapSessionToken(callback, args) {
   try {
     await fetchTimetapSessionToken();
     console.log("Session Token refreshed! " + tt_sessiontoken);
-    await callback.call(args);
+    await callback(...args);
   } catch {
     console.log("Timetap is broken.");
   }
