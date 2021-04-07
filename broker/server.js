@@ -64,6 +64,7 @@ app.get("/healthcheck", (req, res) => {
 
 app.post("/Patient", Patient.create);
 app.get("/Patient/:qrCode", Patient.read);
+app.put("/Patient/:id", Patient.update);
 
 // POST request since client is sending PHI
 app.post("/SearchPatients", keycloak.protect(), Patient.search);

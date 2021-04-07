@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import EventBus from "../eventBus";
+import EventBus from "../../eventBus";
 
   export default {
 	data () {
@@ -112,6 +112,7 @@ import EventBus from "../eventBus";
 				/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v) ||
 				"Zip code must be in format of ##### or #####-####",
 				],
+		
 			stateOptions:[
 				'AL', 'AK', 'AS', 'AZ',
 				'AR', 'CA', 'CO', 'CT',
@@ -138,12 +139,12 @@ import EventBus from "../eventBus";
 			countryAddress: 'USA',
 			postalCode: '',
 			valid: false,
-		}				
+		}
+		
 	},
-	
 	methods: {
-		sendHomeAddressInfoToReviewPage() {
-			const homeAddressPayload = {
+		sendHouseholdHomeAddressInfoToReviewPage() {
+			const householdHomeAddressPayload = {
 				addressType: this.addressType,
 				lineAddress1: this.lineAddress1,
 				lineAddress2: this.lineAddress2,
@@ -151,18 +152,17 @@ import EventBus from "../eventBus";
 				stateAddress: this.stateAddress,
 				countryAddress: this.countryAddress,
 				postalCode: this.postalCode
-				}
-			EventBus.$emit('DATA_ADDRESS_INFO_PUBLISHED', homeAddressPayload)
+			}
+			EventBus.$emit('DATA_HOUSEHOLD_ADDRESS_INFO_PUBLISHED', householdHomeAddressPayload)
 		},
 		verifyFormContents() {
-
 			var valid = true
 			var message = "Woops! You need to enter the following field(s):"
-			
+
 			if(this.addressType == "") {
 				message += " Address Type"
 				valid = false
-			}
+			}	
 			if(this.lineAddress1 == "") {
 				if(!valid) {
 					message +=","
@@ -202,12 +202,11 @@ import EventBus from "../eventBus";
 				alert(message)
 				return false
 			}
-			this.$refs.form.validate();
-			if (!this.valid) return;
-			
-			this.sendHomeAddressInfoToReviewPage();
+				this.$refs.form.validate();
+				if (!this.valid) return;
+			this.sendHouseholdHomeAddressInfoToReviewPage();
 			return true;
 		},
-	}
-}
+	},
+  }
 </script>

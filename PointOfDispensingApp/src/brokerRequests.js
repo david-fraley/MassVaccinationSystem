@@ -67,6 +67,20 @@ export default {
     }
   },
 
+  // Update patient
+  // param id: id of resource to update
+  // param data: new patient resource
+  updatePatient: (id, data) => {
+    return axios
+      .put(`/broker/Patient/${id}`, data)
+      .then((response) => {
+        return { data: response.data };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
+  },
+
   getAppointment: (patID) => {
     return axios
       .get("/broker/Appointment", { params: { actor: patID } }, getHeaders())

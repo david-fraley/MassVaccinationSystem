@@ -13,7 +13,13 @@ module.exports = function (req, res) {
         console.log("Immunization ID: " + immId);
     }
 
-    return axios.get(`${configs.fhirUrlBase}/Immunization?_id=${immId}&_include=Immunization:patient`).then((response) => {
+    const includes = "_include=Immunization:patient&_include=Immunization:location&_include=Immunization:performer";
+	let url = `${configs.fhirUrlBase}/Immunization?_id=${immId}&${includes}`;
+	if (process.env.DEVELOPMENT == 1) {
+        console.log("SendHL7Message URL: " + url);
+    }
+
+    return axios.get(url).then((response) => {
         const mirthBundle = response.data;
 
         if (process.env.DEVELOPMENT == 1) {

@@ -160,7 +160,7 @@ exports.create = [
   body('Patient.*.address.state', 'Please enter patient address state').trim().escape().isLength({min: 1}),
   body('Patient.*.address.postalCode', 'Please enter patient address zip code').trim().escape().matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
   body('Patient.*.address.country', 'Please enter patient address country').trim().escape().isLength({min: 1}),
-  body('Patient.*.relationship', 'Please specify patient relationship').trim().escape().custom((relationshipVal) => {
+  body('Patient.*.contact.relationship', 'Please specify patient contact relationship').trim().escape().optional({checkFalsy: true}).custom((relationshipVal) => {
     return RelatedPerson.relationshipValueSet[relationshipVal];
   }),
 
@@ -263,7 +263,7 @@ async function createPatient(patient, head) {
   };
 
   // Add QR Code UUID to Patient Identifier list
-  if (!resource.hasOwnProperty("identifier")) resource.identifier = [];
+  if (!resource.identifier) resource.identifier = [];
   resource.identifier.push({
 	  value: patientID.qr_code,
 	  assigner: {
@@ -304,3 +304,16 @@ async function createPatient(patient, head) {
 
   return patientID;
 }
+
+exports.update = (req, res) => {
+  const patient = Patient.toFHIR(req.body);
+  axios
+    .put(req.url, patient)
+    .then((response) => {
+      res.send(Patient.toModel(response.data));
+    })
+    .catch((e) => {
+      console.log(e.response ? e.response.data : e.message);
+      res.status(500).send("Failed to update patient");
+    });
+};

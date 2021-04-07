@@ -22,13 +22,13 @@
       <div class="font-weight-medium">
         Name:
         <span class="font-weight-regular"
-          >{{ dataPersonalInfo.familyName }}, {{ dataPersonalInfo.givenName }}
-          {{ dataPersonalInfo.middleName }} {{ dataPersonalInfo.suffix }}</span
+          >{{ patient.family }}, {{ patient.given }} {{ patient.middle }}
+          {{ patient.suffix }}</span
         >
       </div>
     </v-row>
     <v-row justify="center">
-      <v-btn color="secondary" class="ma-2 white--text" @click="generatePdf">
+      <v-btn color="primary" class="ma-2 white--text" @click="generatePdf">
         Download As PDF
       </v-btn>
     </v-row>
@@ -47,27 +47,35 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-btn color="secondary" class="ma-2 white--text">
+      <v-btn color="primary" class="ma-2 white--text">
         Send
+      </v-btn>
+      <v-btn color="secondary" class="ma-2 white--text" @click="reset">
+        Register another person
       </v-btn>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import EventBus from "../eventBus";
 import VueQrcode from "vue-qrcode";
 import jsPDF from "jspdf";
 
 export default {
+  name: "SinglePatientFollowUp",
   data() {
     return {
       dataPersonalInfo: [],
       correctionLevel: "H",
-      qrValue: " ",
       sendQr: " ",
       dataScreeningResponses: [],
+      qrValue: this.$store.state.patient.patient.identifier,
     };
+  },
+  computed: {
+    patient() {
+      return this.$store.state.patient.patient;
+    },
   },
   methods: {
     generatePdf() {
@@ -75,13 +83,13 @@ export default {
       let pdfDoc = new jsPDF();
       let imageData = this.getBase64Image(qrcode);
       let string =
-        this.dataPersonalInfo.familyName +
+        this.patient.family +
         ", " +
-        this.dataPersonalInfo.givenName +
+        this.patient.given +
         " " +
-        this.dataPersonalInfo.middleName +
+        this.patient.middle +
         " " +
-        this.dataPersonalInfo.suffix;
+        this.patient.suffix;
       pdfDoc.setFontSize(10);
       pdfDoc.text("COVID-19 Vaccination Registration", 10, 15);
       pdfDoc.text(
@@ -107,54 +115,18 @@ export default {
       var dataURL = canvas.toDataURL("image/png");
       return dataURL;
     },
-    updatePersonalInfoData(personalInfoPayload) {
-      this.dataPersonalInfo = personalInfoPayload;
-    },
-    updateQrCodeData(data) {
-      this.qrValue = data;
-      //temporary - add the screening responses to the qrValue string:
-      this.qrValue +=
-        "|" +
-        this.dataScreeningResponses.screeningQ1 +
-        "|" +
-        this.dataScreeningResponses.screeningQ2 +
-        "|" +
-        this.dataScreeningResponses.screeningQ2b +
-        "|" +
-        this.dataScreeningResponses.screeningQ3a +
-        "|" +
-        this.dataScreeningResponses.screeningQ3b +
-        "|" +
-        this.dataScreeningResponses.screeningQ3c +
-        "|" +
-        this.dataScreeningResponses.screeningQ4 +
-        "|" +
-        this.dataScreeningResponses.screeningQ5 +
-        "|" +
-        this.dataScreeningResponses.screeningQ6 +
-        "|" +
-        this.dataScreeningResponses.screeningQ7 +
-        "|" +
-        this.dataScreeningResponses.screeningQ8 +
-        "|";
-    },
-    updateScreeningResponseData(screeningResponsesPayload) {
-      this.dataScreeningResponses = screeningResponsesPayload;
-    },
+    reset(){
+      this.$store.commit("patient/resetPatient");
+      this.$router.push("/");
+    }
   },
   components: {
     VueQrcode,
   },
   mounted() {
-    EventBus.$on("DATA_PERSONAL_INFO_PUBLISHED", (personalInfoPayload) => {
-      this.updatePersonalInfoData(personalInfoPayload);
-    }),
-      EventBus.$on(
-        "DATA_SCREENING_RESPONSES_PUBLISHED",
-        (screeningResponsesPayload) => {
-          this.updateScreeningResponseData(screeningResponsesPayload);
-        }
-      );
+    if (!this.patient.identifier) {
+      this.$router.push("/");
+    }
   },
 };
 </script>

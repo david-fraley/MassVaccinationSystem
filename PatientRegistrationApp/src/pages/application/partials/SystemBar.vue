@@ -3,7 +3,8 @@
     v-if="showTestBuildWarning"
     dark
     color="red"
-    height="40 rem">
+    height="40 rem"
+    :class="{'font-xs': $vuetify.breakpoint.xs}">
     <v-icon color="white" large>mdi-alert-circle-outline</v-icon>
     <span class="white--text"><strong>TEST WEBSITE - NOT LIVE</strong></span>
   </v-system-bar>
@@ -21,5 +22,8 @@ export default {
 <style lang="css" scoped>
 .v-system-bar {
   font-size: 2rem;
+}
+.font-xs {
+  font-size: 1rem
 }
 </style>

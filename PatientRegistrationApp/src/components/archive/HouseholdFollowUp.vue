@@ -73,7 +73,7 @@
   </v-container>
 </template>
 <script>
-import EventBus from "../eventBus";
+import EventBus from "../../eventBus";
 import VueQrcode from "vue-qrcode";
 import jsPDF from "jspdf";
 
