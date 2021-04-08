@@ -13,11 +13,6 @@
                 <div><br />{{ QRcodeStatement }}</div>
                 <div><br />{{ ReminderStatement }}</div>
                 <div><br />{{ finalStatement }}</div>
-                <div class="pt-2 float-right">
-                  <v-btn @click="showLastStep = false" color="blue lighten-4"
-                    >Close</v-btn
-                  >
-                </div>
               </v-alert>
             </v-col>
           </v-row>
@@ -87,7 +82,6 @@ export default {
       QRcodeStatement: customerSettings.QRcodeStatement,
       ReminderStatement: customerSettings.ReminderStatement,
       finalStatement: customerSettings.finalStatement,
-      showLastStep: true,
     };
   },
   computed: {
