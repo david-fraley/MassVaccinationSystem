@@ -13,7 +13,7 @@
     <v-navigation-drawer :mini-variant="mini" :mini-variant-width="90" v-model="drawer" app width="20em" permanent>
       <v-sheet color="white" class="pa-4">
         <span>
-          <v-btn icon color="accent">
+          <v-btn icon color="secondary">
             <v-icon large>mdi-account-circle</v-icon>
           </v-btn>
           Hello, {{ currentUserName }}

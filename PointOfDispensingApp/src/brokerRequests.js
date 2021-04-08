@@ -1,5 +1,15 @@
-import axios from "axios";
 import store from './store/store';
+import axios from "axios";
+
+axios.interceptors.request.use((config) => {
+  config.headers.Authorization = 'bearer ' + store.state.keycloak.token;
+  return config;
+});
+
+// function getKeycloakToken() {
+//   return store.state.keycloak.token;
+// }
+
 
 // Return an object with error property containing data
 // from Axios error object
@@ -13,17 +23,14 @@ function toResponse(error) {
   }
 }
 
-function getKeycloakToken() {
-  return store.state.keycloak.token;
-}
-
-function getHeaders() {
-  return {
-    headers: {
-      'Authorization': 'bearer ' + getKeycloakToken()
-    }
-  }
-}
+// function addAuthHeader(axiosOptions = {}) {
+//   return {
+//     ...axiosOptions,
+//     headers: {
+//       'Authorization': 'bearer ' + getKeycloakToken()
+//     }
+//   }
+// }
 
 // define functions for API requests here
 export default {
@@ -37,7 +44,7 @@ export default {
   // }
   searchPatient: (data) => {
     return axios
-      .post(`/broker/SearchPatients`, data, getHeaders())
+      .post(`/broker/SearchPatients`, data)
       .then((response) => {
         return { patients: response.data.patients };
       })
@@ -56,7 +63,7 @@ export default {
     else{
     // If we successfully got a Qr Code, hit the patient GET endpoint
       return axios
-      .get(`/broker/Patient/${qrCode}`, getHeaders())
+      .get(`/broker/Patient/${qrCode}`)
       .then((response) => {
         console.log(response);
         return { patient: response.data };
@@ -83,7 +90,7 @@ export default {
 
   getAppointment: (patID) => {
     return axios
-      .get("/broker/Appointment", { params: { actor: patID } }, getHeaders())
+      .get("/broker/Appointment", { params: { actor: patID } })
       .then((response) => {
         let result;
         if (response.data.length == 0) result = { data: {} };
@@ -97,7 +104,7 @@ export default {
 
   getEncounter: (patID) => {
     return axios
-      .get("/broker/Encounter", { params: { subject: patID, _sort: "-date" } }, getHeaders())
+      .get("/broker/Encounter", { params: { subject: patID, _sort: "-date" } })
       .then((response) => {
         let result;
         if (response.data.length == 0) result = { data: {} };
@@ -111,7 +118,7 @@ export default {
 
   getImmunization:(patID) => {
     return axios
-    .get('/broker/Immunization', {params: { patient: patID, status: "completed" }}, getHeaders())
+    .get('/broker/Immunization', {params: { patient: patID, status: "completed" }})
     .then((response) => {
       return {data: response.data};
     })
@@ -130,7 +137,7 @@ export default {
   // }
   checkIn: (data) => {
     return axios
-      .post(`/broker/check-in`, data, getHeaders())
+      .post(`/broker/check-in`, data)
       .then((response) => {
         return {
           data: {
@@ -147,7 +154,7 @@ export default {
   // Submit vaccination
   submitVaccination: (data) => {
     return axios
-      .post("/broker/Immunization", { Immunization: data }, getHeaders())
+      .post("/broker/Immunization", { Immunization: data })
       .then((response) => {
         console.log(`/Immunization/${response.data.id}`);
         return { data: response.data };
@@ -168,8 +175,7 @@ export default {
       .post(
         `/broker/discharge`,
         {},
-        { params: { appointment: data.apptID, encounter: data.encounterID } },
-        getHeaders()
+        { params: { appointment: data.apptID, encounter: data.encounterID } }
       )
       .then((response) => {
         return {
