@@ -6,29 +6,21 @@
                 elevation="2"
                 color="info"
                 outlined
-                :value="showWelcome"
+                :value="showLastStep"
                 transition="scroll-y-transition"
               >
                 <h2>{{ lastStep }}</h2>
                 <div><br />{{ QRcodeStatement }}</div>
+                <div><br />{{ ReminderStatement }}</div>
                 <div><br />{{ finalStatement }}</div>
                 <div class="pt-2 float-right">
-                  <v-btn @click="showWelcome = false" color="blue lighten-4"
+                  <v-btn @click="showLastStep = false" color="blue lighten-4"
                     >Close</v-btn
                   >
                 </div>
               </v-alert>
             </v-col>
           </v-row>
-    <v-row align="center" justify="start">
-      <v-col cols="12">
-        <div class="font-weight-regular">
-          Use this QR code to easily check-in at the site where you receive your
-          vaccine. This QR code contains an encrypted patient identifier so we
-          can quickly and securely identify you and retrieve your information.
-        </div>
-      </v-col>
-    </v-row>
     <v-row justify="center">
       <div>
         <vue-qrcode
@@ -93,7 +85,9 @@ export default {
       qrValue: this.$store.state.patient.patient.identifier,
       lastStep: customerSettings.lastStep,
       QRcodeStatement: customerSettings.QRcodeStatement,
+      ReminderStatement: customerSettings.ReminderStatement,
       finalStatement: customerSettings.finalStatement,
+      showLastStep: true,
     };
   },
   computed: {

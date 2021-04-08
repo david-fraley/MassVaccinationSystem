@@ -16,5 +16,5 @@ export default {
 
     lastStep: 'Last Step!',
     QRcodeStatement: 'Use this QR code to easily check-in at the site where you receive your vaccine. This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.',
-
+    ReminderStatement: 'You will not be able to retrieve the QR code once leaving this page, so make sure to download or save the QR code to be able to use it for check-in when getting the vaccine.',
 }
