@@ -36,7 +36,6 @@
   </v-row>
   <div v-if="isCameraOn"><v-row><v-col cols="6"><qrcode-stream :camera="camera" @init="onInit" @decode="onDecode">
     </qrcode-stream></v-col></v-row>
-    <v-row><p class="decode-result"> Result: <b>{{result}}</b></p></v-row>
   </div>
   </template>
     <v-row>
@@ -205,6 +204,10 @@ export default {
       }
     },
     onDecode (result) {
+      this.toggleCamera();
+      this.patientLookupTable = [];
+      this.loading = true;
+
       this.result = result
 
       //Interim solution:  extract screening responses from QR code (part 1 of 2)
@@ -217,11 +220,11 @@ export default {
       // result should be null if we didn't get a qrCode
       brokerRequests.getPatientFromQrCode(qrValue).then((response) => {
         if (response.patient) {
-          this.patient = response.patient;
-          this.patientRecordRetrieved();
+          this.patientLookupTable = [response.patient];
         } else if (response.error) {
           alert("Patient not found");
         }
+        this.loading = false;
       });
     },
     searchPatient() {
