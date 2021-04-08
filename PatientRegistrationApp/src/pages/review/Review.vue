@@ -170,9 +170,10 @@ export default {
     patient() {
       return this.$store.state.patient.patient;
     },
-    answers() {
+    //archive screening questions page 
+    /*answers() {
       return this.$store.state.screeningQuestions.answers;
-    },
+    },*/
   },
   methods: {
     back() {
@@ -251,8 +252,11 @@ export default {
     if (this.patient.hasSubmitted) {
       this.$router.push("/followup");
     }
-    if (!this.patient.family || !this.answers.screeningQ1) {
+    if (!this.patient.family) {
       this.$router.push("/");
+    //archive screening questions page  
+    /*if (!this.patient.family || !this.answers.screeningQ1) {
+      this.$router.push("/"); */
     }
   },
 };

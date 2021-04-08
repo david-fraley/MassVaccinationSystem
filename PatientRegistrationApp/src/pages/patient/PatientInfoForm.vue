@@ -542,7 +542,7 @@ export default {
       }
 
       this.hasValidationErrors = false;
-      this.$router.push("questions");
+      this.$router.push("/review");
     },
   },
   mounted() {
