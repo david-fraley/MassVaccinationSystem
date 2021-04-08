@@ -425,6 +425,7 @@ export default {
         },
         { text: "First Name", value: "given" },
         { text: "DOB", value: "birthDate" },
+        { text: "Mother's Maiden Name", value: "maiden" },
         { text: "Address", value: "address.line" },
         { text: "City", value: "address.city" },
         { text: "Zipcode", value: "address.postalCode" },

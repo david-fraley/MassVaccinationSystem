@@ -21,6 +21,10 @@
           <span class="font-weight-regular">{{ patient.gender }}</span>
         </div>
         <div class="font-weight-medium">
+          Mother's Maiden Name:
+          <span class="font-weight-regular">{{ patient.maiden }}</span>
+        </div>
+        <div class="font-weight-medium">
           Race:
           <span class="font-weight-regular">{{ patient.race }}</span>
         </div>
@@ -207,6 +211,7 @@ export default {
         middle: this.patient.middle,
         suffix: this.patient.suffix,
         gender: this.patient.gender,
+        maiden: this.patient.maiden,
         birthDate: this.patient.birthDate,
         race: this.patient.race,
         ethnicity: this.patient.ethnicity,
