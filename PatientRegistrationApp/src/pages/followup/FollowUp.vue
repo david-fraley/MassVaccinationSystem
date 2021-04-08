@@ -40,23 +40,7 @@
       </v-btn>
     </v-row>
     <v-row justify="center">
-      <div class="font-weight-medium">
-        <br /><br />How do you want to receive this QR code?
-      </div>
-    </v-row>
-    <v-row justify="center">
-      <v-col cols="8" sm="4" md="3" lg="3">
-        <v-radio-group v-model="sendQr" class="font-weight-medium">
-          <v-radio value="Email" label="E-mail"></v-radio>
-          <v-radio value="SmsMessage" label="SMS Message"></v-radio>
-          <v-radio value="Both" label="Both"></v-radio>
-        </v-radio-group>
-      </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-btn color="primary" class="ma-2 white--text">
-        Send
-      </v-btn>
+  
       <v-btn color="secondary" class="ma-2 white--text" @click="reset">
         Register another person
       </v-btn>
