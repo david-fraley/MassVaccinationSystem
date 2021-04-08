@@ -245,7 +245,7 @@ export default {
 
         // Accomodate form validation errors
         else if(typeof(response.error) === 'string') {
-          alert(response.error.error);
+          alert(response.error);
         }
 
         // Accomodate FHIR errors

@@ -103,9 +103,6 @@ export default new Vuex.Store({
         hasPatientBeenCheckedIn: state => {
             return (state.encounterResource.status == 'arrived')
         },
-        // isLoggedIn: state => {
-        //     return !!(state.currentUser.loggedIn && state.currentUser.exp > Date.now());
-        // },
         howManyDosesHasPatientReceived: state => {
             let numberOfDoses = 0;
 
@@ -239,10 +236,7 @@ export default new Vuex.Store({
             state.currentUser.name = "";
             state.currentUser.exp = null;
             state.keycloak.logout();
-            localStorage.clear();
-            // localStorage.removeItem('loggedIn');
-            // localStorage.removeItem()
-            
+            localStorage.clear();  
         }
     },
 
@@ -277,7 +271,6 @@ export default new Vuex.Store({
             localStorage.removeItem("username");
             localStorage.removeItem("exp");
             context.commit("logoutUser");
-            // state.keycloak.logout()
         }
     },
     activeWorkflowStateEnum:

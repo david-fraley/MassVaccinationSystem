@@ -47,7 +47,7 @@ keycloak.init({ onLoad: configKeycloak.onLoad, checkLoginIframe: false }).then((
   setInterval(() => {
     keycloak.updateToken(70).then((refreshed) => {
       if (refreshed) {
-        Vue.$log.info('Token refreshed' + refreshed);
+        Vue.$log.info('Token refreshed');
       } else {
         Vue.$log.warn('Token not refreshed, valid for '
           + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');

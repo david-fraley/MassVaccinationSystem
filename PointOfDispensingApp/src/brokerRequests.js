@@ -6,31 +6,26 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-// function getKeycloakToken() {
-//   return store.state.keycloak.token;
-// }
-
-
 // Return an object with error property containing data
 // from Axios error object
 function toResponse(error) {
-  if (error.response) {
-    return { error: error.response.data };
-  } else if (error.request) {
+  if(error.response.status === 403) {
+    return { error: error.response.data + '.  Please re-login.'}
+  }
+  else if (error.response) {
+    return {error: error.response.data};
+  } 
+  else if (error.request) {
     return { error: error.request.data };
-  } else {
+  } 
+  else if(error.response.status === 403) {
+    return { error: error.response.data + '.  Please re-login.' };
+  } 
+  else {
     return { error: error.message ? error.message : error };
   }
 }
 
-// function addAuthHeader(axiosOptions = {}) {
-//   return {
-//     ...axiosOptions,
-//     headers: {
-//       'Authorization': 'bearer ' + getKeycloakToken()
-//     }
-//   }
-// }
 
 // define functions for API requests here
 export default {
