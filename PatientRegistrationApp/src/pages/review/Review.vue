@@ -177,7 +177,9 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push("/questions");
+      this.$router.push("/patient-info");
+      //archive screening questions page
+      //this.$router.push("/questions");
     },
     updatePatient(field, value) {
       this.$store.commit("patient/updatePatient", { field, value });
