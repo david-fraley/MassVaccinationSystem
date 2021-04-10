@@ -224,6 +224,14 @@ exports.toFHIR = function (patient) {
   if (patient.hasOwnProperty("suffix")) {
     resource.name[0].suffix = [patient.suffix];
   }
+  if (patient.maiden) {
+    if (!resource.identifier) resource.identifier = [];
+
+    resource.identifier.push({
+      use: "secondary",
+      value: patient.maiden
+    });
+  }
   if (patient.address.line2) resource.address[0].line.push(patient.address.line2);
   // add in telecom
   for (let idx in patient.phone) {
@@ -290,6 +298,7 @@ exports.toModel = function (patient) {
         given: (()=>{try{return patient.name[0].given[0];}catch(e){return undefined;}})(),
         middle: (()=>{try{return patient.name[0].given[1];}catch(e){return undefined;}})(),
         suffix: (()=>{try{return patient.name[0].suffix[0];}catch(e){return undefined;}})(),
+        maiden: (()=>{try{return patient.identifier.filter(obj => obj.use == "secondary").map(obj => obj.value)[0];}catch(e){return undefined;}})(),
         phone: (()=>{try{return patient.telecom.filter(obj => obj.system === "phone").map(obj => {return {value: obj.value, use: exports.phoneUseEnums[obj.use]}});}catch(e){return [];}})(),
         email: (()=>{try{return patient.telecom.filter(obj => obj.system === "email").map(obj => obj.value);}catch(e){return [];}})(),
         gender: exports.genderEnums[patient.gender],

@@ -1,6 +1,7 @@
 function newPatient() {
   return Object.assign({}, {
     identifier: "",
+    maiden: "",
     family: "",
     given: "",
     middle: "",
