@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="PointOfDispensingApp">
     <SystemBar />
     
     <v-app-bar app clipped-right flat height="69" color="appTitleColor">
@@ -107,6 +107,9 @@
         <router-view></router-view>
       </v-container>
     </v-main>
+    <v-footer app fixed>
+      <span class="font-weight-thin">Version {{ version }}</span>
+    </v-footer>
   </v-app>
 </template>
 
@@ -150,6 +153,9 @@
       },
       currentUserName() {
         return this.$store.state.currentUser.name;
+      },
+      version() {
+        return process.env.VUE_POD_APP_VERSION;
       } 
     },
     components: 
