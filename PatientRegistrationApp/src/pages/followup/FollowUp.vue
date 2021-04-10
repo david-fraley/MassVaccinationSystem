@@ -1,14 +1,21 @@
 <template>
   <v-container fluid>
-    <v-row align="center" justify="start">
-      <v-col cols="12">
-        <div class="font-weight-regular">
-          Use this QR code to easily check-in at the site where you receive your
-          vaccine. This QR code contains an encrypted patient identifier so we
-          can quickly and securely identify you and retrieve your information.
-        </div>
-      </v-col>
-    </v-row>
+    <v-row align="center" justify="start"
+            ><v-col cols="12">
+              <v-alert
+                elevation="2"
+                color="info"
+                outlined
+                :value="showLastStep"
+                transition="scroll-y-transition"
+              >
+                <h2>{{ lastStep }}</h2>
+                <div><br />{{ QRcodeStatement }}</div>
+                <div><br />{{ ReminderStatement }}</div>
+                <div><br />{{ finalStatement }}</div>
+              </v-alert>
+            </v-col>
+          </v-row>
     <v-row justify="center">
       <div>
         <vue-qrcode
@@ -33,23 +40,7 @@
       </v-btn>
     </v-row>
     <v-row justify="center">
-      <div class="font-weight-medium">
-        <br /><br />How do you want to receive this QR code?
-      </div>
-    </v-row>
-    <v-row justify="center">
-      <v-col cols="8" sm="4" md="3" lg="3">
-        <v-radio-group v-model="sendQr" class="font-weight-medium">
-          <v-radio value="Email" label="E-mail"></v-radio>
-          <v-radio value="SmsMessage" label="SMS Message"></v-radio>
-          <v-radio value="Both" label="Both"></v-radio>
-        </v-radio-group>
-      </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-btn color="primary" class="ma-2 white--text">
-        Send
-      </v-btn>
+  
       <v-btn color="secondary" class="ma-2 white--text" @click="reset">
         Register another person
       </v-btn>
@@ -60,6 +51,7 @@
 <script>
 import VueQrcode from "vue-qrcode";
 import jsPDF from "jspdf";
+import customerSettings from "@/customerSettings";
 
 export default {
   name: "SinglePatientFollowUp",
@@ -70,6 +62,10 @@ export default {
       sendQr: " ",
       dataScreeningResponses: [],
       qrValue: this.$store.state.patient.patient.identifier,
+      lastStep: customerSettings.lastStep,
+      QRcodeStatement: customerSettings.QRcodeStatement,
+      ReminderStatement: customerSettings.ReminderStatement,
+      finalStatement: customerSettings.finalStatement,
     };
   },
   computed: {
