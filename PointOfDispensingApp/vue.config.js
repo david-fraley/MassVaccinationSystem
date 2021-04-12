@@ -1,4 +1,4 @@
-process.env.VUE_POD_APP_VERSION = require('./package.json').version
+process.env.VUE_APP_VERSION = require('./package.json').version
 
 module.exports = {
   transpileDependencies: ["vuetify"],

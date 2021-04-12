@@ -155,7 +155,7 @@
         return this.$store.state.currentUser.name;
       },
       version() {
-        return process.env.VUE_POD_APP_VERSION;
+        return process.env.VUE_APP_VERSION;
       } 
     },
     components: 
