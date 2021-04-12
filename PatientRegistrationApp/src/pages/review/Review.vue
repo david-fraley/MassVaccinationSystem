@@ -21,6 +21,10 @@
           <span class="font-weight-regular">{{ patient.gender }}</span>
         </div>
         <div class="font-weight-medium">
+          Mother's Maiden Name:
+          <span class="font-weight-regular">{{ patient.maiden }}</span>
+        </div>
+        <div class="font-weight-medium">
           Race:
           <span class="font-weight-regular">{{ patient.race }}</span>
         </div>
@@ -170,13 +174,16 @@ export default {
     patient() {
       return this.$store.state.patient.patient;
     },
-    answers() {
+    //archive screening questions page 
+    /*answers() {
       return this.$store.state.screeningQuestions.answers;
-    },
+    },*/
   },
   methods: {
     back() {
-      this.$router.push("/questions");
+      this.$router.push("/patient-info");
+      //archive screening questions page
+      //this.$router.push("/questions");
     },
     updatePatient(field, value) {
       this.$store.commit("patient/updatePatient", { field, value });
@@ -207,6 +214,7 @@ export default {
         middle: this.patient.middle,
         suffix: this.patient.suffix,
         gender: this.patient.gender,
+        maiden: this.patient.maiden,
         birthDate: this.patient.birthDate,
         race: this.patient.race,
         ethnicity: this.patient.ethnicity,
@@ -251,8 +259,11 @@ export default {
     if (this.patient.hasSubmitted) {
       this.$router.push("/followup");
     }
-    if (!this.patient.family || !this.answers.screeningQ1) {
+    if (!this.patient.family) {
       this.$router.push("/");
+    //archive screening questions page  
+    /*if (!this.patient.family || !this.answers.screeningQ1) {
+      this.$router.push("/"); */
     }
   },
 };
