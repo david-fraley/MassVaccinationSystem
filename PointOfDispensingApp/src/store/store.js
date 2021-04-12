@@ -172,7 +172,9 @@ export default new Vuex.Store({
             
             //Retrieve encounter resource 'status' field to determine the workflow state
             if(state.encounterResource.status) {
-                if (state.encounterResource.status == 'arrived') {
+                if ( (state.encounterResource.status == 'arrived') 
+                    || (state.encounterResource.status == 'in-progress') 
+                    || (state.encounterResource.status == 'cancelled')) {
                     state.activeWorkflowState = 'ADMITTED'
                 }
                 else if (state.encounterResource.status == 'finished') {

@@ -317,7 +317,7 @@
       <v-divider></v-divider>
     </v-row>
       <v-col cols="12">
-        <v-card class="mx-auto my-12" color="accent" dark height="50%" v-show="screeningComplete">
+        <v-card class="mx-auto my-12" color="accent" dark height="50%" v-show="true">
           <v-card-title class="headline justify-center">
               Proceed with vaccination?
           </v-card-title>
@@ -343,7 +343,7 @@
 </template>
 
 <script>
-
+  //import brokerRequests from "../brokerRequests";
   export default {
     name: 'VaccinationScreeningComponent',
     computed: {
@@ -376,7 +376,20 @@
      vaccinationProceedDecision()
      {
        this.storeVaccinationScreeningData()
+
+      if(this.vaccinationProceed == 'Yes') {
+        //send request to broker to update encounter status to "in-progress"
+      }
+      else if(this.vaccinationProceed == 'No') {
+        //send request to broker to update encounter status to "cancelled"
+      }
+      console.log(this.vaccinationProceed)
      },
+     onSuccess(payload) {
+       //send data to Vuex
+       console.log(payload)
+       //this.$store.dispatch('encounterStatusUpdate', response.data)
+    },
      storeVaccinationScreeningData()
      {
        const screeningResponsesPayload = {
@@ -396,7 +409,8 @@
       }
       //send data to Vuex
       this.$store.dispatch('vaccinationScreeningUpdate', screeningResponsesPayload)
-     }
+     },
+     
     },
     components: 
     {
