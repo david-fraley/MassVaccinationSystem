@@ -60,6 +60,7 @@ app.get("/Observation*", Observation.read);
 app.post("/SendHL7Message", SendHL7Message);
 
 app.post("/Encounter", Encounter.post);
+app.patch("/Encounter/:id/Status", Encounter.status)
 app.get("/Encounter*", Encounter.read);
 
 app.post("/EpisodeOfCare", EpisodeOfCare.create);
