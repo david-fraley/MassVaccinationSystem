@@ -125,6 +125,10 @@ export default {
     }
   },
 };
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    e.returnValue = '';
+});
 </script>
 
 <style lang="sass" scoped>
