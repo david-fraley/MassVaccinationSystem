@@ -111,7 +111,7 @@ export default {
       return dataURL;
     },
     goToTimeTap(){
-      window.open('https://google.com','_blank');
+      window.open('https://google.com','_self');
     }
   },
   components: {
