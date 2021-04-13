@@ -148,7 +148,7 @@ export default new Vuex.Store({
                 let numberOfDoses = payload.Immunization.length;
 
                 state.patientHistory = payload.Immunization;
-                state.immunizationResource = payload.Immunization[numberOfDoses-1];
+                if (numberOfDoses > 0) state.immunizationResource = payload.Immunization[numberOfDoses-1];
                 
                 if(state.immunizationResource) {
                     if(state.immunizationResource.status == 'completed') {

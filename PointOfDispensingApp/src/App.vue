@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="PointOfDispensingApp">
     <SystemBar />
     
     <v-app-bar app clipped-right flat height="69" color="appTitleColor">
@@ -10,7 +10,7 @@
         height="100%">
     </v-app-bar>
 
-    <v-navigation-drawer :mini-variant="mini" :mini-variant-width="90" v-model="drawer" app width="20em" permanent>
+    <v-navigation-drawer :mini-variant="mini" mini-variant-width="90" app width="20em" permanent :key="mini">
       <v-sheet color="white" class="pa-4">
         <span>
           <v-btn icon color="secondary">
@@ -107,6 +107,9 @@
         <router-view></router-view>
       </v-container>
     </v-main>
+    <v-footer app fixed>
+      <span class="font-weight-thin">Version {{ version }}</span>
+    </v-footer>
   </v-app>
 </template>
 
@@ -153,6 +156,9 @@
       },
       currentUserName() {
         return this.$store.state.currentUser.name;
+      },
+      version() {
+        return process.env.VUE_APP_VERSION;
       } 
     },
     components: 
@@ -161,7 +167,6 @@
     },
     data () {
       return {
-        drawer: null,
         leftMenu: 1,
       }
     }

@@ -1,14 +1,21 @@
 <template>
   <v-container fluid>
-    <v-row align="center" justify="start">
-      <v-col cols="12">
-        <div class="font-weight-regular">
-          Use this QR code to easily check-in at the site where you receive your
-          vaccine. This QR code contains an encrypted patient identifier so we
-          can quickly and securely identify you and retrieve your information.
-        </div>
-      </v-col>
-    </v-row>
+    <v-row align="center" justify="start"
+            ><v-col cols="12">
+              <v-alert
+                elevation="2"
+                color="info"
+                outlined
+                :value="showLastStep"
+                transition="scroll-y-transition"
+              >
+                <h2>{{ lastStep }}</h2>
+                <div><br />{{ QRcodeStatement }}</div>
+                <div><br />{{ ReminderStatement }}</div>
+                <div><br />{{ finalStatement }}</div>
+              </v-alert>
+            </v-col>
+          </v-row>
     <v-row justify="center">
       <div>
         <vue-qrcode
@@ -44,6 +51,7 @@
 <script>
 import VueQrcode from "vue-qrcode";
 import jsPDF from "jspdf";
+import customerSettings from "@/customerSettings";
 
 export default {
   name: "SinglePatientFollowUp",
@@ -54,6 +62,10 @@ export default {
       sendQr: " ",
       dataScreeningResponses: [],
       qrValue: this.$store.state.patient.patient.identifier,
+      lastStep: customerSettings.lastStep,
+      QRcodeStatement: customerSettings.QRcodeStatement,
+      ReminderStatement: customerSettings.ReminderStatement,
+      finalStatement: customerSettings.finalStatement,
     };
   },
   computed: {
@@ -113,6 +125,10 @@ export default {
     }
   },
 };
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    e.returnValue = '';
+});
 </script>
 
 <style lang="sass" scoped>
