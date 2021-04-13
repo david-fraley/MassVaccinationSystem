@@ -110,10 +110,6 @@ export default {
       var dataURL = canvas.toDataURL("image/png");
       return dataURL;
     },
-    reset(){
-      this.$store.commit("patient/resetPatient");
-      this.$router.push("/");
-    },
     goToTimeTap(){
       window.open('https://google.com','_blank');
     }
