@@ -12,14 +12,14 @@
 
     <v-navigation-drawer :mini-variant="mini" mini-variant-width="90" app width="20em" permanent :key="mini">
       <v-sheet color="white" class="pa-4">
-        <span v-if="isLoggedIn">
+        <span>
           <v-btn icon color="secondary">
             <v-icon large>mdi-account-circle</v-icon>
           </v-btn>
-          Hello, {{ currentUserName }} <router-link to="/UserLogout">Log Out</router-link>
-        </span>
-        <span v-else>
-          Welcome to MassVaxx, <router-link to="/UserLogin">Log In</router-link>
+          Hello, {{ currentUserName }}
+          <v-btn color="accent" @click="logout">
+            Log out
+          </v-btn>
         </span>
       </v-sheet>
 
@@ -117,8 +117,11 @@
   import SystemBar from "@/pages/application/partials/SystemBar";
   export default {
     name: 'App',
-    methods: 
+    methods:
     {
+      logout() {
+        this.$store.dispatch("logoutUser");
+      }
     },
     computed:
     {

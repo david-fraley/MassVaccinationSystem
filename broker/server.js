@@ -1,5 +1,7 @@
 // Load configuration settings
 const configs = require("./config/server.js");
+const keycloakConfig = require("./config/keycloakConfig.js");
+const keycloak = keycloakConfig.keycloak;
 
 const express = require("express");
 const Patient = require("./endpoints/Patient");
@@ -16,8 +18,12 @@ const CheckIn = require("./endpoints/CheckIn");
 const Discharge = require("./endpoints/Discharge");
 
 const app = express();
+
+app.use(keycloakConfig.session);
+
 app.use(express.json());
 app.set("json spaces", 2);
+app.use(keycloak.middleware());
 
 if (process.env.DEVELOPMENT == 1) {
   const reg_path = __dirname + "/PatientRegistrationViews/";
@@ -38,42 +44,42 @@ app.get("/healthcheck", (req, res) => {
 });
 
 app.post("/Patient", Patient.create);
-app.get("/Patient/:qrCode", Patient.read);
-app.put("/Patient/:id", Patient.update);
+app.get("/Patient/:qrCode", keycloak.protect(), Patient.read);
+app.put("/Patient/:id", keycloak.protect(), Patient.update);
 
 // POST request since client is sending PHI
-app.post("/SearchPatients", Patient.search);
+app.post("/SearchPatients", keycloak.protect(), Patient.search);
 
-app.post("/Immunization", Immunization.create);
-app.get("/Immunization*", Immunization.read);
+app.post("/Immunization", keycloak.protect(), Immunization.create);
+app.get("/Immunization*", keycloak.protect(), Immunization.read);
 
-app.post("/Appointment", Appointment.create);
-app.get("/Appointment*", Appointment.read);
+app.post("/Appointment", keycloak.protect(), Appointment.create);
+app.get("/Appointment*", keycloak.protect(), Appointment.read);
 
-app.post("/Organization", Organization.create);
-app.get("/Organization*", Organization.read);
+app.post("/Organization", keycloak.protect(), Organization.create);
+app.get("/Organization*", keycloak.protect(), Organization.read);
 
-app.post("/Observation", Observation.create);
-app.get("/Observation*", Observation.read);
+app.post("/Observation", keycloak.protect(), Observation.create);
+app.get("/Observation*", keycloak.protect(), Observation.read);
 
 // Tell Mirth to send an HL7 message
-app.post("/SendHL7Message", SendHL7Message);
+app.post("/SendHL7Message", keycloak.protect(), SendHL7Message);
 
-app.post("/Encounter", Encounter.post);
-app.get("/Encounter*", Encounter.read);
+app.post("/Encounter", keycloak.protect(), Encounter.post);
+app.get("/Encounter*", keycloak.protect(), Encounter.read);
 
-app.post("/EpisodeOfCare", EpisodeOfCare.create);
-app.get("/EpisodeOfCare*", EpisodeOfCare.read);
+app.post("/EpisodeOfCare", keycloak.protect(), EpisodeOfCare.create);
+app.get("/EpisodeOfCare*", keycloak.protect(), EpisodeOfCare.read);
 
-app.post("/Practitioner", Practitioner.create);
-app.get("/Practitioner*", Practitioner.read);
+app.post("/Practitioner", keycloak.protect(), Practitioner.create);
+app.get("/Practitioner*", keycloak.protect(), Practitioner.read);
 
-app.post("/Location", Location.create);
-app.get("/Location*", Location.read);
+app.post("/Location", keycloak.protect(), Location.create);
+app.get("/Location*", keycloak.protect(), Location.read);
 
-app.post("/check-in", CheckIn);
+app.post("/check-in", keycloak.protect(), CheckIn);
 
-app.post("/discharge", Discharge);
+app.post("/discharge", keycloak.protect(), Discharge);
 
 app.listen(configs.port, () =>
   console.log(`Listening on port ${configs.port}`)
