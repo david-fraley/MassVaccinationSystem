@@ -169,4 +169,18 @@ export default {
         return toResponse(e);
       });
   },
+
+  // Data should contain
+  // id, id of resource to update, and
+  // status, the new status
+  encounterStatus: (data) => {
+    return axios
+      .patch(`/broker/Encounter/${data.id}/Status`, { status: data.status })
+      .then((response) => {
+        return { data: response.data };
+      })
+      .catch((e) => {
+        return toResponse(e);
+      });
+  },
 };
