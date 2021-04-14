@@ -33,32 +33,39 @@ async function fetchTimetapSessionToken() {
       signature: signature,
     },
   });
-  console.log(res.data.sessionToken);
   tt_sessiontoken = res.data.sessionToken;
 }
 
 exports.createTimetapClient = async (patient) => {
-  console.log("Starting createTimetapClient");
-  console.log(patient);
+  // Create the Patient record in Timetap
+  let phone = "";
+  let email = "";
+  for (let i = 0; i < patient.telecom.length; i++) {
+    if (patient.telecom[i].system === "phone") {
+      phone = patient.telecom[i].value;
+    }
+    if (patient.telecom[i].system === "email") {
+      email = patient.telecom[i].value;
+    }
+  }
 
   const data = {
     firstName: patient.name[0].given[0],
     lastName: patient.name[0].family,
     fullName: `${patient.name[0].given[0]} ${patient.name[0].family}`,
-    // emailAddress: patient.telecom.wtfbbq,
+    emailAddress: email,
     dateOfBirth: patient.birthDate,
     sex: patient.gender,
     address1: patient.address[0].line[0],
     address2: patient.address[0].line[1],
     city: patient.address[0].city,
-    // county: "foo",
     state: patient.address[0].state,
     zip: patient.address[0].postalCode,
     country: patient.address[0].country,
     timeZone: {},
     allowWaitListText: true,
-    homePhone: "555-444-6666",
-    cellPhone: "777-333-2222",
+    homePhone: phone,
+    cellPhone: phone,
     clientIdsClientCanView: [],
     fields: [],
     locale: "en-US",
@@ -72,11 +79,10 @@ exports.createTimetapClient = async (patient) => {
       },
     })
     .then((response) => {
-      console.log("Patient created in TimeTap!");
+      // Success!
     })
     .catch(async (err) => {
-      console.log("API request failed, attempting to refresh the token.");
-      console.log("the magical 'this': " + this);
+      // Attempt to refresh our TT token
       await refreshTimetapSessionToken(this, [patient]);
     });
 };
@@ -84,9 +90,8 @@ exports.createTimetapClient = async (patient) => {
 async function refreshTimetapSessionToken(callback, args) {
   try {
     await fetchTimetapSessionToken();
-    console.log("Session Token refreshed! " + tt_sessiontoken);
     await callback(...args);
   } catch {
-    console.log("Timetap is broken.");
+    // TimeTap token refresh failed
   }
 }
