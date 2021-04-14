@@ -34,14 +34,14 @@
         >
       </div>
     </v-row>
-    <v-row justify="center">
-      <v-btn color="primary" class="ma-2 white--text" @click="goToTimeTap">
-        Schedule Your Appointment
+        <v-row justify="center">
+      <v-btn color="secondary" class="ma-2 white--text" @click="generatePdf">
+        Download As PDF
       </v-btn>
     </v-row>
     <v-row justify="center">
-      <v-btn color="secondary" class="ma-2 white--text" @click="generatePdf">
-        Download As PDF
+      <v-btn color="primary" class="ma-2 white--text" @click="goToTimeTap">
+        Schedule Your Appointment
       </v-btn>
     </v-row>
   </v-container>
