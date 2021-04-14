@@ -12,6 +12,9 @@ export default {
     welcome: 'Welcome!',
     introStatement: 'You are about to register as a patient for the COVID-19 vaccine. This form will securely collect your patient information and register you to recieve a vaccine. At the time of vaccination, you may be required to bring proof of identity or proof of eligibility if relevant.',
     expectationsStatement: 'After registering as a patient, you will receive a notification to schedule your COVID vaccination appointment if you are not already eligible to do so based upon the CDC and local phases. Upon receiving your eligibility notification, you will answer COVID screening questions, provide consent, and choose your date to receive the COVID-19 vaccine. You will also be provided with a QR code that contains a patient identifier so that when you arrive at the vaccine clinic, staff can easily look up your patient information.',
-    finalStatement: 'Thank you for helping to do your part to combat COVID!',
+    finalStatement: 'After downloading the QR code, make sure to schedule your appointment. Thank you for helping to do your part to combat COVID!',
 
+    lastStep: 'Last Step!',
+    QRcodeStatement: 'Use this QR code to easily check-in at the site where you receive your vaccine. This QR code contains an encrypted patient identifier so we can quickly and securely identify you and retrieve your information.',
+    ReminderStatement: 'You will not be able to retrieve the QR code once leaving this page, so make sure to download or save the QR code to be able to use it for check-in when getting the vaccine.',
 }

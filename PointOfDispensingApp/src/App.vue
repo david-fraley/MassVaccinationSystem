@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="PointOfDispensingApp">
     <SystemBar />
     
     <v-app-bar app clipped-right flat height="69" color="appTitleColor">
@@ -10,16 +10,16 @@
         height="100%">
     </v-app-bar>
 
-    <v-navigation-drawer :mini-variant="mini" :mini-variant-width="90" v-model="drawer" app width="20em" permanent>
+    <v-navigation-drawer :mini-variant="mini" mini-variant-width="90" app width="20em" permanent :key="mini">
       <v-sheet color="white" class="pa-4">
-        <span v-if="isLoggedIn">
+        <span>
           <v-btn icon color="secondary">
             <v-icon large>mdi-account-circle</v-icon>
           </v-btn>
-          Hello, {{ currentUserName }} <router-link to="/UserLogout">Log Out</router-link>
-        </span>
-        <span v-else>
-          Welcome to MassVaxx, <router-link to="/UserLogin">Log In</router-link>
+          Hello, {{ currentUserName }}
+          <v-btn color="accent" @click="logout">
+            Log out
+          </v-btn>
         </span>
       </v-sheet>
 
@@ -107,6 +107,9 @@
         <router-view></router-view>
       </v-container>
     </v-main>
+    <v-footer app fixed>
+      <span class="font-weight-thin">Version {{ version }}</span>
+    </v-footer>
   </v-app>
 </template>
 
@@ -114,8 +117,11 @@
   import SystemBar from "@/pages/application/partials/SystemBar";
   export default {
     name: 'App',
-    methods: 
+    methods:
     {
+      logout() {
+        this.$store.dispatch("logoutUser");
+      }
     },
     computed:
     {
@@ -150,6 +156,9 @@
       },
       currentUserName() {
         return this.$store.state.currentUser.name;
+      },
+      version() {
+        return process.env.VUE_APP_VERSION;
       } 
     },
     components: 
@@ -158,7 +167,6 @@
     },
     data () {
       return {
-        drawer: null,
         leftMenu: 1,
       }
     }

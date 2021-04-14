@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     
     state: {
+        keycloak: {},
         currentUser: {
             loggedIn: localStorage.getItem("loggedIn"),
             name: localStorage.getItem("username"),
@@ -102,9 +103,6 @@ export default new Vuex.Store({
         hasPatientBeenCheckedIn: state => {
             return (state.encounterResource.status == 'arrived')
         },
-        isLoggedIn: state => {
-            return !!(state.currentUser.loggedIn && state.currentUser.exp > Date.now());
-        },
         howManyDosesHasPatientReceived: state => {
             let numberOfDoses = 0;
 
@@ -150,7 +148,7 @@ export default new Vuex.Store({
                 let numberOfDoses = payload.Immunization.length;
 
                 state.patientHistory = payload.Immunization;
-                state.immunizationResource = payload.Immunization[numberOfDoses-1];
+                if (numberOfDoses > 0) state.immunizationResource = payload.Immunization[numberOfDoses-1];
                 
                 if(state.immunizationResource) {
                     if(state.immunizationResource.status == 'completed') {
@@ -233,15 +231,12 @@ export default new Vuex.Store({
         patientHistory(state, payload){
             state.patientHistory = payload;
         },
-        loginUser(state, {user, exp}){
-            state.currentUser.loggedIn = true;
-            state.currentUser.exp = exp;
-            state.currentUser.name = user;
-        },
         logoutUser(state){
             state.currentUser.loggedIn = false;
             state.currentUser.name = "";
             state.currentUser.exp = null;
+            state.keycloak.logout();
+            localStorage.clear();  
         }
     },
 
@@ -270,14 +265,6 @@ export default new Vuex.Store({
         },
         patientHistory(context, payload){
             context.commit('patientHistory', payload)
-        },
-        loginUser(context, user) {
-            let exp = Date.now();
-            exp = exp + (1000*60*60*process.env.VUE_APP_EXP_LOGIN_HOURS); // add 24 hours of millis
-            localStorage.setItem("loggedIn", true);
-            localStorage.setItem("username", user);
-            localStorage.setItem("exp", exp);
-            context.commit("loginUser", {user, exp});
         },
         logoutUser(context) {
             localStorage.removeItem("loggedIn");

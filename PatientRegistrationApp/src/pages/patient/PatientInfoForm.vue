@@ -105,6 +105,15 @@
               </v-select>
             </v-col>
             <v-col cols="12" sm="6" md="6" lg="4">
+              <!-- Mother maiden name -->
+              <v-text-field
+                :value="patient.maiden"
+                @input="updatePatient('maiden', $event)"
+                label="Mother's Maiden Name"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6" lg="4">
               <!-- Race -->
               <v-select
                 :value="patient.race"
@@ -542,7 +551,7 @@ export default {
       }
 
       this.hasValidationErrors = false;
-      this.$router.push("questions");
+      this.$router.push("/review");
     },
   },
   mounted() {
