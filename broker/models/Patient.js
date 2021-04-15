@@ -24,13 +24,14 @@ Patient {
   contact: {
     family: string
     given: string
+    relationship: enum (CGV Caregiver, SIB, STPCHLD, GUARD Guardian, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
     phone: {
       value: string
       use: enum (home, work, temp, old, mobile)
     }
   }
   language: enum (English, Spanish),
-  relationship: enum (CGV Caregiver, SIB, STPCHLD, GUARD Guardian, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
+  
 }
 */
 
@@ -198,8 +199,8 @@ exports.toFHIR = function (patient) {
                       coding: [
                           {
                               system: RELATIONSHIP_SYSTEM,
-                              code: exports.relationshipValueSet[patient.relationship],
-                              display: patient.relationship
+                              code: exports.relationshipValueSet[patient.contact.relationship],
+                              display: patient.contact.relationship
                           }
                       ]
                   }
@@ -316,6 +317,7 @@ exports.toModel = function (patient) {
         contact: {
           given: (()=>{try{return patient.contact[0].name.given[0];}catch(e){return undefined;}})(),
           family: (()=>{try{return patient.contact[0].name.family;}catch(e){return undefined;}})(),
+          relationship: (()=>{try{return patient.contact[0].relationship;}catch(e){return undefined;}})(),
           phone: {
             value: (()=>{try{return patient.contact[0].telecom[0].value;}catch(e){return undefined;}})(),
             use: (()=>{try{return exports.phoneUseEnums[patient.contact[0].telecom[0].use];}catch(e){return undefined;}})()
