@@ -112,6 +112,23 @@ exports.ethnicityValueSet = {
   },
 };
 
+exports.relationshipValueSet = {
+  "Care Giver": "CGV",
+  Sibling: "SIB",
+  Stepchild: "STPCHLD",
+  Guardian: "GUARD",
+  Child: "CHILD",
+  "Foster Child": "CHLDFOST",
+  Spouse: "SPS",
+  Parent: "PRN",
+  Grandparent: "GRPRN",
+  Other: "O",
+  Self: "ONESELF"
+};
+
+const RELATIONSHIP_SYSTEM =
+  "http://hl7.org/fhir/ValueSet/relatedperson-relationshiptype";
+
 /**
  * Returns the date in YYYY-MM-DD format.
  *
@@ -180,9 +197,9 @@ exports.toFHIR = function (patient) {
                   {
                       coding: [
                           {
-                              system: "http://terminology.hl7.org/CodeSystem/v2-0131",
-                              code: "C",
-                              display: "Emergency Contact"
+                              system: RELATIONSHIP_SYSTEM,
+                              code: exports.relationshipValueSet[patient.relationship],
+                              display: patient.relationship
                           }
                       ]
                   }
