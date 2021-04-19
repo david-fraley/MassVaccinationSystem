@@ -21,7 +21,7 @@ module.exports = {
     origin: function(origin, callback) {
       
       // If CORS_ORIGINS specified in .env, make sure origin matches one of them
-      if(!allowedCorsOrigins || allowedCorsOrigins.indexOf(origin) !== -1) {
+      if(!origin || !allowedCorsOrigins || allowedCorsOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       }
       else {
