@@ -121,8 +121,8 @@
             :rules="[rules.required('Contact consent required')]"
           >
             <template #label>
-              <span class="red--text"><strong>* </strong></span
-              > {{ contactInfoAcknowledgement }}
+              <span class="red--text"><strong>* </strong></span>
+              {{ contactInfoAcknowledgement }}
             </template>
           </v-checkbox>
         </v-form>
@@ -131,26 +131,36 @@
     <!-- SUBMIT BUTTON -->
     <v-row>
       <v-col cols="12">
+        <vue-recaptcha
+          ref="recaptcha"
+          @verify="onVerify"
+          @expired="onExpired"
+          :sitekey="recaptchaKey"
+          :loadRecaptchaScript="true"
+        >
+        </vue-recaptcha>
+      </v-col>
+      <v-col cols="12">
         <v-btn clear color="secondary" class="ma-2 white--text" @click="back()">
           <v-icon left large color="white"> mdi-chevron-left </v-icon>
           Back
         </v-btn>
         <v-btn
-          color="primary"
-          class="ma-2 white--text"
-          @click="submitPatientInfo()"
-          :disabled="!formValid || submittingPatient"
-        >
-          <span>Register</span>
-          <v-icon right large color="white"> mdi-chevron-right </v-icon>
-          <v-progress-circular
-            v-if="submittingPatient"
-            size="16"
-            indeterminate
-            color="white"
-            class="ml-2"
-          ></v-progress-circular>
-        </v-btn>
+            color="primary"
+            class="ma-2 white--text"
+            @click="submitPatientInfo()"
+            :disabled="!formValid || submittingPatient || !recaptchaValid"
+          >
+            <span>Register</span>
+            <v-icon right large color="white"> mdi-chevron-right </v-icon>
+            <v-progress-circular
+              v-if="submittingPatient"
+              size="16"
+              indeterminate
+              color="white"
+              class="ml-2"
+            ></v-progress-circular>
+          </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -159,22 +169,26 @@
 import customerSettings from "@/customerSettings";
 import brokerRequests from "@/brokerRequests";
 import Rules from "@/utils/commonFormValidation";
+import VueRecaptcha from "vue-recaptcha";
 
 export default {
   name: "Review",
+  components: { VueRecaptcha },
   data() {
     return {
       rules: Rules,
       submittingPatient: false,
       formValid: false,
       contactInfoAcknowledgement: customerSettings.contactInfoAcknowledgement,
+      recaptchaKey: process.env.VUE_APP_RECAPTCHA,
+      recaptchaValid: false,
     };
   },
   computed: {
     patient() {
       return this.$store.state.patient.patient;
     },
-    //archive screening questions page 
+    //archive screening questions page
     /*answers() {
       return this.$store.state.screeningQuestions.answers;
     },*/
@@ -245,9 +259,16 @@ export default {
         patient.phone = {
           value: this.patient.phone,
           use: this.patient.phoneType,
-        }
+        };
       }
       return { Patient: [patient] };
+    },
+    onVerify(response) {
+      this.recaptchaValid = true;
+    },
+    onExpired() {
+      this.recaptchaValid = false;
+      this.$refs.recaptcha.reset()
     },
   },
   mounted() {
@@ -256,8 +277,8 @@ export default {
     }
     if (!this.patient.family) {
       this.$router.push("/");
-    //archive screening questions page  
-    /*if (!this.patient.family || !this.answers.screeningQ1) {
+      //archive screening questions page
+      /*if (!this.patient.family || !this.answers.screeningQ1) {
       this.$router.push("/"); */
     }
   },
