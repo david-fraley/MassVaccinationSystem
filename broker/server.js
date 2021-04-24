@@ -25,6 +25,10 @@ app.use(express.json());
 app.set("json spaces", 2);
 app.use(keycloak.middleware());
 
+// Verify that requests can only be made from whitelisted domains 
+// configurable - see .env.template in root directory
+app.use(configs.cors);
+
 if (process.env.DEVELOPMENT == 1) {
   const reg_path = __dirname + "/PatientRegistrationViews/";
   const pod_path = __dirname + "/PointOfDispensingViews/";
@@ -80,6 +84,18 @@ app.get("/Location*", keycloak.protect(), Location.read);
 app.post("/check-in", keycloak.protect(), CheckIn);
 
 app.post("/discharge", keycloak.protect(), Discharge);
+
+// Catch-all error handler, currently only used to catch errors thrown by CORS middleware
+app.use((err, req, res, next) => {
+  if(err) {
+    if(typeof err.message === 'string') {
+      res.status(500).json({error: err.message});
+    }
+    else {
+      res.status(500).json({error: err});
+    }
+  }
+})
 
 app.listen(configs.port, () =>
   console.log(`Listening on port ${configs.port}`)

@@ -73,11 +73,13 @@ const postalCode = (v) =>
 const phoneNumber = (v) =>
   (!!v && v.length === 13) || "Phone number must be 10 digits";
 const expiration = (v) => validExpiration(v) || "Invalid expiration date";
+const email = (v) => /^[\s]*$|.+@.+\..+/.test(v) || "Please provide a valid e-mail address";
 
 export default {
   required: [required],
   birthdateRules: [required, dateFormat, birthdate],
   postalCodeRules: [required, postalCode],
   phoneNumberRules: [required, phoneNumber],
-  expirationRules: [required, dateFormat, expiration]
+  expirationRules: [required, dateFormat, expiration],
+  emailRules: [required, email]
 };
