@@ -1,5 +1,6 @@
 <template>
   <v-container fill-height fluid>
+    <v-form ref="form" v-model="screeningComplete">
     <v-row>
       <v-col cols="10">
         <v-row>
@@ -22,6 +23,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -62,6 +64,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -101,6 +104,7 @@
             :disabled="
               this.screeningQ2 != 'Yes' || isConsentScreeningPageReadOnly
             "
+            :rules="screeningQ2 == 'Yes' ? rules.required : []"
           >
             <v-radio
               label="Pfizer"
@@ -178,6 +182,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -213,6 +218,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -250,6 +256,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -301,6 +308,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -345,6 +353,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -385,6 +394,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -426,6 +436,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -467,6 +478,7 @@
             row
             @change="screeningChecklistUpdate()"
             :disabled="isConsentScreeningPageReadOnly"
+            :rules="rules.required"
           >
             <v-radio
               label="Yes"
@@ -485,6 +497,7 @@
     <v-row>
       <v-divider></v-divider>
     </v-row>
+    </v-form>
     <v-col cols="12">
       <v-card
         class="mx-auto my-12"
@@ -513,6 +526,8 @@
 </template>
 
 <script>
+import Rules from "@/utils/commonFormValidation"
+
 export default {
   name: "VaccinationScreeningComponent",
   computed: {
@@ -522,27 +537,8 @@ export default {
   },
   methods: {
     screeningChecklistUpdate() {
-      if (this.isScreeningChecklistComplete()) {
-        this.screeningComplete = true;
-      } else {
-        this.screeningComplete = false;
-      }
+      this.$refs.form.validate();
       this.storeVaccinationScreeningData();
-    },
-    isScreeningChecklistComplete() {
-      return !(
-        this.screeningQ1 == "" ||
-        this.screeningQ2 == "" ||
-        (this.screeningQ2 == "Yes" && this.screeningQ2b == "") ||
-        this.screeningQ3a == "" ||
-        this.screeningQ3b == "" ||
-        this.screeningQ3c == "" ||
-        this.screeningQ4 == "" ||
-        this.screeningQ5 == "" ||
-        this.screeningQ6 == "" ||
-        this.screeningQ7 == "" ||
-        this.screeningQ8 == ""
-      );
     },
     vaccinationProceedDecision() {
       this.storeVaccinationScreeningData();
@@ -573,6 +569,7 @@ export default {
   components: {},
   data() {
     return {
+      rules: Rules,
       vaccinationProceed: this.$store.state.screeningResponses
         .vaccinationDecision,
       screeningQ1: this.$store.state.screeningResponses.screeningQ1,
