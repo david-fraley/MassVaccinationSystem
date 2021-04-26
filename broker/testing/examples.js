@@ -220,20 +220,11 @@ module.exports = {
       "family": "Smith",
       "given": "John",
       "suffix": "Jr.",
-      "phone": [
-        {
-          "value": "(200)000-0000",
-          "use": "Mobile"
-        },
-        {
-          "value": "(100)000-0000",
-          "use": "Mobile"
-        }
-      ],
-      "email": [
-        "email@site.com",
-        "email2@site.com"
-      ],
+      "phone": {
+        "value": "(200)000-0000",
+        "use": "Mobile"
+      },
+      "email": "email@site.com",
       "gender": "Male",
       "birthDate": "01/01/2000",
       "race": "White",
@@ -254,8 +245,7 @@ module.exports = {
           "use": "Mobile"
         }
       },
-      "language": "English",
-      "relationship": "Self"
+      "language": "English"
     }
   ]
 }`,

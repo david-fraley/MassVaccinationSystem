@@ -152,7 +152,8 @@
             dense
             :readonly="!edit"
             outlined
-            :rules="phoneNumberRules"
+            required
+            :rules="rules.phoneNumberRules"
             v-mask="'(###)###-####'"
             v-model="phoneNumber">
           </v-text-field>
@@ -164,8 +165,9 @@
             dense
             :readonly="!edit"
             outlined
-            :rules="[(v) => (!v || /^[\s]*$|.+@.+\..+/.test(v)) || 'Please provide a valid e-mail address']"
-            v-model="patient.email[0]">
+            required
+            :rules="rules.emailRules"
+            v-model="patient.email">
           </v-text-field>
         </v-col>
       </v-row>
@@ -277,9 +279,10 @@ export default {
 
       this.loading = true;
 
-      if (this.phoneNumber) this.patient.phone = [{value: this.phoneNumber}];
-      else this.patient.phone = [];
-      if (!this.patient.email[0]) this.patient.email = [];
+      if (this.phoneNumber) {
+        if (this.patient.phone) this.patient.phone.value = this.phoneNumber;
+        else this.patient.phone = {value: this.phoneNumber};
+      }
 
       brokerRequests.updatePatient(this.patient.id, this.patient).then((response) => {
         if (response.data) {
@@ -303,7 +306,7 @@ export default {
       loading: false,
       // pass obj by value
       patient: JSON.parse(JSON.stringify(this.$store.state.patientResource)),
-      phoneNumber: this.$store.state.patientResource.phone[0] ? this.$store.state.patientResource.phone[0].value : "",
+      phoneNumber: this.$store.state.patientResource.phone ? this.$store.state.patientResource.phone.value : "",
       currentDate: new Date(),
       genderIdOptions: ["Male", "Female", "Other", "Decline to answer"],
       languageOptions: ["English", "Spanish"],
@@ -323,9 +326,6 @@ export default {
 				'TX', 'UT', 'VT', 'VI', 'VA',
 				'WA', 'WV', 'WI', 'WY',
       ],
-      phoneNumberRules: [
-        (v) => !v || v.length === 13 || "Phone number must be 10 digits"
-      ]
     };
   },
 };
