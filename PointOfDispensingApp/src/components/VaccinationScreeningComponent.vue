@@ -537,7 +537,6 @@ export default {
   },
   methods: {
     screeningChecklistUpdate() {
-      this.$refs.form.validate();
       this.storeVaccinationScreeningData();
     },
     vaccinationProceedDecision() {
