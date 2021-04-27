@@ -360,14 +360,9 @@ export default {
           this.setTwoDoseColorScheme();
         }
         
-        if(this.$store.getters.hasPatientBeenCheckedIn) {
-          //Advance to the Consent and Screening page
-          this.$router.push("ConsentScreening");
-        }
-        else {
-          //Advance to the Check In page
-          this.$router.push("CheckIn");
-        }
+        let nextPage = this.$store.getters.resumePatientWorkflowPage;
+        //advance to the next appropriate page in the patient workflow
+        this.$router.push(nextPage);
       });
     },
     parseDate(date) {

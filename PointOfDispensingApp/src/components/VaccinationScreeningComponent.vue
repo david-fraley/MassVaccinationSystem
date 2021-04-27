@@ -317,7 +317,7 @@
       <v-divider></v-divider>
     </v-row>
       <v-col cols="12">
-        <v-card class="mx-auto my-12" color="accent" dark height="50%" v-show="screeningComplete">
+        <v-card class="mx-auto my-12" color="accent" dark height="50%" v-show="true">
           <v-card-title class="headline justify-center">
               Proceed with vaccination?
           </v-card-title>
@@ -343,12 +343,15 @@
 </template>
 
 <script>
-
+  import brokerRequests from "../brokerRequests";
   export default {
     name: 'VaccinationScreeningComponent',
     computed: {
       isConsentScreeningPageReadOnly() {
         return this.$store.getters.isConsentScreeningPageReadOnly
+      },
+      encounterID() {
+        return this.$store.state.encounterResource.id;
       },
     },
     methods: 
@@ -376,7 +379,40 @@
      vaccinationProceedDecision()
      {
        this.storeVaccinationScreeningData()
+
+       let encounterStatus;
+
+      if(this.vaccinationProceed == 'Yes') {
+        //update encounter status to "in-progress"
+        encounterStatus = "in-progress"
+      }
+      else if(this.vaccinationProceed == 'No') {
+        //update encounter status to "cancelled"
+        encounterStatus = "cancelled"
+      }
+
+      //send the updated encounter status to broker
+      let data = {
+        status: encounterStatus,
+        id: this.encounterID,
+      }
+      brokerRequests.encounterStatus(data).then((response) => {
+        if (response.data) {
+          this.onSuccess(response.data);
+        } else if (response.error) {
+          //console.log(response.error);
+          alert("Encounter status not updated");
+        }
+      });
+      
+      //Advance to the Vaccination Event page
+      this.$router.push('VaccinationEvent');
      },
+     onSuccess(payload) {
+       //send data to Vuex
+       console.log(payload)
+       //this.$store.dispatch('encounterStatusUpdate', response.data)
+    },
      storeVaccinationScreeningData()
      {
        const screeningResponsesPayload = {
@@ -396,7 +432,8 @@
       }
       //send data to Vuex
       this.$store.dispatch('vaccinationScreeningUpdate', screeningResponsesPayload)
-     }
+     },
+     
     },
     components: 
     {

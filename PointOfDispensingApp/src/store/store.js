@@ -82,8 +82,8 @@ export default new Vuex.Store({
             return (state.activeWorkflowState != 'DISCHARGED')
         },
         isConsentScreeningPageDisabled: state => {
-            //Consent and Screening page is not accessible before the patient record has been loaded 
-            return (state.activeWorkflowState == 'NO_PATIENT_LOADED')
+            //Consent and Screening page is not accessible before the patient has been checked in 
+            return ((state.activeWorkflowState == 'NO_PATIENT_LOADED') || (state.activeWorkflowState == 'RECORD_RETRIEVED'))
         },
         isConsentScreeningPageReadOnly: state => {
             //Consent and Screening page is "read only" after the patient has been discharged
@@ -98,8 +98,16 @@ export default new Vuex.Store({
             //(in other words, a user cannot go to the Configuration page while a patient record is actively in use)
             return ((state.activeWorkflowState != 'NO_PATIENT_LOADED') && (state.activeWorkflowState != 'DISCHARGED'))
         },
-        hasPatientBeenCheckedIn: state => {
-            return (state.encounterResource.status == 'arrived')
+        resumePatientWorkflowPage: state => {
+            switch (state.encounterResource.status) {
+                case 'arrived':
+                    return "ConsentScreening";
+                case 'in-progress':
+                case 'cancelled':
+                    return "VaccinationEvent";
+                default:
+                    return "CheckIn";
+            }
         },
         howManyDosesHasPatientReceived: state => {
             let numberOfDoses = 0;
@@ -142,18 +150,21 @@ export default new Vuex.Store({
         },
         patientRecordRetrieved(state, payload) {
             state.patientResource = payload.Patient;
-            if(state.patientHistory) {
-                let numberOfDoses = payload.Immunization.length;
 
+            if(state.patientHistory) {
                 state.patientHistory = payload.Immunization;
+                
+                let numberOfDoses = payload.Immunization.length;
+                
                 if (numberOfDoses > 0) state.immunizationResource = payload.Immunization[numberOfDoses-1];
                 
+                //Check the status of the immunization resource to determine the screening status
                 if(state.immunizationResource) {
                     if(state.immunizationResource.status == 'completed') {
                         state.screeningResponses.screeningComplete = true;
                         state.screeningResponses.vaccinationDecision = 'Yes';
                     }
-                    else if(state.immunizationResource.status == 'not-done') {
+                    else {
                         state.screeningResponses.screeningComplete = true;
                         state.screeningResponses.vaccinationDecision = 'No';
                     }
@@ -166,16 +177,31 @@ export default new Vuex.Store({
                 state.appointmentResource = payload.Appointment;
             }
             
-            //Retrieve encounter resource 'status' field to determine the workflow state
+            //Retrieve encounter resource 'status' field to determine the workflow state and screening status
             if(state.encounterResource.status) {
-                if (state.encounterResource.status == 'arrived') {
-                    state.activeWorkflowState = 'ADMITTED'
-                }
-                else if (state.encounterResource.status == 'finished') {
-                    state.activeWorkflowState = 'DISCHARGED'
-                }
-                else {
-                    console.log(state.encounterResource.status)
+                switch(state.encounterResource.status) {
+                    case 'arrived':
+                        state.activeWorkflowState = 'ADMITTED'
+                        state.screeningResponses.screeningComplete = false;
+                        state.screeningResponses.vaccinationDecision = ' ';
+                        break;
+                    case 'in-progress':
+                        state.activeWorkflowState = 'ADMITTED'
+                        state.screeningResponses.screeningComplete = true;
+                        state.screeningResponses.vaccinationDecision = 'Yes';
+                        break;
+                    case 'cancelled':
+                        state.activeWorkflowState = 'ADMITTED'
+                        state.screeningResponses.screeningComplete = true;
+                        state.screeningResponses.vaccinationDecision = 'No';
+                        break;
+                    case 'finished':
+                        state.activeWorkflowState = 'DISCHARGED'
+                        //Screening state is determined via the immunization resource status
+                        break;
+                    default:
+                        console.log(state.encounterResource.status)
+                        break;
                 }
             }
             else {

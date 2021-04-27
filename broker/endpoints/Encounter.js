@@ -38,10 +38,33 @@ exports.post = (req, res) => {
 exports.create = (req) => {
   const encounter = req.body.Encounter;
   const resource = Encounter.toFHIR(encounter);
-  
+
   return axios.post(`/Encounter`, resource).then((response) => {
-  return Encounter.toModel(response.data);
+    return Encounter.toModel(response.data);
   });
+};
+
+exports.status = async (req, res) => {
+  const encounterId = req.params.id;
+  const status = req.body.status;
+
+  if (!status) {
+    res.status(400).send("Status must be provided ");
+    return;
+  }
+
+  const patch = [
+    {
+      op: "add",
+      path: "/status",
+      value: status
+    }
+  ];
+
+  // update the database with new encounter
+  res.json(await axios.patch(`/Encounter/${encounterId}`, patch).then((response) => {
+    return Encounter.toModel(response.data);
+  }));
 };
 
 exports.discharge = async (req) => {
@@ -52,16 +75,16 @@ exports.discharge = async (req) => {
 
   // patch status and end time
   const patch = [
-      {
-          op: "add",
-          path: "/status",
-          value: status
-      },
-      {
-          op: "add",
-          path: "/period/end",
-          value: new Date().toISOString()
-      }
+    {
+      op: "add",
+      path: "/status",
+      value: status
+    },
+    {
+      op: "add",
+      path: "/period/end",
+      value: new Date().toISOString()
+    }
   ];
 
   // update the database with new encounter

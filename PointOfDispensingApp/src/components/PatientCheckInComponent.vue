@@ -90,6 +90,9 @@ export default {
     onSuccess(payload) {
       //send data to Vuex
       this.$store.dispatch("patientAdmitted", payload);
+
+      //advance to the consent & screening page 
+      this.$router.push('ConsentScreening');
     },
     checkIn() {
       let data = {

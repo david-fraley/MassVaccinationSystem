@@ -70,6 +70,7 @@ app.get("/Observation*", keycloak.protect(), Observation.read);
 app.post("/SendHL7Message", keycloak.protect(), SendHL7Message);
 
 app.post("/Encounter", keycloak.protect(), Encounter.post);
+app.patch("/Encounter/:id/Status", keycloak.protect(), Encounter.status)
 app.get("/Encounter*", keycloak.protect(), Encounter.read);
 
 app.post("/EpisodeOfCare", keycloak.protect(), EpisodeOfCare.create);
