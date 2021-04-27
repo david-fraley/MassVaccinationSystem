@@ -24,13 +24,14 @@ Patient {
   contact: {
     family: string
     given: string
+    relationship: enum (CGV Caregiver, SIB, STPCHLD, GUARD Guardian, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
     phone: {
       value: string
       use: enum (home, work, temp, old, mobile)
     }
   }
   language: enum (English, Spanish),
-  relationship: enum (CGV Caregiver, SIB, STPCHLD, GUARD Guardian, CHILD Child, CHLDFOST Foster Child, SPS Spouse, PRN Parent, GRPRN Grandparent, O Other, ONESELF)
+  
 }
 */
 
@@ -112,6 +113,23 @@ exports.ethnicityValueSet = {
   },
 };
 
+exports.relationshipValueSet = {
+  "Care Giver": "CGV",
+  Sibling: "SIB",
+  Stepchild: "STPCHLD",
+  Guardian: "GUARD",
+  Child: "CHILD",
+  "Foster Child": "CHLDFOST",
+  Spouse: "SPS",
+  Parent: "PRN",
+  Grandparent: "GRPRN",
+  Other: "O",
+  Self: "ONESELF"
+};
+
+const RELATIONSHIP_SYSTEM =
+  "http://hl7.org/fhir/ValueSet/relatedperson-relationshiptype";
+
 /**
  * Returns the date in YYYY-MM-DD format.
  *
@@ -180,9 +198,9 @@ exports.toFHIR = function (patient) {
                   {
                       coding: [
                           {
-                              system: "http://terminology.hl7.org/CodeSystem/v2-0131",
-                              code: "C",
-                              display: "Emergency Contact"
+                              system: RELATIONSHIP_SYSTEM,
+                              code: exports.relationshipValueSet[patient.contact.relationship],
+                              display: patient.contact.relationship
                           }
                       ]
                   }
@@ -299,6 +317,7 @@ exports.toModel = function (patient) {
         contact: {
           given: (()=>{try{return patient.contact[0].name.given[0];}catch(e){return undefined;}})(),
           family: (()=>{try{return patient.contact[0].name.family;}catch(e){return undefined;}})(),
+          relationship: (()=>{try{return patient.contact[0].relationship;}catch(e){return undefined;}})(),
           phone: {
             value: (()=>{try{return patient.contact[0].telecom[0].value;}catch(e){return undefined;}})(),
             use: (()=>{try{return exports.phoneUseEnums[patient.contact[0].telecom[0].use];}catch(e){return undefined;}})()
