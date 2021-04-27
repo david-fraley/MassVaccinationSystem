@@ -26,7 +26,7 @@
       </div>
     </v-row>
     <v-row justify="center">
-      <div class="font-weight-medium">
+      <div class="font-weight-medium ma-2">
         Name:
         <span class="font-weight-regular"
           >{{ patient.family }}, {{ patient.given }} {{ patient.middle }}
@@ -34,15 +34,14 @@
         >
       </div>
     </v-row>
-    <v-row justify="center">
-      <v-btn color="primary" class="ma-2 white--text" @click="generatePdf">
+        <v-row justify="center">
+      <v-btn color="secondary" class="ma-2 white--text" @click="generatePdf">
         Download As PDF
       </v-btn>
     </v-row>
     <v-row justify="center">
-  
-      <v-btn color="secondary" class="ma-2 white--text" @click="reset">
-        Register another person
+      <v-btn color="primary" class="ma-2 white--text" @click="goToTimeTap">
+        Schedule Your Appointment
       </v-btn>
     </v-row>
   </v-container>
@@ -111,9 +110,8 @@ export default {
       var dataURL = canvas.toDataURL("image/png");
       return dataURL;
     },
-    reset(){
-      this.$store.commit("patient/resetPatient");
-      this.$router.push("/");
+    goToTimeTap(){
+      window.open('https://google.com','_self');
     }
   },
   components: {
@@ -125,6 +123,10 @@ export default {
     }
   },
 };
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    e.returnValue = '';
+});
 </script>
 
 <style lang="sass" scoped>

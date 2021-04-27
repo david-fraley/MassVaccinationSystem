@@ -18,33 +18,14 @@ const endpoints = [
 let urls = [];
 
 /**
- * Add Patient and RelatedPerson to list of resources to delete.
- *
- * @param {The QR code of a patient} qrCode
- */
-async function markPatient(qrCode) {
-  urls.push(`/Patient/${qrCode}`);
-
-  const related = (await globals.broker.get(`/Patient/${qrCode}`)).data.link;
-  urls.push(`/${related}`);
-}
-
-/**
- * Add Patients and their RelatedPersons to list of resources to delete.
+ * Add Patients to list of resources to delete.
  *
  * @param {List of QR codes of patients} qrCodes
  */
 async function markPatients(qrCodes) {
-  const promises = [];
-
   for (let code of qrCodes) {
-    promises.push(markPatient(code));
+    urls.push(`/Patient/${code}`);
   }
-
-  await Promise.all(promises).catch((error) => {
-    console.log("patient tests failed");
-    globals.info(error);
-  });
 }
 
 /**
@@ -60,16 +41,6 @@ async function cleanup() {
     if (url.includes("Patient")) {
       const patientIdRecord = await Patient.findByQrCode(url.split('/')[2]);
       promise = globals.fhirServer.delete(`/Patient/${patientIdRecord.id}`);
-      try {
-        await promise;
-      }
-      catch(error) {
-        console.log("generalTest cleanup failed");
-        globals.info(error);
-      }
-    }
-    else if(url.includes("RelatedPerson")) {
-      promise = globals.fhirServer.delete(`${url}`);
       try {
         await promise;
       }
@@ -114,8 +85,8 @@ async function test() {
         .then(async (response) => {
             if (response.data.id) urls.push(`${url}/${response.data.id}`);
             else if (response.data.Patient)
-            // wait for references to be added to cleanup list
-                await markPatients(response.data.Patient);
+              // wait for references to be added to cleanup list
+              await markPatients(response.data.Patient);
 
             globals.config(response);
             console.log(JSON.stringify(response.data));

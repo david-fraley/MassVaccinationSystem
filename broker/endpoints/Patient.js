@@ -122,6 +122,7 @@ exports.search = [
       });
     });
   } 
+
 ];
 
 exports.create = [
@@ -158,6 +159,14 @@ exports.create = [
   body('Patient.*.address.state', 'Please enter patient address state').trim().escape().isLength({min: 1}),
   body('Patient.*.address.postalCode', 'Please enter patient address zip code').trim().escape().matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/),
   body('Patient.*.address.country', 'Please enter patient address country').trim().escape().isLength({min: 1}),
+  body('Patient.*.email', 'Please enter a valid email').trim().escape().isEmail(),
+  body('Patient.*.phone.value', 'Please enter a valid patient phone number').trim().escape().custom((phoneString) => {
+    let numericString = phoneString.replace('(', '').replace(')', '').replace('-', '');
+    return numericString.length === 10 && Number(numericString);
+  }),
+  body('Patient.*.phone.use', 'Please enter a valid patient phone type').trim().escape().custom((phoneUseVal) => {
+    return Patient.phoneUseEnums[phoneUseVal];
+  }),
   body('Patient.*.contact.relationship', 'Please specify patient contact relationship').trim().escape().optional({checkFalsy: true}).custom((relationshipVal) => {
     return RelatedPerson.relationshipValueSet[relationshipVal];
   }),
@@ -165,14 +174,6 @@ exports.create = [
   // Optional fields
   body('Patient.*.middle', '').trim().escape(),
   body('Patient.*.suffix').trim().escape(),
-  body('Patient.*.email.*', 'Please enter a valid email').trim().escape().optional({checkFalsy: true}).isEmail(),
-  body('Patient.*.phone.*.value', 'Please enter a valid patient phone number').trim().escape().optional({checkFalsy: true}).custom((phoneString) => {
-    let numericString = phoneString.replace('(', '').replace(')', '').replace('-', '');
-    return numericString.length === 10 && Number(numericString);
-  }),
-  body('Patient.*.phone.*.use', 'Please enter a valid patient phone type').trim().escape().optional({checkFalsy: true}).custom((phoneUseVal) => {
-    return Patient.phoneUseEnums[phoneUseVal];
-  }),
   body('Patient.*.contact.phone.use', 'Please enter a valid emergency contact phone type').trim().escape().optional({checkFalsy: true}).custom((phoneUseVal) => {
     return Patient.phoneUseEnums[phoneUseVal];
   }),
@@ -198,23 +199,15 @@ exports.create = [
 
 async function createPatients(req, res) {
   const patients = req.body.Patient;
-  let patient = patients.shift();
   const promises = [];
 
-  if (!patient) {
+  if (patients.length === 0) {
     res.status(400).json({ error: "at least one patient should be provided" });
     return;
   }
 
-  // Create head of household to be referenced by other members
-  let head = await createPatient(patient);
-  if (!head) {
-    res.status(500).json({ error: "create patient failed" });
-    return;
-  }
-
-  for (patient of patients) {
-    promises.push(createPatient(patient, head));
+  for (const patient of patients) {
+    promises.push(createPatient(patient));
   }
 
   // Resolve promises and send qr_codes as response
@@ -223,7 +216,6 @@ async function createPatients(req, res) {
       const response = {
 		    Patient: values.map(value => value.qr_code)
 	    };
-	  response.Patient.unshift(head.qr_code);
 	  res.json(response);
     })
     .catch((e) => res.status(400).json(e));
@@ -234,27 +226,9 @@ async function createPatients(req, res) {
  * containing resourceId and qr_code
  *
  * @param {Patient information} patient
- * @param {IDs of head of household} head
  */
-async function createPatient(patient, head) {
-  let related;
-
-  // If head is not provided, create RelatedPerson resource first
-  // and update reference to patient later.
-  if (head == null) related = { resourceType: "RelatedPerson" };
-  else
-    related = {
-      patient: `Patient/${head.resourceId}`,
-      relationship: patient.relationship
-    };
-
-  // Create RelatedPerson resource
-  let resource = RelatedPerson.toFHIR(related);
-  const relatedID = (await axios.post(`/RelatedPerson`, resource)).data.id;
-
-  patient.link = `RelatedPerson/${relatedID}`;
-  
-  resource = Patient.toFHIR(patient);
+async function createPatient(patient) {
+  let resource = Patient.toFHIR(patient);
   
   const patientID = {
       qr_code: uuid.v4()
@@ -274,18 +248,6 @@ async function createPatient(patient, head) {
   
   const createdPatient = await axios.post(`/Patient`, resource);
   patientID.resourceId = createdPatient.data.id;
-
-  // If RelatedPerson was not created with a link to a patient,
-  // update the resource to link to the new Patient
-  if (head == null) {
-    head = patientID;
-    resource = RelatedPerson.toFHIR({
-      patient: `Patient/${head.resourceId}`,
-      relationship: patient.relationship
-    });
-    resource.id = relatedID;
-    axios.put(`/RelatedPerson/${relatedID}`, resource);
-  }
 
   // Mock Appointment resource
   const appointment = {

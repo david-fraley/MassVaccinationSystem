@@ -219,15 +219,10 @@ export default {
         race: this.patient.race,
         ethnicity: this.patient.ethnicity,
         language: this.patient.language,
-        email: [],
-        phone: [],
         address: {
           use: this.patient.addressUse,
-          line: (
-            this.patient.addressLine +
-            " " +
-            this.patient.addressLine2
-          ).trim(),
+          line: this.patient.addressLine,
+          line2: this.patient.addressLine2,
           city: this.patient.addressCity,
           state: this.patient.addressState,
           postalCode: this.patient.addressPostalCode,
@@ -244,13 +239,13 @@ export default {
         },
       };
       if (this.patient.email) {
-        patient.email.push(this.patient.email);
+        patient.email = this.patient.email;
       }
       if (this.patient.phone) {
-        patient.phone.push({
+        patient.phone = {
           value: this.patient.phone,
           use: this.patient.phoneType,
-        });
+        }
       }
       return { Patient: [patient] };
     },
