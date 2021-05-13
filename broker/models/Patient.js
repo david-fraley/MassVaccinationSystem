@@ -282,6 +282,7 @@ exports.toFHIR = function (patient) {
 
 exports.toModel = function (patient) {
     const model = {
+        recaptchaToken: (()=>{try{return patient.recaptchaToken;}catch(e){return undefined;}})(),
         resourceType: patient.resourceType,
         id: patient.id,
         identifier: patient.identifier,

@@ -182,6 +182,7 @@ export default {
       contactInfoAcknowledgement: customerSettings.contactInfoAcknowledgement,
       recaptchaKey: process.env.VUE_APP_RECAPTCHA,
       recaptchaValid: false,
+      recaptchaToken: ""
     };
   },
   computed: {
@@ -261,10 +262,12 @@ export default {
           use: this.patient.phoneType,
         };
       }
-      return { Patient: [patient] };
+      let recaptchaToken = this.recaptchaToken;
+      return { Patient: [patient], recaptchaToken };
     },
     onVerify(response) {
       this.recaptchaValid = true;
+      this.recaptchaToken = response;
     },
     onExpired() {
       this.recaptchaValid = false;

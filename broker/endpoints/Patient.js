@@ -5,6 +5,9 @@ const {body, param, validationResult, sanitizeBody} = require('express-validator
 const Appointment = require("../models/Appointment");
 const uuid = require('uuid');
 
+// Read private configuration settings from .env file into process.env
+require("dotenv").config({ path: `${__dirname}/../../.env` });
+
 exports.read = [
 
   param('qrCode', "No QR Code provided for patient lookup").trim().escape().isLength({min: 1}),
@@ -126,7 +129,8 @@ exports.search = [
 ];
 
 exports.create = [
-  // Can't just sanitize body since it contains arrays and nested objects
+   // Can't just sanitize body since it contains arrays and nested objects
+  body('recaptchaToken', 'Please verify with recaptcha').trim().escape().isLength({min: 1}),
   body('Patient', 'Please provide patient data').custom((patients) => {
     return Array.isArray(patients) && patients.length >=1;
   }),
@@ -177,10 +181,26 @@ exports.create = [
   body('Patient.*.contact.phone.use', 'Please enter a valid emergency contact phone type').trim().escape().optional({checkFalsy: true}).custom((phoneUseVal) => {
     return Patient.phoneUseEnums[phoneUseVal];
   }),
+  
 
-  (req, res) => {
-
+  // Verify recaptcha before proceeding to create patient
+  async (req, res) => {
+    const recaptchaToken = req.body.recaptchaToken;
     const errors = validationResult(req);
+    const secret = process.env.VUE_APP_RECAPTCHA_SECRET; 
+    const googleVerifyURL =  `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${recaptchaToken}`;
+  try{
+    const result = await axios.post(googleVerifyURL,{},
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+  const data = result.data || {};
+
+  // If recaptcha is verified
+  if(data.success){
     if(!errors.isEmpty()) {
       let errorString = '';
       errors.array().forEach((error) => {
@@ -194,6 +214,15 @@ exports.create = [
         error: e.response ? e.response.data : e.message,
       })
     );
+    
+  } // if recaptcha verification failed
+  else{ 
+    const errorCodes = data["error-codes"];
+    return res.status(400).json({success: false, msg:errorCodes});
+  }
+    }catch(err){
+      return res.status(401).json({error: 'Error during recaptcha verification'});
+    }
   }
 ]
 
@@ -229,7 +258,7 @@ async function createPatients(req, res) {
  */
 async function createPatient(patient) {
   let resource = Patient.toFHIR(patient);
-  
+  resource.RecaptchaToken = patient.recaptchaToken;
   const patientID = {
       qr_code: uuid.v4()
   };
