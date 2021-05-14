@@ -215,6 +215,7 @@ module.exports = {
 }`,
 
   Patient: `{
+    "recaptchaToken":"THISWOULDBEATOKENBUTITSNOT"
   "Patient": [
     {
       "family": "Smith",
