@@ -5,9 +5,6 @@ const {body, param, validationResult, sanitizeBody} = require('express-validator
 const Appointment = require("../models/Appointment");
 const uuid = require('uuid');
 
-// Read private configuration settings from .env file into process.env
-require("dotenv").config({ path: `${__dirname}/../../.env` });
-
 exports.read = [
 
   param('qrCode', "No QR Code provided for patient lookup").trim().escape().isLength({min: 1}),
@@ -218,10 +215,10 @@ exports.create = [
   } // if recaptcha verification failed
   else{ 
     const errorCodes = data["error-codes"];
-    return res.status(400).json({success: false, msg:errorCodes});
+    return res.status(401).json({success: false, msg:errorCodes});
   }
     }catch(err){
-      return res.status(401).json({error: 'Error during recaptcha verification'});
+      return res.status(400).json({error: 'Error during recaptcha verification'});
     }
   }
 ]
